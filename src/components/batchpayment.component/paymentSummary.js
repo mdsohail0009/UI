@@ -99,7 +99,15 @@ class PaymentSummary extends Component {
 		this.props.history.push('/cockpit');
 	}
 	changesVerification = (obj) => {
-		if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
+		if(obj.isPhoneVerification && obj.verifyData?.isPhoneVerified &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if(obj.isAuthenticatorVerification &&obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification ){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if(obj.isEmailVerification && obj.verifyData?.isEmailVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if(obj.verifyData?.isLiveVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified  ){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
 			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
 		}
 		else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification)) {
@@ -132,7 +140,7 @@ class PaymentSummary extends Component {
 		return (<>
 			<div>
 			<Drawer destroyOnClose={true}
-            title={[<div className="side-drawer-header"><span></span>
+            title={[<div className="side-drawer-header" key={""}><span></span>
 			{!this.state.showDeclaration &&<><div className='drawer-maintitle rec-bottom'>Payment Summary</div>
 			 <span onClick={this.props.onClose} className="icon md close-white c-pointer" /></>}
 			 {this.state.showDeclaration &&<span onClick={this.handleBack} className="icon md close-white c-pointer" />}
