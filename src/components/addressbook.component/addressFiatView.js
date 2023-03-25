@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
+import { Row, Col, Typography, Button,} from "antd";
 import Loader from "../../Shared/loader";
 import { getViewData, } from "./api";
 import { connect } from "react-redux";
@@ -335,15 +335,6 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														}
-														{/* 
-														{bankDetailes[0]?.accountNumber && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-															<div className="kpi-divstyle ad-rec-detyails">
-																<label className="kpi-label">Account Number</label>
-																<div className="kpi-val">
-																	{bankDetailes[0]?.accountNumber}
-																</div>
-															</div>
-														</Col>	}	 */}
 														{item?.bankName && 
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
@@ -473,7 +464,7 @@ const AddressFiatView = (props) => {
 													
 												</div>
 												{item?.docrepoitory.map((file) => (
-													<Col xs={12} sm={12} md={12} lg={12} xxl={12}>
+													<Col xs={12} sm={12} md={12} lg={12} xxl={12} key={file.id}>
 														<div
 															className="docfile address-book-viewlevel"
 															key={file.id}>
