@@ -201,10 +201,10 @@ class AddressBook extends Component {
 			field: "digitallySigned",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed"  && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
+					}} >{props?.dataItem?.bankAccountType!=="Personal" && <DownloadOutlined />}</Link>{props.dataItem?.digitallySigned}</>}
 					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
 					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
@@ -279,7 +279,7 @@ class AddressBook extends Component {
 			field: "digitallySigned",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.digitallySigned==="Signed" && (props.dataItem?.bankAccountType===null ||props.dataItem?.bankAccountType==="") && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
+					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
 					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
