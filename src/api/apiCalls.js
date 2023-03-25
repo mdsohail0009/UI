@@ -89,7 +89,10 @@ const downloadKyc = () => {
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
-const getAccountDetails=()=>{
+// const getAccountDetails=()=>{
+// 	return bankClient.get(ApiControllers.bank + `AccountDetailsForExchange`)
+//   }
+  const getAccountDetails=()=>{
 	return bankClient.get(ApiControllers.bank + `AccountDetails`)
   }
 const encryptValue = (msg, key) => {
