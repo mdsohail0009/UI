@@ -102,6 +102,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount;
+        saveObj.createdBy = props.userConfig?.userName;
         if(isEdit){
             saveObj.id = isSelectedId ? isSelectedId: saveObj.payeeId;
         }

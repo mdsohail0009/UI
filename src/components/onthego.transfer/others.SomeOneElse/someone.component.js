@@ -72,6 +72,7 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].walletCode = props.currency;
         obj.payeeAccountModels[0].ukSortCode = values?.payeeAccountModels?.ukSortCode;
         obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
+        obj.createdBy = props.userProfile?.userName;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }

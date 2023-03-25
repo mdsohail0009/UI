@@ -101,7 +101,8 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
-        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
+        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
+        _obj.createdBy = this.props.userProfile?.userName;
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
