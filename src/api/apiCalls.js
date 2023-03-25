@@ -90,8 +90,11 @@ const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
 const getAccountDetails=()=>{
-	return bankClient.get(ApiControllers.bank + `AccountDetails`)
+	return bankClient.get(ApiControllers.bank + `AccountDetailsForExchange`)
   }
+//   const getAccountDetails=()=>{
+// 	return bankClient.get(ApiControllers.bank + `AccountDetails`)
+//   }
 const encryptValue = (msg, key) => {
 	msg = typeof msg == "string" ? msg : JSON.stringify(msg);
 	let salt = CryptoJS.lib.WordArray.random(128 / 8);
