@@ -101,7 +101,7 @@ amountnext = (values) => {
         this.setState({ ...this.state, [loader]: false, errorMessage: null,isPersonalSummary:true,isPersonal:false,reviewDetails:res.data }, () => this.chnageStep(step, values,));
 
     } else {
-        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res),isPersonalSummary:true,isPersonal:false })
+        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res) })
     }
 
   }
