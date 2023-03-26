@@ -14,7 +14,6 @@ import OnthegoFundTransfer from '../onthego.transfer';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import MassPayment from '../buyfiat.component'
 import { getScreenName } from '../../reducers/feturesReducer';
-import PersonalInternalTransferComponent from '../personalInternalTransfer.component';
 const { Title, Paragraph, Text } = Typography;
 
 class CockpitCharts extends Component {
@@ -36,8 +35,7 @@ class CockpitCharts extends Component {
         selctedVal: '',
         valNum: 1,
         showFuntransfer: false,
-        errorMessage:null,
-        personalTransafershowDrawer:false
+        errorMessage:null
     }
 
     componentDidMount() {
@@ -149,10 +147,6 @@ class CockpitCharts extends Component {
             })
         }else if(e===3){
             this.props.history.push(`/payments/${value.walletCode}`)
-        }else if(e===4){
-            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-            this.setState({ ...this.setState, personalTransafershowDrawer: true, selctedVal: value.walletCode })
-          
         }else {
             this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.props.history.push(`/internaltransfer`)
@@ -165,7 +159,6 @@ class CockpitCharts extends Component {
             buyFiatDrawer: false,
             transactions: false,
             showFuntransfer:false,
-            personalTransafershowDrawer:false
         })
     }
     handleSearch = ({ currentTarget: { value } }) => {
@@ -185,17 +178,18 @@ class CockpitCharts extends Component {
                     </Link>
                 </li>
                 <li 
+                // onClick={() => this.showTransactionDrawer(item)}
                 >
-
+                   
+                    
                     <Link to="/transactions" value={4} className="c-pointer"><Translate content="transactions_history" /></Link>
                    
                 </li>
-                
-                {item?.walletCode==="EUR" &&<li onClick={() => this.showSendReceiveDrawer(4, item)}>
+                <li onClick={() => this.showSendReceiveDrawer(5, item)}>
                     <Link value={5} className="c-pointer">
-                    <Translate content="personal_iban_transafer" />
+                    <Translate content="menu_internal_transfer" />
                     </Link>
-                </li>}
+                </li>
             </ul>
         </Menu>
     )
@@ -328,9 +322,6 @@ class CockpitCharts extends Component {
                         this.closeDrawer();
                     }}
                 />}
-                {this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
-                        this.closeDrawer();
-                    }}/>}
                 <Drawer
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
