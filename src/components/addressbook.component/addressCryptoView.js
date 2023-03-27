@@ -147,6 +147,17 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
+											{cryptoAddress?.adressstate ==="Rejected" &&(<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Reason For Rejection</label>
+													<div className=" kpi-val adview-name">
+														{cryptoAddress?.rejectReason === " " ||
+															cryptoAddress?.rejectReason === null
+															? "-"
+															: cryptoAddress?.rejectReason}
+													</div>
+												</div>
+											</Col>)}
 
 										</Row>
 										{process.env.REACT_APP_ISTR == "true" &&<Row>

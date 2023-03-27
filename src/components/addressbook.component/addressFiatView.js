@@ -205,7 +205,6 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.line3}</div>}
 												</div>
 											</Col>
-
 											{fiatAddress?.country && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Country</label>
@@ -260,7 +259,16 @@ const AddressFiatView = (props) => {
 														{bankDetailes[0]?.addressState}
 													</div>
 												</div>
-											</Col>								
+											</Col>
+											{bankDetailes[0]?.addressState ==="Rejected" &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Reason For Rejection</label>
+													<div className="kpi-val">
+													{bankDetailes[0]?.rejectReason ===""||
+													bankDetailes[0]?.rejectReason === null ? "-":bankDetailes[0]?.rejectReason}
+													</div>
+												</div>
+											</Col>}								
 										</Row>
 										<Title className="basicinfo  abbook-title-mt">
 										   Recipient Bank Details
