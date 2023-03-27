@@ -99,14 +99,6 @@ saveWithdrawdata = async () => {
             this.reviewScrool.current.scrollIntoView();
             return
         }
-    } else {
-        this.setState({
-            ...this.state,
-            errorMessage:
-                "Without Verifications you can't Proceed.",
-        });
-        this.reviewScrool.current.scrollIntoView();
-        return
     }
     if (this.state.reviewDetails) {
         let obj = Object.assign({}, this.state.reviewDetails);
@@ -174,7 +166,13 @@ saveWithdrawdata = async () => {
     this.setState({ ...this.state, reviewDetailsLoading: val })
   }
 
-
+  verificationsData=(data)=>{
+    if(data?.isLiveVerification && !data?.twoFactorEnabled && !data?.isEmailVerification && !data?.isPhoneVerified ){
+      this.setState({ ...this.state, 
+        isShowGreyButton: true ,
+        verificationsData:data });
+    }
+  }
 
 
 
@@ -295,7 +293,7 @@ saveWithdrawdata = async () => {
                             }
                             </div>
              
-                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
+                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} verificationsData={(data)=>this.verificationsData(data)}/>
                 
                 {this.state.permissions?.Send && 
             
