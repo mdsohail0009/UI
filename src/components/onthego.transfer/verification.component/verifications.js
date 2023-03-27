@@ -95,6 +95,7 @@ const goToSecurity=()=>{
         setMsg(null)
         let response = await getVerificationFields();
         if (response.ok) {
+            props?.verificationsData(response.data)
             setVerifyData(response.data);
             props.onReviewDetailsLoading(false)
             setMsg(null)
