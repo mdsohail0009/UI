@@ -639,6 +639,7 @@ export default {
 	bathch_payments_preview: "Hamarino azafady ny saha alohan'ny hanaiky.",
 	suissebase_title_crypto:"Suissebase Crypto Wallet",
 	Whitelisting_Status:"Whitelisting Status",
+	Reason_For_Rejection:"sebab penolakan",
 	personal_iban_transafer:"Transferencia personal de IBAN",
 	fiat_transfer_success:"Volver a Transfer"
 };
