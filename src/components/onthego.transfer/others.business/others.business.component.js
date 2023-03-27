@@ -558,7 +558,7 @@ class OthersBusiness extends Component {
                         />
                     </Form.Item>
                 </Col></>}
-               { this.props.ontheGoType === "Onthego" && <><Paragraph className="adbook-head" >Compliance</Paragraph>
+                { this.props.ontheGoType === "Onthego" &&this.props.currency != "CHF"&& <><Paragraph className="adbook-head" >Compliance</Paragraph>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
