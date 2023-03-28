@@ -162,7 +162,7 @@ class OthersBusiness extends Component {
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         
         _obj.addressType = "otherbusiness";
-        _obj.transferType = "sepa";
+        _obj.transferType = this.props.currency=='CHF'?'chftransfer':"sepa";
         _obj.amount = this.props.amount;
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
@@ -218,7 +218,8 @@ class OthersBusiness extends Component {
         else {
             return <><div ref={this.useDivRef}>
                 {this.props.currency !="CHF" && <h2 className="adbook-head">SEPA Transfer</h2>}
-                {this.props.currency !="EUR" && <h2  className="adbook-head">Bank Details</h2>}
+                {this.props.currency =="CHF" && <h2 className="adbook-head">CHF Transfer</h2>}
+                {this.props.currency !="EUR" &&this.props.currency !="CHF" &&  <h2  className="adbook-head">Bank Details</h2>}
                 {this.state.isLoading && <Loader />}
                 {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
                 {!this.state.isLoading && <Form
@@ -258,7 +259,7 @@ class OthersBusiness extends Component {
 
                             </Form.Item>
                         </Col>
-                        {this.props.currency !="EUR" &&
+                        {this.props.currency !="EUR" &&this.props.currency !="CHF" &&
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -289,7 +290,7 @@ class OthersBusiness extends Component {
                             </Form.Item>
                         </Col>}
                     </Row>
-                  { this.props.currency != "CHF" && <> <Translate style={{ fontSize: 18 }}
+                  {( this.props.currency == "CHF" ||this.props.currency == "EUR") && <> <Translate style={{ fontSize: 18 }}
                         content="Beneficiary_Details"
                         component={Paragraph}
                         className="mb-8 text-white fw-500 mt-16"
@@ -465,7 +466,7 @@ class OthersBusiness extends Component {
                         </Spin>
                        
                     </div>
-                  { this.props.currency !="EUR" && <> 
+                  { this.props.currency !="EUR" &&this.props.currency !="CHF" &&  <> 
                   <Paragraph className="adbook-head" >Recipient Address</Paragraph>
                 
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -557,7 +558,7 @@ class OthersBusiness extends Component {
                         />
                     </Form.Item>
                 </Col></>}
-               { this.props.ontheGoType === "Onthego" && <><Paragraph className="adbook-head" >Compliance</Paragraph>
+                { this.props.ontheGoType === "Onthego" &&this.props.currency != "CHF"&& <><Paragraph className="adbook-head" >Compliance</Paragraph>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
@@ -605,7 +606,7 @@ class OthersBusiness extends Component {
                             />
                         </React.Fragment>)
                         }
-                        {this.props.type === "manual" && this.props.currency != "EUR" &&
+                        {this.props.type === "manual" && this.props.currency != "EUR" &&this.props.currency != "CHF" &&
                         (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                         <AddressDocumnet 

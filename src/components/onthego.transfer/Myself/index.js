@@ -78,14 +78,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].ukSortCode=values?.ukSortCode;
-        saveObj.payeeAccountModels[0].iban= (currency==='EUR' || (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
+        saveObj.payeeAccountModels[0].iban= (currency==='CHF'||currency==='EUR' || (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
         saveObj.payeeAccountModels[0].accountNumber=currency !='EUR'?values.accountNumber:null;
         saveObj.payeeAccountModels[0].abaRoutingCode=values.abaRoutingCode?values.abaRoutingCode:null;
         saveObj.payeeAccountModels[0].swiftRouteBICNumber=values.swiftRouteBICNumber?values.swiftRouteBICNumber:null;
         saveObj.payeeAccountModels[0].line1=currency != 'EUR'?values.line1:null;
         saveObj.payeeAccountModels[0].line2=currency !='EUR'?values.line2:null;
         saveObj.payeeAccountModels[0].state=bankDetails.state?bankDetails.state:null;
-        saveObj.payeeAccountModels[0].bankName=(currency==='EUR' || addressOptions?.tabType === "internationalIBAN")?bankDetails.bankName:values.bankName;
+        saveObj.payeeAccountModels[0].bankName=(currency==='CHF'||currency==='EUR' || addressOptions?.tabType === "internationalIBAN")?bankDetails.bankName:values.bankName;
         saveObj.payeeAccountModels[0].bic=bankDetails.routingNumber?bankDetails.routingNumber:null;
         saveObj.payeeAccountModels[0].branch=bankDetails.branch?bankDetails.branch:null;
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
@@ -98,7 +98,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.line2=recipientDetails.line2;
         saveObj.line3=recipientDetails.line3;
         saveObj.addressType=isBusiness?'ownbusiness':'myself';
-        saveObj.transferType=currency==='EUR'?'sepa':addressOptions.tabType;
+        saveObj.transferType=currency==='EUR'?'sepa':currency==='CHF'?'chftransfer':addressOptions.tabType;
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount;
@@ -124,8 +124,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             else {
                 setShowDeclartion(true);
                 props.isHideTabs(false)
+                props.headingUpdate(true)
             }
-            props.headingUpdate(true)
         }else{seterrorMessage(apiCalls.isErrorDispaly(response));
             useDivRef.current.scrollIntoView();
 		setBtnLoading(false);
@@ -257,7 +257,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Row>
         </>}
        
-        {!showDeclartion &&<> {(currency === "GBP" || currency === "CHF") && <>
+        {!showDeclartion &&<> {(currency === "GBP") && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
@@ -269,6 +269,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </>}
         
         {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>}
+        {currency == 'CHF' && <h2 className="adbook-head" >CHF Transfer</h2>}
         
         {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
         {!isLoading &&<>
@@ -358,8 +359,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </div>
 
         <h2  className="adbook-head">Bank Details</h2>
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row className="validateiban-content">
-        {(currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+        {(currency == 'CHF'||currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Row className="validateiban-content">
+        {(currency == 'CHF'||currency == 'EUR'||addressOptions.tabType == 'internationalIBAN') && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <div className="custom-btn-error">
             <Form.Item
                 className="custom-forminput custom-label "
@@ -395,7 +396,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Row>}
 
         <Row>
-            {((currency == 'USD' || currency == "GBP" || currency === "CHF") && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {((currency == 'USD' || currency == "GBP") && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
@@ -622,7 +623,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                     </Form.Item>
                 </Col></>}
         </Row>
-        {(currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16 kpi-List">
+        {(currency === 'CHF' ||currency === 'EUR' || addressOptions.tabType === 'internationalIBAN') && <div className="box basic-info alert-info-custom mt-16 kpi-List">
             <Spin spinning={ibanLoading}>
             {validIban&&isShowBankDetails&&<Row>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
