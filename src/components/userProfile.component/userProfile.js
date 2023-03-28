@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import { getScreenName } from "../../reducers/feturesReducer";
 import { withRouter } from 'react-router-dom';
+import SuisseBaseCreditCom from './suissebaseCredit';
 const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
@@ -82,6 +83,10 @@ class UserProfile extends Component {
                     <TabPane tab={<div><span className="icon lg referral-icon" />
                         <Translate content="referr" className="tabtitle" /></div>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                    <TabPane tab={<div><span className="icon lg referral-icon" />
+                        <Translate content="suissebase_credit" className="tabtitle" /></div>} key="8" >
+                        {this.state.activeTab == 8 && <SuisseBaseCreditCom/>}
                     </TabPane>
                 </Tabs>
             </div>
