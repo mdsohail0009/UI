@@ -371,6 +371,7 @@ export default {
 	FromWallet: "From Wallet",
 	FromValue: "From Value",
 	Status: "Status",
+	Reason_For_Rejection:"Reason For Rejection",
 	ToWallet: "To Wallet",
 	ToValue: "To Value",
 	BeforeValue: "Before Value",
@@ -681,7 +682,7 @@ export default {
 	sb_card_title:"Your card",
 	Dashboard:"Dashboard",
 	notices:"Notices",
-	personal_iban_transafer:"Personal IBAN Transafer",
+	personal_iban_transafer:"Personal IBAN Transfer",
 	fiat_transfer_success:"Back to Transafer",
 	suissebase_credit:"SuisseBase Credit",
 	suissebasecredits:"Suissebase Credits Available"
