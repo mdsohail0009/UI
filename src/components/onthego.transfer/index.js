@@ -113,7 +113,7 @@ class OnthegoFundTransfer extends Component {
             minVerifications = minVerifications + 1;
         }
       }
-      if (minVerifications >= 2) {
+      if (minVerifications >= 1) {
         this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
@@ -238,6 +238,15 @@ saveWithdrawdata = async () => {
     }
   }
   changesVerification = (obj) => {
+    if(obj.isPhoneVerification && obj.verifyData?.isPhoneVerified &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else if(obj.isAuthenticatorVerification &&obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification ){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else if(obj.isEmailVerification && obj.verifyData?.isEmailVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else if(obj.verifyData?.isLiveVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified  ){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else
     if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
         this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
     }
@@ -857,7 +866,7 @@ saveWithdrawdata = async () => {
                             }
                             </div>
              
-                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
+                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} onClosePopup={()=>this.props?.onClosePopup()}/>
                 
                 {this.state.permissions?.Send && 
             

@@ -231,7 +231,7 @@ class WithdrawSummary extends Component {
 		let response = await apiCalls.getVerificationFields();
 		if (response.ok) {
 			this.setState({ ...this.state, verifyData: response.data });
-			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
+			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification||response.data.isPhoneVerified)) {
 				this.setState({
 					...this.state,
 					errorMsg:
@@ -246,6 +246,12 @@ class WithdrawSummary extends Component {
 			});
 		}
 	};
+	 goToSecurity=()=>{
+		this.props.history.push('/userprofile/2')
+		if (this.props.onClose) {
+            this.props.onClose();
+        }
+	}
 	getOTP = async (val) => {
 		let response = await apiCalls.getCode(this.state.type);
 		if (response.ok) {
@@ -793,10 +799,14 @@ class WithdrawSummary extends Component {
 							form={this.form}
 							onFinish={this.saveWithdrwal}>
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified === true && (
+								<div className="phone-flex">
 								<Text className="label-style">
 									Phone Verification Code *
 								</Text>
+						 {this.state.buttonText==='resendotp'&&<Link onClick={()=>this.goToSecurity()}>Still didn't received SMS, Click here</Link>}
+						 </div>
 							)}
+
 							{this.state.permissions?.Send && this.state.verifyData.isPhoneVerified === true && (
 								<Form.Item
 									name="code"
