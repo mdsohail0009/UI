@@ -42,4 +42,9 @@ export const getAccountWallet=()=>{
 export const getAccountBankDetails=(payeeId,currency)=>{
     return apiClient.get(ApiControllers.addressbook + `PayeeLableLu/${payeeId}/${currency}`);
 }
-
+export const getSuissebaseCredit = (customerId) => {
+    return apiClient.get(ApiControllers.customers + `Customer/Credit/${customerId}`);
+  };
+  export const saveSuissebaseCrediate = (obj) => {
+    return apiClient.put(ApiControllers.customers + `SaveCredits`,obj);
+  };

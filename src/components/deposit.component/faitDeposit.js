@@ -358,7 +358,10 @@ class FaitDeposit extends Component {
                     <Paragraph
                       className="import-note"
                     ><div className=""><span className='imp-note'>Important: </span>{apicalls.convertLocalLang('reference_hint_text')}</div> </Paragraph>
-
+                  <Paragraph
+                className="import-note"
+              ><div className=""><span className='imp-note'>Fees: <span   className="fait-title">Minimum of {BankInfo?.feeUsers?.minFee } {""}{ BankInfo?.feeUsers?.curreny }   Or Maximum at {BankInfo?.feeUsers?.maxFee } %</span></span></div>   <p>Whichever higher</p></Paragraph>
+               
                   </div>
                   
                 }

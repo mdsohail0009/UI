@@ -35,6 +35,7 @@ export default {
 	refresh_newprice: "Please refresh to get new price",
 	confirm_btn_text: "Confirm %(counter)s",
 	exchange_rate: "Exchange Rate",
+	effective_fee:"Effective Fee",
 	amount: "Amount",
 	suissebase_fee: "Suissebase Fee",
 	estimated_total: "Estimated Total",
@@ -370,6 +371,7 @@ export default {
 	FromWallet: "From Wallet",
 	FromValue: "From Value",
 	Status: "Status",
+	Reason_For_Rejection:"Reason For Rejection",
 	ToWallet: "To Wallet",
 	ToValue: "To Value",
 	BeforeValue: "Before Value",
@@ -680,7 +682,8 @@ export default {
 	sb_card_title:"Your card",
 	Dashboard:"Dashboard",
 	notices:"Notices",
-	personal_iban_transafer:"Personal IBAN Transafer",
-	fiat_transfer_success:"Back to Transafer"
-	
+	personal_iban_transafer:"Personal IBAN Transfer",
+	fiat_transfer_success:"Back to Transafer",
+	suissebase_credit:"SuisseBase Credit",
+	suissebasecredits:"Suissebase Credits Available"
 };

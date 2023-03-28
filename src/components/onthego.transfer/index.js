@@ -54,6 +54,7 @@ class OnthegoFundTransfer extends Component {
     permissions: {},
     filtercoinsList: [],
     searchFiatVal: "",
+    effectiveType:false,
   }
   componentDidMount() {
     this.verificationCheck()
@@ -347,6 +348,14 @@ saveWithdrawdata = async () => {
         })
       }
     }
+  }
+  feeChange=()=>{
+    if(this.state.effectiveType){
+      this.setState({...this.state,effectiveType:false})
+    }else{
+      this.setState({...this.state,effectiveType:true})
+    }
+
   }
 
   renderStep = (step) => {
@@ -769,12 +778,37 @@ saveWithdrawdata = async () => {
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Total fees</div>
+                                    <div className="summary-liststyle gridLink"  onClick={()=>this.feeChange()}>Effective Fees</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>  
+                  
+                 {this.state.effectiveType && <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Fees</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.totalValue)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Tire Discount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.tierDiscount)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">SuisseBase Credit Used</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.sbCredit)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">How much you will receive</div>
+                    <div className="summarybal">
+                    <NumberFormat
+                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div></>}
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal amount</div>
                                     <div className="summarybal"><NumberFormat

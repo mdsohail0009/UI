@@ -98,7 +98,7 @@ class SellSummary extends Component {
     }
     render() {
         const { sellpreviewData } = this.state;
-        const { amount, amountNativeCurrency, oneCoinValue, coin, currency } = sellpreviewData;
+        const { amount, amountNativeCurrency, oneCoinValue, coin, currency,sussiBaseCreditUsed,tierDiscount,sbFee,totalFee } = sellpreviewData;
         {this.state.error !== null && (
             <Alert
                 closable
@@ -126,7 +126,10 @@ class SellSummary extends Component {
             onCancel={() => this.onSellCancel()}
             onClick={() => this.saveSellData()}
             okBtnTitle={"sell"}
-
+            sussiBaseCreditUsed={sussiBaseCreditUsed}
+            tierDiscount={tierDiscount}
+            sbFee={sbFee}
+            totalFee={totalFee}
             onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}
             onCheked={this.state.isTermsAgree}
             onErrorClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />
