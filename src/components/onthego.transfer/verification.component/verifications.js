@@ -24,6 +24,7 @@ const Verifications = (props) => {
     const last4Digits = fullNumber.slice(-4);
     const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
     const [permissions, setPermissions] = useState({});
+    const [isOnVerification,setIsOnVerification]=useState(false);
    const history=useHistory()
     useEffect(() => {
         loadPermissions();
@@ -129,20 +130,25 @@ const goToSecurity=()=>{
         }
         if(email.code && email.code>5){
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
+        setIsOnVerification(true);
         let response = await verifyEmailCode(email.code);
         if (response.ok) {
             setEmailBtnColor(true)
         setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
         updateverifyObj(true, 'isEmailVerification')
+        setIsOnVerification(false);
         } else if (response.data == null) {
             setEmail({ ...email, errorMsg: 'Invalid email verification code', verified: false, btnLoader:false });
             updateverifyObj(false, 'isEmailVerification')
+            setIsOnVerification(false);
         } else {
             setEmail({ ...email, errorMsg: 'Invalid email verification code', btnLoader:false });
             updateverifyObj(false, 'isEmailVerification')
+            setIsOnVerification(false);
         }
     }else{
         setEmail({ ...email, errorMsg: 'Invalid email verification code', verified:false});
+        setIsOnVerification(false);
     }
     };
     const handleEmailinputChange = (e) => {
@@ -185,20 +191,25 @@ const goToSecurity=()=>{
         }
         if (phone.code && phone.code > 5) {
             setPhone({ ...phone, errorMsg: '', showRuleMsg: '', btnLoader: true })
+            setIsOnVerification(true);
             let response = await getVerification(phone.code);
             if (response.ok) {
                 setPhBtnColor(true)
                 setPhone({ ...phone, errorMsg: '', verified: true, btnName: 'verified', btnLoader: false });
                 updateverifyObj(true, 'isPhoneVerification')
+                setIsOnVerification(false);
             } else if (response.data == null) {
                 setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false, btnLoader: false });
                 updateverifyObj(false, 'isPhoneVerification')
+                setIsOnVerification(false);
             } else {
                 setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false, btnLoader: false });
                 updateverifyObj(false, 'isPhoneVerification')
+                setIsOnVerification(false);
             }
         } else {
             setPhone({ ...phone, errorMsg: 'Invalid phone verification code', verified: false, btnLoader: false });
+            setIsOnVerification(false);
         }
     };
 
@@ -218,20 +229,25 @@ const goToSecurity=()=>{
         }
         if(authenticator.code && authenticator.code>5){
             setAuthenticator({ ...authenticator, errorMsg: '', verified: false, btnLoader:true });
+            setIsOnVerification(true);
         let response = await getAuthenticator(authenticator.code);
         if (response.ok) {
             setAuthBtnColor(true)
             setAuthenticator({ ...authenticator, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
             updateverifyObj(true, 'isAuthenticatorVerification')
+            setIsOnVerification(false);
         } else if (response.data == null) {
             setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false, btnLoader:false });
             updateverifyObj(false, 'isAuthenticatorVerification')
+            setIsOnVerification(false);
         } else {
             setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', btnLoader:false });
             updateverifyObj(false, 'isAuthenticatorVerification')
+            setIsOnVerification(false);
         }
     }else{
         setAuthenticator({ ...authenticator, errorMsg: 'Invalid authenticator verification code', verified: false, btnLoader:false });
+        setIsOnVerification(false);
     }
     };
     const handleAuthenticatorinputChange = (e) => {
@@ -300,6 +316,7 @@ const goToSecurity=()=>{
                 type="text"
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyPhoneOtp()}
+                disabled={isOnVerification}
                 loading={phone.btnLoader}
             ><Text className={` text-yellow`} >Click here to verify</Text></Button>
         ),
@@ -351,6 +368,7 @@ const goToSecurity=()=>{
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyEmailOtp()}
                 loading={email.btnLoader}
+                disabled={isOnVerification}
             ><Text className={` text-yellow`} >Click here to verify</Text></Button>
         ),
     };
@@ -374,6 +392,7 @@ const goToSecurity=()=>{
                 style={{ color: "black", margin: "0 auto" }}
                 onClick={() => verifyAuthenticatorOTP()}
                 loading={authenticator.btnLoader}
+                disabled={isOnVerification}
             ><Text className={` text-yellow`} >Click here to verify</Text></Button>
         ),
     };
