@@ -407,7 +407,6 @@ class HeaderPermissionMenu extends Component {
                         <li
                             // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                             onClick={() => this.props.history.push("/auditlogs")}
-
                         >
                             <Link>
                                 <Translate
@@ -461,7 +460,9 @@ class HeaderPermissionMenu extends Component {
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
-                        <li onClick={() => this.onMenuItemClick("fees", { key: "fees", path: "/fees" })}>
+                        <li
+                         onClick={() => this.props.history.push("/fees")}
+                        >
                             <Link>
                                 <span className="text-left">
                                     <Translate
