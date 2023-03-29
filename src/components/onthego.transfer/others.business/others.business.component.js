@@ -558,8 +558,8 @@ class OthersBusiness extends Component {
                         />
                     </Form.Item>
                 </Col></>}
-                { this.props.ontheGoType === "Onthego" &&this.props.currency != "CHF"&& <><Paragraph className="adbook-head" >Compliance</Paragraph>
-                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                { this.props.ontheGoType === "Onthego" &&this.props.currency != "CHF"&& this.props.currency != "EUR"&& <Paragraph className="adbook-head" >Compliance</Paragraph>}
+                { this.props.ontheGoType === "Onthego" &&  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item
                                 className="custom-forminput custom-label"
                                 name="reasonOfTransfer"
@@ -593,7 +593,7 @@ class OthersBusiness extends Component {
                                 maxLength={100}
                             ></TextArea>
                             </Form.Item>
-                        </Col></>}
+                        </Col>}
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
