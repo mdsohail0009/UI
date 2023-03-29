@@ -1,0 +1,108 @@
+import React, { useEffect, useState } from 'react';
+import apiCalls from '../../api/apiCalls'
+import { Table ,Alert} from 'antd';
+import NumberFormat from 'react-number-format';
+import Loader from '../../Shared/loader';
+const Fees = () => {
+    const [feeData, setfeeData] = useState()
+    const [loader,setLoader]=useState()
+    const [error,setError]=useState()
+    useEffect(() => {
+        getcustomersfeeData()
+    },[])
+    const getcustomersfeeData = async () => {
+        setLoader(true)
+        let res = await apiCalls.getcustomersFees()
+        if (res.ok) {  setLoader(false)
+            setfeeData(res.data);
+        }else{
+            setLoader(false); setError(apiCalls.isErrorDispaly(res));
+        }
+    }
+    const columns=[
+        {
+            title: '',
+            dataIndex: '',
+            children:[
+                {
+                    title: 'Tier',
+                    dataIndex: 'name',
+                    key: 'name',
+                    width: 150,
+                  },
+                  {
+                    title: '30-Day Volume(USD)',
+                    dataIndex: 'fromValue',
+                    key: 'fromValue',
+                    width: 150,
+                    render:(_,row)=>{return <div>${row.fromValue} - ${row.toValue}</div>}
+                  }
+            ]
+        },
+        {
+            title: 'Fiat',
+            dataIndex: '',
+            children:[
+                {
+                    title: 'Withdraw',
+                    dataIndex: 'withdrawFiat',
+                    key: 'withdrawFiat',
+                    width: 150,
+                    render:(_,row)=>{return <div>{row.withdrawFiat}%</div>}
+                  },
+                  {
+                    title: 'Deposit',
+                    dataIndex: 'depositFiat',
+                    key: 'depositFiat',
+                    width: 150,
+                    render:(_,row)=>{return <div>{row.depositFiat}%</div>}
+                  }
+            ]
+        }, {
+            title: 'Crypto',
+            dataIndex: '',
+            children:[
+                {
+                    title: 'Withdraw',
+                    dataIndex: 'withdrawCrypto',
+                    key: 'withdrawCrypto',
+                    width: 150,
+                    render:(_,row)=>{return <div>{row.withdrawCrypto}%</div>}
+                  },
+                  {
+                    title: 'Deposit',
+                    dataIndex: 'depositCrypto',
+                    key: 'depositCrypto',
+                    width: 150,
+                    render:(_,row)=>{return <div>{row.depositCrypto}%</div>}
+                  }, {
+                    title: 'Buy',
+                    dataIndex: 'buy',
+                    key: 'buy',
+                    width: 150,
+                    render:(_,row)=>{return <div>{row.buy}%</div>}
+                  },
+                  {
+                    title: 'Sell',
+                    dataIndex: 'sell',
+                    key: 'sell',
+                    width: 150,
+                    render:(_,row)=>{return <div>{row.sell}%</div>}
+                  }
+            ]
+        }
+    ]
+    return <>
+    {loader?<Loader/>:
+        <div className="main-container">
+             {error && <Alert type="error" showIcon closable={false} description={error} />}
+            <div className="coin-viewstyle">Fee discount for each tier</div>
+           <div style={{backgroundColor:'white'}}> {feeData&&<Table columns={columns} dataSource={feeData.customerTiers} pagination={false} />}</div>
+            <p style={{color:'white'}}>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
+        <p style={{color:'white'}}>Your current tier:{feeData?.tradeVolumes[0]?.currentTier}</p>
+        <span style={{color:'white'}}>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
+        </div>}
+        </>
+
+}
+export default Fees;

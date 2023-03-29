@@ -461,6 +461,18 @@ class HeaderPermissionMenu extends Component {
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
+                        <li onClick={() => this.onMenuItemClick("fees", { key: "fees", path: "/fees" })}>
+                            <Link>
+                                <span className="text-left">
+                                    <Translate
+                                        content="fees"
+                                        component={Text}
+                                        className="d-block text-white"
+                                    />
+                                </span>
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
                         <li onClick={() => this.clearEvents()}>
                             <Link className="text-left">
                                 <span>
