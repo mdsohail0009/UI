@@ -156,7 +156,7 @@ const goToSecurity=()=>{
             setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.target.value })
         } else if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' })
-        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {// && phone.btnName==='code_Sent'
+        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {
             setEmail({ ...email, btnName: 'resendotp', code: '' })
         } else {
             setEmail({ ...email, btnName: 'code_Sent', code: '' })
@@ -179,7 +179,7 @@ const goToSecurity=()=>{
         } else if(phoneSeconds===0 && phone.btnName==='code_Sent') {
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }
-        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") {// && phone.btnName==='code_Sent'
+        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") { 
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }else {
             setPhone({ ...phone, btnName: 'code_Sent', code: '' })
