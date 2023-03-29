@@ -37,24 +37,25 @@ class cryptocoinsView extends Component {
     }
     componentDidMount() {
         this.loadCryptos();
-        this.loadCoinDetailData();
+        // this.loadCoinDetailData();
     }
-    loadCoinDetailData = async () => {
-      this.setState({ ...this.state, loading: true,errorMessage:null})
-      this.props.dispatch(fetchMarketCoinData(false))
-      const response = await getcoinDetails(this.props.match.params?.coinName);
-      if (response.ok) {
-          this.setState({ ...this.state, coinData: response.data,errorMessage:null },
-          )
-      }else{
-        this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
 
-    }
-      this.setState({ ...this.state, loading: false})
-  }
+  //   loadCoinDetailData = async () => {
+  //     this.setState({ ...this.state, loading: true,errorMessage:null})
+  //     this.props.dispatch(fetchMarketCoinData(false))
+  //     const response = await getcoinDetails(this.props.match.params?.coinName);
+  //     if (response.ok) {
+  //         this.setState({ ...this.state, coinData: response.data,errorMessage:null },
+  //         )
+  //     }else{
+  //       this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+
+  //   }
+  //     this.setState({ ...this.state, loading: false})
+  // }
     loadCryptos = () => {
         if (this.props.userProfile) {
-            this.props.dispatch(fetchYourPortfoliodata());
+            // this.props.dispatch(fetchYourPortfoliodata());
         }
     }
     cockpitCharts=()=>{
@@ -192,16 +193,16 @@ class cryptocoinsView extends Component {
           transactions: false
       })
   }
-  onSearch=({ currentTarget: { value } })=>{
-    let filterTransactionList;
-    if (!value) {
-        filterTransactionList = this.props.dashboard.cryptoPortFolios.data;
-    } else {
-        filterTransactionList =  this.props.dashboard.cryptoPortFolios.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
-        this.setState({...this.state,searchVal:value})
-    }
-    this.setState({...this.state,coinData:filterTransactionList})
-  }
+  // onSearch=({ currentTarget: { value } })=>{
+  //   let filterTransactionList;
+  //   if (!value) {
+  //       filterTransactionList = this.props.dashboard.cryptoPortFolios.data;
+  //   } else {
+  //       filterTransactionList =  this.props.dashboard.cryptoPortFolios.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
+  //       this.setState({...this.state,searchVal:value})
+  //   }
+  //   this.setState({...this.state,coinData:filterTransactionList})
+  // }
   showTransactionDrawer =(item) => {
     this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
 }
