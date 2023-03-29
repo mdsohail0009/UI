@@ -616,5 +616,5 @@ export default {
 	Whitelisting_Status:"白名單狀態",
 	Reason_For_Rejection:"拒绝理由",
 	personal_iban_transafer:"个人 IBAN 转账",
-	fiat_transfer_success:"返回转接"
+	fiat_transfer_success:"返回传化集团"
 };
