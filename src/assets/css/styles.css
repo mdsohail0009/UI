@@ -1116,3 +1116,5 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .phone-flex{ display: flex;
     justify-content: space-between;
     align-items: center;}
+.commision-fee-custtable .cust-tr-style > th{border-right: 1px solid var(--tableborder)}
+.commision-fee-custtable .cust-tr-style > th:last-child{border-right:0}

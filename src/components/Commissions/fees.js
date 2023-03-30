@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import apiCalls from '../../api/apiCalls'
+import { Typography} from 'antd';
 import { Table ,Alert} from 'antd';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 const Fees = () => {
+  const { Title } = Typography;
   const [feeData, setfeeData] = useState()
   const [loader, setLoader] = useState()
   const [error, setError] = useState()
@@ -116,6 +118,7 @@ const Fees = () => {
 
           </div>} */}
           <table border="1" className="Tier-table">
+
             
           </table>
             <div className="coin-viewstyle">Fee discount for each tier</div>
@@ -123,8 +126,189 @@ const Fees = () => {
             <p style={{color:'white'}}>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
         <p style={{color:'white'}}>Your current tier:{feeData?.tradeVolumes[0]?.currentTier}</p>
         <span style={{color:'white'}}>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
-        </div>}
-        </>
+        
+          <div className='transaction-custom-table db-transactions'>
+            <div className='responsive_table db-ts-grid'>
+              <table className='pay-grid view mb-view commision-fee-custtable'>
+            <thead>
+              <tr className='cust-tr-style'>
+                <th style={{ width: "18%",textAlign: "center"}}>Signature Bank <br></br>(USD)
+                <table>
+                <tr><th>Withdraw</th>
+                  <th>Deposit</th>
+                </tr>
+              </table>
+                </th>
+                <th style={{ width: "15%",textAlign: "center" }}>Another USD Bank<br></br> (USD)
+                <table>
+                <tr><th>Withdraw</th>
+                  <th>Deposit</th>
+                </tr>
+              </table>
+                </th>
+                <th style={{ width: "15%" ,textAlign: "center"}}>Pyrros Bank<br></br>(EUR)
+                <table>
+                <tr><th>Withdraw</th>
+                  <th>Deposit</th>
+                </tr>
+              </table>
+                </th>
+                <th style={{ width: "15%",textAlign: "center" }}>GuruPay <br></br>(EUR)
+                <table>
+                <tr><th>Withdraw</th>
+                  <th>Deposit</th>
+                </tr>
+              </table>
+                </th>
+                <th style={{ width: "15%",textAlign: "center" }}>State<br></br>{" "}
+                <table>
+                <tr><th>Withdraw</th>
+                  <th>Deposit</th>
+                </tr>
+              </table>
+                </th>
+                <th style={{ width: "15%",textAlign: "center" }}>Personal Pyrros<br></br>(EUR)
+                <table>
+                <tr><th>Withdraw</th>
+                  <th>Deposit</th>
+                </tr>
+              </table>
+                
+                </th>
+                <th style={{ width: "15%",textAlign: "center" }}>Crypto<br></br>
+                <table>
+                <tr><th>Withdraw</th>
+                  <th>Deposit</th>
+                </tr>
+              </table> 
+                </th>
+              </tr>
+            </thead>
+           <tbody>
+           <tr>
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td><div className='ts-date'>1.00%</div>
+                  </td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>            
+           </tr>
+           <tr>
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td><div className='ts-date'>1.00%</div>
+                  </td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>   
+            <td className="p-16">
+              <table style={{width:"100%",textAlign: "center"}}>
+                <tr>
+                  <td>1.00%</td>
+                  <td>1.00%</td>
+                </tr>
+              </table>
+            </td>            
+           </tr>
+           </tbody>
+          </table>
+          </div>
+          </div>
+     </div>}
+</>
 
 }
 export default Fees;
