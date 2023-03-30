@@ -4,21 +4,33 @@ import { Table ,Alert} from 'antd';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 const Fees = () => {
-    const [feeData, setfeeData] = useState()
-    const [loader,setLoader]=useState()
-    const [error,setError]=useState()
-    useEffect(() => {
-        getcustomersfeeData()
-    },[])
-    const getcustomersfeeData = async () => {
-        setLoader(true)
-        let res = await apiCalls.getcustomersFees()
-        if (res.ok) {  setLoader(false)
-            setfeeData(res.data);
-        }else{
-            setLoader(false); setError(apiCalls.isErrorDispaly(res));
-        }
+  const [feeData, setfeeData] = useState()
+  const [loader, setLoader] = useState()
+  const [error, setError] = useState()
+  const [commFees, setCommFees] = useState([])
+  useEffect(() => {
+    getcustomersfeeData()
+  }, [])
+  const getcustomersfeeData = async () => {
+    setLoader(true)
+    let res = await apiCalls.getcustomersFees()
+    if (res.ok) {
+      setLoader(false)
+      setfeeData(res.data);
+      let products = res.data.commissionTierFees
+      const groupByCategory = products.reduce((group, product) => {
+        const { operation } = product;
+        group[operation] = group[operation] ?? [];
+        group[operation].push(product);
+        return group;
+      }, {});
+      const tableData = Object.entries(groupByCategory);
+      console.log(tableData)
+      setCommFees(tableData)
+    } else {
+      setLoader(false); setError(apiCalls.isErrorDispaly(res));
     }
+  }
     const columns=[
         {
             title: '',
@@ -96,6 +108,16 @@ const Fees = () => {
     {loader?<Loader/>:
         <div className="main-container">
              {error && <Alert type="error" showIcon closable={false} description={error} />}
+            <div className="coin-viewstyle">Fees for Transaction</div>
+          {/* {commFees && <div style={{ backgroundColor: 'white' }}>
+            {commFees.map(([operation, items]) =>
+            <div>{operation}</div>
+            )}
+
+          </div>} */}
+          <table border="1" className="Tier-table">
+            
+          </table>
             <div className="coin-viewstyle">Fee discount for each tier</div>
            <div style={{backgroundColor:'white'}}> {feeData&&<Table columns={columns} dataSource={feeData.customerTiers} pagination={false} />}</div>
             <p style={{color:'white'}}>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>

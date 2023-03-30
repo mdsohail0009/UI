@@ -215,7 +215,7 @@ const getFileURL = (docId) => {
 	}
 }
 const getcustomersFees=()=>{
-	return apiClient.get(ApiControllers.commissions + `CustomerFee/Tier/A13FBF8E-83A9-4CFC-935D-F4752E0A74A6`);
+	return apiClient.get(ApiControllers.commissions + `CustomerFee/Tier/D4F584C2-F8B2-43EA-9676-4E7441A49761`);
 }
 let apicalls = {
 	getportfolio,
