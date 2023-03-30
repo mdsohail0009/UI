@@ -64,6 +64,10 @@ class SellSummary extends Component {
             obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency + this.props.sellData.sellsaveObject.comission;
             obj.comission = this.props.sellData.sellsaveObject.comission;
             obj.isCrypto = this.state.sellpreviewData?.isCrypto;
+            obj.sbCredit = this.state.sellpreviewData?.sbCredit;
+            obj.tierDiscount = this.state.sellpreviewData?.tierDiscount;
+            obj.sbFee = this.state.sellpreviewData?.sbFee;
+            obj.totalFee = this.state.sellpreviewData?.totalFee;
             this.props.trackAuditLogData.Action = 'Save';
             this.props.trackAuditLogData.Remarks = obj.fromValue + " " + this.state.sellpreviewData.coin + " selled"
             obj.info = JSON.stringify(this.props.trackAuditLogData)
@@ -98,7 +102,7 @@ class SellSummary extends Component {
     }
     render() {
         const { sellpreviewData } = this.state;
-        const { amount, amountNativeCurrency, oneCoinValue, coin, currency,sussiBaseCreditUsed,tierDiscount,sbFee,totalFee } = sellpreviewData;
+        const { amount, amountNativeCurrency, oneCoinValue, coin, currency,sbCredit,tierDiscount,sbFee,totalFee } = sellpreviewData;
         {this.state.error !== null && (
             <Alert
                 closable
@@ -126,7 +130,7 @@ class SellSummary extends Component {
             onCancel={() => this.onSellCancel()}
             onClick={() => this.saveSellData()}
             okBtnTitle={"sell"}
-            sussiBaseCreditUsed={sussiBaseCreditUsed}
+            sbCredit={sbCredit}
             tierDiscount={tierDiscount}
             sbFee={sbFee}
             totalFee={totalFee}

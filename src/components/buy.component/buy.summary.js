@@ -71,6 +71,10 @@ class BuySummary extends Component {
         exicutedPrice: this.props.sellData?.previewDetails?.data?.oneCoinValue,
         totalAmount: this.props.sellData.previewDetails?.data?.amount,
         isCrypto: this.props.sellData.previewDetails?.data?.isCrypto,
+        tierDiscount:this.props.sellData.previewDetails?.data?.tierDiscount,
+        sbCredit:this.props.sellData.previewDetails?.data?.sbCredit,
+        totalFee:this.props.sellData.previewDetails?.data?.totalFee,
+        sbFee:this.props.sellData.previewDetails?.data?.sbFee,
       };
       obj.toWalletId = obj.toWalletId
         ? obj.toWalletId
@@ -160,7 +164,7 @@ class BuySummary extends Component {
     ) {
       return <Loader />;
     }
-    const { coin, oneCoinValue, amount, amountNativeCurrency, isCrypto,sussiBaseCreditUsed,tierDiscount,totalFee,sbFee } =
+    const { coin, oneCoinValue, amount, amountNativeCurrency, isCrypto,sbCredit,tierDiscount,totalFee,sbFee } =
       this.props.sellData?.previewDetails?.data;
     return (
       <div id="divScroll" ref={this.myRef}>
@@ -178,7 +182,7 @@ class BuySummary extends Component {
         nativeCurrency={this.props.sellData?.selectedWallet?.currencyCode}
         error={this.state.error}
         iButtonLoad={this.state.isLoading}
-        sussiBaseCreditUsed={sussiBaseCreditUsed}
+        sbCredit={sbCredit}
         tierDiscount={tierDiscount}
         sbFee={sbFee}
         totalFee={totalFee}

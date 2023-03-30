@@ -87,7 +87,7 @@ class Summary extends Component {
 			decimalPlaces,
 			onErrorClose,
 			onCheked,
-			sussiBaseCreditUsed,
+			sbCredit,
 			tierDiscount,
 			sbFee,
 			totalFee
@@ -214,7 +214,7 @@ class Summary extends Component {
                                     <div className="summary-liststyle">SuisseBase Credit Used</div>
                                     <div className="summarybal">
 									<Currency
-									defaultValue={sussiBaseCreditUsed}
+									defaultValue={sbCredit}
 									prefix={""}
 								    decimalPlaces={decimalPlaces}
 									className="summarybal"
