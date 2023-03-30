@@ -21,8 +21,16 @@ const Verifications = (props) => {
     const useOtpRef = React.useRef(null);
     const { Text} = Typography;
     const fullNumber = props.auth.phone_number;
-    const last4Digits = fullNumber.slice(-4);
-    const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    let last4Digits;
+    if (fullNumber) {
+        last4Digits = fullNumber.slice(-4);
+    }
+    let maskedNumber;
+    if (last4Digits) {
+        maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    } else {
+        maskedNumber = "**********";
+    }
     const [permissions, setPermissions] = useState({});
    const history=useHistory()
     useEffect(() => {
@@ -205,11 +213,11 @@ const goToSecurity=()=>{
  
     const updateverifyObj = (val, name) => {
         if (name === 'isEmailVerification') {
-            props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: phone.verified })
+        props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val})
         } else if (name === 'isPhoneVerification') {
-            props.onchangeData({ verifyData: verifyData,emailBtn:emailbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: val })
+        props.onchangeData({ verifyData: verifyData, isPhoneVerification: val })
         } else if (name === 'isAuthenticatorVerification') {
-            props.onchangeData({ verifyData: verifyData,authBtn:authbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: val, isPhoneVerification: phone.verified })
+            props.onchangeData({ verifyData: verifyData,authBtn:authbtnColor, isAuthenticatorVerification: val })
         }
     }
     const verifyAuthenticatorOTP = async () => {
