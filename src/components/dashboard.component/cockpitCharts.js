@@ -13,6 +13,7 @@ import { setdepositCurrency } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import MassPayment from '../buyfiat.component'
+import { buyFiatSteps as config } from '../buyfiat.component/config';
 import { getScreenName } from '../../reducers/feturesReducer';
 import PersonalInternalTransferComponent from '../personalInternalTransfer.component';
 const { Title, Paragraph, Text } = Typography;
@@ -335,10 +336,8 @@ class CockpitCharts extends Component {
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         <span></span>
-                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
-                        <Translate className="drawer-maintitle" content={"withdrawFiat"} component={Paragraph} />
-                            </div>
-                        }
+                        <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                          
                         <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer"
@@ -351,8 +350,8 @@ class CockpitCharts extends Component {
 
     }
 }
-const connectStateToProps = ({ breadCrumb, oidc, userConfig, sendReceive, dashboard }) => {
-    return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo, }
+const connectStateToProps = ({ breadCrumb, oidc, userConfig, sendReceive, dashboard,buyFiat }) => {
+    return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo,buyFiat }
 }
 
 export default connect(connectStateToProps, (dispatch) => { return { dispatch } })(CockpitCharts);
