@@ -112,7 +112,7 @@ class Wallets extends Component {
                     <Link to="/transactions" value={4} className="c-pointer"><Translate content="transactions_history" /></Link>
                    
                 </li>
-            {item?.walletCode==="EUR" &&
+            {item?.walletCode==="EUR" && process.env.REACT_APP_PERSONAL_IBAN==="personal" &&
                 <li onClick={() => this.showSendReceiveDrawer(5, item)}>
                     <Link value={5} className="c-pointer">
                     <Translate content="personal_iban_transafer"/>
@@ -190,7 +190,7 @@ class Wallets extends Component {
                         this.closeDrawer();
                     }}
                 />}
-                {this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
+                {process.env.REACT_APP_PERSONAL_IBAN==="personal" && this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
                         this.closeDrawer();
                     }}/>}
                 <Drawer

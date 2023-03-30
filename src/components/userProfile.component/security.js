@@ -131,7 +131,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       else {
         useDivRef.current.scrollIntoView(0,0);
         setError(null);
-         setErrorMsg("Please select at least one of the Send verification options");
+         setErrorMsg("Please select at least one of the verification option");
          setIsLoading(false)
          setBtnDisabled(false);         
       }
@@ -290,7 +290,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           component={Title}
           className="basicinfo "
         />
-        <Paragraph className="basic-decs">Please select at least one of the Send verification options below.</Paragraph>
+        <Paragraph className="basic-decs">Please select at least one of the verification options from below.</Paragraph>
        
         <Form>
           <Row gutter={[16, 16]}>
