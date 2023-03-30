@@ -336,7 +336,11 @@ class CockpitCharts extends Component {
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         <span></span>
-                        <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                        {console.log(this.props.buyFiat,"this.props.buyFiat")}
+                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
+                            <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            </div>
+                        }
                           
                         <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
                     </div>]}
