@@ -41,7 +41,7 @@ class CockpitCharts extends Component {
     }
 
     componentDidMount() {
-        this.loadKpis();
+        // this.loadKpis();
         this.loadDashboards(30);
         this.cokpitKpiTrack();
     }
@@ -96,16 +96,16 @@ class CockpitCharts extends Component {
             this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
         }
     }
-    loadKpis = async () => {
-        this.setState({...this.state,isLoading:true})
-        let response = await apiCalls.getdshKpis();
-        if (response.ok) {
-            this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
+    // loadKpis = async () => {
+    //     this.setState({...this.state,isLoading:true})
+    //     let response = await apiCalls.getdshKpis();
+    //     if (response.ok) {
+    //         this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
 
-        }else{
-            this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
-        }
-    }
+    //     }else{
+    //         this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+    //     }
+    // }
 
     viewReport = (elem) => {
         this.props.history.push('/cockpit/reportview/' + elem.name);
