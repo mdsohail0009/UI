@@ -272,7 +272,7 @@ class cryptocoinsView extends Component {
             <List
               className="mobile-list"
               itemLayout="horizontal"
-              dataSource={this.state.transactionData}
+              dataSource={cryptoPortFolios.data}
               locale={{
                 emptyText: (
                   <Empty

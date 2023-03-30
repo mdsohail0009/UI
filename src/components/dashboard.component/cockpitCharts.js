@@ -238,7 +238,7 @@ class CockpitCharts extends Component {
             <List
               className="mobile-list"
               itemLayout="horizontal"
-              dataSource={this.state.transactionData}
+              dataSource={wallets.data}
               locale={{
                 emptyText: (
                   <Empty
