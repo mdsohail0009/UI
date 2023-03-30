@@ -243,17 +243,17 @@ saveWithdrawdata = async () => {
   isAllVerificationsFullfilled = (obj) => {
     const vdata=this.state.verifyData ||{}
     const vDetails=Object.keys(vdata).length===0?obj:this.state.verifyData;
-    let _verficationDetails = { ...vDetails };
+    let _verficationDetails = { ...vDetails,...obj };
     let _verificationCount = 0;
     let _currentVerificationCount = 0;
     for (let key in _verficationDetails) {
-      if (["isPhoneVerification", "isEmailVerification", "isAuthenticatorVerification"].includes[key] && _verficationDetails[key]) {
+      if (["isPhoneVerification", "isEmailVerification", "isAuthenticatorVerification"].includes(key) && _verficationDetails[key]) {
         _currentVerificationCount++;
       }
     }
 
     for (let key in _verficationDetails?.verifyData) {
-      if (["isPhoneVerified", "isEmailVerified", "twoFactorEnabled"].includes[key] && _verficationDetails?.verifyData[key]) {
+      if (["isPhoneVerified", "isEmailVerification", "twoFactorEnabled"].includes(key) && _verficationDetails?.verifyData[key]) {
         _verificationCount++;
       }
     }
