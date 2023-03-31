@@ -62,7 +62,8 @@ class OnthegoFundTransfer extends Component {
     getBanckDetails:null,
     withdrawAmount:null,
     loader:false,
-    fiatWallets:[]
+    fiatWallets:[],
+    isLoading:false,
   }
   componentDidMount() {
     this.verificationCheck()
@@ -122,9 +123,9 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
-    this.setState({...this.state,loader:true})
-    if(this.state.amount && (this.state.selectedBank || e)){
+    if(this.state.amount || this.enteramtForm.current.getFieldsValue().amount && (this.state.selectedBank || e)){
       {
+        this.setState({...this.state,isLoading:true})
         let obj ={
           CustomerId:this.props.userProfile.id,      
           amount:this.enteramtForm.current.getFieldsValue().amount,    
@@ -134,7 +135,7 @@ class OnthegoFundTransfer extends Component {
         let res = await saveCommissions(obj);
         if(res.ok){
 
-          this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,loader:false});
+          this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
         }
         }
     }  
@@ -485,7 +486,7 @@ saveWithdrawdata = async () => {
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label fund-transfer-input send-fiat-input"
+                        className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
                         name="amount"
                         label={"Enter Amount"}
                         required
@@ -520,13 +521,13 @@ saveWithdrawdata = async () => {
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
                                 {this.state.fiatWallets.map((item)=>
-                                  <option value={item.walletCode}>{item.walletCode} {""}(Balance : {item.amount})</option>
+                                  <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}({item.amount.toLocaleString()})</option>
                                 )}
                               </Select>}
                           onValueChange={() => {
                             this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
                         }}
-                        onChange={()=>this.saveCommissionsDetails()}
+                         onChange={()=>this.saveCommissionsDetails()}
                         />
 
                       </Form.Item>
@@ -558,48 +559,49 @@ saveWithdrawdata = async () => {
                         </Select>
                       </Form.Item>
                     </Col>
-                { getBanckDetails && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                   <div className="cust-summary-new">
-                 
-                  {  <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+               {this.state.isLoading ? <Loader/> : <div className="cust-summary-new">
+                  <div> 
+                  { getBanckDetails &&  <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal Amount</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${this.state.withdrawAmount}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.selectedCurrency}`}</div>
+                                        value={`${this.state?.withdrawAmount}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>
                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle gridLink"  onClick={()=>this.feeChange()}>Effective Fees</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.effectiveFee)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.selectedCurrency}`}</div>
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>
                   {this.state.effectiveType && <>  <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Fees</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.totalFee)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.selectedCurrency}`}</div>
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>
                 {getBanckDetails?.tierDiscount && getBanckDetails?.tierDiscount !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Tire Discount</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.tierDiscount)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.selectedCurrency}`}</div>
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>}
                  {getBanckDetails?.sbCredit && getBanckDetails?.sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">SuisseBase Credit Used</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.sbCredit)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.selectedCurrency}`}</div>
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>}
                   </>}
                   <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">How Much Beneficiary Will Receive</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${getBanckDetails.amount}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.selectedCurrency}`}</div>
-                  </div></>}
-                  </div>
-                  </Col>}
+                                        value={`${getBanckDetails?.amount}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div></>} 
+                  </div>        
+                  </div>}
+                  </Col>
                   </Row>
                   <Row gutter={[16, 4]} className="send-drawerbtn">
 
@@ -891,12 +893,11 @@ saveWithdrawdata = async () => {
                                     <div className="adbook-head" >Transfer details</div>
                   </div>
                   <div className="cust-summary-new">
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">How much you will receive</div>
-                    <div className="summarybal">
-                    <NumberFormat
-                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Withdrawal amount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.requestedAmount)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
@@ -926,11 +927,12 @@ saveWithdrawdata = async () => {
                   </div>
                 
                   </>}
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Withdrawal amount</div>
-                                    <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.requestedAmount)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">How much Beneficiary will receive</div>
+                    <div className="summarybal">
+                    <NumberFormat
+                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 
 
