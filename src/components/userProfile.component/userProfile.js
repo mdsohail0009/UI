@@ -84,7 +84,7 @@ class UserProfile extends Component {
                         <Translate content="referr" className="tabtitle" /></div>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                    <TabPane tab={<div><span className="icon lg referral-icon" />
+                    <TabPane tab={<div><span className="icon lg suissebase-credit" />
                         <Translate content="suissebase_credit" className="tabtitle" /></div>} key="8" >
                         {this.state.activeTab == 8 && <SuisseBaseCreditCom/>}
                     </TabPane>
@@ -114,6 +114,10 @@ class UserProfile extends Component {
                     <TabPane tab={<span><span className="icon lg referral-icon " />
                         <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                    <TabPane tab={<div><span className="icon lg suissebase-credit" />
+                        <Translate content="suissebase_credit" className="tabtitle" /></div>} key="8" >
+                        {this.state.activeTab == 8 && <SuisseBaseCreditCom/>}
                     </TabPane>
                 </Tabs>
             </div>

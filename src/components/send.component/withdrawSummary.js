@@ -769,7 +769,8 @@ class WithdrawSummary extends Component {
 							/>
 						</div>						
 				  <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle gridLink" onClick={(e)=>this.handleEffectiveFee(e)}>Effective Fees</div>
+                                    <div className="summary-liststyle 
+Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
                     <div className="summarybal">
 					<Currency
 							defaultValue={effectiveData?.comission}
