@@ -131,7 +131,7 @@ class ProfileInfo extends Component {
     const { Title, Text } = Typography;
     return (
       <>
-      <div className="main-container ">
+      <div className="">
         {this.state.errorMessage !== null && (
           <Alert
             className="mb-12  profile-alert-style"

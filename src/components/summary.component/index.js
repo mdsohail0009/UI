@@ -175,7 +175,7 @@ class Summary extends Component {
 						/>
 					</div>
 					 <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle gridLink" onClick={()=>this.handleEffectiveFee()}>Effective Fees</div>
+                                    <div className="summary-liststyle Effective-Fees" onClick={()=>this.handleEffectiveFee()}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
                                     <div className="summarybal">
 									<Currency
 									defaultValue={sbFee}
