@@ -87,7 +87,7 @@ class Summary extends Component {
 			decimalPlaces,
 			onErrorClose,
 			onCheked,
-			sussiBaseCreditUsed,
+			sbCredit,
 			tierDiscount,
 			sbFee,
 			totalFee
@@ -175,7 +175,7 @@ class Summary extends Component {
 						/>
 					</div>
 					 <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle gridLink" onClick={()=>this.handleEffectiveFee()}>Effective Fees</div>
+                                    <div className="summary-liststyle Effective-Fees" onClick={()=>this.handleEffectiveFee()}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
                                     <div className="summarybal">
 									<Currency
 									defaultValue={sbFee}
@@ -214,7 +214,7 @@ class Summary extends Component {
                                     <div className="summary-liststyle">SuisseBase Credit Used</div>
                                     <div className="summarybal">
 									<Currency
-									defaultValue={sussiBaseCreditUsed}
+									defaultValue={sbCredit}
 									prefix={""}
 								    decimalPlaces={decimalPlaces}
 									className="summarybal"

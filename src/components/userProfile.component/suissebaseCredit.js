@@ -106,19 +106,19 @@ const SuisseBaseCreditCom=(props)=>{
                                             valuePropName="checked"
                                             required
                                         >				
-                                            <div className={`d-flex  agree-check checkbox-mobile align-center`}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            id="agree-check1"
-                                            checked={isSuissebaseCredit}   
-                                            onChange={(e)=>handlechange(e)}                                       
-                                        />
-                                        <span for="agree-check"  className="c-pointer"
-                        />     
-                                    </label>
+                                            <div className={`d-flex align-center mt-16`}>
+                                            <label className="custom-checkbox c-pointer cust-check-outline">
+                                                <Input
+                                                    name="check"
+                                                    type="checkbox"
+                                                    className="c-pointer"
+                                                    checked={isSuissebaseCredit}   
+                                                    onChange={(e)=>handlechange(e)}
+                                                />
+                                                <span></span>
+                                                </label>
                                     <div
-                                        className="cust-agreecheck d-flex align-center travel-custcheck"
+                                        className="security-label-style"
                                         >
                                     Use SuisseBase Credit if Available for all transactions fees
                                     </div>

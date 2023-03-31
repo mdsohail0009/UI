@@ -1042,6 +1042,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .align-declaration .declaration-content{margin-top: 50px;}
 .batch-upload .docnames{text-overflow: ellipsis; overflow: hidden;}
 .grid-content{color: var(--gridcontent);}
+.commission-text{color: var(--viewAll);margin-bottom: 0;}
+.icon.lg.suissebase-credit{background-position: -213px -555px;}
+.user-labels.active .icon.lg.suissebase-credit, .user-labels:hover .icon.lg.suissebase-credit, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.suissebase-credit, .ant-tabs-tab:hover .icon.lg.suissebase-credit{background-position: -213px -589px;}
+.Effective-Fees{color: var(--termsText);cursor: pointer;}
+.icon.lg.down-arrow{background-position: -389px -486px;margin-left: 4px;}
 /*@media start*/
 @media (min-width: 768px){
     .listitems-design{width: 340px;}
@@ -1179,7 +1184,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 @media (max-width: 767.98px){
     .new-viewpage .search-box{margin-left: 0;}
     .fait-wallets-style.new-viewpage{display: block !important;}
-    .footer-links a{margin-right: 20px !important;}
+    .footer-links a{margin-right: 0px !important;}
     .sidebar-push{margin: 62px 0 0 !important;}
     .visible-mobile .side-drawer .side-drawer-header.change_password{align-items: self-start !important;}
     /* .visible-mobile{margin-right: 24px;padding-left: 24px;padding-right: 24px;} */

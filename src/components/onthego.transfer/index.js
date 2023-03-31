@@ -23,8 +23,10 @@ import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
 import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-
+import { getCommissionBankDetails,saveCommissions} from "./verification.component/api";
+import { getAccountWallet} from "../../api/apiServer";
 const { Text, Title } = Typography; 
+const { Option } = Select;
 class OnthegoFundTransfer extends Component {
   enteramtForm = React.createRef();
   reasonForm = React.createRef();
@@ -32,6 +34,7 @@ class OnthegoFundTransfer extends Component {
   state = {
     step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
     filterObj: [],
+    selectedBank:null,
     selectedCurrency: this.props.selectedCurrency,
     addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
@@ -55,9 +58,21 @@ class OnthegoFundTransfer extends Component {
     filtercoinsList: [],
     searchFiatVal: "",
     effectiveType:false,
+    fiatBanks:[],   
+    getBanckDetails:null,
+    withdrawAmount:null,
+    loader:false,
+    fiatWallets:[],
+    isLoading:false,
   }
   componentDidMount() {
     this.verificationCheck()
+    this.getAccountWallet();
+    if(this.state.isVerificationEnable){
+      this.getBankDetails();
+      console.log(this.props.userProfile.id,'userProfile')
+    }
+    
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
@@ -67,7 +82,16 @@ class OnthegoFundTransfer extends Component {
       this.getPayees();
     }
   }
-
+  getAccountWallet=()=>{
+    let walletObj=getAccountWallet()
+    if(walletObj.ok){
+      this.setState({ ...this.state, fiatWallets: walletObj.data });
+    }
+    else{
+         this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
+    
+    }
+  }
   fetchMemberWallet= async()=>{
     
       this.setState({ ...this.state, fiatWalletsLoading: true });
@@ -91,7 +115,36 @@ class OnthegoFundTransfer extends Component {
     }
   }
 
+  getBankDetails=async()=>{
+    let res = await getCommissionBankDetails()
+    if(res.ok){
+      this.setState({...this.state,fiatBanks:res.data})
+    }
+  }
+  
+  saveCommissionsDetails=async(e)=>{
+    if(this.state.amount || this.enteramtForm.current.getFieldsValue().amount && (this.state.selectedBank || e)){
+      {
+        this.setState({...this.state,isLoading:true})
+        let obj ={
+          CustomerId:this.props.userProfile.id,      
+          amount:this.enteramtForm.current.getFieldsValue().amount,    
+          WalletCode:this.state.selectedCurrency,
+          BankName:this.state.selectedBank || e,       
+        }
+        let res = await saveCommissions(obj);
+        if(res.ok){
+
+          this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
+        }
+        }
+    }  
+  }
+  handleBankChange=(e)=>{
+  this.setState({...this.state,selectedBank:e,effectiveType:false},()=> this.saveCommissionsDetails(e))
  
+  }
+
   getPayees() {
     fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
@@ -270,6 +323,7 @@ saveWithdrawdata = async () => {
   }
   validateAmt = async (amt, step, values, loader) => {
     this.getPayees();
+    this.getBankDetails();
     const obj = {
       CustomerId: this.props.userProfile?.id,
       amount: amt,
@@ -359,7 +413,7 @@ saveWithdrawdata = async () => {
   }
 
   renderStep = (step) => {
-    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
@@ -432,7 +486,7 @@ saveWithdrawdata = async () => {
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label fund-transfer-input send-fiat-input"
+                        className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
                         name="amount"
                         label={"Enter Amount"}
                         required
@@ -466,18 +520,88 @@ saveWithdrawdata = async () => {
                               onChange={(e) => this.handleCurrencyChange(e)}
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
-                              <option value="USD">USD</option>
-                              <option value="EUR">EUR</option>
-                              {/* <option value="GBP">GBP</option>
-                              <option value="CHF">CHF</option> */}
+                                {this.state.fiatWallets.map((item)=>
+                                  <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}({item.amount.toLocaleString()})</option>
+                                )}
                               </Select>}
                           onValueChange={() => {
                             this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
                         }}
+                         onChange={()=>this.saveCommissionsDetails()}
                         />
 
                       </Form.Item>
+                    </Col>                 
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-label"
+                        name="fiatBank"
+                        label="Bank Name"
+                        rules={[
+                          {
+                            required: true,
+                          },
+                        ]}>
+
+
+                        <Select
+                          placeholder="Select Your Bank"
+                          className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                          dropdownClassName="select-drpdwn"
+                          onChange={(e) => this.handleBankChange(e)}
+                          bordered={false}
+                        >
+                          {this.state.fiatBanks?.map((item, indx) => (
+                            <Option key={indx} value={item.bankName}>
+                              {item.bankName}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
                     </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+               {this.state.isLoading ? <Loader/> : <div className="cust-summary-new">
+                  <div> 
+                  { getBanckDetails &&  <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Withdrawal Amount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${this.state?.withdrawAmount}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>
+                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.effectiveFee)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>
+                  {this.state.effectiveType && <>  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Fees</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.totalFee)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>
+                {getBanckDetails?.tierDiscount && getBanckDetails?.tierDiscount !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Tire Discount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.tierDiscount)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>}
+                 {getBanckDetails?.sbCredit && getBanckDetails?.sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">SuisseBase Credit Used</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.sbCredit)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>}
+                  </>}
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">How Much Beneficiary Will Receive</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${getBanckDetails?.amount}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div></>} 
+                  </div>        
+                  </div>}
+                  </Col>
                   </Row>
                   <Row gutter={[16, 4]} className="send-drawerbtn">
 
@@ -769,16 +893,16 @@ saveWithdrawdata = async () => {
                                     <div className="adbook-head" >Transfer details</div>
                   </div>
                   <div className="cust-summary-new">
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">How much you will receive</div>
-                    <div className="summarybal">
-                    <NumberFormat
-                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Withdrawal amount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.requestedAmount)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle gridLink"  onClick={()=>this.feeChange()}>Effective Fees</div>
+                                    <div className="summary-liststyle 
+Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
@@ -802,18 +926,14 @@ saveWithdrawdata = async () => {
                                         value={`${(this.state.reviewDetails?.sbCredit)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
+                
+                  </>}
                   <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">How much you will receive</div>
+                                    <div className="summary-liststyle">How much Beneficiary will receive</div>
                     <div className="summarybal">
                     <NumberFormat
                                             value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
                                             thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
-                  </div></>}
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Withdrawal amount</div>
-                                    <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.requestedAmount)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 
 

@@ -17,7 +17,7 @@
         "type":"Transaction Type",
         "amount":"Amount",
         "wallet":"Asset",
-        "sbFee":"Fee",
+        "sbFee":"Effective Fee",
         "fees":"Fee",
         "sbCredit":"Suissebase Credit Used",
         "tierDiscount":"Tier Discount",
