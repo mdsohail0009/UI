@@ -68,8 +68,7 @@ class OnthegoFundTransfer extends Component {
   componentDidMount() {
     this.verificationCheck()
     this.getAccountWallet();
-    if(this.state.isVerificationEnable){
-      this.getBankDetails();
+    if(this.state.isVerificationEnable){    
       console.log(this.props.userProfile.id,'userProfile')
     }
     
@@ -119,11 +118,13 @@ class OnthegoFundTransfer extends Component {
     let res = await getCommissionBankDetails()
     if(res.ok){
       this.setState({...this.state,fiatBanks:res.data})
-    }
+    }else {
+      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(res),fiatBanks:null })
+  }
   }
   
   saveCommissionsDetails=async(e)=>{
-    if(this.state.amount || this.enteramtForm.current.getFieldsValue().amount && (this.state.selectedBank || e)){
+    if((this.state.amount || this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
       {
         this.setState({...this.state,isLoading:true})
         let obj ={
@@ -134,9 +135,10 @@ class OnthegoFundTransfer extends Component {
         }
         let res = await saveCommissions(obj);
         if(res.ok){
-
           this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
-        }
+        }else {
+          this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null })
+      }
         }
     }  
   }
@@ -146,6 +148,7 @@ class OnthegoFundTransfer extends Component {
   }
 
   getPayees() {
+    this.getBankDetails();
     fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
             this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
@@ -323,7 +326,6 @@ saveWithdrawdata = async () => {
   }
   validateAmt = async (amt, step, values, loader) => {
     this.getPayees();
-    this.getBankDetails();
     const obj = {
       CustomerId: this.props.userProfile?.id,
       amount: amt,
@@ -521,13 +523,12 @@ saveWithdrawdata = async () => {
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
                                 {this.state.fiatWallets.map((item)=>
-                                  <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}({item.amount.toLocaleString()})</option>
+                                  <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}  ({item.amount.toLocaleString()})</option>
                                 )}
                               </Select>}
                           onValueChange={() => {
-                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
+                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' },()=>this.saveCommissionsDetails())
                         }}
-                         onChange={()=>this.saveCommissionsDetails()}
                         />
 
                       </Form.Item>
@@ -911,7 +912,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                  {this.state.effectiveType && <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Fees</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.totalValue)}`}
+                                        value={`${(this.state.reviewDetails?.totalFee)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                   <div className="pay-list" style={{ alignItems: 'baseline' }}>
