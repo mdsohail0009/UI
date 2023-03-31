@@ -23,7 +23,7 @@ import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
 import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-import { getAccountWallet} from "../../api/apiServer";
+
 const { Text, Title } = Typography; 
 class OnthegoFundTransfer extends Component {
   enteramtForm = React.createRef();
@@ -54,11 +54,9 @@ class OnthegoFundTransfer extends Component {
     permissions: {},
     filtercoinsList: [],
     searchFiatVal: "",
-    fiatWallets:[]
   }
   componentDidMount() {
-    this.verificationCheck();
-    this.getAccountWallet();
+    this.verificationCheck()
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
@@ -92,16 +90,7 @@ class OnthegoFundTransfer extends Component {
     }
   }
 
-  getAccountWallet=()=>{
-    let walletObj=getAccountWallet()
-    if(walletObj.ok){
-      this.setState({ ...this.state, fiatWallets: walletObj.data });
-    }
-    else{
-         this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
-    
-    }
-  }
+ 
   getPayees() {
     fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
@@ -474,10 +463,7 @@ verificationsData=(data)=>{
                               onChange={(e) => this.handleCurrencyChange(e)}
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
-                                {this.state.fiatWallets.map((item)=>
-                                  <option value={item.walletCode}>{item.walletCode}</option>
-                                )}
- <option value="USD">USD</option>
+                              <option value="USD">USD</option>
                               <option value="EUR">EUR</option>
                               {/* <option value="GBP">GBP</option>
                               <option value="CHF">CHF</option> */}
