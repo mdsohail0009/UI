@@ -115,7 +115,8 @@ class OnthegoFundTransfer extends Component {
   }
 
   getBankDetails=async()=>{
-    let res = await getCommissionBankDetails()
+    this.setState({...this.state,fiatBanks:null})
+    let res = await getCommissionBankDetails(this.state.selectedCurrency)
     if(res.ok){
       this.setState({...this.state,fiatBanks:res.data})
     }else {
@@ -126,7 +127,7 @@ class OnthegoFundTransfer extends Component {
   saveCommissionsDetails=async(e)=>{
     if((this.state.amount || this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
       {
-        this.setState({...this.state,isLoading:true})
+        this.setState({...this.state,isLoading:true,errorMessage:null})
         let obj ={
           CustomerId:this.props.userProfile.id,      
           amount:this.enteramtForm.current.getFieldsValue().amount,    
@@ -137,7 +138,7 @@ class OnthegoFundTransfer extends Component {
         if(res.ok){
           this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
         }else {
-          this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null })
+          this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false})
       }
         }
     }  
@@ -350,7 +351,8 @@ saveWithdrawdata = async () => {
     },400)
 }
   handleCurrencyChange = (e) => {
- this.setState({ ...this.state, selectedCurrency: e });
+ this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,getBanckDetails:null},(e)=>this.getBankDetails(e));
+  this.enteramtForm.current.setFieldsValue({fiatBank:"",selectedBank:null})
   }
 
   keyDownHandler = (e) => {
