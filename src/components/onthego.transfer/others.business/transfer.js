@@ -91,7 +91,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
 
         _obj.addressType = "otherbusiness";
-        _obj.transferType = selectedTab;
+        _obj.transferType = this.props.currency=='CHF'?'chftransfer':selectedTab;
         _obj.amount = this.props.amount;
         _obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
@@ -101,7 +101,8 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
-        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
+        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
+        _obj.createdBy = this.props.userProfile?.userName;
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }

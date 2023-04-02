@@ -75,11 +75,11 @@ class UserProfile extends Component {
                         </div>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    <TabPane tab={<div><span className="icon lg settings-icon" />
+                    {/* <TabPane tab={<div><span className="icon lg settings-icon" />
                         <Translate content="settings" className="tabtitle" />
                         </div>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
-                    </TabPane>
+                    </TabPane> */}
                     <TabPane tab={<div><span className="icon lg referral-icon" />
                         <Translate content="referr" className="tabtitle" /></div>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
@@ -106,11 +106,11 @@ class UserProfile extends Component {
                     </span>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon " />
+                    {/* <TabPane tab={<span><span className="icon lg settings-icon " />
                         <Translate content="settings" className="tabtitle" />
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
-                    </TabPane>
+                    </TabPane> */}
                     <TabPane tab={<span><span className="icon lg referral-icon " />
                         <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}

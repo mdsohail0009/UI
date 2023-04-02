@@ -489,13 +489,6 @@ class WithdrawSummary extends Component {
 			});
 			this.useDivRef.current.scrollIntoView(0, 0);
 		}
-		else if (!(this.state.verifyData.isEmailVerification || this.state.verifyData.isPhoneVerification || this.state.verifyData.twoFactorEnabled || this.state.verifyData.isLiveVerification)) {
-			this.setState({
-				...this.state,
-				errorMsg:
-					"Without verifications you can't send. Please select send verifications from security section"
-			});
-		}
 		else {
 
 			this.setState({ ...this.state, btnLoading: true, agreeRed: true })

@@ -21,8 +21,16 @@ const Verifications = (props) => {
     const useOtpRef = React.useRef(null);
     const { Text} = Typography;
     const fullNumber = props.auth.phone_number;
-    const last4Digits = fullNumber.slice(-4);
-    const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    let last4Digits;
+    if (fullNumber) {
+        last4Digits = fullNumber.slice(-4);
+    }
+    let maskedNumber;
+    if (last4Digits) {
+        maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    } else {
+        maskedNumber = "**********";
+    }
     const [permissions, setPermissions] = useState({});
    const history=useHistory()
     useEffect(() => {
@@ -95,6 +103,7 @@ const goToSecurity=()=>{
         setMsg(null)
         let response = await getVerificationFields();
         if (response.ok) {
+            props?.verificationsData(response.data)
             setVerifyData(response.data);
             props.onReviewDetailsLoading(false)
             setMsg(null)
@@ -149,7 +158,7 @@ const goToSecurity=()=>{
             setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.target.value })
         } else if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' })
-        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {// && phone.btnName==='code_Sent'
+        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {
             setEmail({ ...email, btnName: 'resendotp', code: '' })
         } else {
             setEmail({ ...email, btnName: 'code_Sent', code: '' })
@@ -172,7 +181,7 @@ const goToSecurity=()=>{
         } else if(phoneSeconds===0 && phone.btnName==='code_Sent') {
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }
-        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") {// && phone.btnName==='code_Sent'
+        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") { 
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }else {
             setPhone({ ...phone, btnName: 'code_Sent', code: '' })

@@ -72,15 +72,7 @@ class PaymentSummary extends Component {
 				this.myRef.current.scrollIntoView();
 				return
 			}
-		} else {
-			this.setState({
-				...this.state,
-				errorMessage:
-					"Without Verifications you can't Proceed.",loading:false
-			});
-			this.myRef.current.scrollIntoView();
-			return
-		}
+		} 
 		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
 		if(response.ok){
 			if(response.data === true){
@@ -98,8 +90,23 @@ class PaymentSummary extends Component {
 	handleBack=()=>{
 		this.props.history.push('/cockpit');
 	}
+
+	verificationsData=(data)=>{
+		if(data?.isLiveVerification && !data?.twoFactorEnabled && !data?.isEmailVerification && !data?.isPhoneVerified ){
+		  this.setState({ ...this.state, 
+			isShowGreyButton: true });
+		}
+	  }
 	changesVerification = (obj) => {
-		if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
+		if(obj.isPhoneVerification && obj.verifyData?.isPhoneVerified &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if(obj.isAuthenticatorVerification &&obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification ){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if(obj.isEmailVerification && obj.verifyData?.isEmailVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if(obj.verifyData?.isLiveVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified  ){
+			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+		  }else if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
 			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
 		}
 		else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification)) {
@@ -132,7 +139,7 @@ class PaymentSummary extends Component {
 		return (<>
 			<div>
 			<Drawer destroyOnClose={true}
-            title={[<div className="side-drawer-header"><span></span>
+            title={[<div className="side-drawer-header" key={""}><span></span>
 			{!this.state.showDeclaration &&<><div className='drawer-maintitle rec-bottom'>Payment Summary</div>
 			 <span onClick={this.props.onClose} className="icon md close-white c-pointer" /></>}
 			 {this.state.showDeclaration &&<span onClick={this.handleBack} className="icon md close-white c-pointer" />}
@@ -205,7 +212,9 @@ class PaymentSummary extends Component {
 						<div><Text className='summarybal'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
 					</div></div>
 					
-                           <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
+                           <Verifications onchangeData={(obj) => this.changesVerification(obj)} 
+						   onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} 
+						   verificationsData={(data)=>this.verificationsData(data)}/>
 					    
 						   <div className="cust-pop-up-btn crypto-pop">
 						   <Button block

@@ -13,6 +13,7 @@ import { setdepositCurrency } from '../../reducers/depositReducer'
 import OnthegoFundTransfer from '../onthego.transfer';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import MassPayment from '../buyfiat.component'
+import { buyFiatSteps as config } from '../buyfiat.component/config';
 import { getScreenName } from '../../reducers/feturesReducer';
 import PersonalInternalTransferComponent from '../personalInternalTransfer.component';
 const { Title, Paragraph, Text } = Typography;
@@ -41,7 +42,7 @@ class CockpitCharts extends Component {
     }
 
     componentDidMount() {
-        this.loadKpis();
+        // this.loadKpis();
         this.loadDashboards(30);
         this.cokpitKpiTrack();
     }
@@ -96,16 +97,16 @@ class CockpitCharts extends Component {
             this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
         }
     }
-    loadKpis = async () => {
-        this.setState({...this.state,isLoading:true})
-        let response = await apiCalls.getdshKpis();
-        if (response.ok) {
-            this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
+    // loadKpis = async () => {
+    //     this.setState({...this.state,isLoading:true})
+    //     let response = await apiCalls.getdshKpis();
+    //     if (response.ok) {
+    //         this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
 
-        }else{
-            this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
-        }
-    }
+    //     }else{
+    //         this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+    //     }
+    // }
 
     viewReport = (elem) => {
         this.props.history.push('/cockpit/reportview/' + elem.name);
@@ -191,7 +192,7 @@ class CockpitCharts extends Component {
                    
                 </li>
                 
-                {item?.walletCode==="EUR" &&<li onClick={() => this.showSendReceiveDrawer(4, item)}>
+                {item?.walletCode==="EUR" && process.env.REACT_APP_PERSONAL_IBAN==="personal"&&<li onClick={() => this.showSendReceiveDrawer(4, item)}>
                     <Link value={5} className="c-pointer">
                     <Translate content="personal_iban_transafer" />
                     </Link>
@@ -237,7 +238,7 @@ class CockpitCharts extends Component {
             <List
               className="mobile-list"
               itemLayout="horizontal"
-              dataSource={this.state.transactionData}
+              dataSource={wallets.data}
               locale={{
                 emptyText: (
                   <Empty
@@ -328,7 +329,7 @@ class CockpitCharts extends Component {
                         this.closeDrawer();
                     }}
                 />}
-                {this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
+                {process.env.REACT_APP_PERSONAL_IBAN==="personal" &&this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
                         this.closeDrawer();
                     }}/>}
                 <Drawer
@@ -336,9 +337,10 @@ class CockpitCharts extends Component {
                     title={[<div className="side-drawer-header">
                         <span></span>
                         {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
-                            <Translate className="drawer-maintitle"  component={Paragraph} />
+                            <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
                         }
+                          
                         <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer"
@@ -351,8 +353,8 @@ class CockpitCharts extends Component {
 
     }
 }
-const connectStateToProps = ({ breadCrumb, oidc, userConfig, sendReceive, dashboard }) => {
-    return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo, }
+const connectStateToProps = ({ breadCrumb, oidc, userConfig, sendReceive, dashboard,buyFiat }) => {
+    return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo,buyFiat }
 }
 
 export default connect(connectStateToProps, (dispatch) => { return { dispatch } })(CockpitCharts);
