@@ -262,15 +262,7 @@ saveWithdrawdata = async () => {
             this.reviewScrool.current.scrollIntoView()
             return
         }
-    } else {
-        this.setState({
-            ...this.state,
-            errorMessage:
-                "Without Verifications you can't Proceed.",
-        });
-        this.reviewScrool.current.scrollIntoView()
-        return
-    }
+    } 
     if (this.state.reviewDetails) {
         let obj = Object.assign({}, this.state.reviewDetails);
         obj["accountNumber"] = obj.accountNumber ? apicalls.encryptValue(obj.accountNumber, this.props.userProfile?.sk) : null;
@@ -296,6 +288,15 @@ saveWithdrawdata = async () => {
     }
   }
   changesVerification = (obj) => {
+    if(obj.isPhoneVerification && obj.verifyData?.isPhoneVerified &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else if(obj.isAuthenticatorVerification &&obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification ){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else if(obj.isEmailVerification && obj.verifyData?.isEmailVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else if(obj.verifyData?.isLiveVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified  ){
+      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
+    }else
     if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
         this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
     }
@@ -369,7 +370,12 @@ saveWithdrawdata = async () => {
   handleTabChange = (key) => {
     this.setState({ ...this.state, selectedTab: key})
 }
-
+verificationsData=(data)=>{
+  if(data?.isLiveVerification && !data?.twoFactorEnabled && !data?.isEmailVerification && !data?.isPhoneVerified ){
+    this.setState({ ...this.state, 
+      isShowGreyButton: true });
+  }
+}
 
 
   goToAddressBook = () => {
@@ -1014,7 +1020,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                             }
                             </div>
              
-                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} onClosePopup={()=>this.props?.onClosePopup()}/>
+                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} onClosePopup={()=>this.props?.onClosePopup()} verificationsData={(data)=>this.verificationsData(data)}/>
                 
                 {this.state.permissions?.Send && 
             
