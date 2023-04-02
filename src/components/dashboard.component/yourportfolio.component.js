@@ -28,21 +28,8 @@ class YourPortfolio extends Component {
     }
     componentDidMount() {
         this.loadCryptos();
-        // this.loadCoinDetailData();
     }
-  //   loadCoinDetailData = async () => {
-  //     this.setState({ ...this.state, loading: true,errorMessage:null})
-  //     this.props.dispatch(fetchMarketCoinData(false))
-  //     debugger
-  //     const response = await getcoinDetails(this.props.match.params?.coinName);
-  //     if (response.ok) {
-  //         this.setState({ ...this.state, coinData: response.data,errorMessage:null },
-  //         )
-  //     }else{
-  //       this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
-  //     }
-  //     this.setState({ ...this.state, loading: false})
-  // }
+  
     loadCryptos = () => {
         if (this.props.userProfile) {
             this.props.dispatch(fetchYourPortfoliodata());
