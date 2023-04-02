@@ -682,6 +682,7 @@ export default {
 	Dashboard:"Dashboard",
 	notices:"Notices",
 	personal_iban_transafer:"Personal IBAN Transfer",
-	fiat_transfer_success:"Back to Transfer"
-	
+	fiat_transfer_success:"Back to Transfer",
+	suissebase_credit:"SuisseBase Credits",
+	suissebasecredits:"Suissebase Credits Available"
 };
