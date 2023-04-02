@@ -21,8 +21,16 @@ const Verifications = (props) => {
     const useOtpRef = React.useRef(null);
     const { Text} = Typography;
     const fullNumber = props.auth.phone_number;
-    const last4Digits = fullNumber.slice(-4);
-    const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    let last4Digits;
+    if (fullNumber) {
+        last4Digits = fullNumber.slice(-4);
+    }
+    let maskedNumber;
+    if (last4Digits) {
+        maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+    } else {
+        maskedNumber = "**********";
+    }
     const [permissions, setPermissions] = useState({});
    const history=useHistory()
     useEffect(() => {
