@@ -30,7 +30,10 @@ const MarketCap = ({ member }) => {
             setIsLoading(false);
             setErrorMessage(null)
         }else{
-            setErrorMessage(apiCalls.isErrorDispaly(response))
+            // setErrorMessage(apiCalls.isErrorDispaly(response))//they removed due to to hide the error message in io because of coin geco server problem
+            setErrorMessage(null);
+            setMarketCaps([]);
+            setIsLoading(false);
         }
     }
     const onSearch = ({ currentTarget: { value } }, isFullScreen) => {
