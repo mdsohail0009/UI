@@ -20,13 +20,12 @@ const Fees = (props) => {
       setfeeData(res.data);
       let products = res.data.commissionTierFees
       const groupByCategory = products.reduce((group, product) => {
-        const { bankName } = product;
+        const { bankName} = product;
         group[bankName] = group[bankName] ?? [];
         group[bankName].push(product);
         return group;
       }, {});
       const tableData = Object.entries(groupByCategory);
-      console.log(tableData)
       setCommFees(tableData)
     } else {
       setLoader(false); setError(apiCalls.isErrorDispaly(res));
@@ -114,48 +113,17 @@ const Fees = (props) => {
            <div className='transaction-custom-table db-transactions'>
             <div className='responsive_table db-ts-grid'>
          <table className='pay-grid view mb-view commision-fee-custtable' border="1" style={{color:"#ffffff"}}>
-          <thead>
+         {commFees.map(([bankName, items]) =><thead>
             <tr className='first-header' >
-              <th colSpan={2}>signature bank<br/>(usd)</th>
-              <th colSpan={2}>Another USD bank</th>
-              <th colSpan={2}>Pyrros bank (EUR)</th>
-              <th colSpan={2}>GuruPay(EUR)</th>
-              <th colSpan={2}>Personal Pyrros (EUR)</th>
-              <th colSpan={4}>Crypto</th>
+              <th colSpan={2}>{bankName}<br/></th>
+            </tr>
+            {items.map((item) =><><tr>
+              <th>{item.operation}</th>
             </tr>
             <tr>
-              <th>withdraw</th>
-              <th>deposit</th>
-              <th>withdraw</th>
-              <th>deposit</th>  
-              <th>withdraw</th>
-              <th>deposit</th>
-              <th>withdraw</th>
-              <th>deposit</th>
-              <th>withdraw</th>
-              <th>deposit</th>
-              <th>withdraw</th>
-              <th>deposit</th>
-              <th>Buy</th>
-              <th>Sell</th>
-            </tr>
-            <tr>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-              <td>1.00%</td>
-            </tr>
-          </thead>
+              <td>{item.flatFee}</td>
+            </tr></>)}
+          </thead>)}
             {/* <thead>
            <tr className='cust-tr-style'>
            {commFees.map(([bankName, items]) =><th >{bankName} <br></br>(USD)
