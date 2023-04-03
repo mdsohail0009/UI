@@ -198,7 +198,7 @@ class Summary extends Component {
 								    />									
 										 </div>
                      </div>
-				     <div className="pay-list" style={{ alignItems: 'baseline' }}>
+				 {tierDiscount !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Tire Discount</div>
                                     <div className="summarybal">
 									<Currency
@@ -209,8 +209,8 @@ class Summary extends Component {
 									suffixText={coin}
 						        	/> 
 										 </div>
-                     </div>
-					 <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                     </div>}
+					 {sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">SuisseBase Credit Used</div>
                                     <div className="summarybal">
 									<Currency
@@ -221,7 +221,8 @@ class Summary extends Component {
 									suffixText={coin}
 						        	/>
 										 </div>
-                  </div></>}
+                  </div>}
+				  </>}
 					
 					{showFee && (
 						<div className="pay-list">

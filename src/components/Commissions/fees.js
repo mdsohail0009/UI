@@ -3,7 +3,8 @@ import apiCalls from '../../api/apiCalls'
 import { Table ,Alert} from 'antd';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
-const Fees = () => {
+import { connect } from 'react-redux';
+const Fees = (props) => {
   const [feeData, setfeeData] = useState()
   const [loader, setLoader] = useState()
   const [error, setError] = useState()
@@ -13,7 +14,7 @@ const Fees = () => {
   }, [])
   const getcustomersfeeData = async () => {
     setLoader(true)
-    let res = await apiCalls.getcustomersFees()
+    let res = await apiCalls.getcustomersFees(props.userConfig.id)
     if (res.ok) {
       setLoader(false)
       setfeeData(res.data);
@@ -151,4 +152,8 @@ const Fees = () => {
 </>
 
 }
-export default Fees;
+const connectStateToProps = ({ userConfig, }) => {
+  return { userConfig: userConfig.userProfileInfo,}
+}
+
+export default connect(connectStateToProps)(Fees);

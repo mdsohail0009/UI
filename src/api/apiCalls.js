@@ -217,8 +217,8 @@ const getFileURL = (docId) => {
 		}
 	}
 }
-const getcustomersFees=()=>{
-	return apiClient.get(ApiControllers.commissions + `CustomerFee/Tier/D4F584C2-F8B2-43EA-9676-4E7441A49761`);
+const getcustomersFees=(id)=>{
+	return apiClient.get(ApiControllers.commissions + `CustomerFee/Tier/${id}`);
 }
 let apicalls = {
 	getportfolio,

@@ -786,7 +786,7 @@ Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</
                                         
 											</div>
                   </div>
-				  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+				{effectiveData?.sbCredit !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Suissebase Credits Used</div>
                     <div className="summarybal">
 					<Currency
@@ -796,8 +796,8 @@ Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</
 							suffixText={`${effectiveData?.coin}`}
 							/>                                       
 											</div>
-                  </div>
-				  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                  </div>}
+				 {effectiveData?.tierDiscount !=0 &&  <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">tierDiscount</div>
                     <div className="summarybal">
 					<Currency
@@ -808,7 +808,8 @@ Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</
 							/>
                                        
 											</div>
-                  </div></>}
+                  </div>}
+				  </>}
 						<div className="pay-list">
 							<Translate
 								className="summary-liststyle"

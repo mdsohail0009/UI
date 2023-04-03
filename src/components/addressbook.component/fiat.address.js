@@ -57,15 +57,15 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
         {(addressOptions.addressType === "ownbusiness" || addressOptions.addressType === "myself") && <MyselfNewTransfer currency={props.currency} type={props.type} onContinue={(obj) => onContinue(obj)} {...props} isBusiness={props.userProfile?.isBusiness}
           headingUpdate={headingChange}    onTheGoObj={{ amount: props.amount }} selectedAddress={selectedAddress} onEdit={(val) => {
                 setIsEdit(val);
-            }} isHideTabs={(value)=>setHideTabs(value)}></MyselfNewTransfer>}
+            }} isHideTabs={(value)=>setHideTabs(value)} selectedbankobj={props.selectedbankobj}></MyselfNewTransfer>}
         {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} currency={props.currency}
          headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={(props.currency === "USD" ||props.currency=== "GBP")? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
-        }} isHideTabs={(value)=>setHideTabs(value)}/>}
+        }} isHideTabs={(value)=>setHideTabs(value)} selectedbankobj={props.selectedbankobj}/>}
         {addressOptions.addressType === "individuals" && <SomeoneComponent ontheGoType={props.typeOntheGo}
          headingUpdate={headingChange}  selectedAddress={selectedAddress} addressType={addressOptions.addressType} type={props.type} currency={props.currency} onContinue={(obj) => onContinue(obj)} onTheGoObj={{ amount: props.amount }} onEdit={(val) => {
             setIsEdit(val);
-        }} isHideTabs={(value)=>setHideTabs(value)}/>}
+        }} isHideTabs={(value)=>setHideTabs(value)} selectedbankobj={props.selectedbankobj}/>}
     </>
 }
 

@@ -64,6 +64,7 @@ class OnthegoFundTransfer extends Component {
     loader:false,
     fiatWallets:[],
     isLoading:false,
+    selectedbankobj:{},
   }
   componentDidMount() {
     this.verificationCheck()
@@ -132,7 +133,7 @@ class OnthegoFundTransfer extends Component {
           CustomerId:this.props.userProfile.id,      
           amount:this.enteramtForm.current.getFieldsValue().amount,    
           WalletCode:this.state.selectedCurrency,
-          BankName:this.state.selectedBank || e,       
+          bankId:this.state.selectedbankobj[0]?.bankId,       
         }
         let res = await saveCommissions(obj);
         if(res.ok){
@@ -144,7 +145,8 @@ class OnthegoFundTransfer extends Component {
     }  
   }
   handleBankChange=(e)=>{
-  this.setState({...this.state,selectedBank:e,effectiveType:false},()=> this.saveCommissionsDetails(e))
+    const newRecords = this.state.fiatBanks.filter(record => record.bankName === e);
+  this.setState({...this.state,selectedBank:e,effectiveType:false,selectedbankobj:newRecords},()=> this.saveCommissionsDetails(e))
  
   }
 
@@ -271,7 +273,7 @@ saveWithdrawdata = async () => {
         obj["beneficiaryAccountName"] = obj.beneficiaryAccountName ? apicalls.encryptValue(obj.beneficiaryAccountName, this.props.userProfile?.sk) : null;
         obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
         obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
-
+        obj["bankId"]=this.state.selectedbankobj[0].bankId
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
@@ -331,7 +333,8 @@ saveWithdrawdata = async () => {
     const obj = {
       CustomerId: this.props.userProfile?.id,
       amount: amt,
-      WalletCode: this.state.selectedCurrency
+      WalletCode: this.state.selectedCurrency,
+      bankId:this.state.selectedbankobj[0]?.bankId,
     }
     this.setState({ ...this.state, [loader]: true, errorMessage: null });
     const res = await validateAmount(obj);
@@ -589,13 +592,13 @@ verificationsData=(data)=>{
                                         value={`${(getBanckDetails?.totalFee)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>
-                {getBanckDetails?.tierDiscount && getBanckDetails?.tierDiscount !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                {getBanckDetails?.tierDiscount !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Tire Discount</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.tierDiscount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>}
-                 {getBanckDetails?.sbCredit && getBanckDetails?.sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
+                 {getBanckDetails?.sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">SuisseBase Credit Used</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.sbCredit)}`}
@@ -708,6 +711,7 @@ verificationsData=(data)=>{
                                 payeeId: item.id,
                                 reasonOfTransfer: '',
                                 amount: this.state.amount,
+                                bankId:this.state.selectedbankobj[0]?.bankId,
                               })
                               if (res.ok) {
                                 this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
@@ -760,7 +764,9 @@ verificationsData=(data)=>{
                           )
                         } else {
                             this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
-                            const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                            const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount ,
+                            bankId:this.state.selectedbankobj[0]?.bankId,
+                          });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -864,7 +870,9 @@ verificationsData=(data)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents });
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,
+                             bankId:this.state.selectedbankobj[0]?.bankId, 
+                            });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -923,18 +931,18 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                                         value={`${(this.state.reviewDetails?.totalFee)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                {this.state.reviewDetails?.tierDiscount !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Tire Discount</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.tierDiscount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
-                  </div>
-                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                  </div>}
+                 {this.state.reviewDetails?.sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">SuisseBase Credit Used</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.sbCredit)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
-                  </div>
+                  </div>}
                 
                   </>}
                   <div className="pay-list" style={{ alignItems: 'baseline' }}>
@@ -1053,7 +1061,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                 }
                 }
                     fiatHeadingUpdate={this.fiatHeading}
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} selectedbankobj={this.state.selectedbankobj} />
             </>,
       declaration: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
       <Image preview={false} src={alertIcon} className="confirm-icon"  />

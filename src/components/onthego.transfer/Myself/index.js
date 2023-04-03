@@ -12,7 +12,7 @@ import NumberFormat from "react-number-format";
 const { Paragraph,Title } = Typography;
 const { Text } = Typography;
 const { TextArea } = Input;
-const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
+const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ...props }) => {
     const [form] = Form.useForm();
     const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: 'domestic', tabType: 'domestic' });
     const [bankDetails, setbankDetails] = useState({})
@@ -110,7 +110,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         if (response.ok) {
             seterrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null ,bankId:selectedbankobj[0]?.bankId})
                 if (confirmRes.ok) {
                     seterrorMessage(null)
                     setBtnLoading(false);
