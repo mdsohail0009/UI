@@ -113,8 +113,50 @@ const Fees = (props) => {
         
            <div className='transaction-custom-table db-transactions'>
             <div className='responsive_table db-ts-grid'>
-         <table className='pay-grid view mb-view commision-fee-custtable'>
-            <thead>
+         <table className='pay-grid view mb-view commision-fee-custtable' border="1" style={{color:"#ffffff"}}>
+          <thead>
+            <tr className='first-header' >
+              <th colSpan={2}>signature bank<br/>(usd)</th>
+              <th colSpan={2}>Another USD bank</th>
+              <th colSpan={2}>Pyrros bank (EUR)</th>
+              <th colSpan={2}>GuruPay(EUR)</th>
+              <th colSpan={2}>Personal Pyrros (EUR)</th>
+              <th colSpan={4}>Crypto</th>
+            </tr>
+            <tr>
+              <th>withdraw</th>
+              <th>deposit</th>
+              <th>withdraw</th>
+              <th>deposit</th>  
+              <th>withdraw</th>
+              <th>deposit</th>
+              <th>withdraw</th>
+              <th>deposit</th>
+              <th>withdraw</th>
+              <th>deposit</th>
+              <th>withdraw</th>
+              <th>deposit</th>
+              <th>Buy</th>
+              <th>Sell</th>
+            </tr>
+            <tr>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+              <td>1.00%</td>
+            </tr>
+          </thead>
+            {/* <thead>
            <tr className='cust-tr-style'>
            {commFees.map(([bankName, items]) =><th >{bankName} <br></br>(USD)
                 </th>)}
@@ -135,7 +177,7 @@ const Fees = (props) => {
             </td>   )}
             </tr>
            
-           </tbody>
+           </tbody> */}
           </table>
           </div>
           </div>
