@@ -112,41 +112,30 @@ const Fees = (props) => {
         
            <div className='transaction-custom-table db-transactions'>
             <div className='responsive_table db-ts-grid'>
-         <table className='pay-grid view mb-view commision-fee-custtable' border="1" style={{color:"#ffffff"}}>
-         {commFees.map(([bankName, items]) =><thead>
-            <tr className='first-header' >
-              <th colSpan={2}>{bankName}<br/></th>
-            </tr>
-            {items.map((item) =><><tr>
-              <th>{item.operation}</th>
-            </tr>
-            <tr>
-              <td>{item.flatFee}</td>
-            </tr></>)}
-          </thead>)}
-            {/* <thead>
-           <tr className='cust-tr-style'>
-           {commFees.map(([bankName, items]) =><th >{bankName} <br></br>(USD)
-                </th>)}
-              </tr>
-            </thead>
-           <tbody>
-           <tr>
-           {commFees.map(([bankName, items]) =><td className="p-16">
-            <table style={{width:"100%",textAlign: "center"}}>
-            <tr>
-            {items.map((item) =><td>{item.operation}</td>)}
-                </tr>
-                <tr>
-                {items.map((item1) =><td><div className='ts-date'>{item1.flatFee}</div>
-                  </td>)}
-                </tr>
+              <table className='pay-grid view mb-view commision-fee-custtable'>
+                <thead>
+                  <tr className='cust-tr-style'>
+                    {commFees.map(([bankName, items]) => <th >{bankName} <br></br>
+                    </th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {commFees.map(([bankName, items]) => <td className="p-16">
+                      <table style={{ width: "100%", textAlign: "center" }}>
+                        <tr>
+                          {items.map((item) => <td>{item.operation}</td>)}
+                        </tr>
+                        <tr>
+                          {items.map((item1) => <td><div className='ts-date'>{item1.flatFee}</div>
+                          </td>)}
+                        </tr>
+                      </table>
+                    </td>)}
+                  </tr>
+
+                </tbody>
               </table>
-            </td>   )}
-            </tr>
-           
-           </tbody> */}
-          </table>
           </div>
           </div>
             <div className="coin-viewstyle">Fee discount for each tier</div>
