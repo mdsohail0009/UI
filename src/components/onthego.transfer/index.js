@@ -289,41 +289,29 @@ saveWithdrawdata = async () => {
       }
     }
   }
-  changesVerification = (obj) => {
-    if(obj.isPhoneVerification && obj.verifyData?.isPhoneVerified &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else if(obj.isAuthenticatorVerification &&obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification ){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else if(obj.isEmailVerification && obj.verifyData?.isEmailVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else if(obj.verifyData?.isLiveVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified  ){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else
-    if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.verifyData?.isLiveVerification && obj.isEmailVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.verifyData?.isLiveVerification && obj.isPhoneVerification && !obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && obj.verifyData?.isPhoneVerified) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else {
-        if (obj.verifyData?.isLiveVerification && obj.isAuthenticatorVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification && obj.verifyData?.twoFactorEnabled) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
+  isAllVerificationsFullfilled = (obj) => {
+    const vdata=this.state.verifyData ||{}
+    const vDetails=Object.keys(vdata).length===0?obj:this.state.verifyData;
+    let _verficationDetails = { ...vDetails,...obj };
+    let _verificationCount = 0;
+    let _currentVerificationCount = 0;
+    for (let key in _verficationDetails) {
+      if (["isPhoneVerification", "isEmailVerification", "isAuthenticatorVerification"].includes(key) && _verficationDetails[key]) {
+        _currentVerificationCount++;
+      }
     }
 
-}
+    for (let key in _verficationDetails?.verifyData) {
+      if (["isPhoneVerified", "isEmailVerification", "twoFactorEnabled"].includes(key) && _verficationDetails?.verifyData[key]) {
+        _verificationCount++;
+      }
+    }
+    return _verificationCount === _currentVerificationCount;
+  }
+
+  changesVerification = (obj) => {
+    this.setState({ ...this.state, isShowGreyButton: this.isAllVerificationsFullfilled(obj), verifyData: {...this.state.verifyData,...obj} })
+  }
 
   onReviewDetailsLoading = (val) => {
     this.setState({ ...this.state, reviewDetailsLoading: val })

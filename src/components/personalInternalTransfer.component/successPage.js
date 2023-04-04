@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
 class DelcarationForm extends Component {
     componentDidMount() {
-        console.log(this.props)
         this.successTrack();
     }
     successTrack = () => {
