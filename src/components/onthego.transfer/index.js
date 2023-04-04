@@ -535,11 +535,12 @@ verificationsData=(data)=>{
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-label"
-                        name="fiatBank"
+                        name="Bank"
                         label="Bank Name"
                         rules={[
                           {
                             required: true,
+                            message:"Is required"
                           },
                         ]}>
 
