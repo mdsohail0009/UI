@@ -82,8 +82,8 @@ class OnthegoFundTransfer extends Component {
       this.getPayees();
     }
   }
-  getAccountWallet=()=>{
-    let walletObj=getAccountWallet()
+  getAccountWallet=async()=>{
+    let walletObj=await getAccountWallet()
     if(walletObj.ok){
       this.setState({ ...this.state, fiatWallets: walletObj.data });
     }
@@ -521,8 +521,9 @@ verificationsData=(data)=>{
                               onChange={(e) => this.handleCurrencyChange(e)}
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
+                                {console.log(this.state.fiatWallets)}
                                 {this.state.fiatWallets.map((item)=>
-                                  <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}  ({item.amount.toLocaleString()})</option>
+                                  <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}  ({item.amount?.toLocaleString()})</option>
                                 )}
                               </Select>}
                           onValueChange={() => {
