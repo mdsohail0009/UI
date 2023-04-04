@@ -330,8 +330,8 @@ input:-webkit-autofill:active{
 .cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 46px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
 /* button styles end */
 /*Kendo start*/
-.k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 700;color: var(--gridtitle);}
-.k-grid td{font-size: 14px;font-weight: 400;}
+.k-grid-header .k-header > .k-link,.commision-fee-custtable .k-link{font-size: 16px;font-weight: 700;color: var(--gridtitle);}
+.k-grid td,.commision-fee-custtable td{font-size: 14px;font-weight: 400;}
 /* .ant-form-item-label > label{color: var(--subText);font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;} */
 h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:500;margin-top: 10px;color:var(--textWhite);margin-bottom: 26px !important;}
 h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom: 16px;padding-left:4px; padding-right:4px;}
@@ -828,7 +828,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-picker-dropdown{z-index: 9999;}
 .excel-button{margin-top: 20px;}
 /* .k-grid-table,.ant-table-tbody{background-color: var(--tablebody);} */
-.k-grid td,.markets-grid td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
+.k-grid td,.markets-grid td,.fee-withdraw td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
 .k-grid th,.markets-grid th{border-right: 1px solid  var(--tableborder) !important;}
 .custom-gridresponsive .ant-drawer-header,.custom-gridresponsive .ant-drawer-body{background: var(--bodyBg) !important;}
 .k-pager-wrap.k-pager.k-widget.k-grid-pager{background: var(--gridheader);border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
@@ -1047,9 +1047,15 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .user-labels.active .icon.lg.suissebase-credit, .user-labels:hover .icon.lg.suissebase-credit, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.suissebase-credit, .ant-tabs-tab:hover .icon.lg.suissebase-credit{background-position: -213px -589px;}
 .Effective-Fees{color: var(--termsText);cursor: pointer;}
 .icon.lg.down-arrow{background-position: -389px -486px;margin-left: 4px;}
-
 /* commissions  start   */
 .first-header th{text-align: center !important;}
+.fee-withdraw{padding: 0 !important;border-right: 1px solid var(--gridborder) !important;}
+.fee-withdraw table tr td:last-child{border-right: transparent !important;}  
+.fee-withdraw tr:last-child td{border-bottom: transparent !important;}
+.fee-withdraw:last-child{border: transparent !important;}  
+.cust-tr-style th{text-align: center !important;}
+.fee-table{height: fit-content;padding-bottom: 0;}
+/* .commision-fee-custtable{border:1px solid var(--gridborder)  ;} */
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){
