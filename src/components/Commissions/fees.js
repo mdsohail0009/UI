@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import apiCalls from '../../api/apiCalls'
-import { Table ,Alert} from 'antd';
+import { Table ,Alert,Empty} from 'antd';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
+import Translate from "react-translate-component";
 const Fees = (props) => {
   const [feeData, setfeeData] = useState()
   const [loader, setLoader] = useState()
@@ -17,6 +18,7 @@ const Fees = (props) => {
     let res = await apiCalls.getcustomersFees(props.userConfig.id)
     if (res.ok) {
       setLoader(false)
+      res.data.customerTiers=res.data.customerTiers?res.data.customerTiers:[]
       setfeeData(res.data);
       let products = res.data.commissionTierFees
       const groupByCategory = products.reduce((group, product) => {
@@ -110,7 +112,7 @@ const Fees = (props) => {
              {error && <Alert type="error" showIcon closable={false} description={error} />}
             <div className="grid-title">Fees for Transaction</div>
         
-           <div className='transaction-custom-table db-transactions fee-table'>
+            {commFees.length!=0&&<div className='transaction-custom-table db-transactions fee-table'>
             <div className='responsive_table db-ts-grid'>
               <table className='pay-grid view mb-view commision-fee-custtable'>
                 <thead>
@@ -137,9 +139,15 @@ const Fees = (props) => {
                 </tbody>
               </table>
           </div>
-          </div>
+          </div>}
+          {commFees.length==0&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+            <Translate content="No_data" />
+          } />}
             <div className="grid-title">Fee discount for each tier</div>
-           <div style={{backgroundColor:'white'}}> {feeData&&<Table columns={columns} dataSource={feeData.customerTiers} pagination={false} />}</div>
+            {feeData?.customerTiers.length!=0&&<div style={{backgroundColor:'white'}}> {feeData&&<Table columns={columns} dataSource={feeData.customerTiers} pagination={false} />}</div>}
+           {(feeData?.customerTiers?.length==0)&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+                        <Translate content="No_data" />
+                    } />}
             <p style={{color:'white'}}>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
         <p style={{color:'white'}}>Your current tier:{feeData?.tradeVolumes[0]?.currentTier}</p>
         <span style={{color:'white'}}>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
