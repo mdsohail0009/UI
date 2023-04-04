@@ -108,21 +108,21 @@ const Fees = (props) => {
     {loader?<Loader/>:
         <div className="main-container">
              {error && <Alert type="error" showIcon closable={false} description={error} />}
-            <div className="coin-viewstyle">Fees for Transaction</div>
+            <div className="grid-title">Fees for Transaction</div>
         
-           <div className='transaction-custom-table db-transactions'>
+           <div className='transaction-custom-table db-transactions fee-table'>
             <div className='responsive_table db-ts-grid'>
               <table className='pay-grid view mb-view commision-fee-custtable'>
                 <thead>
                   <tr className='cust-tr-style'>
-                    {commFees.map(([bankName, items]) => <th >{bankName} <br></br>
+                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} <br></br>
                     </th>)}
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    {commFees.map(([bankName, items]) => <td className="p-16">
-                      <table style={{ width: "100%", textAlign: "center" }}>
+                    {commFees.map(([bankName, items]) => <td className='fee-withdraw'>
+                      <table style={{ textAlign: "center",width:'100%' }}>
                         <tr>
                           {items.map((item) => <td>{item.operation}</td>)}
                         </tr>
@@ -138,7 +138,7 @@ const Fees = (props) => {
               </table>
           </div>
           </div>
-            <div className="coin-viewstyle">Fee discount for each tier</div>
+            <div className="grid-title">Fee discount for each tier</div>
            <div style={{backgroundColor:'white'}}> {feeData&&<Table columns={columns} dataSource={feeData.customerTiers} pagination={false} />}</div>
             <p style={{color:'white'}}>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
         <p style={{color:'white'}}>Your current tier:{feeData?.tradeVolumes[0]?.currentTier}</p>
