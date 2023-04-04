@@ -921,7 +921,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 {this.state.reviewDetails?.tierDiscount !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Tire Discount</div>
+                                    <div className="summary-liststyle">Tier Discount</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.tierDiscount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
