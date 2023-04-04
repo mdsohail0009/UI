@@ -521,7 +521,6 @@ verificationsData=(data)=>{
                               onChange={(e) => this.handleCurrencyChange(e)}
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
-                                {console.log(this.state.fiatWallets)}
                                 {this.state.fiatWallets.map((item)=>
                                   <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}  ({item.amount?.toLocaleString()})</option>
                                 )}
