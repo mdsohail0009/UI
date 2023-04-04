@@ -32,5 +32,10 @@ const getVerificationFields = () => {
 		ApiControllers.master + `Verificationfields`
 	);
 };
-
-export {getCode,getVerification,sendEmail,verifyEmailCode,getAuthenticator,getVerificationFields}
+const getCommissionBankDetails = (currency) => {
+	return apiClient.get(ApiControllers.commissions + `/CustomerBanks/${currency}`);
+};
+const saveCommissions = (obj) => {
+	return apiClient.post(ApiControllers.withdraw + `/Fiat/commision`,obj);
+};
+export {getCode,getVerification,sendEmail,verifyEmailCode,getAuthenticator,getVerificationFields,getCommissionBankDetails,saveCommissions}

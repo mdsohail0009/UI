@@ -35,6 +35,7 @@ export default {
 	refresh_newprice: "Please refresh to get new price",
 	confirm_btn_text: "Confirm %(counter)s",
 	exchange_rate: "Exchange Rate",
+	effective_fee:"Effective Fee",
 	amount: "Amount",
 	suissebase_fee: "Suissebase Fee",
 	estimated_total: "Estimated Total",
@@ -682,6 +683,7 @@ export default {
 	Dashboard:"Dashboard",
 	notices:"Notices",
 	personal_iban_transafer:"Personal IBAN Transfer",
-	fiat_transfer_success:"Back to Transfer"
-	
+	fiat_transfer_success:"Back to Transfer",
+	suissebase_credit:"SuisseBase Credits",
+	suissebasecredits:"Suissebase Credits Available"
 };

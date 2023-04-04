@@ -14,7 +14,8 @@ class Summary extends Component {
 	state = {
 		permissions: {},
 		buyPermissions: {},
-		sellPermissions: {}
+		sellPermissions: {},
+		effectiveType:false,
 	};
 	
 	componentDidMount() {
@@ -50,6 +51,14 @@ class Summary extends Component {
 			this.props.onCancel()
 		}
     }
+	handleEffectiveFee=()=>{
+		if(this.state.effectiveType){
+			this.setState({...this.state,effectiveType:false})
+		}else {
+			this.setState({...this.state,effectiveType:true})
+		}
+   
+	}
 	render() {
 		if (this.props?.loading) {
 			return <Loader />;
@@ -78,6 +87,11 @@ class Summary extends Component {
 			decimalPlaces,
 			onErrorClose,
 			onCheked,
+			sbCredit,
+			tierDiscount,
+			sbFee,
+			totalFee
+			
 		} = this.props;
 		
 		return (
@@ -160,6 +174,56 @@ class Summary extends Component {
 							suffixText={coin}
 						/>
 					</div>
+					 <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle Effective-Fees" onClick={()=>this.handleEffectiveFee()}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
+                                    <div className="summarybal">
+									<Currency
+									defaultValue={sbFee}
+									prefix={""}
+								    decimalPlaces={decimalPlaces}
+									className="summarybal"
+									suffixText={coin}
+						        	/>
+				    </div>
+                  </div>
+				 {this.state.effectiveType && <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Total Fees</div>
+                                    <div className="summarybal">
+									<Currency
+									defaultValue={totalFee}
+									prefix={""}
+									decimalPlaces={decimalPlaces}
+									className="summarybal"
+									suffixText={coin}
+								    />									
+										 </div>
+                     </div>
+				 {tierDiscount !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Tire Discount</div>
+                                    <div className="summarybal">
+									<Currency
+									defaultValue={tierDiscount}
+									prefix={""}
+								    decimalPlaces={decimalPlaces}
+									className="summarybal"
+									suffixText={coin}
+						        	/> 
+										 </div>
+                     </div>}
+					 {sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">SuisseBase Credit Used</div>
+                                    <div className="summarybal">
+									<Currency
+									defaultValue={sbCredit}
+									prefix={""}
+								    decimalPlaces={decimalPlaces}
+									className="summarybal"
+									suffixText={coin}
+						        	/>
+										 </div>
+                  </div>}
+				  </>}
+					
 					{showFee && (
 						<div className="pay-list">
 							<Translate
@@ -225,7 +289,8 @@ class Summary extends Component {
 							
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
-					</div>}
+
+					</div>}      
 					
 					
 

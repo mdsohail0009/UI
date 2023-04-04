@@ -178,7 +178,7 @@ class OthersBusiness extends Component {
        if (response.ok) {
             if (this.props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
-                    docrepoitory:this.state.rasonDocuments 
+                    docrepoitory:this.state.rasonDocuments ,bankId:this.props.selectedbankobj[0].bankId
                  })
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
@@ -214,7 +214,7 @@ class OthersBusiness extends Component {
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType}/> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType} selectedbankobj={this.props.selectedbankobj}/> }
         else {
             return <><div ref={this.useDivRef}>
                 {this.props.currency !="CHF" && <h2 className="adbook-head">SEPA Transfer</h2>}

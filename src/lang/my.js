@@ -641,5 +641,6 @@ export default {
 	Whitelisting_Status:"Whitelisting Status",
 	Reason_For_Rejection:"sebab penolakan",
 	personal_iban_transafer:"Transferencia personal de IBAN",
-	fiat_transfer_success:"Volver a Transfor"
+	fiat_transfer_success:"Volver a Transfer",
+	suissebase_credit:"SuisseBase Credits"
 };

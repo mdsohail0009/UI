@@ -94,6 +94,8 @@ class WithdrawSummary extends Component {
 		permissions: {},
 		previewModal:false,
 		showDeclartion: false,
+		effectiveData:null,
+		effectiveType:false,
 	};
 
 	useDivRef = React.createRef();
@@ -215,6 +217,10 @@ class WithdrawSummary extends Component {
 			_obj["comission"] = response.data?.comission;
 			_obj.totalValue = response?.data?.amount;
 			_obj.memberWalletId = response?.data?.memberWalletId;
+			_obj.sbCredit = response?.data?.sbCredit;
+			_obj.tierDiscount = response?.data?.tierDiscount;
+			_obj.totalFee = response?.data?.totalFee;
+			_obj.comission = response?.data?.comission;
 			this.props?.dispatch(setWithdrawcrypto(_obj));
 			this.setState({
 				...this.state,
@@ -222,6 +228,7 @@ class WithdrawSummary extends Component {
 				OneusdAmount: response?.data?.exchangeRate,
 				loading: false,
 				comission: response?.data?.comission,
+				effectiveData:response.data,
 			});
 		} else {
 			this.setState({ ...this.state, loading: false });
@@ -580,9 +587,16 @@ class WithdrawSummary extends Component {
 	
 
 
+	handleEffectiveFee=()=>{
+		if(this.state.effectiveType){
+			this.setState({...this.state,effectiveType:false})
+		  }else{
+			this.setState({...this.state,effectiveType:true})
+		  }
+	}
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, seconds2, agreeRed, showDeclartion } = this.state;
+		const { seconds, disable, textDisable, seconds2, agreeRed, showDeclartion,effectiveData } = this.state;
 		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
@@ -746,7 +760,56 @@ class WithdrawSummary extends Component {
 									this.props.sendReceive.withdrawCryptoObj?.walletCode
 								}
 							/>
-						</div>
+						</div>						
+				  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle 
+Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
+                    <div className="summarybal">
+					<Currency
+							defaultValue={effectiveData?.comission}
+							prefix={""}
+							type={"text"}
+							suffixText={`${effectiveData?.coin}`}
+							/>
+							
+											 </div>
+                  </div>
+				  {this.state.effectiveType && <><div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Fees</div>
+                    <div className="summarybal">
+					<Currency
+							defaultValue={effectiveData?.totalFee}
+							prefix={""}
+							type={"text"}
+							suffixText={`${effectiveData?.coin}`}
+							/>
+                                        
+											</div>
+                  </div>
+				{effectiveData?.sbCredit !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Suissebase Credits Used</div>
+                    <div className="summarybal">
+					<Currency
+							defaultValue={effectiveData?.sbCredit}
+							prefix={""}
+							type={"text"}
+							suffixText={`${effectiveData?.coin}`}
+							/>                                       
+											</div>
+                  </div>}
+				 {effectiveData?.tierDiscount !=0 &&  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">tierDiscount</div>
+                    <div className="summarybal">
+					<Currency
+							defaultValue={effectiveData?.tierDiscount}
+							prefix={""}
+							type={"text"}
+							suffixText={`${effectiveData?.coin}`}
+							/>
+                                       
+											</div>
+                  </div>}
+				  </>}
 						<div className="pay-list">
 							<Translate
 								className="summary-liststyle"
