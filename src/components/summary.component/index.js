@@ -199,7 +199,7 @@ class Summary extends Component {
 										 </div>
                      </div>
 				 {tierDiscount !=0 && <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Tire Discount</div>
+                                    <div className="summary-liststyle">Tier Discount</div>
                                     <div className="summarybal">
 									<Currency
 									defaultValue={tierDiscount}

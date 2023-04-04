@@ -582,7 +582,7 @@ verificationsData=(data)=>{
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>
                 {getBanckDetails?.tierDiscount !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Tire Discount</div>
+                                    <div className="summary-liststyle">Tier Discount</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.tierDiscount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
