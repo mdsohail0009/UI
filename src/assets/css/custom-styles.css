@@ -225,7 +225,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .fait-wallets-style{display: flex;align-items: center;justify-content: space-between;margin-top: 36px;}
 .ant-table{background-color: transparent !important;}
 .ant-table-tbody > tr.ant-table-row:hover > td{background-color: transparent;}
-.ant-table-thead > tr > th{background-color:var(--grid) !important;border-bottom: 0;}
+.ant-table-thead > tr > th,.fee-table th{background-color:var(--grid) !important;border-bottom: transparent !important;}
 .ant-table-tbody > tr > td{border-bottom:rgba(255, 255, 255, 0.2) ;}
 .ant-table-container table > thead > tr:first-child th:first-child{border-top-left-radius: 20px;}
 .currency-style{color: var(--coinPrice);font-weight: 400;font-size: 24px;}

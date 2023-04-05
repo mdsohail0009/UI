@@ -112,10 +112,10 @@ const Fees = (props) => {
              {error && <Alert type="error" showIcon closable={false} description={error} />}
             <div className="grid-title">Fees for Transaction</div>
         
-            {commFees.length!=0&&<div className='transaction-custom-table db-transactions fee-table'>
+            {commFees.length!=0&&<div className='transaction-custom-table  fee-table p-0'>
             <div className='responsive_table db-ts-grid'>
               <table className='pay-grid view mb-view commision-fee-custtable'>
-                <thead>
+                <thead style={{borderTopLeftRadius:20}}>
                   <tr className='cust-tr-style'>
                     {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} <br></br>
                     </th>)}
