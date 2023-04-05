@@ -65,6 +65,7 @@ class OnthegoFundTransfer extends Component {
     fiatWallets:[],
     isLoading:false,
     selectedbankobj:{},
+    detailstype:false,
   }
   componentDidMount() {
     this.verificationCheck()
@@ -128,7 +129,7 @@ class OnthegoFundTransfer extends Component {
   saveCommissionsDetails=async(e)=>{
     if((this.state.amount || this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
       {
-        this.setState({...this.state,isLoading:true,errorMessage:null})
+        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true})
         let obj ={
           CustomerId:this.props.userProfile.id,      
           amount:this.enteramtForm.current.getFieldsValue().amount,    
@@ -139,7 +140,7 @@ class OnthegoFundTransfer extends Component {
         if(res.ok){
           this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
         }else {
-          this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false})
+          this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
       }
         }
     }  
@@ -343,8 +344,8 @@ saveWithdrawdata = async () => {
     },400)
 }
   handleCurrencyChange = (e) => {
- this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,getBanckDetails:null},(e)=>this.getBankDetails(e));
-  this.enteramtForm.current.setFieldsValue({fiatBank:"",selectedBank:null})
+ this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,detailstype:false,getBanckDetails:null},(e)=>this.getBankDetails(e));
+  this.enteramtForm.current.setFieldsValue({fiatBank:null,selectedBank:null})
   }
 
   keyDownHandler = (e) => {
@@ -535,7 +536,7 @@ verificationsData=(data)=>{
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-label"
-                        name="Bank"
+                        name="fiatBank"
                         label="Bank Name"
                         rules={[
                           {
@@ -560,7 +561,7 @@ verificationsData=(data)=>{
                         </Select>
                       </Form.Item>
                     </Col>
-                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.state.detailstype &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                {this.state.isLoading ? <Loader/> : <div className="cust-summary-new">
                   <div> 
                   { getBanckDetails &&  <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
@@ -602,7 +603,7 @@ verificationsData=(data)=>{
                   </div></>} 
                   </div>        
                   </div>}
-                  </Col>
+                  </Col>}
                   </Row>
                   <Row gutter={[16, 4]} className="send-drawerbtn">
 
