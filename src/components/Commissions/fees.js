@@ -129,7 +129,7 @@ const Fees = (props) => {
                           {items.map((item) => <td>{item.operation}</td>)}
                         </tr>
                         <tr>
-                          {items.map((item1) => <td><div className='ts-date'>{item1.flatFee}</div>
+                          {items.map((item1) => <td style={{height:38}}><div className='ts-date'>{item1.flatFee}</div>
                           </td>)}
                         </tr>
                       </table>
@@ -143,14 +143,16 @@ const Fees = (props) => {
           {commFees.length==0&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
             <Translate content="No_data" />
           } />}
-            <div className="grid-title">Fee discount for each tier</div>
-            {feeData?.customerTiers.length!=0&&<div style={{backgroundColor:'white'}}> {feeData&&<Table columns={columns} dataSource={feeData.customerTiers} pagination={false} />}</div>}
+            <div className="grid-title text-style">Fee discount for each tier</div>
+            {feeData?.customerTiers.length!=0&&<div> {feeData&&<div className="transaction-custom-table p-0 responsive_table">
+                           
+            <Table className="fee-discount-table" columns={columns} dataSource={feeData.customerTiers} pagination={false} /></div>}</div>}
            {(feeData?.customerTiers?.length==0)&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
                         <Translate content="No_data" />
                     } />}
-            <p style={{color:'white'}}>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
-        <p style={{color:'white'}}>Your current tier:{feeData?.tradeVolumes[0]?.currentTier}</p>
-        <span style={{color:'white'}}>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            <p className='note-cont text-style'>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
+        <p  className='note-cont'>Your current tier:{feeData?.tradeVolumes[0]?.currentTier}</p>
+        <span  className='note-cont'>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
         
          
               

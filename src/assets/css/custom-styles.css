@@ -223,7 +223,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .text-green{color: var(--green);}
 .text-red{color: var(--red);}
 .fait-wallets-style{display: flex;align-items: center;justify-content: space-between;margin-top: 36px;}
-.ant-table{background-color: transparent;}
+.ant-table{background-color: transparent !important;}
 .ant-table-tbody > tr.ant-table-row:hover > td{background-color: transparent;}
 .ant-table-thead > tr > th{background-color:var(--grid) !important;border-bottom: 0;}
 .ant-table-tbody > tr > td{border-bottom:rgba(255, 255, 255, 0.2) ;}
@@ -330,7 +330,7 @@ input:-webkit-autofill:active{
 .cust-cancel-btn.ant-btn:hover, .cust-cancel-btn.ant-btn:focus, .cust-cancel-btn.ant-btn:active{border: 1px solid #CCC3FF;border-radius: 5px;height: 46px;background-color: transparent;color: var(--white);font-weight: 600;transition: 0.3s ease;font-size: 16px;}
 /* button styles end */
 /*Kendo start*/
-.k-grid-header .k-header > .k-link,.commision-fee-custtable .k-link{font-size: 16px;font-weight: 700;color: var(--gridtitle);}
+.k-grid-header .k-header > .k-link,.commision-fee-custtable .k-link,.fee-discount-table thead th{font-size: 16px;font-weight: 700;color: var(--gridtitle);}
 .k-grid td,.commision-fee-custtable td{font-size: 14px;font-weight: 400;}
 /* .ant-form-item-label > label{color: var(--subText);font-weight: 400;font-size: 14px;margin-bottom: 2px !important;text-transform: capitalize;} */
 h1.sub-heading {text-transform: capitalize;padding-left:4px; padding-right:4px;font-size:18px;font-weight:500;margin-top: 10px;color:var(--textWhite);margin-bottom: 26px !important;}
@@ -356,7 +356,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .k-grid-content, .k-grid{background-color: transparent !important;color: var(--textWhite) !important;}
 .k-grid-content{margin-right: -12px;}
 .k-grid-header{padding-right: 0;}
-.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover,.markets-grid tbody tr:hover{background-color: var( --drawerList) !important;}
+.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover,.markets-grid tbody tr:hover,.fee-discount-table tbody{background-color: var( --drawerList) !important;}
 .k-pager-wrap{color: var(--white);background-color: transparent;}
 .k-actions.k-actions-stretched .k-button.k-button-md.k-button-solid.k-button-solid-base.k-rounded-md{background-color:#E8E8E8 !important ;border-radius: 30px;}
 .k-actions.k-actions-stretched .k-button-solid-primary.k-disabled{background-color:#3653E4 !important ;border-radius: 30px;border:transparent;color:#000;text-transform: uppercase;font-weight: 500;}
@@ -821,20 +821,20 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .grid-title{font-weight: 800 !important;font-size: 28px !important;color: var(--white) !important;margin-bottom: 24px !important;}
 .cust-list .k-grid{border-radius: 20px;}
 .cust-list{padding-top: 0 !important;}
-.cust-list .k-grid-header-wrap,.markets-drawer .ant-table-header{border-top-left-radius: 20px;border-top-right-radius: 20px;background-color: var(--gridheader);}
+.cust-list .k-grid-header-wrap,.markets-drawer .ant-table-header,.fee-discount-table thead tr{border-top-left-radius: 20px;border-top-right-radius: 20px;background-color: var(--gridheader);}
 .ant-select-selection-item{font-weight: 500;font-size: 14px;color: var(--white);}
 .filter-content{align-items:center}
 .pop-btn.search-btn{margin: 22px 0 0 12px; height: 48px; width: 148px;}
 .ant-picker-dropdown{z-index: 9999;}
 .excel-button{margin-top: 20px;}
 /* .k-grid-table,.ant-table-tbody{background-color: var(--tablebody);} */
-.k-grid td,.markets-grid td,.fee-withdraw td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
-.k-grid th,.markets-grid th{border-right: 1px solid  var(--tableborder) !important;}
+.k-grid td,.markets-grid td,.fee-withdraw td,.fee-discount-table td{border-right: 1px solid var(--gridborder) !important;border-bottom: 1px solid var(--gridborder) !important; color: var(--gridcontent);}
+.k-grid th,.markets-grid th,.fee-discount-table th{border-right: 1px solid  var(--tableborder) !important;}
 .custom-gridresponsive .ant-drawer-header,.custom-gridresponsive .ant-drawer-body{background: var(--bodyBg) !important;}
 .k-pager-wrap.k-pager.k-widget.k-grid-pager{background: var(--gridheader);border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
 .k-pager-numbers .k-link:hover{background-color: #3653E4;color: #ffffff !important;}
 /* .k-grid th,.k-grid td{padding: 8px 20px;} */
-.k-grid th:last-child,.k-grid td:last-child,.markets-grid td:last-child,.markets-grid th:last-child{border-right-color: transparent !important;}
+.k-grid th:last-child,.k-grid td:last-child,.markets-grid td:last-child,.markets-grid th:last-child,.fee-discount-table th:last-child{border-right-color: transparent !important;}
 .cust-input.cust-adon .ant-input-wrapper.ant-input-group{padding: 0 11px;}
 .icon.md.search-angle{background-position:-360.5px -488px; margin-left: 8px;}
 .custom-model-label .ant-form-item-label > label{height: 20px;}
@@ -1032,7 +1032,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .kpi-val.adview-name{width: 230px;}
 .input-disabled-style .ant-select-selection-item{color: var(--textSecondary);}
 .travel-success{margin-top: 65px;}
-.dashbord-space .notices-content{margin-bottom: 36px;}.db-transactions thead{ background-color: var(--grid) !important;}.db-transactions{padding-top: 0;margin-top: 14px;height: 505px;}.db-transactions thead tr:first-child{border-bottom: none !important;}
+.dashbord-space .notices-content{margin-bottom: 36px;}.db-transactions thead,.fee-discount-table thead{ background-color: var(--grid) !important;}.db-transactions{padding-top: 0;margin-top: 14px;height: 505px;}.db-transactions thead tr:first-child{border-bottom: none !important;}
 .download-btn{background-color: #3653E4; border-color: #3653E4;border-radius: 5px;font-weight: 600;transition: 0.3s ease; font-size: 16px; color: #FFFFFF;    padding: 10px 28px;   display: inline-block;    margin-left: 16px;}
 .validateiban-content:hover .ant-form-item-has-error .cust-input{border-color: var(--red) !important;}
 .crypto-list.auto-scroll.wallet-list .drawer-list-fiat .ant-image{vertical-align: middle;}
@@ -1050,12 +1050,14 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 /* commissions  start   */
 .first-header th{text-align: center !important;}
 .fee-withdraw{padding: 0 !important;border-right: 1px solid var(--gridborder) !important;}
-.fee-withdraw table tr td:last-child{border-right: transparent !important;}  
-.fee-withdraw tr:last-child td{border-bottom: transparent !important;}
+.fee-withdraw table tr td:last-child,.fee-discount-table tr td:last-child{border-right: transparent !important;}  
+.fee-withdraw tr:last-child td,.fee-discount-table tr:last-child td{border-bottom: transparent !important;}
 .fee-withdraw:last-child{border: transparent !important;}  
 .cust-tr-style th{text-align: center !important;}
 .fee-table{height: fit-content;padding-bottom: 0;}
-/* .commision-fee-custtable{border:1px solid var(--gridborder)  ;} */
+.fee-discount-table .ant-table-cell{padding: 8px 12px;}
+.fee-discount-table .ant-table-thead > tr:first-child th{border-bottom:1px solid var(--gridborder) !important;}
+
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){
