@@ -1,4 +1,4 @@
-import { Form, Row, Col, Typography, Input, Button, Image, Spin, Alert, Tabs } from "antd";
+import { Form, Row, Col, Typography, Input, Button, Image, Spin, Alert, Tabs,Select } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
@@ -6,7 +6,7 @@ import { validateContentRule } from "../../../utils/custom.validator";
 import ConnectStateProps from "../../../utils/state.connect";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails } from "../api";
+import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
@@ -14,6 +14,7 @@ import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
+const {Option}=Select;
 class BusinessTransfer extends Component {
     form = React.createRef();useDivRef=React.createRef()
     state = {
@@ -34,21 +35,27 @@ class BusinessTransfer extends Component {
         payeeaccountDetails:null,
         gbpdetails:{},
         documents:null,
-        reasonDocuments:null
+        reasonDocuments:null,
+        relationData:[],
+        selectedRelation:null,
+        reasonForTransferDataa:[],
+        selectedReasonforTransfer:null,
     };
     componentDidMount() {
         this.loadDetails();
+        this.getRelationData();
+        this.getReasonForTransferData();
     }
     loadDetails = async () => {
-        this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory });
-            let data = this.props.transferData;
+        let data = this.props.transferData;
+        this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory,selectedRelation:data.relation });
             let edit=false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
-                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2,ukSortCode:accountDetails.ukSortCode };
+                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2,ukSortCode:accountDetails.ukSortCode};
                 delete data["documents"];
                  edit = true;
             }
@@ -63,8 +70,8 @@ class BusinessTransfer extends Component {
                 this.setState({ ...this.state, selectedTab:"domestic" })  
             }
             const ibanDetails = this.props.transferData?.payeeAccountModels[0] || {}
-            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  this.props.transferData.id, ibanDetails}, () => {
-                this.setState({ ...this.state, isLoading: false })
+            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  this.props.transferData.id, ibanDetails,selectedRelation:data.relation}, () => {
+                this.setState({ ...this.state, isLoading: false,selectedRelation:data.relation})
             });
        
 
@@ -116,7 +123,7 @@ class BusinessTransfer extends Component {
         
         if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments,transferOthers:_obj.transferOthers, })
                 if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false,documents:null });
@@ -133,7 +140,7 @@ class BusinessTransfer extends Component {
     }
     handleTabChange = (key) => {
         let _obj = { ...this.state.details}
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null});this.form.current.resetFields();
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
@@ -196,6 +203,35 @@ class BusinessTransfer extends Component {
             return Promise.resolve();
         }
     };
+    getRelationData=async()=>{
+        let res = await getRelationDetails()
+        if(res.ok){
+            this.setState({...this.state,relationData:res.data,errorMessage:null})
+        }else{
+            this.setState({...this.state,errorMessage: apiCalls.isErrorDispaly(res),})
+           
+        }
+    }
+    handleRelation=(e)=>{
+        this.setState({...this.state,selectedRelation:e})
+        if(!this.state.edit){
+            this.form.current.setFieldsValue({others:null})
+        }        
+    }
+    getReasonForTransferData=async()=>{
+        let res = await getReasonforTransferDetails();
+        if(res.ok){
+            this.setState({...this.state,reasonForTransferDataa:res.data,errorMessage:null})
+        }else{
+            this.setState({...this.state,errorMessage: apiCalls.isErrorDispaly(res),})
+           
+        }
+    }
+
+    handleReasonTrnsfer=(e)=>{
+        this.setState({...this.state,selectedReasonforTransfer:e})
+        this.form.current.setFieldsValue({transferOthers:null})
+    }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
         if (isLoading) {
@@ -302,13 +338,47 @@ class BusinessTransfer extends Component {
                                     },
                                 ]}
                             >
-                                <Input
+                                <Select
                                     className="cust-input"
+                                    maxLength={100}
                                     placeholder={"Relationship To Beneficiary"}
-                                    maxLength={100}/>
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.relationData?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select>
 
                             </Form.Item>
                         </Col>
+                        {this.state.selectedRelation=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="others"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
@@ -321,7 +391,7 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    <DomesticTransfer type={this.props.type} currency={this.props.currency}/>
+                    <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}/>
                 
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
@@ -437,13 +507,47 @@ class BusinessTransfer extends Component {
                                     },
                                 ]}
                             >
-                                <Input
+                                 <Select
                                     className="cust-input"
+                                    maxLength={100}
                                     placeholder={"Relationship To Beneficiary"}
-                                    maxLength={100}/>
-
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.relationData?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
+                       
+                        {this.state.selectedRelation=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="others"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
@@ -455,7 +559,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
                     <h2  className="adbook-head">Bank Details</h2>
-                    <InternationalTransfer type={this.props.type} />
+                    <InternationalTransfer type={this.props.type} form={this.form} editDocument={this.state.isEdit} />
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
@@ -569,13 +673,47 @@ class BusinessTransfer extends Component {
                                     },
                                 ]}
                             >
-                                <Input
+                                <Select
                                     className="cust-input"
+                                    maxLength={100}
                                     placeholder={"Relationship To Beneficiary"}
-                                    maxLength={100}/>
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.relationData?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select>
 
                             </Form.Item>
                         </Col>
+                        {this.state.selectedRelation=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="others"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
@@ -708,14 +846,48 @@ class BusinessTransfer extends Component {
                                     "Reason For Transfer"
                                 }
                             >
-                                <TextArea
-                                    placeholder={"Reason For Transfer"}
-                                    className="cust-input cust-text-area address-book-cust"
-                                    autoSize={{ minRows: 1, maxRows: 1 }}
-                                    maxLength={200}
-                                ></TextArea>
+                                 <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={apicalls.convertLocalLang(
+                                        "reasiontotransfor"
+                                    )}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleReasonTrnsfer(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select> 
                             </Form.Item>
                         </Col>}
+                        {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>

@@ -1,13 +1,36 @@
 import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
-import { Form, Row, Col, Input } from "antd";
+import { Form, Row, Col, Input,Select,Alert } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
+import { getReasonforTransferDetails } from "../api";
 const { TextArea } = Input;
+const {Option}=Select;
 class InternationalTransfer extends Component {
+    state={
+        reasonForTransferDataa:[],
+        selectedReasonforTransfer:null,
+        errorMessage:null,
+    }
+    componentDidMount(){
+      this.getReasonForTransferData();  
+    }
+    getReasonForTransferData=async()=>{
+        let res = await getReasonforTransferDetails();
+        if(res.ok){
+            this.setState({...this.state,reasonForTransferDataa:res.data,errorMessage:null})
+        }else{
+            this.setState({...this.state,errorMessage: apiCalls.isErrorDispaly(res),})
+           
+        }
+    }
 
-
+    handleReasonTrnsfer=(e)=>{
+        this.setState({...this.state,selectedReasonforTransfer:e})
+        this.props.form.current.setFieldsValue({transferOthers:null})
+    }
     render() {
         return <Row className="validateiban-content">
+             {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"
@@ -175,14 +198,48 @@ class InternationalTransfer extends Component {
                         "Reason For Transfer"
                     }
                 >
-                    <TextArea
-                        placeholder={"Reason For Transfer"}
-                        className="cust-input cust-text-area address-book-cust"
-                        autoSize={{ minRows: 1, maxRows: 1 }}
-                        maxLength={200}
-                    ></TextArea>
+                     <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={"Reason For Transfer"}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleReasonTrnsfer(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select>
+                 
                 </Form.Item>
             </Col>}
+            {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                                
+                            />
+                            </Form.Item>
+                      </Col>}
         </Row>
     }
 }
