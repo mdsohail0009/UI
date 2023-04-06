@@ -9,45 +9,99 @@ import { userManager } from '../authentication';
 import OnBoarding from './onboard.component';
 import CallbackPage from '../authentication/callback.component';
 import { clearUserInfo } from '../reducers/configReduser';
+import { profileSuccess, setToken } from "../reducers/authReducer";
 import { withCookies } from 'react-cookie';
-class Layout extends Component {
-    state = {
-    }
-    componentDidMount() {
-        if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
-            localStorage.setItem("__url", window.location.pathname);
-            userManager.clearStaleState().then(()=>{
-                this.props.dispatch(clearUserInfo());
-                userManager.signinRedirect();
-            });
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useState } from 'react';
+
+const Layout = (props) => {
+    const [state, setState] = useState({
+        showResult: false,
+        apiMessage: "",
+        error: null,
+    });
+    const [tokenData, setTokenData] = useState()
+    const { isAuthenticated, loginWithRedirect, user, getAccessTokenSilently } = useAuth0();
+
+    const { isLoading, error } = useAuth0();
+
+    const callApi = async () => {
+        try {
+            const token = await getAccessTokenSilently();
+            props.acctoken(token)
+            //   const responseData = await response.json();    
+            setTokenData(token)
+        } catch (error) {
         }
-    }
-    redirect = () =>{
+    };
+
+
+    useEffect(() => {
+        callApi()
+        console.log(isAuthenticated);
+        console.log(user);
+        console.log(getAccessTokenSilently);
+        if (!isAuthenticated) {
+            loginWithRedirect();
+        } else {
+            props.updateProfile(user)
+        }
+    }, [])
+    // componentDidMount() {
+    // if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
+    //     localStorage.setItem("__url", window.location.pathname);
+    //     userManager.clearStaleState().then(()=>{
+    //         this.props.dispatch(clearUserInfo());
+    //         userManager.signinRedirect();
+    //     });
+    // }
+
+    // }
+    const redirect = () => {
+
         userManager.removeUser()
-        window.open(process.env.REACT_APP_ADMIN_URL,"_self")
+        window.open(process.env.REACT_APP_ADMIN_URL, "_self")
     }
-    render() {
-        if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
-            return <div className="loader">Loading .....</div>
-        }else if((!this.props.user || this.props.user.expired) && window.location.pathname.includes('callback')){
-            return <CallbackPage />
-        }else if(this.props.user && !this.props.userProfile){
-            return <OnBoarding />
-        }else if( this.props.userProfile && this.props.userProfile?.role==='Admin'){
-            return <>{this.redirect()}</>
-        }else if(this.props.twoFA?.loading){
-            return <div className="loader">Loading .....</div>
-        }else{
-        return <>
+    if (!isAuthenticated || !props.oidc.profile || !props.oidc.deviceToken) {
+        return <div className="loader">Loading .....</div>
+    } else if (props.oidc.profile && !props.userProfile) {
+        return <OnBoarding />
+    } else if (props.userProfile && props.userProfile?.role === 'Admin') {
+        return <>{redirect()}</>
+    } else if (props.twoFA?.loading) {
+        return <div className="loader">Loading .....</div>
+    }
+
+    if (error) {
+        return <div>Oops... {error.message}</div>;
+    }
+    if (isLoading) {
+        return <div className="loader">Loading .....</div>
+    }
+
+    return (
+        <>
             <AntLayout>
-            <Header />
-            <Content />
-            <Footer />
-          </AntLayout>
+                <Header />
+                <Content />
+                <Footer />
+            </AntLayout>
         </>
-        }
-        
+    )
+
+}
+const mapStateToProps = ({ oidc, userConfig }) => {
+    return { oidc, userProfile: userConfig.userProfileInfo }
+
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        updateProfile: (info) => { dispatch(profileSuccess(info)) },
+        acctoken: (data) => { dispatch(setToken(data)) }
     }
+
 }
 
-export default ConnectStateProps(withCookies(Layout));
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(Layout));

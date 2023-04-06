@@ -34,7 +34,6 @@ const clearUserInfo = () => {
 }
 const getmemeberInfo = () => {
     return async (dispatch) => {
-        
         apiCalls.getMember().then((res) => {
             if (res.ok) {
                 dispatch(userInfo(res.data));

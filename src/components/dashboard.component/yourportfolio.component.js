@@ -33,7 +33,6 @@ class YourPortfolio extends Component {
   //   loadCoinDetailData = async () => {
   //     this.setState({ ...this.state, loading: true,errorMessage:null})
   //     this.props.dispatch(fetchMarketCoinData(false))
-  //     debugger
   //     const response = await getcoinDetails(this.props.match.params?.coinName);
   //     if (response.ok) {
   //         this.setState({ ...this.state, coinData: response.data,errorMessage:null },

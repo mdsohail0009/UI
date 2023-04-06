@@ -13,20 +13,44 @@ import { store } from './store';
 import { CookiesProvider } from 'react-cookie';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { updateWorker } from './reducers/serviceWorker';
+import NavBar from './authentication/auth0/login';
+import { getConfig } from './authentication/auth0/configs';
+import { Auth0Provider } from "@auth0/auth0-react";
+import history from "./authentication/auth0/history";
+
 
 const onUpdate = () => {
   store.dispatch(updateWorker());
 }
+const onRedirectCallback = (appState) => {
+  history.push(
+    appState && appState.returnTo ? appState.returnTo : window.location.pathname
+  );
+};
+
+const config = getConfig();
+
+const providerConfig = {
+  domain: config.domain,
+  clientId: config.clientId,
+  ...(config.audience ? { audience: config.audience } : null),
+  redirectUri: window.location.origin,
+  onRedirectCallback,
+};
 ReactDOM.render(
   <React.StrictMode>
+    <Auth0Provider {...providerConfig}>
+    {/* <NavBar /> */}
+  
     <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./custom-dark2.0.css", LHT: "./custom-light2.0.css" }}>
-     <Provider store={store}>
-     <CookiesProvider>
-      <IdleCmp />
-      </CookiesProvider>
+      <Provider store={store}>
+        <CookiesProvider>
+          <IdleCmp />
+        </CookiesProvider>
       </Provider>
     </ThemeSwitcherProvider>
-  </React.StrictMode>,
+    </Auth0Provider>
+   </React.StrictMode>,
   document.getElementById('root')
 );
 serviceWorkerRegistration.register({ onUpdate });

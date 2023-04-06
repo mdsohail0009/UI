@@ -12,10 +12,12 @@ import apiCalls from '../../api/apiCalls';
 import { updatetwofactor } from "../../reducers/configReduser";
 import SecurityLogin from "../../authentication/temp.security";
 import ConnectStateProps from "../../utils/state.connect";
+import { useAuth0 } from "@auth0/auth0-react";
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
   const [showNotifications, setNotifications] = useState(false);
+  const { isLoading, error } = useAuth0();
   const connectToHub = () => {
     setTimeout(() => {
       const { userConfig: { userProfileInfo } } = store.getState();
@@ -68,6 +70,12 @@ function App(props) {
     //this should be unComment to STG and LIVE Only connectToHub
     connectToHub(); 
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
+  if (error) {
+    return <div>Oops... {error.message}</div>;
+}
+if (isLoading) {
+    return <div className="loader">Loading .....</div>
+}
   return (
     <OidcProvider userManager={userManager} store={store}>
       <Router basename={process.env.PUBLIC_URL}>
