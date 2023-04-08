@@ -178,7 +178,7 @@ class OthersBusiness extends Component {
        if (response.ok) {
             if (this.props.type !== "manual") {
                 const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
-                    docrepoitory:this.state.rasonDocuments 
+                    docRepositories:this.state.rasonDocuments 
                  })
                 if (confirmRes.ok) {
                     this.props.onContinue(confirmRes.data);
