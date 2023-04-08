@@ -66,7 +66,7 @@ class AddressBook extends Component {
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"), this.props.userConfig.id));
 	}
 	componentDidMount() {
-		this.setState({...this.state,cryptoFiat:false})
+		this.setState({...this.state,cryptoFiat:true})
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if (process.env.REACT_APP_ISTR=="true") {
@@ -90,7 +90,7 @@ class AddressBook extends Component {
 				customerId: this.props.userProfileInfo?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book grid view",
-				Duration: 1,
+				Duration: 1,	
 				Url: window.location.href,
 				FullFeatureName: "Address Book",
 			});
@@ -584,6 +584,7 @@ class AddressBook extends Component {
 		this.props.changeStep("step1");
 	};
 	handleWithdrawToggle = (e) => {
+		debugger
 		this.setState({
 			...this.state,
 			cryptoFiat: parseInt(e) === 2,
@@ -709,8 +710,9 @@ class AddressBook extends Component {
 					defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
 							onChange={this.handleWithdrawToggle}
 							>					
-                                <Tabs.TabPane tab="Send Crypto" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
                                 <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" key={2} className="" component={Radio.Button}/>
+								<Tabs.TabPane tab="Send Crypto" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
+
 						    </Tabs>
 							</div>
 					</div>
