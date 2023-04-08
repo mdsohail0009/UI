@@ -36,6 +36,7 @@ class OnthegoFundTransfer extends Component {
     filterObj: [],
     selectedBank:null,
     selectedCurrency: this.props.selectedCurrency,
+    selectedType:this.props.selectedCurrency,
     addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
         amount: "",
@@ -81,6 +82,10 @@ class OnthegoFundTransfer extends Component {
     }
     if (this.state.selectedCurrency) {
       this.getPayees();
+     // this.fetchMemberWallet()
+    }
+    if(this.state.selectedType){
+      this.fetchMemberWallet()
     }
   }
   getAccountWallet=async()=>{
