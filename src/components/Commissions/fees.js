@@ -120,7 +120,7 @@ const Fees = (props) => {
               <table className='pay-grid view mb-view commision-fee-custtable'>
                 <thead style={{borderTopLeftRadius:20}}>
                   <tr className='cust-tr-style'>
-                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} <br></br>
+                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} {items[0].currency&&<>({items[0].currency})</>}<br></br>
                     </th>)}
                     
                   </tr>
