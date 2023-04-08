@@ -5,6 +5,7 @@ import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
 import Translate from "react-translate-component";
+import {Link } from "react-router-dom";
 const Fees = (props) => {
   const [feeData, setfeeData] = useState()
   const [loader, setLoader] = useState()
@@ -109,6 +110,8 @@ const Fees = (props) => {
     return <>
     {loader?<Loader/>:
         <div className="main-container">
+          <div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
+          <div className="grid-title">Fees & Tier Structure</div>
              {error && <Alert type="error" showIcon closable={false} description={error} />}
             <div className="grid-title">Fees for Transaction</div>
         
@@ -117,8 +120,9 @@ const Fees = (props) => {
               <table className='pay-grid view mb-view commision-fee-custtable'>
                 <thead style={{borderTopLeftRadius:20}}>
                   <tr className='cust-tr-style'>
-                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} <br></br>
+                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} {items[0].currency&&<>({items[0].currency})</>}<br></br>
                     </th>)}
+                    
                   </tr>
                 </thead>
                 <tbody>
