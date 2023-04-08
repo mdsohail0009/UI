@@ -109,7 +109,7 @@ const AddressFiatView = (props) => {
 															fiatAddress?.transferType === null
 															? "-"
 															: (fiatAddress?.transferType=='chftransfer'&&"CHF Transfer")||((fiatAddress?.transferType === "internationalIBAN") && `International ${bankDetailes[0].walletCode} IBAN`) ||
-															fiatAddress?.transferType.toUpperCase()}
+															fiatAddress?.transferType}
 
 													</div>}
 												</div>
