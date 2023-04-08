@@ -1119,3 +1119,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .commision-fee-custtable .cust-tr-style > th{border-right: 1px solid var(--tableborder)}
 .commision-fee-custtable .cust-tr-style > th:last-child{border-right:0}
 .cust-send-amountfield.fund-transfer-input .tfunds-inputgroup .ant-select{width:auto;}
+.accordian .ant-collapse-extra span{display: inline-block; color: var(--textPureWhite);font-size: 12px;padding: 2px 8px; border-radius: 4px; font-weight: 500;}
+.reject-lbl{background-color: red !important;}
+.subm-lbl{background-color: blue !important;}
+.Requet-lbl{background-color: #c7c70d !important;}
