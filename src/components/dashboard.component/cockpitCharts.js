@@ -114,7 +114,7 @@ class CockpitCharts extends Component {
     }
     showSendReceiveDrawer = (e, value) => {
         this.props.dispatch(setStep("step1"));
-        const is2faEnabled =  this.props.userConfig?.twofactorVerified;
+        const is2faEnabled =  this.props?.twoFA?.isEnabled;
         if (!this.props?.userConfig?.isKYC) {
             this.props.history.push("/notkyc");
             return;
@@ -354,7 +354,7 @@ class CockpitCharts extends Component {
     }
 }
 const connectStateToProps = ({ breadCrumb, oidc, userConfig, sendReceive, dashboard,buyFiat }) => {
-    return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo,buyFiat }
+    return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo,buyFiat,twoFA:userConfig.twoFA }
 }
 
 export default connect(connectStateToProps, (dispatch) => { return { dispatch } })(CockpitCharts);
