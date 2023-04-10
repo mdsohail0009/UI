@@ -28,7 +28,7 @@ const SuisseBaseCreditCom=(props)=>{
             setIsLoading(false);
             setSuissebaseCreditBalance(res.data);
             setisSuissebaseCredit(res.data.isSuissebaseCredit)
-            form.setFieldsValue({credit:res.data.credit,isSuissebaseCredit:res.data.isSuissebaseCredit})          
+            form.setFieldsValue({credit:res.data.credit.toLocaleString(),isSuissebaseCredit:res.data.isSuissebaseCredit})          
         }else {
             setIsLoading(false);
             setErrorMsg(apicalls.isErrorDispaly(res))
@@ -84,7 +84,7 @@ const SuisseBaseCreditCom=(props)=>{
             <p></p>
             <Row className="order-bottom add-custom">
                 <Col sm={24} md={24} xs={24} xl={24} className="">
-                    <Text className="label-style"><Translate content="suissebasecredits" /></Text>
+                    <Text className="label-style"><Translate content="suissebasecredits" /> (USD)</Text>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="credit"
