@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
 import { PDFExport } from '@progress/kendo-react-pdf';
 import logColor from '../../assets/images/logo-color.png';
-import {Button, Dropdown,Menu,} from 'antd';
+import {Button, Dropdown,Menu, Spin,} from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -196,7 +196,6 @@ export function withState(WrappedGrid) {
                     </div>
                     </div>
                     <div className="cust-list main-container">
-                    {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
                      <Dropdown
                       overlayClassName="secureDropdown depwith-drpdown transacton-drpdwn mobile-transaction"
@@ -212,8 +211,9 @@ export function withState(WrappedGrid) {
                         <Button>Download Transaction<span className='icon md excel-export'></span></Button>
                         </Dropdown>
                     </div>}
-                    {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
-
+                    {this.props.showExcelExport ? <>
+                     <Spin spinning={this.state.isLoading} >
+                    <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
                         <WrappedGrid ref={this.gridref}
                             sortable={true}
                             resizable={true}
@@ -228,7 +228,10 @@ export function withState(WrappedGrid) {
                             sort={this.state.dataState.sort}
                             onDataStateChange={this.handleDataStateChange}
                         />
-                    </ExcelExport> : <WrappedGrid ref={this.gridref}
+                    </ExcelExport></Spin> </>:
+                    <>
+                     <Spin spinning={this.state.isLoading} >
+                    <WrappedGrid ref={this.gridref}
                         sortable={true}
                         resizable={true}
                         filterOperators={filterOperators}
@@ -241,7 +244,7 @@ export function withState(WrappedGrid) {
                         filter={this.state.dataState.filter}
                         sort={this.state.dataState.sort}
                         onDataStateChange={this.handleDataStateChange}
-                    />}
+                    /></Spin></>}
                 </div>
                 </div>
             );
