@@ -316,11 +316,11 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
                                 : "text-red red-text"
                             }`}
                           />
-                          {/* <span className={`icon sm  ${
+                          <span className={`icon sm  ${
                               item.coinValueinNativeCurrency > 0
                                 ? "valupp-icon pg-arrow"
                                 : "valdown-icon red-arrow"
-                            }`} /> */}
+                            }`} />
                             </div>
                       </div>
                     }
