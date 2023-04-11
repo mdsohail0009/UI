@@ -228,8 +228,6 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
                   </div> 
                      
               </div>
-              {console.log(state.transactionData,"transactionData1")}
-              {console.log(cryptoPortFolios.data,"cryptoPortFolios")}
             <List
               className="mobile-list"
               itemLayout="horizontal"

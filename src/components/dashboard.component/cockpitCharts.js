@@ -43,66 +43,8 @@ const CockpitCharts=(props)=> {
     useEffect(()=>{
         if(props.dashboard.wallets.data!==state.transactionData){
           setState({...state,transactionData:props.dashboard.wallets.data})
-        
         }
-        loadDashboards(30);
-        cokpitKpiTrack();
     },[props.dashboard.wallets.data])
-    const cokpitKpiTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit KPI page view', "Username": props.userProfileInfo?.userName, "customerId": props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit KPI page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
-    }
-    const loadDashboards = async (Days) => {
-        setState({ ...state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
-        await Promise.all([
-            apiCalls.getdshcumulativePnl(Days).then(_response => {
-                if (_response.ok) {
-                    setState({ ...state, cumulativePNL: _response.data,errorMessage:null })
-                }else{
-                    setState({...state,errorMessage:apiCalls.isErrorDispaly(_response)})
-                }
-            }),
-            apiCalls.getprofits(Days).then(_res => {
-                if (_res.ok) {
-                    setState({ ...state, profits: _res.data })
-                }else{
-                    setState({...state,errorMessage:apiCalls.isErrorDispaly(_res)})
-                }
-            }),
-            apiCalls.getdailypnl(Days).then(_dailyPnlres => {
-                if (_dailyPnlres.ok) {
-                    setState({ ...state, dailyPnl: _dailyPnlres.data })
-                }else{
-                    setState({...state,errorMessage:apiCalls.isErrorDispaly(_dailyPnlres)})
-                }
-            }),
-            apiCalls.getAssetNetwroth(Days).then(assetnetWorthres => {
-                if (assetnetWorthres.ok) {
-                    setState({ ...state, assetnetWorth: assetnetWorthres.data })
-                }else{
-                    setState({...state,errorMessage:apiCalls.isErrorDispaly(assetnetWorthres)})
-                }
-            }),
-            apiCalls.getAssetAllowcation(Days).then(assetAlloctionres => {
-                if (assetAlloctionres.ok) {
-                    setState({ ...state, assetAlloction: assetAlloctionres.data })
-                }else{
-                    setState({...state,errorMessage:apiCalls.isErrorDispaly(assetAlloctionres)})
-                }
-            }),
-        ]);
-    }
-   const loadData = async () => {
-        let response = await apiCalls.getreports('getReports');
-        if (response.ok) {
-            setState({ reports: response.data,errorMessage:null })
-        }else{
-            setState({...state,errorMessage:apiCalls.isErrorDispaly(response)})
-        }
-    }
-  const viewReport = (elem) => {
-        props.history.push('/cockpit/reportview/' + elem.name);
-        apiCalls.trackEvent({ "Action": 'View Reports', "Feature": 'Dashboard', "Remarks": "View Reports", "FullFeatureName": 'Dashboard View Reports', "userName": props.userConfig.userName, id: props.userConfig.id });
-    }
   const showSendReceiveDrawer = (e, value) => {
         props.dispatch(setStep("step1"));
         const is2faEnabled =  props?.twoFA?.isEnabled;
@@ -122,8 +64,11 @@ const CockpitCharts=(props)=> {
         if (e === 2) {
             props.dispatch(setReceiveFiatHead(false));
             props.dispatch(setSendFiatHead(false));
-            setState({ ...setState, showFuntransfer: true, selectedCurrency:value })
-            props.dispatch(getScreenName({getScreen:"withdraw"}))
+            props.dispatch(getScreenName({getScreen:"withdraw"}));
+            setState(prevState => ({
+                ...prevState,
+                showFuntransfer: true, selectedCurrency:value
+             }));
         } else if (e === 1) {
             props.dispatch(setReceiveFiatHead(true));
             props.dispatch(setWithdrawfiatenaable(false))
