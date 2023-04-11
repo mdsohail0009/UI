@@ -1089,7 +1089,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .statement-header div{flex: 1;}
 .statement-header.logo-content{align-items: flex-end;}
 .transaction-pdf-template thead{vertical-align: top;text-align: left;}
-.transaction-pdf-template thead th:first-child,tbody tr td:first-child{padding-left: 10px; }
+.transaction-pdf-template thead th:first-child,tbody tr td:first-child,.fee-discount-table tr td:first-child{padding-left: 10px; }
 .transaction-pdf-template tbody tr td{padding-top:8px;padding-bottom:8px; }
 .transaction-pdf-template .pdt-data tr td{word-break: break-all;}
 .ant-dropdown-menu.history-excel{background-color: var(--profileMenu) !important; border-radius: 10px; min-width: 100px; max-width: 200px; padding: 24px 0;right: 25px;}
