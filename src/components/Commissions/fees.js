@@ -144,15 +144,15 @@ const Fees = (props) => {
               </table>
           </div>
           </div>} */}
-           <div className="table-scroll">
+           <div className="table-scroll responsive_table">
             <table className="commision-table table-border edit-commition-table view-commition-table" border="1">
                   <thead><tr className="table-header-row">
                     <th style={{width:"150px"}}></th>
-                    <th className="p-0">
+                    <th className="">
                       <table className="table-partner-head">
                         <tr>
                         <th className="text-center" style={{paddingLeft:"55px"}}>Suissebase Fees</th>
-                        <th colSpan={5} className="table-border-right text-center"></th>
+                        <th colSpan={5} className=" text-center"></th>
                         </tr>
                       </table>
                     </th>
@@ -167,9 +167,9 @@ const Fees = (props) => {
 
                         {items?.map((item) => (<>
 
-                          <table className="row-border inside-table" >
+                          <table className="row-border inside-table"width="100%" >
                             <tr>
-                              <td >{item.currencyType}</td>
+                              <td style={{ width: "150px" }}>{item.currencyType}</td>
                               <td style={{ width: "150px" }} >{item.bankName}
                               {" "} {item.status==="Inactive"? <span className="file-labels ml-8 fs-12 address-label address-label-width">Inactive</span>:" "}
                               </td>
