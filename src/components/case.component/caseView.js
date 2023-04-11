@@ -462,9 +462,7 @@ beforeUpload = (file) => {
                                         <Form
                                             onFinish={() => this.docReject(doc)}
                                         >
-                                             {doc?.state !=="Approved"&&<>
                                             <div>
-                                           
                                                     <Form.Item
                                                      className="d-block error-mt"
                                                         name=""
@@ -559,7 +557,6 @@ beforeUpload = (file) => {
                                                     Submit
                                                 </Button>
                                             </Form.Item> 
-                                            </>}
                                         </Form>
                                     </>}
                                      {this.state.documentReplies[doc.id]?.loading ? <div className="text-center"><Spin size="large" /></div>:
