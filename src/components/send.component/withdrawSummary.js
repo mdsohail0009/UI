@@ -481,15 +481,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	saveWithdrwal = async (values) => {
-		if (!values.isAccept) {
-			this.setState({
-				...this.state,
-				errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
-				agreeRed: false,
-			});
-			this.useDivRef.current.scrollIntoView(0, 0);
-		}
-		else {
+	
 
 			this.setState({ ...this.state, btnLoading: true, agreeRed: true })
 
@@ -522,6 +514,15 @@ class WithdrawSummary extends Component {
 					this.useDivRef.current.scrollIntoView(0, 0);
 					return;
 				}
+			}
+			if (!values.isAccept) {
+				this.setState({
+					...this.state,
+					btnLoading: false,
+					errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
+					agreeRed: false,
+				});
+				this.useDivRef.current.scrollIntoView(0, 0);
 			}
 			if (this.props.userProfile.isBusiness || !this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
@@ -566,7 +567,7 @@ class WithdrawSummary extends Component {
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
-		}
+		
 	};
 	
 

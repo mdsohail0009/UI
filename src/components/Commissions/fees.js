@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import apiCalls from '../../api/apiCalls'
-import { Table ,Alert,Empty} from 'antd';
+import { Table ,Alert,Empty,Form} from 'antd';
 import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
 import Translate from "react-translate-component";
+import {Link } from "react-router-dom";
 const Fees = (props) => {
   const [feeData, setfeeData] = useState()
   const [loader, setLoader] = useState()
@@ -22,9 +23,9 @@ const Fees = (props) => {
       setfeeData(res.data);
       let products = res.data.commissionTierFees
       const groupByCategory = products.reduce((group, product) => {
-        const { bankName} = product;
-        group[bankName] = group[bankName] ?? [];
-        group[bankName].push(product);
+        const { operation} = product;
+        group[operation] = group[operation] ?? [];
+        group[operation].push(product);
         return group;
       }, {});
       const tableData = Object.entries(groupByCategory);
@@ -109,16 +110,19 @@ const Fees = (props) => {
     return <>
     {loader?<Loader/>:
         <div className="main-container">
+          <div className="backbtn-arrowmb"><Link  to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
+          <div className="grid-title">Fees & Tier Structure</div>
              {error && <Alert type="error" showIcon closable={false} description={error} />}
             <div className="grid-title">Fees for Transaction</div>
         
-            {commFees.length!=0&&<div className='transaction-custom-table  fee-table p-0'>
+            {/* {commFees.length!=0&&<div className='transaction-custom-table  fee-table p-0'>
             <div className='responsive_table db-ts-grid'>
               <table className='pay-grid view mb-view commision-fee-custtable'>
                 <thead style={{borderTopLeftRadius:20}}>
                   <tr className='cust-tr-style'>
-                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} <br></br>
+                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} {items[0].currency&&<>({items[0].currency})</>}<br></br>
                     </th>)}
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -139,7 +143,72 @@ const Fees = (props) => {
                 </tbody>
               </table>
           </div>
-          </div>}
+          </div>} */}
+           <div className="table-scroll">
+            <table className="commision-table table-border edit-commition-table view-commition-table" border="1">
+                  <thead><tr className="table-header-row">
+                    <th style={{width:"150px"}}></th>
+                    <th className="p-0">
+                      <table className="table-partner-head">
+                        <tr>
+                        <th className="text-center" style={{paddingLeft:"55px"}}>Suissebase Fees</th>
+                        <th colSpan={5} className="table-border-right text-center"></th>
+                        </tr>
+                      </table>
+                    </th>
+                  </tr></thead>
+               <tbody>
+                {commFees?.map(([operation,items])=>(
+                  <React.Fragment key={operation}>
+                    <tr>
+                      <td style={{width:"100px"}}>{operation}</td>
+                     
+                      <td className="p-0" >
+
+                        {items?.map((item) => (<>
+
+                          <table className="row-border inside-table" >
+                            <tr>
+                              <td >{item.currencyType}</td>
+                              <td style={{ width: "150px" }} >{item.bankName}
+                              {" "} {item.status==="Inactive"? <span className="file-labels ml-8 fs-12 address-label address-label-width">Inactive</span>:" "}
+                              </td>
+                              <td style={{ width: "150px" }}>
+                                <Form.Item className="customised-input">
+                                  <div className="d-flex align-center">
+                                    {/* <span className={item.isMinMax ? item.isMinMax === true && "icon md greenCheck mr-8" : "icon md greyCheck"}></span> */}
+
+                                    <label>Min: <span className="minmax-value"><>{item.minFee?<>{`${item.minFee}`}</>:"-"}</></span></label>
+                                  </div>
+                                </Form.Item>
+                              </td>
+                              <td style={{ width: "150px" }}>
+                                <Form.Item className="customised-input">
+                                  <div className="d-flex align-center">
+                                    <label>Max:<span className="minmax-value"><>{item.maxFee?<>{`${item.maxFee}%`}</>:"-"}</></span></label>
+                                  </div>
+                                </Form.Item>
+                              </td>
+                              <td style={{ width: "150px" }}>
+                                <Form.Item className="customised-input">
+                                  <div className="d-flex align-center">
+                                    {/* <span className={item.isFlat ? item.isFlat === true && "icon md greenCheck mr-8" : " icon md greyCheck  mr-8"}></span> */}
+                                    <label>Flat: <span className="minmax-value"><>{item.flatFee?<>{`${item.flatFee}`}</>:"-"}</></span></label>
+                                  </div>
+                                </Form.Item>
+                              </td>
+
+                                  </tr>
+                          </table>
+                        </>))}
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+               </tbody>
+                </table>
+                
+          </div>
           {commFees.length==0&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
             <Translate content="No_data" />
           } />}

@@ -430,7 +430,7 @@ beforeUpload = (file) => {
                             accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} 
                             expandIcon={() => <span className="icon md downangle" />}>
-                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + " staus-lbl" : ""}`}>{doc?.state}</span>) : ""}>
+                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + ` ${(doc?.state==="Approved"&&"staus-lbl")||(doc?.state==="Rejected"&&"reject-lbl")||(doc?.state==="Submitted"&& "subm-lbl")||(doc?.state==="Requested"&&"Requet-lbl")}` : ""}`}>{doc?.state}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
@@ -442,7 +442,6 @@ beforeUpload = (file) => {
                                         <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
                                                 <span className={`icon xl ${(file.fileName.slice(-3) === "zip" ? "file" : "") || (file.fileName.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                 <div className="docdetails c-pointer" 
-                                                //onClick={() => this.docPreview(file)}
                                                 onClick={() => this.docPreviewOpen(file)}
                                                 >
                                                     <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
@@ -462,7 +461,9 @@ beforeUpload = (file) => {
                                         <Form
                                             onFinish={() => this.docReject(doc)}
                                         >
+                                             {doc?.state !=="Approved"&&<>
                                             <div>
+
                                                     <Form.Item
                                                      className="d-block error-mt"
                                                         name=""
@@ -498,14 +499,12 @@ beforeUpload = (file) => {
                                                 />}
                                                 {this.state?.saveDocId==doc?.id && this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
-                                                        <Alert
-                                                            className="newcase-style error-style"
-                                                            type="warning"
-                                                            description={this.state.errorWarning}
-                                                            showIcon
-                                                            closable={false}
-                                                           
-                                                        />
+                                                       <Alert
+													className="w-100 mb-16"
+													type="error"
+                                                    description={this.state.errorWarning}
+													showIcon
+												/>
                                                     </div>
                                                 )}
                                                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} 
@@ -559,6 +558,7 @@ beforeUpload = (file) => {
                                                     Submit
                                                 </Button>
                                             </Form.Item> 
+                                            </>}
                                         </Form>
                                     </>}
                                      {this.state.documentReplies[doc.id]?.loading ? <div className="text-center"><Spin size="large" /></div>:
