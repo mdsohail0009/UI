@@ -28,7 +28,7 @@ const SuisseBaseCreditCom=(props)=>{
             setIsLoading(false);
             setSuissebaseCreditBalance(res.data);
             setisSuissebaseCredit(res.data.isSuissebaseCredit)
-            form.setFieldsValue({credit:res.data.credit.toLocaleString(),isSuissebaseCredit:res.data.isSuissebaseCredit})          
+            form.setFieldsValue({credit:res?.data.credit?.toLocaleString(),isSuissebaseCredit:res.data.isSuissebaseCredit})          
         }else {
             setIsLoading(false);
             setErrorMsg(apicalls.isErrorDispaly(res))

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState,useEffect } from 'react'
 import { List,Button, Empty, Menu,Dropdown,Input,Typography,Space,Drawer,Image,Alert } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
@@ -18,8 +18,8 @@ import { getScreenName } from '../../reducers/feturesReducer';
 import PersonalInternalTransferComponent from '../personalInternalTransfer.component';
 const { Title, Paragraph, Text } = Typography;
 
-class CockpitCharts extends Component {
-    state = {
+const CockpitCharts=(props)=> {
+ const [state,setState] = useState({
         reports: [],
         c: null,
         cumulativePNL: null,
@@ -28,159 +28,150 @@ class CockpitCharts extends Component {
         profits: null,
         assetnetWorth: null,
         isLoading:false,
-        transactionData:this.props.dashboard.wallets.data,
+        transactionData:props.dashboard.wallets.data,
         searchVal:[],
         fullViewData:[],
         marketCaps:[],
-        dashBoardTransactions:this.props.dashboard.wallets.data,
+        dashBoardTransactions:props.dashboard.wallets.data,
         buyFiatDrawer: false,
         selctedVal: '',
         valNum: 1,
         showFuntransfer: false,
         errorMessage:null,
         personalTransafershowDrawer:false
+    })
+    useEffect(()=>{
+        if(props.dashboard.wallets.data!==state.transactionData){
+          setState({...state,transactionData:props.dashboard.wallets.data})
+        
+        }
+        loadDashboards(30);
+        cokpitKpiTrack();
+    },[props.dashboard.wallets.data])
+    const cokpitKpiTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit KPI page view', "Username": props.userProfileInfo?.userName, "customerId": props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit KPI page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
-
-    componentDidMount() {
-        // this.loadKpis();
-        this.loadDashboards(30);
-        this.cokpitKpiTrack();
-    }
-    cokpitKpiTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit KPI page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit KPI page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
-    }
-    loadDashboards = async (Days) => {
-        this.setState({ ...this.state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
+    const loadDashboards = async (Days) => {
+        setState({ ...state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
         await Promise.all([
             apiCalls.getdshcumulativePnl(Days).then(_response => {
                 if (_response.ok) {
-                    this.setState({ ...this.state, cumulativePNL: _response.data,errorMessage:null })
+                    setState({ ...state, cumulativePNL: _response.data,errorMessage:null })
                 }else{
-                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(_response)})
+                    setState({...state,errorMessage:apiCalls.isErrorDispaly(_response)})
                 }
             }),
             apiCalls.getprofits(Days).then(_res => {
                 if (_res.ok) {
-                    this.setState({ ...this.state, profits: _res.data })
+                    setState({ ...state, profits: _res.data })
                 }else{
-                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(_res)})
+                    setState({...state,errorMessage:apiCalls.isErrorDispaly(_res)})
                 }
             }),
             apiCalls.getdailypnl(Days).then(_dailyPnlres => {
                 if (_dailyPnlres.ok) {
-                    this.setState({ ...this.state, dailyPnl: _dailyPnlres.data })
+                    setState({ ...state, dailyPnl: _dailyPnlres.data })
                 }else{
-                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(_dailyPnlres)})
+                    setState({...state,errorMessage:apiCalls.isErrorDispaly(_dailyPnlres)})
                 }
             }),
             apiCalls.getAssetNetwroth(Days).then(assetnetWorthres => {
                 if (assetnetWorthres.ok) {
-                    this.setState({ ...this.state, assetnetWorth: assetnetWorthres.data })
+                    setState({ ...state, assetnetWorth: assetnetWorthres.data })
                 }else{
-                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(assetnetWorthres)})
+                    setState({...state,errorMessage:apiCalls.isErrorDispaly(assetnetWorthres)})
                 }
             }),
             apiCalls.getAssetAllowcation(Days).then(assetAlloctionres => {
                 if (assetAlloctionres.ok) {
-                    this.setState({ ...this.state, assetAlloction: assetAlloctionres.data })
+                    setState({ ...state, assetAlloction: assetAlloctionres.data })
                 }else{
-                    this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(assetAlloctionres)})
+                    setState({...state,errorMessage:apiCalls.isErrorDispaly(assetAlloctionres)})
                 }
             }),
         ]);
     }
-    loadData = async () => {
+   const loadData = async () => {
         let response = await apiCalls.getreports('getReports');
         if (response.ok) {
-            this.setState({ reports: response.data,errorMessage:null })
+            setState({ reports: response.data,errorMessage:null })
         }else{
-            this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+            setState({...state,errorMessage:apiCalls.isErrorDispaly(response)})
         }
     }
-    // loadKpis = async () => {
-    //     this.setState({...this.state,isLoading:true})
-    //     let response = await apiCalls.getdshKpis();
-    //     if (response.ok) {
-    //         this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
-
-    //     }else{
-    //         this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
-    //     }
-    // }
-
-    viewReport = (elem) => {
-        this.props.history.push('/cockpit/reportview/' + elem.name);
-        apiCalls.trackEvent({ "Action": 'View Reports', "Feature": 'Dashboard', "Remarks": "View Reports", "FullFeatureName": 'Dashboard View Reports', "userName": this.props.userConfig.userName, id: this.props.userConfig.id });
+  const viewReport = (elem) => {
+        props.history.push('/cockpit/reportview/' + elem.name);
+        apiCalls.trackEvent({ "Action": 'View Reports', "Feature": 'Dashboard', "Remarks": "View Reports", "FullFeatureName": 'Dashboard View Reports', "userName": props.userConfig.userName, id: props.userConfig.id });
     }
-    showSendReceiveDrawer = (e, value) => {
-        this.props.dispatch(setStep("step1"));
-        const is2faEnabled =  this.props?.twoFA?.isEnabled;
-        if (!this.props?.userConfig?.isKYC) {
-            this.props.history.push("/notkyc");
+  const showSendReceiveDrawer = (e, value) => {
+        props.dispatch(setStep("step1"));
+        const is2faEnabled =  props?.twoFA?.isEnabled;
+        if (!props?.userConfig?.isKYC) {
+            props.history.push("/notkyc");
             return;
         }
         if (!is2faEnabled) {
-            this.props.history.push("/enabletwofactor");
+            props.history.push("/enabletwofactor");
             return;
         }
-        if (this.props?.userConfig?.isDocsRequested) {
-            this.props.history.push("/docnotices");
+        if (props?.userConfig?.isDocsRequested) {
+            props.history.push("/docnotices");
             return;
         }
 
         if (e === 2) {
-            this.props.dispatch(setReceiveFiatHead(false));
-            this.props.dispatch(setSendFiatHead(false));
-            this.setState({ ...this.setState, showFuntransfer: true, selectedCurrency:value })
-            this.props.dispatch(getScreenName({getScreen:"withdraw"}))
+            props.dispatch(setReceiveFiatHead(false));
+            props.dispatch(setSendFiatHead(false));
+            setState({ ...setState, showFuntransfer: true, selectedCurrency:value })
+            props.dispatch(getScreenName({getScreen:"withdraw"}))
         } else if (e === 1) {
-            this.props.dispatch(setReceiveFiatHead(true));
-            this.props.dispatch(setWithdrawfiatenaable(false))
-            this.props.dispatch(setdepositCurrency(value))
-            this.props.dispatch(getScreenName({getScreen:"deposit"}))
-            this.setState({
+            props.dispatch(setReceiveFiatHead(true));
+            props.dispatch(setWithdrawfiatenaable(false))
+            props.dispatch(setdepositCurrency(value))
+            props.dispatch(getScreenName({getScreen:"deposit"}))
+            setState({
                 valNum: e
             }, () => {
-                this.setState({
-                    ...this.state,
+                setState({
+                    ...state,
                     buyFiatDrawer: true,
                     selctedVal: value
                 })
     
             })
         }else if(e===3){
-            this.props.history.push(`/payments/${value.walletCode}`)
+            props.history.push(`/payments/${value.walletCode}`)
         }else if(e===4){
-            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-            this.setState({ ...this.setState, personalTransafershowDrawer: true, selctedVal: value.walletCode })
+            props.dispatch(getScreenName({getScreen:"dashboard"}))
+            setState({ ...setState, personalTransafershowDrawer: true, selctedVal: value.walletCode })
           
         }else {
-            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-            this.props.history.push(`/internaltransfer`)
+            props.dispatch(getScreenName({getScreen:"dashboard"}))
+            props.history.push(`/internaltransfer`)
         }
         
     }
-    closeDrawer = () => {
-        this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-        this.setState({
+   const closeDrawer = () => {
+        props.dispatch(getScreenName({getScreen:"dashboard"}))
+        setState({
             buyFiatDrawer: false,
             transactions: false,
             showFuntransfer:false,
             personalTransafershowDrawer:false
         })
     }
-    handleSearch = ({ currentTarget: { value } }) => {
+   const handleSearch = ({ currentTarget: { value } }) => {
         if(value){
-            let filterTransactionList =  this.props.dashboard?.wallets?.data.filter(item => item.walletCode.toLowerCase().includes(value.toLowerCase()));
-            this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
+            let filterTransactionList =  props.dashboard?.wallets?.data.filter(item => item.walletCode.toLowerCase().includes(value.toLowerCase()));
+            setState({...state,transactionData:filterTransactionList,searchVal:value})
         }else{
-            this.setState({...this.state,transactionData:this.state.dashBoardTransactions}) 
+            setState({...state,transactionData:state.dashBoardTransactions}) 
         }
     }
-    menuBar = (item) => (
+   const menuBar = (item) => (
         <Menu>
             <ul className="drpdwn-list">
-                <li onClick={() => this.showSendReceiveDrawer(3, item)}>
+                <li onClick={() => showSendReceiveDrawer(3, item)}>
                     <Link value={3} className="c-pointer">
                     <Translate content="menu_payments" />
                     </Link>
@@ -192,7 +183,7 @@ class CockpitCharts extends Component {
                    
                 </li>
                 
-                {item?.walletCode==="EUR" && process.env.REACT_APP_PERSONAL_IBAN==="personal"&&<li onClick={() => this.showSendReceiveDrawer(4, item)}>
+                {item?.walletCode==="EUR" && process.env.REACT_APP_PERSONAL_IBAN==="personal"&&<li onClick={() => showSendReceiveDrawer(4, item)}>
                     <Link value={5} className="c-pointer">
                     <Translate content="personal_iban_transafer" />
                     </Link>
@@ -200,13 +191,14 @@ class CockpitCharts extends Component {
             </ul>
         </Menu>
     )
-    render() {
+
         const { Search } = Input;
-        const { wallets } = this.props.dashboard;
+        const { wallets } = props.dashboard;
+        const {transactionData}=state;
         
         return (<>
-        {this.state.errorMessage != null && <Alert
-            description={this.state.errorMessage}
+        {state.errorMessage != null && <Alert
+            description={state.errorMessage}
             type="error"
             showIcon
             closable={false}
@@ -221,7 +213,7 @@ class CockpitCharts extends Component {
             <div className = 'search-box'>
               <Search
                              placeholder={apiCalls.convertLocalLang('search_currency')} 
-                            onChange={(value)=>this.handleSearch(value)}
+                            onChange={(value)=>handleSearch(value)}
                             size="middle"
                             bordered={false}
                             className="search-text search-view" />
@@ -238,7 +230,7 @@ class CockpitCharts extends Component {
             <List
               className="mobile-list"
               itemLayout="horizontal"
-              dataSource={wallets.data}
+              dataSource={transactionData || wallets.data}
               locale={{
                 emptyText: (
                   <Empty
@@ -258,19 +250,19 @@ class CockpitCharts extends Component {
                         content="deposit"
                         component={Button}
                         className="custom-btn prime text-purewhite mr-16"
-                        onClick={() => this.showSendReceiveDrawer(1, item.walletCode)}
+                        onClick={() => showSendReceiveDrawer(1, item.walletCode)}
                       />
                       <Translate
                         content="withdraw"
                         component={Button}
                         type="primary"
-                        onClick={() => { this.showSendReceiveDrawer(2, item.walletCode) }}
+                        onClick={() => { showSendReceiveDrawer(2, item.walletCode) }}
                         className="custom-btn sec"
                         disabled={item.amount > 0 ? false : true}
                       />
                       
                       <Dropdown 
-                                overlay={this.menuBar(item)}
+                                overlay={menuBar(item)}
                                  trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                             <a onClick={e => e.preventDefault()}>
                               <Space>
@@ -321,37 +313,37 @@ class CockpitCharts extends Component {
             
         )}
         </div>
-        <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
-                {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
-                {this.state.transactions && <TransactionsHistory
-                    showDrawer={this.state.transactions} selectWallet={this.state.selectedWallet}
+        <SuissebaseFiat showDrawer={state.sendReceiveDrawer} valNum={state.valNum} onClose={() => closeDrawer()} />
+                {state.buyFiatDrawer && <MassPayment showDrawer={state.buyFiatDrawer} tabData={{ tabVal: state.valNum, walletCode: state.selctedVal }} onClose={() => closeDrawer()} />}
+                {state.transactions && <TransactionsHistory
+                    showDrawer={state.transactions} selectWallet={state.selectedWallet}
                     onClose={() => {
-                        this.closeDrawer();
+                        closeDrawer();
                     }}
                 />}
-                {process.env.REACT_APP_PERSONAL_IBAN==="personal" &&this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
-                        this.closeDrawer();
+                {process.env.REACT_APP_PERSONAL_IBAN==="personal" &&state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={state.personalTransafershowDrawer}  walletCode={state.selctedVal} onClose={() => {
+                        closeDrawer();
                     }}/>}
                 <Drawer
                     destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         <span></span>
-                        {!this.props.buyFiat?.sendFiatHeader && <div className="text-center">
-                            <Translate className="drawer-maintitle" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                        {!props.buyFiat?.sendFiatHeader && <div className="text-center">
+                            <Translate className="drawer-maintitle" content={props.buyFiat.stepTitles[config[props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
                         }
                           
-                        <span onClick={() => this.closeDrawer()} className="icon md close-white c-pointer" />
+                        <span onClick={() => closeDrawer()} className="icon md close-white c-pointer" />
                     </div>]}
                     className="side-drawer"
-                    visible={this.state.showFuntransfer}
+                    visible={state.showFuntransfer}
                 >
-                    <OnthegoFundTransfer selectedCurrency={this.state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => this.closeDrawer()}  />
+                    <OnthegoFundTransfer selectedCurrency={state.selectedCurrency} ontheGoType={"Onthego"} onClosePopup={() => closeDrawer()}  />
                 </Drawer>
           </div>
         </>)
 
-    }
+    
 }
 const connectStateToProps = ({ breadCrumb, oidc, userConfig, sendReceive, dashboard,buyFiat }) => {
     return {dashboard,sendReceive, breadCrumb, oidc, userConfig: userConfig.userProfileInfo,buyFiat,twoFA:userConfig.twoFA }
