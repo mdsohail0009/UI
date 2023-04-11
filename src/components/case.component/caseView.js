@@ -498,14 +498,12 @@ beforeUpload = (file) => {
                                                 />}
                                                 {this.state?.saveDocId==doc?.id && this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
                                                     <div style={{ width: '100%' }}>
-                                                        <Alert
-                                                            className="newcase-style error-style"
-                                                            type="warning"
-                                                            description={this.state.errorWarning}
-                                                            showIcon
-                                                            closable={false}
-                                                           
-                                                        />
+                                                       <Alert
+													className="w-100 mb-16"
+													type="error"
+                                                    description={this.state.errorWarning}
+													showIcon
+												/>
                                                     </div>
                                                 )}
                                                 <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-4" multiple={false} 
