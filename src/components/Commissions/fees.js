@@ -169,7 +169,7 @@ const Fees = (props) => {
 
                           <table className="row-border inside-table"width="100%" >
                             <tr>
-                              <td style={{ width: "150px" }}>{item.currencyType}</td>
+                              <td style={{ width: "150px" }}>{item.currencyType} <br/>{item.currency}</td>
                               <td style={{ width: "150px" }} >{item.bankName}
                               {" "} {item.status==="Inactive"? <span className="file-labels ml-8 fs-12 address-label address-label-width">Inactive</span>:" "}
                               </td>
