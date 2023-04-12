@@ -1,6 +1,7 @@
 import { Component } from "react";
 import pending from '../assets/images/pending1.png';
 import Acsacnner from '../../src/assets/images/scannerac.jpg';
+import AcsacnnerIo from '../../src/assets/images/scannerIo.png'
 
 class AccountStatus extends Component {
     render() {
@@ -13,12 +14,15 @@ class AccountStatus extends Component {
             <div className='text-white cust-sumsub-font text-center'>
             <div className='sumSub-review sumsub-mb'>{this.props.customerState?.customerState==="Under Review"?"Please complete your application using the QR code or button below:":<>Your account approval is in progress.
             </>}</div>
-            <img src={Acsacnner} width="150" />
+            {process.env.REACT_APP_ACCOUNT_STATUS_SCANNER_IS==="true" &&
+            <img src={AcsacnnerIo} width="150" />}
+            {process.env.REACT_APP_ACCOUNT_STATUS_SCANNER_IS==="false" &&
+            <img src={Acsacnner} width="150" />}
             <div>
                 
                  <a
                  className="download-btn sumsubactbtn"
-                href={`https://qrfy.com/p/jKDd44d4ZD`}
+                href={`${process.env.REACT_APP_ACCOUNT_STATUS_SCANNER}`}
                 target="_blank"
               >
                 Click here
