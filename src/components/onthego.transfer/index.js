@@ -576,7 +576,7 @@ verificationsData=(data)=>{
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
                   </div>
                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
+                                    <div className="summary-liststyle Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className={`${this.state.effectiveType ? "icon lg up-arrow" : "icon lg down-arrow"}`}></span></div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(getBanckDetails?.effectiveFee)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
@@ -914,7 +914,7 @@ verificationsData=(data)=>{
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle 
-Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className="icon lg down-arrow"></span></div>
+Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className={`${this.state.effectiveType ? "icon lg up-arrow" : "icon lg down-arrow"}`}></span></div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>

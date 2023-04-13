@@ -47,7 +47,7 @@ const SuisseBaseCreditCom=(props)=>{
         let res = await saveSuissebaseCrediate(obj);
         if(res.ok){            
             message.destroy()
-            message.success({ content:"SuisseBase Credits Saved Successfully", className: 'custom-msg',duration:3 });
+            message.success({ content:"SuisseBase Credits saved successfully", className: 'custom-msg',duration:3 });
             setBtnDisabled(false);
         }else {
             setBtnDisabled(false);

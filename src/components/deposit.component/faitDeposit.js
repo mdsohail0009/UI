@@ -28,7 +28,8 @@ class FaitDeposit extends Component {
      BankInfo: null, 
      depObj: { currency: null, BankName: null, Amount: null },
     tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false,
-    bankLoader: false
+    bankLoader: false,
+    selectLuLoader:false,
   }
   componentDidMount() {
     this.props.fiatRef(this)
@@ -130,12 +131,12 @@ class FaitDeposit extends Component {
   }
 
   getBankDetails=async(e)=>{
-    this.setState({...this.state,BankDetails:null})
+    this.setState({...this.state,BankDetails:null,selectLuLoader:true})
     let res = await getCommissionBankDetails(e)
     if(res.ok){
-      this.setState({...this.state,BankDetails:res.data})
+      this.setState({...this.state,BankDetails:res.data,selectLuLoader:false})
     }else {
-      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(res),BankDetails:null })
+      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(res),BankDetails:null,selectLuLoader:false })
   }
   }
   handlebankName = async (e) => {
@@ -236,20 +237,22 @@ class FaitDeposit extends Component {
                   </div></Form.Item>}
                 {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 d-block preview-file" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {/* this.state.BankDetails?.length > 1 && depObj.currency !== null && */}
-                {<Form.Item><Translate
+                {this.state.selectLuLoader ? <Loader /> : <Form.Item><Translate
                   className="label-style"
                   content="BankName"
                   component={Text}
                 />
                   <div id="_bankname">
                     <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('select_bank')} className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('_bankname')}
-                      onChange={(e) => { this.handlebankName(e) }} value={depObj?.BankName}>
+                      onChange={(e) => { this.handlebankName(e) }} value={depObj?.BankName}
+                      >
+
                       {this.state.BankDetails?.map((item, idx) =>
-                        <Option key={idx} value={item?.bankName}>{item?.bankName}
-                        </Option>
+                        <Select.Option key={idx} value={item?.bankName}>{item?.bankName}
+                        </Select.Option>
                       )}
                     </Select>
-                  </div></Form.Item>}
+                  </div></Form.Item> }
                   {this.state.bankLoader && <Loader />}
 
                 {(this.state.BankInfo && !this.state.bankLoader) &&
