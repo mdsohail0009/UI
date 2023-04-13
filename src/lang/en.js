@@ -273,7 +273,7 @@ export default {
 	PL_DU_BOURG_DE_FOUR: "PL DU BOURG DE FOUR6,1204 GENEVE,SWITZERLAND",
 	Beneficiary_account: "Beneficiary Account",
 	for_Domestic_wires: "For Domestic Wires",
-	for_international_wires: "For International Wires",
+	for_international_wires: "For SEPA Wires",
 	Swift_BICcode: "Swift / BIC Code",
 	SIGNU: "%(value)s",
 	beneficiaryBank: "Beneficiary Bank Name",
