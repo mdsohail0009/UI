@@ -182,7 +182,7 @@ class Summary extends Component {
 									prefix={""}
 								    decimalPlaces={decimalPlaces}
 									className="summarybal"
-									suffixText={coin}
+									suffixText={nativeCurrency}
 						        	/>
 				    </div>
                   </div>
@@ -194,7 +194,7 @@ class Summary extends Component {
 									prefix={""}
 									decimalPlaces={decimalPlaces}
 									className="summarybal"
-									suffixText={coin}
+									suffixText={nativeCurrency}
 								    />									
 										 </div>
                      </div>
@@ -206,7 +206,7 @@ class Summary extends Component {
 									prefix={""}
 								    decimalPlaces={decimalPlaces}
 									className="summarybal"
-									suffixText={coin}
+									suffixText={nativeCurrency}
 						        	/> 
 										 </div>
                      </div>}
@@ -218,7 +218,7 @@ class Summary extends Component {
 									prefix={""}
 								    decimalPlaces={decimalPlaces}
 									className="summarybal"
-									suffixText={coin}
+									suffixText={nativeCurrency}
 						        	/>
 										 </div>
                   </div>}
