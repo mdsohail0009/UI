@@ -147,15 +147,9 @@ const Fees = (props) => {
            <div className="table-scroll responsive_table">
             <table className="commision-table table-border edit-commition-table view-commition-table" border="1">
                   <thead><tr className="table-header-row">
-                    <th style={{width:"150px"}}></th>
-                    <th className="">
-                      <table className="table-partner-head">
-                        <tr>
-                        <th className="text-center" style={{paddingLeft:"55px"}}>Suissebase Fees</th>
-                        <th colSpan={5} className=" text-center"></th>
-                        </tr>
-                      </table>
-                    </th>
+                    
+                        <th className="text-center" colSpan={6} >Suissebase Fees</th>
+                   
                   </tr></thead>
                <tbody>
                 {commFees?.map(([operation,items])=>(
