@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { List, Button,Input, Typography, Empty,Dropdown, Menu, Space,Alert } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
-import { fetchYourPortfoliodata,fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep, setSellHeaderHide } from '../../reducers/buysellReducer';
@@ -13,14 +12,13 @@ import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable,rejectWithdrawfiat, setWithdrawfiat,setWalletAddress, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
-import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
 import Loader from "../../Shared/loader";
 import { getScreenName } from '../../reducers/feturesReducer';
 
-class cryptocoinsView extends Component {
-    state = {
+const CryptocoinsView=(props)=> {
+   const [state,setState]=useState({
         loading: true,
         initLoading: true,
         portfolioData: [], 
@@ -29,197 +27,158 @@ class cryptocoinsView extends Component {
         selectedWallet: '',
         searchVal:[],
         coinData:[],
-        transactionData: this.props.dashboard.cryptoPortFolios.data,
+        transactionData: props.dashboard.cryptoPortFolios.data,
         fullViewData:[],
         marketCaps:[],
-        dashBoardTransactions:this.props.dashboard.cryptoPortFolios.data,
-        errorMessage:null
-    }
-    componentDidMount() {
-        this.loadCryptos();
-        // this.loadCoinDetailData();
-    }
+        dashBoardTransactions:props.dashboard.cryptoPortFolios.data,
+        errorMessage:null})
+    useEffect(()=>{
+if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
+  setState({...state,transactionData:props.dashboard.cryptoPortFolios.data})
 
-  //   loadCoinDetailData = async () => {
-  //     this.setState({ ...this.state, loading: true,errorMessage:null})
-  //     this.props.dispatch(fetchMarketCoinData(false))
-  //     const response = await getcoinDetails(this.props.match.params?.coinName);
-  //     if (response.ok) {
-  //         this.setState({ ...this.state, coinData: response.data,errorMessage:null },
-  //         )
-  //     }else{
-  //       this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
-
-  //   }
-  //     this.setState({ ...this.state, loading: false})
-  // }
-    loadCryptos = () => {
-        if (this.props.userProfile) {
-            // this.props.dispatch(fetchYourPortfoliodata());
-        }
-    }
-    cockpitCharts=()=>{
-
-      this.props.history.push("/cockpitCharts");
-      
-    }
-    showBuyDrawer = (item, key) => {
-        if (!this.props?.userProfile?.isKYC) {
-            this.props.history.push("/notkyc");
+}
+    },[props.dashboard.cryptoPortFolios.data])  
+    const  showBuyDrawer = (item, key) => {
+        if (!props?.userProfile?.isKYC) {
+            props.history.push("/notkyc");
             return;
         }
-        else if (!this.props.twoFA?.isEnabled) {
-            this.props.history.push("/enabletwofactor");
+        else if (!props.twoFA?.isEnabled) {
+            props.history.push("/enabletwofactor");
             return;
         }
-        else if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
+        else if (props?.userProfile?.isDocsRequested) {
+            props.history.push("/docnotices");
             return;
         }
 
         if (key === "buy") {
-            this.props.dispatch(fetchSelectedCoinDetails(item.coin));
-            this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
-            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, customer_id: this.props.userProfile?.id, screenName: null }).then(val => {
-                this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
+            props.dispatch(fetchSelectedCoinDetails(item.coin));
+            props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
+            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, customer_id: props.userProfile?.id, screenName: null }).then(val => {
+                props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
-            this.props.dispatch(setSellHeaderHide(false));
-            this.props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
-            this.props.dispatch(setStep("step2"));
+            props.dispatch(setSellHeaderHide(false));
+            props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
+            props.dispatch(setStep("step2"));
         } else if (key === "sell") {
-          this.props.dispatch(setSellHeaderHide(false));
-            this.props.dispatch(setCoin(item));
-            this.props.dispatch(setExchangeValue({ key: item.coin, value: item.oneCoinValue }));
-            this.props.dispatch(updateCoinDetail(item))
-            this.props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
-            this.props.dispatch(setStep("step10"));
+          props.dispatch(setSellHeaderHide(false));
+            props.dispatch(setCoin(item));
+            props.dispatch(setExchangeValue({ key: item.coin, value: item.oneCoinValue }));
+            props.dispatch(updateCoinDetail(item))
+            props.dispatch(getScreenName({getScreen:"menu_buy_sell"}))
+            props.dispatch(setStep("step10"));
         }
-        this.setState({
+        setState({
             buyDrawer: true
         })
     }
-    showInternalTransfer=()=>{
-      if(!this.props?.twoFA?.isEnabled){
-        this.props.history.push("/enabletwofactor");
+    const showInternalTransfer=()=>{
+      if(!props?.twoFA?.isEnabled){
+        props.history.push("/enabletwofactor");
         return;
     }
-      if (this.props?.userProfile?.isDocsRequested) {
-        this.props.history.push("/docnotices");
+      if (props?.userProfile?.isDocsRequested) {
+        props.history.push("/docnotices");
         return;
     }
-   else if (!this.props?.userProfile?.isKYC) {
-        this.props.history.push("/notkyc");
+   else if (!props?.userProfile?.isKYC) {
+        props.history.push("/notkyc");
         return;
     }else{
-      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-      this.props.history.push(`/internalTransfer`)
+      props.dispatch(getScreenName({getScreen:"dashboard"}))
+      props.history.push(`/internalTransfer`)
     }}
-  
-    showSendReceiveDrawer = async(e, value) => {
-      this.setState({...this.state,errorMessage:null})
+  const showDocsError=()=> {
+    props.history.push("/docnotices");
+  }
+    const showSendReceiveDrawer = async(e, value) => {
+      setState({...state,errorMessage:null})
       let selectedObj = { ...value };
       selectedObj.coin = selectedObj.coin?.toUpperCase();
-      this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
-      this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
-      this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("wallet_address")));
+      props.dispatch(fetchWithDrawWallets({ customerId: props?.userProfile?.id }));
+      props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
+      props.dispatch(setSubTitle(apiCalls.convertLocalLang("wallet_address")));
       let coin = value.coin?.toUpperCase();
-      if (!this.props?.userProfile?.isKYC) {
-          this.props.history.push("/notkyc");
+      if (!props?.userProfile?.isKYC) {
+          props.history.push("/notkyc");
           return;
       }
-      if(!this.props?.twoFA?.isEnabled){
-          this.props.history.push("/enabletwofactor");
+      if(!props?.twoFA?.isEnabled){
+          props.history.push("/enabletwofactor");
           return;
       }
-      if (this.props?.userProfile?.isDocsRequested) {
-          this.props.history.push("/docnotices");
+      if (props?.userProfile?.isDocsRequested) {
+          props.history.push("/docnotices");
           return;
       }
-      if (!this.props?.userProfile?.isKYC) {
-          this.props.history.push("/notkyc");
+      if (!props?.userProfile?.isKYC) {
+          props.history.push("/notkyc");
           return;
       }
-      const isDocsRequested = this.props.userProfile.isDocsRequested;
+      const isDocsRequested = props.userProfile.isDocsRequested;
       if (isDocsRequested) {
-          this.showDocsError();
+          showDocsError();
           return;
       }
       if (e === 2) {
-          this.props.dispatch(setWithdrawfiatenaable(true))
-          this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
-          this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-          this.props.dispatch(setSendCrypto(true));
-          this.props.changeStep('withdraw_crypto_selected');
-          this.props.dispatch(getScreenName({getScreen:"withdraw"}))
+          props.dispatch(setWithdrawfiatenaable(true))
+          props.dispatch(setWithdrawfiat({ walletCode: coin }))
+          props.dispatch(setSelectedWithDrawWallet(selectedObj));
+          props.dispatch(setSendCrypto(true));
+          props.changeStep('withdraw_crypto_selected');
+          props.dispatch(getScreenName({getScreen:"withdraw"}))
       } else {
-        this.props.dispatch(setSendCrypto(false));
-        this.props.dispatch(setWithdrawfiatenaable(false));
-        this.props.dispatch(hideSendCrypto(false));
-          this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-          this.props.dispatch(getScreenName({getScreen:"deposit"}))
-          this.props.dispatch(setStep("step7"));
-          this.props.dispatch(setSubTitle(`${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`));
-             const response = await createCryptoDeposit({ customerId: this.props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
+        props.dispatch(setSendCrypto(false));
+        props.dispatch(setWithdrawfiatenaable(false));
+        props.dispatch(hideSendCrypto(false));
+          props.dispatch(setSelectedWithDrawWallet(selectedObj));
+          props.dispatch(getScreenName({getScreen:"deposit"}))
+          props.dispatch(setStep("step7"));
+          props.dispatch(setSubTitle(`${coin}` + " " + "balance" +" "+ ":" +" "+ `${selectedObj.coinBalance ?  selectedObj.coinBalance : '0'}`+`${" "}`+`${coin}`));
+             const response = await createCryptoDeposit({ customerId: props.userProfile?.id, walletCode: coin, network: selectedObj?.netWork });
              if (response.ok) {
-                this.props.dispatch(setWalletAddress(response.data));
-                this.setState({...this.state,errorMessage:null})
+                props.dispatch(setWalletAddress(response.data));
+                setState({...state,errorMessage:null})
              }else{
-              this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+              setState({...state,errorMessage:apiCalls.isErrorDispaly(response)})
   
           }
 
-          this.setState({
-              ...this.state,
+          setState({
+              ...state,
               sendDrawer: true
           })
       }
-      this.setState({
-          valNum: e
-      }, () => {
-          this.setState({
-              ...this.state,
-              sendDrawer: true,
-              selctedVal: coin
-          })
-
-      })
+      setState(prevState => ({
+        ...prevState,
+        sendDrawer: true,
+        selctedVal: coin
+     }));
   }
-    closeDrawer = () => {
-      this.props.dispatch(getScreenName({getScreen:"dashboard"}))
-      this.props.dispatch(rejectWithdrawfiat())
-      this.setState({
+  const closeDrawer = () => {
+      props.dispatch(getScreenName({getScreen:"dashboard"}))
+      props.dispatch(rejectWithdrawfiat())
+      setState({
           buyDrawer: false,
           sendDrawer: false,
           transactions: false
       })
   }
-  // onSearch=({ currentTarget: { value } })=>{
-  //   let filterTransactionList;
-  //   if (!value) {
-  //       filterTransactionList = this.props.dashboard.cryptoPortFolios.data;
-  //   } else {
-  //       filterTransactionList =  this.props.dashboard.cryptoPortFolios.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
-  //       this.setState({...this.state,searchVal:value})
-  //   }
-  //   this.setState({...this.state,coinData:filterTransactionList})
-  // }
-  showTransactionDrawer =(item) => {
-    this.setState({...this.state, transactions: true, selectedWallet: item?.coin});
-}
-     menuBar = (item) => (
+   const menuBar = (item) => (
       <Menu>
           <ul className="drpdwn-list">
-              <li onClick={() => this.showBuyDrawer(item, "buy")}>
+              <li onClick={() => showBuyDrawer(item, "buy")}>
                   <Link  value={2} className="c-pointer">
                   <Translate content="buy" />
                   </Link>
               </li>
-              <li onClick={() => this.showBuyDrawer(item, "sell")}>
+              <li onClick={() => showBuyDrawer(item, "sell")}>
                     <Link  value={4} className="c-pointer">
                     <Translate content="sell" />
                     </Link>
                 </li>
-                <li onClick={() => this.showInternalTransfer(item)}>
+                <li onClick={() => showInternalTransfer(item)}>
                   <Link  value={5} className="c-pointer">
                   <Translate content="menu_internal_transfer" />
                   </Link>
@@ -228,23 +187,22 @@ class cryptocoinsView extends Component {
           </ul>
       </Menu>
   )
-  handleSearch = ({ currentTarget: { value } }) => {
+  const handleSearch = ({ currentTarget: { value } }) => {
     if(value){
-        let filterTransactionList =  this.props.dashboard?.cryptoPortFolios?.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
-        this.setState({...this.state,transactionData:filterTransactionList,searchVal:value})
+        let filterTransactionList =  props.dashboard?.cryptoPortFolios?.data.filter(item => item.coin.toLowerCase().includes(value.toLowerCase()));
+        setState({...state,transactionData:filterTransactionList,searchVal:value})
     }else{
-        this.setState({...this.state,transactionData:this.state.dashBoardTransactions}) 
+        setState({...state,transactionData:state.dashBoardTransactions}) 
     }
 }
-    render() {
         const { Text,Title } = Typography;
-        const { cryptoPortFolios } = this.props.dashboard
+        const { cryptoPortFolios } = props.dashboard
         const { Search } = Input;
        
         return (
           <div className="main-container" >
-             {this.state.errorMessage != null && <Alert
-          description={this.state.errorMessage}
+             {state.errorMessage != null && <Alert
+          description={state.errorMessage}
           type="error"
           showIcon
           closable={false}
@@ -259,7 +217,7 @@ class cryptocoinsView extends Component {
             <div className = 'search-box'>
               <Search
                              placeholder={apiCalls.convertLocalLang('search_currency')} 
-                            onChange={(value)=>this.handleSearch(value)}
+                            onChange={(value)=>handleSearch(value)}
                             size="middle"
                             bordered={false}
                             className="search-text search-view" />
@@ -272,7 +230,7 @@ class cryptocoinsView extends Component {
             <List
               className="mobile-list"
               itemLayout="horizontal"
-              dataSource={cryptoPortFolios.data}
+              dataSource={state.transactionData || cryptoPortFolios.data}
               locale={{
                 emptyText: (
                   <Empty
@@ -292,18 +250,18 @@ class cryptocoinsView extends Component {
                         content="deposit"
                         component={Button}
                         className="custom-btn prime text-purewhite mr-16"
-                        onClick={() =>  this.showSendReceiveDrawer(1, item)}
+                        onClick={() => showSendReceiveDrawer(1, item)}
                       />
                       <Translate
                         content="withdraw"
                         component={Button}
                         type="primary"
-                        onClick={() => this.showSendReceiveDrawer(2, item)}
+                        onClick={() => showSendReceiveDrawer(2, item)}
                         className="custom-btn sec"
                         disabled={item.coinBalance > 0 ? false : true} 
                       />
                       
-                      <Dropdown overlay={this.menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
+                      <Dropdown overlay={menuBar(item)} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" >
                         <Link onClick={e => e.preventDefault()}>
                           <Space>
                           <span class="icon lg menu-bar p-relative"></span>
@@ -351,15 +309,10 @@ class cryptocoinsView extends Component {
                             type={"text"}
                             className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
-                                ? "text-green pg-text"
-                                : "text-red red-text"
+                                ? "text-white pg-text"
+                                : "text-white red-text"
                             }`}
                           />
-                          <span className={`icon sm  ${
-                              item.coinValueinNativeCurrency > 0
-                                ? "valupp-icon pg-arrow"
-                                : "valdown-icon red-arrow"
-                            }`} />
                             </div>
                       </div>
                     }
@@ -372,20 +325,19 @@ class cryptocoinsView extends Component {
       
         </div>)}
             <BuySell
-              showDrawer={this.state.buyDrawer}
-              onClose={() => this.closeDrawer()}
+              showDrawer={state.buyDrawer}
+              onClose={() => closeDrawer()}
             />
-            <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
-            {this.state.transactions && <TransactionsHistory
-              showDrawer={this.state.transactions}
-              selectWallet={this.state.selectedWallet}
+            <SendReceive showDrawer={state.sendDrawer} onClose={() => closeDrawer()} />
+            {state.transactions && <TransactionsHistory
+              showDrawer={state.transactions}
+              selectWallet={state.selectedWallet}
               onClose={() => {
-                this.closeDrawer();
+                closeDrawer();
               }}
             />}
           </div>
         );
-    }
 }
 
 const connectStateToProps = ({ sendReceive, userConfig, dashboard }) => {
@@ -400,4 +352,4 @@ const connectDispatchToProps = dispatch => {
   }
 }
 
-export default connect(connectStateToProps, connectDispatchToProps)(withRouter(cryptocoinsView));
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(CryptocoinsView));
