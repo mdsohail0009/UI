@@ -370,6 +370,7 @@ export default {
 	FromWallet: "From Wallet",
 	FromValue: "From Value",
 	Status: "Status",
+	Reason_For_Rejection:"Reason For Rejection",
 	ToWallet: "To Wallet",
 	ToValue: "To Value",
 	BeforeValue: "Before Value",

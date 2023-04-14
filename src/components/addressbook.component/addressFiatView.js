@@ -108,7 +108,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: ((fiatAddress?.transferType === "internationalIBAN") && `International ${bankDetailes[0].walletCode} IBAN`) ||
+															: (fiatAddress?.transferType=='chftransfer'&&"CHF Transfer")||((fiatAddress?.transferType === "internationalIBAN") && `International ${bankDetailes[0].walletCode} IBAN`) ||
 															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
@@ -155,7 +155,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.relation === " " ||
 															fiatAddress?.relation === null
 															? "-"
-															: fiatAddress?.relation}
+															: fiatAddress?.relation}{"  "}  {fiatAddress.relation=="Others" && `(${fiatAddress.others})`}
 													</div>
 												</div>
 											</Col>}
@@ -205,7 +205,6 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.line3}</div>}
 												</div>
 											</Col>
-
 											{fiatAddress?.country && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Country</label>
@@ -260,7 +259,16 @@ const AddressFiatView = (props) => {
 														{bankDetailes[0]?.addressState}
 													</div>
 												</div>
-											</Col>								
+											</Col>
+											{bankDetailes[0]?.addressState ==="Rejected" &&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Reason For Rejection</label>
+													<div className="kpi-val">
+													{bankDetailes[0]?.rejectReason ===""||
+													bankDetailes[0]?.rejectReason === null ? "-":bankDetailes[0]?.rejectReason}
+													</div>
+												</div>
+											</Col>}								
 										</Row>
 										<Title className="basicinfo  abbook-title-mt">
 										   Recipient Bank Details
@@ -311,7 +319,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														}
-														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN" && item?.walletCode !="EUR")&&
+														{(item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN" && item?.walletCode !="EUR"&& item?.walletCode !="CHF")&&
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																Bank Account Number / IBAN
@@ -433,7 +441,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														}
-														 {(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
+														 {(item.walletCode!=='CHF'&&item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
 														 <div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 															Bank Address 1
@@ -446,7 +454,7 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														}
-														{(item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
+														{(item.walletCode!=='CHF'&&item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 															Bank Address 2
