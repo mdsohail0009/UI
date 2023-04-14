@@ -114,41 +114,11 @@ const Fees = (props) => {
           <div className="grid-title">Fees & Tier Structure</div>
              {error && <Alert type="error" showIcon closable={false} description={error} />}
             <div className="grid-title">Fees for Transaction</div>
-        
-            {/* {commFees.length!=0&&<div className='transaction-custom-table  fee-table p-0'>
-            <div className='responsive_table db-ts-grid'>
-              <table className='pay-grid view mb-view commision-fee-custtable'>
-                <thead style={{borderTopLeftRadius:20}}>
-                  <tr className='cust-tr-style'>
-                    {commFees.map(([bankName, items]) => <th className='k-link'>{bankName} {items[0].currency&&<>({items[0].currency})</>}<br></br>
-                    </th>)}
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {commFees.map(([bankName, items]) => <td className='fee-withdraw'>
-                      <table style={{ textAlign: "center",width:'100%' }}>
-                        <tr>
-                          {items.map((item) => <td>{item.operation}</td>)}
-                        </tr>
-                        <tr>
-                          {items.map((item1) => <td style={{height:38}}><div className='ts-date'>{item1.flatFee}</div>
-                          </td>)}
-                        </tr>
-                      </table>
-                    </td>)}
-                  </tr>
-
-                </tbody>
-              </table>
-          </div>
-          </div>} */}
            <div className="table-scroll responsive_table">
             <table className="commision-table table-border edit-commition-table view-commition-table" border="1">
                   <thead><tr className="table-header-row">
                     
-                        <th className="text-center" colSpan={6} >Suissebase Fees</th>
+                        <th className="text-center" colSpan={6} >SuisseBase Fees</th>
                    
                   </tr></thead>
                <tbody>
@@ -170,8 +140,6 @@ const Fees = (props) => {
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    {/* <span className={item.isMinMax ? item.isMinMax === true && "icon md greenCheck mr-8" : "icon md greyCheck"}></span> */}
-
                                     <label>Min: <span className="minmax-value"><>{item.minFee?<>{`${item.minFee}`}</>:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
@@ -186,7 +154,6 @@ const Fees = (props) => {
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    {/* <span className={item.isFlat ? item.isFlat === true && "icon md greenCheck mr-8" : " icon md greyCheck  mr-8"}></span> */}
                                     <label>Flat: <span className="minmax-value"><>{item.flatFee?<>{`${item.flatFee}`}</>:"-"}</></span></label>
                                   </div>
                                 </Form.Item>

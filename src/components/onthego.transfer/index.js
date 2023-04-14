@@ -431,7 +431,7 @@ verificationsData=(data)=>{
             <div>
               <div className="mt-8">
               <div
-                 className='label-style'>Send from your Suissebase FIAT Wallet</div>
+                 className='label-style'>Send from your SuisseBase FIAT Wallet</div>
               </div>
               <Search placeholder="Search Currency" value={this.state.searchFiatVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="cust-search" />
               <List

@@ -346,7 +346,7 @@ export default {
 	selectWallet: "Select Wallet",
 	final_Amount:
 		"Output is estimated. Final amount will vary due to market conditions.",
-	agree_sell: "I agree to Suissebase’s",
+	agree_sell: "I agree to SuisseBase’s",
 	terms: "Terms of Service",
 	refund_cancellation: " and its return, refund and cancellation policy.",
 	purchase_min: "The minimum purchase amount is",
@@ -666,8 +666,8 @@ export default {
 	send_crypto_address: "Send Crypto",
 	buy_select_currency: "select currency to buy with",
 	network: "Network",
-	send_fiat_text: "Send from your Suissebase FIAT Wallet",
-    receive_fiat_text: "Receive in your Suissebase FIAT Wallet",
+	send_fiat_text: "Send from your SuisseBase FIAT Wallet",
+    receive_fiat_text: "Receive in your SuisseBase FIAT Wallet",
 	contact_amount_text: "Please contact support for higher amounts.",
 	validate: "Validate",
 	sell_select_currency: "select currency to receive",
@@ -676,7 +676,7 @@ export default {
 	batch_payments: "Batch Payment Summary",
 	bathch_payments_preview: "Please confirm the field before acknowledging.",
 	tab_BatchPayment: "Batch Payment",
-	suissebase_title_crypto:"Suissebase Crypto Wallet",
+	suissebase_title_crypto:"SuisseBase Crypto Wallet",
 	Whitelisting_Status:"Whitelisting Status",
 	fait_walets:"Suissebase Fiat Wallets",
 	sb_card_title:"Your card",
@@ -685,5 +685,5 @@ export default {
 	personal_iban_transafer:"Personal IBAN Transfer",
 	fiat_transfer_success:"Back to Transfer",
 	suissebase_credit:"SuisseBase Credits",
-	suissebasecredits:"Suissebase Credits Available"
+	suissebasecredits:"SuisseBase Credits Available"
 };
