@@ -28,7 +28,7 @@ class Cases extends Component {
             field: "createdDate",
             title: apiCalls.convertLocalLang("Date"),
 			filter: true,
-			width: 280,
+			width: 230,
 			isShowTime: true,
 			locked: false,
 			filterType: "date",
