@@ -83,7 +83,7 @@ const validateCryptoAmount = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `Crypto/commision`, obj)
 }
 const getRelationDetails = () => {
-    return apiClient.get(ApiControllers.common + `controlcodes?codecategory=ReleationshoptoBenificiary`)
+    return apiClient.get(ApiControllers.common + `controlcodes?codecategory=ReleationshiptoBenificiary`)
 }
 const getReasonforTransferDetails = () => {
     return apiClient.get(ApiControllers.common + `controlcodes?codecategory=ReasonForTransfer`)
