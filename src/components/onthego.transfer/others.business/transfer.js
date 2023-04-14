@@ -224,10 +224,22 @@ class BusinessTransfer extends Component {
     handleRelation=(e)=>{
         this.setState({...this.state,selectedRelation:e})
         if(!this.state.isEdit){
-            this.form.current.setFieldsValue({others:null})
+            if(this.state.selectedTab=='domestic'){
+                this.form.current.setFieldsValue({others:null})
+           }else if(this.state.selectedTab=='international'){
+            this.form1.current.setFieldsValue({others:null})
+           }else {
+            this.form2.current.setFieldsValue({others:null})
+           }
         }else if(this.state.isEdit && this.state.details.relation !='Others') {
-            this.form.current.setFieldsValue({others:null})
-        }    
+            if(this.state.selectedTab=='domestic'){
+                this.form.current.setFieldsValue({others:null})
+           }else if(this.state.selectedTab=='international'){
+            this.form1.current.setFieldsValue({others:null})
+           }else {
+            this.form2.current.setFieldsValue({others:null})
+           }
+        }     
     }
     getReasonForTransferData=async()=>{
         let res = await getReasonforTransferDetails();
@@ -241,7 +253,13 @@ class BusinessTransfer extends Component {
 
     handleReasonTrnsfer=(e)=>{
         this.setState({...this.state,selectedReasonforTransfer:e})
-        this.form.current.setFieldsValue({transferOthers:null})
+        if(this.state.selectedTab=='domestic'){
+            this.form.current.setFieldsValue({transferOthers:null})
+       }else if(this.state.selectedTab=='international'){
+        this.form1.current.setFieldsValue({transferOthers:null})
+       }else {
+        this.form2.current.setFieldsValue({transferOthers:null})
+       }
     }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
