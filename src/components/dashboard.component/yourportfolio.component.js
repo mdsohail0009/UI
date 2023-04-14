@@ -4,7 +4,7 @@ import { List, Button, Typography, Empty,Dropdown, Menu, Space ,Alert} from 'ant
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
-import { fetchYourPortfoliodata,fetchMarketCoinData } from '../../reducers/dashboardReducer';
+import { fetchYourPortfoliodata, } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep, setSellHeaderHide } from '../../reducers/buysellReducer';
@@ -13,7 +13,6 @@ import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable,rejectWithdrawfiat, setWithdrawfiat,setWalletAddress, setSendCrypto, hideSendCrypto } from "../../reducers/sendreceiveReducer";
-import { getcoinDetails } from './api';
 import {createCryptoDeposit} from "../deposit.component/api";
 import TransactionsHistory from "../transactions.history.component";
 import Loader from "../../Shared/loader";
@@ -29,20 +28,21 @@ class YourPortfolio extends Component {
     }
     componentDidMount() {
         this.loadCryptos();
-        this.loadCoinDetailData();
+        // this.loadCoinDetailData();
     }
-    loadCoinDetailData = async () => {
-      this.setState({ ...this.state, loading: true,errorMessage:null})
-      this.props.dispatch(fetchMarketCoinData(false))
-      const response = await getcoinDetails(this.props.match.params?.coinName);
-      if (response.ok) {
-          this.setState({ ...this.state, coinData: response.data,errorMessage:null },
-          )
-      }else{
-        this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
-      }
-      this.setState({ ...this.state, loading: false})
-  }
+  //   loadCoinDetailData = async () => {
+  //     this.setState({ ...this.state, loading: true,errorMessage:null})
+  //     this.props.dispatch(fetchMarketCoinData(false))
+  //     debugger
+  //     const response = await getcoinDetails(this.props.match.params?.coinName);
+  //     if (response.ok) {
+  //         this.setState({ ...this.state, coinData: response.data,errorMessage:null },
+  //         )
+  //     }else{
+  //       this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+  //     }
+  //     this.setState({ ...this.state, loading: false})
+  // }
     loadCryptos = () => {
         if (this.props.userProfile) {
             this.props.dispatch(fetchYourPortfoliodata());

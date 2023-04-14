@@ -204,15 +204,7 @@ saveWithdrawdata = async () => {
             this.reviewScrool.current.scrollIntoView()
             return
         }
-    } else {
-        this.setState({
-            ...this.state,
-            errorMessage:
-                "Without Verifications you can't Proceed.",
-        });
-        this.reviewScrool.current.scrollIntoView()
-        return
-    }
+    } 
     if (this.state.reviewDetails) {
         let obj = Object.assign({}, this.state.reviewDetails);
         obj["accountNumber"] = obj.accountNumber ? apicalls.encryptValue(obj.accountNumber, this.props.userProfile?.sk) : null;
@@ -319,7 +311,12 @@ saveWithdrawdata = async () => {
   handleTabChange = (key) => {
     this.setState({ ...this.state, selectedTab: key})
 }
-
+verificationsData=(data)=>{
+  if(data?.isLiveVerification && !data?.twoFactorEnabled && !data?.isEmailVerification && !data?.isPhoneVerified ){
+    this.setState({ ...this.state, 
+      isShowGreyButton: true });
+  }
+}
 
 
   goToAddressBook = () => {
@@ -866,7 +863,7 @@ saveWithdrawdata = async () => {
                             }
                             </div>
              
-                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} onClosePopup={()=>this.props?.onClosePopup()}/>
+                <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} onClosePopup={()=>this.props?.onClosePopup()} verificationsData={(data)=>this.verificationsData(data)}/>
                 
                 {this.state.permissions?.Send && 
             

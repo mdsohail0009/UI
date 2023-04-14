@@ -41,7 +41,7 @@ class CockpitCharts extends Component {
     }
 
     componentDidMount() {
-        this.loadKpis();
+        // this.loadKpis();
         this.loadDashboards(30);
         this.cokpitKpiTrack();
     }
@@ -96,16 +96,16 @@ class CockpitCharts extends Component {
             this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
         }
     }
-    loadKpis = async () => {
-        this.setState({...this.state,isLoading:true})
-        let response = await apiCalls.getdshKpis();
-        if (response.ok) {
-            this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
+    // loadKpis = async () => {
+    //     this.setState({...this.state,isLoading:true})
+    //     let response = await apiCalls.getdshKpis();
+    //     if (response.ok) {
+    //         this.setState({ ...this.state, kpis: response.data ,errorMessage:null,isLoading:false})
 
-        }else{
-            this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
-        }
-    }
+    //     }else{
+    //         this.setState({...this.state,errorMessage:apiCalls.isErrorDispaly(response)})
+    //     }
+    // }
 
     viewReport = (elem) => {
         this.props.history.push('/cockpit/reportview/' + elem.name);
@@ -191,7 +191,7 @@ class CockpitCharts extends Component {
                    
                 </li>
                 
-                {item?.walletCode==="EUR" &&<li onClick={() => this.showSendReceiveDrawer(4, item)}>
+                {item?.walletCode==="EUR" && process.env.REACT_APP_PERSONAL_IBAN==="personal"&&<li onClick={() => this.showSendReceiveDrawer(4, item)}>
                     <Link value={5} className="c-pointer">
                     <Translate content="personal_iban_transafer" />
                     </Link>
@@ -328,7 +328,7 @@ class CockpitCharts extends Component {
                         this.closeDrawer();
                     }}
                 />}
-                {this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
+                {process.env.REACT_APP_PERSONAL_IBAN==="personal" &&this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
                         this.closeDrawer();
                     }}/>}
                 <Drawer

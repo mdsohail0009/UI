@@ -72,15 +72,7 @@ class PaymentSummary extends Component {
 				this.myRef.current.scrollIntoView();
 				return
 			}
-		} else {
-			this.setState({
-				...this.state,
-				errorMessage:
-					"Without Verifications you can't Proceed.",loading:false
-			});
-			this.myRef.current.scrollIntoView();
-			return
-		}
+		} 
 		let response= await proceedTransaction(this.props?.id || this.props?.fileData?.id)
 		if(response.ok){
 			if(response.data === true){
@@ -98,6 +90,13 @@ class PaymentSummary extends Component {
 	handleBack=()=>{
 		this.props.history.push('/cockpit');
 	}
+
+	verificationsData=(data)=>{
+		if(data?.isLiveVerification && !data?.twoFactorEnabled && !data?.isEmailVerification && !data?.isPhoneVerified ){
+		  this.setState({ ...this.state, 
+			isShowGreyButton: true });
+		}
+	  }
 	changesVerification = (obj) => {
 		if(obj.isPhoneVerification && obj.verifyData?.isPhoneVerified &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification){
 			this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
@@ -213,7 +212,9 @@ class PaymentSummary extends Component {
 						<div><Text className='summarybal'>{this.props?.getPaymentDetails.noOfPayments}</Text></div>
 					</div></div>
 					
-                           <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} />
+                           <Verifications onchangeData={(obj) => this.changesVerification(obj)} 
+						   onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} 
+						   verificationsData={(data)=>this.verificationsData(data)}/>
 					    
 						   <div className="cust-pop-up-btn crypto-pop">
 						   <Button block
