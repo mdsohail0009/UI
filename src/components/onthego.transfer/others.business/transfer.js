@@ -1,4 +1,4 @@
-import { Form, Row, Col, Typography, Input, Button, Image, Spin, Alert, Tabs } from "antd";
+import { Form, Row, Col, Typography, Input, Button, Image, Spin, Alert, Tabs,Select } from "antd";
 import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
@@ -6,7 +6,7 @@ import { validateContentRule } from "../../../utils/custom.validator";
 import ConnectStateProps from "../../../utils/state.connect";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails } from "../api";
+import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
@@ -14,8 +14,11 @@ import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
+const {Option}=Select;
 class BusinessTransfer extends Component {
     form = React.createRef();useDivRef=React.createRef()
+    form1 = React.createRef()
+    form2 = React.createRef()
     state = {
         errorMessage: null,
         isLoading: true,
@@ -34,21 +37,27 @@ class BusinessTransfer extends Component {
         payeeaccountDetails:null,
         gbpdetails:{},
         documents:null,
-        reasonDocuments:null
+        reasonDocuments:null,
+        relationData:[],
+        selectedRelation:null,
+        reasonForTransferDataa:[],
+        selectedReasonforTransfer:null,
     };
     componentDidMount() {
         this.loadDetails();
+        this.getRelationData();
+        this.getReasonForTransferData();
     }
     loadDetails = async () => {
-        this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory });
-            let data = this.props.transferData;
+        let data = this.props.transferData;
+        this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory,selectedRelation:data.relation });
             let edit=false;
             if (!data?.payeeAccountModels) {
                 data.payeeAccountModels = [payeeAccountObj()];
             }
             if (this.props.selectedAddress?.id) {
                 const accountDetails = data.payeeAccountModels[0];
-                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2,ukSortCode:accountDetails.ukSortCode };
+                data = { ...data, ...accountDetails, line1: data.line1, line2: data.line2, line3: data.line3, bankAddress1: accountDetails.line1, bankAddress2: accountDetails.line2,ukSortCode:accountDetails.ukSortCode};
                 delete data["documents"];
                  edit = true;
             }
@@ -63,8 +72,8 @@ class BusinessTransfer extends Component {
                 this.setState({ ...this.state, selectedTab:"domestic" })  
             }
             const ibanDetails = this.props.transferData?.payeeAccountModels[0] || {}
-            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  this.props.transferData.id, ibanDetails}, () => {
-                this.setState({ ...this.state, isLoading: false })
+            this.setState({ ...this.state, errorMessage: null, details: data,isEdit:edit, isSelectedId:  this.props.transferData.id, ibanDetails,selectedRelation:data.relation}, () => {
+                this.setState({ ...this.state, isLoading: false,selectedRelation:data.relation})
             });
        
 
@@ -91,7 +100,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
 
         _obj.addressType = "otherbusiness";
-        _obj.transferType = selectedTab;
+        _obj.transferType = this.props.currency=='CHF'?'chftransfer':selectedTab;
         _obj.amount = this.props.amount;
         _obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
@@ -100,8 +109,9 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
-        _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
-        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
+        _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form2.current?.getFieldValue('iban');
+        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
+        _obj.createdBy = this.props.userProfile?.userName;
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -115,7 +125,7 @@ class BusinessTransfer extends Component {
         
         if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments,transferOthers:_obj.transferOthers, })
                 if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false,documents:null });
@@ -131,8 +141,15 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
+        if(key=='domestic'){
+            this.form.current?.resetFields();
+       }else if(key=='international'){
+           this.form1.current?.resetFields();
+       }else {
+           this.form2.current?.resetFields();
+       }
         let _obj = { ...this.state.details}
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null });this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null,selectedReasonforTransfer:null});this.form.current.resetFields();
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
@@ -158,11 +175,11 @@ class BusinessTransfer extends Component {
         }
     }
     onIbanValidate = (e) => {
-        let value = e ? e: this.form.current?.getFieldValue('iban');
+        let value = e ? e: this.form2.current?.getFieldValue('iban');
         if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
-                this.form.current?.validateFields(["iban"], this.validateIbanType)
+                this.form2.current?.validateFields(["iban"], this.validateIbanType)
             }
             else {
                 this.setState({ ...this.state, isValidCheck: true, isShowValid: false, isValidateLoading: true});
@@ -171,7 +188,7 @@ class BusinessTransfer extends Component {
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
-            this.form.current?.validateFields(["iban"], this.validateIbanType)
+            this.form2.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
 
@@ -195,6 +212,55 @@ class BusinessTransfer extends Component {
             return Promise.resolve();
         }
     };
+    getRelationData=async()=>{
+        let res = await getRelationDetails()
+        if(res.ok){
+            this.setState({...this.state,relationData:res.data,errorMessage:null})
+        }else{
+            this.setState({...this.state,errorMessage: apiCalls.isErrorDispaly(res),})
+           
+        }
+    }
+    handleRelation=(e)=>{
+        this.setState({...this.state,selectedRelation:e})
+        if(!this.state.isEdit){
+            if(this.state.selectedTab=='domestic'){
+                this.form.current.setFieldsValue({others:null})
+           }else if(this.state.selectedTab=='international'){
+            this.form1.current.setFieldsValue({others:null})
+           }else {
+            this.form2.current.setFieldsValue({others:null})
+           }
+        }else if(this.state.isEdit && this.state.details.relation !='Others') {
+            if(this.state.selectedTab=='domestic'){
+                this.form.current.setFieldsValue({others:null})
+           }else if(this.state.selectedTab=='international'){
+            this.form1.current.setFieldsValue({others:null})
+           }else {
+            this.form2.current.setFieldsValue({others:null})
+           }
+        }     
+    }
+    getReasonForTransferData=async()=>{
+        let res = await getReasonforTransferDetails();
+        if(res.ok){
+            this.setState({...this.state,reasonForTransferDataa:res.data,errorMessage:null})
+        }else{
+            this.setState({...this.state,errorMessage: apiCalls.isErrorDispaly(res),})
+           
+        }
+    }
+
+    handleReasonTrnsfer=(e)=>{
+        this.setState({...this.state,selectedReasonforTransfer:e})
+        if(this.state.selectedTab=='domestic'){
+            this.form.current.setFieldsValue({transferOthers:null})
+       }else if(this.state.selectedTab=='international'){
+        this.form1.current.setFieldsValue({transferOthers:null})
+       }else {
+        this.form2.current.setFieldsValue({transferOthers:null})
+       }
+    }
     render() {
         const { isLoading, details, selectedTab, errorMessage } = this.state;
         if (isLoading) {
@@ -301,13 +367,47 @@ class BusinessTransfer extends Component {
                                     },
                                 ]}
                             >
-                                <Input
+                                <Select
                                     className="cust-input"
+                                    maxLength={100}
                                     placeholder={"Relationship To Beneficiary"}
-                                    maxLength={100}/>
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.relationData?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select>
 
                             </Form.Item>
                         </Col>
+                        {this.state.selectedRelation=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="others"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
@@ -320,7 +420,7 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    <DomesticTransfer type={this.props.type} currency={this.props.currency}/>
+                    <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}  refreshData ={selectedTab}/>
                 
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
@@ -352,7 +452,7 @@ class BusinessTransfer extends Component {
            
                 <Form initialValues={details}
                     className="custom-label  mb-0"
-                    ref={this.form}
+                    ref={this.form1}
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
@@ -436,13 +536,47 @@ class BusinessTransfer extends Component {
                                     },
                                 ]}
                             >
-                                <Input
+                                 <Select
                                     className="cust-input"
+                                    maxLength={100}
                                     placeholder={"Relationship To Beneficiary"}
-                                    maxLength={100}/>
-
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.relationData?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
+                       
+                        {this.state.selectedRelation=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="others"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
@@ -454,7 +588,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
                     <h2  className="adbook-head">Bank Details</h2>
-                    <InternationalTransfer type={this.props.type} />
+                    <InternationalTransfer type={this.props.type} form={this.form1} editDocument={this.state.isEdit}  refreshData ={selectedTab}/>
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
@@ -485,7 +619,7 @@ class BusinessTransfer extends Component {
          
                 <Form initialValues={details}
                     className="custom-label  mb-0"
-                    ref={this.form}
+                    ref={this.form2}
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >                    
@@ -568,13 +702,47 @@ class BusinessTransfer extends Component {
                                     },
                                 ]}
                             >
-                                <Input
+                                <Select
                                     className="cust-input"
+                                    maxLength={100}
                                     placeholder={"Relationship To Beneficiary"}
-                                    maxLength={100}/>
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.relationData?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select>
 
                             </Form.Item>
                         </Col>
+                        {this.state.selectedRelation=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="others"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to prove your relationship with the beneficiary. E.g. Contracts, Agreements</Paragraph>
                             <AddressDocumnet 
@@ -707,14 +875,48 @@ class BusinessTransfer extends Component {
                                     "Reason For Transfer"
                                 }
                             >
-                                <TextArea
-                                    placeholder={"Reason For Transfer"}
-                                    className="cust-input cust-text-area address-book-cust"
-                                    autoSize={{ minRows: 1, maxRows: 1 }}
-                                    maxLength={200}
-                                ></TextArea>
+                                 <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={apicalls.convertLocalLang(
+                                        "reasiontotransfor"
+                                    )}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleReasonTrnsfer(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select> 
                             </Form.Item>
                         </Col>}
+                        {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>

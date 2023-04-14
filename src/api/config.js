@@ -22,5 +22,6 @@ export const ApiControllers = {
     earn: "Earn/",
     partner:"Partner/",
     security:"Security/",
-    bank:"Bank/"
+    bank:"Bank/",
+    commissions:"Commissions/"
 }
