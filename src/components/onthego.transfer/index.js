@@ -199,7 +199,7 @@ amountnext = (values) => {
     let _amt = values.amount;
     _amt = _amt.replace(/,/g, "");
     if (_amt > 0) {
-        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
+        this.setState({ ...this.state, amount: _amt ,effectiveType:false}, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
     } else {
         if (!_amt) {
             this.setState({ ...this.state, errorMessage: '' });
@@ -385,6 +385,7 @@ verificationsData=(data)=>{
           isNewTransfer: false,
           amount: _amt,
           onTheGoObj: this.enteramtForm.current.getFieldsValue(),
+          effectiveType:false,
         },
         () => {
           this.enteramtForm.current
@@ -405,6 +406,7 @@ verificationsData=(data)=>{
       } else {
         this.setState({
           ...this.state,
+          effectiveType:false,
           errorMessage: 'Amount must be greater than zero',
         })
       }
