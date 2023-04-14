@@ -17,6 +17,8 @@ const { TextArea } = Input;
 const {Option}=Select;
 class BusinessTransfer extends Component {
     form = React.createRef();useDivRef=React.createRef()
+    form1 = React.createRef()
+    form2 = React.createRef()
     state = {
         errorMessage: null,
         isLoading: true,
@@ -107,7 +109,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].postalCode = ibanDetails?.zipCode;
         _obj.payeeAccountModels[0].bankBranch = ibanDetails?.branch;
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
-        _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form.current?.getFieldValue('iban');
+        _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form2.current?.getFieldValue('iban');
         _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
         _obj.createdBy = this.props.userProfile?.userName;
         if(isEdit){
@@ -139,8 +141,15 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
+        if(key=='domestic'){
+            this.form.current?.resetFields();
+       }else if(key=='international'){
+           this.form1.current?.resetFields();
+       }else {
+           this.form2.current?.resetFields();
+       }
         let _obj = { ...this.state.details}
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null});this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null,selectedReasonforTransfer:null});this.form.current.resetFields();
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
@@ -166,11 +175,11 @@ class BusinessTransfer extends Component {
         }
     }
     onIbanValidate = (e) => {
-        let value = e ? e: this.form.current?.getFieldValue('iban');
+        let value = e ? e: this.form2.current?.getFieldValue('iban');
         if (value?.length >= 10) {
             if (value &&!/^[A-Za-z0-9]+$/.test(value)) {
                 this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
-                this.form.current?.validateFields(["iban"], this.validateIbanType)
+                this.form2.current?.validateFields(["iban"], this.validateIbanType)
             }
             else {
                 this.setState({ ...this.state, isValidCheck: true, isShowValid: false, isValidateLoading: true});
@@ -179,7 +188,7 @@ class BusinessTransfer extends Component {
         }
         else {
             this.setState({ ...this.state, isValidCheck: false, isShowValid: true, iBanValid: false, ibanDetails: {}, isValidateLoading: true, isValidateMsg: true, errorMessage: null});
-            this.form.current?.validateFields(["iban"], this.validateIbanType)
+            this.form2.current?.validateFields(["iban"], this.validateIbanType)
         }
     }
 
@@ -214,9 +223,11 @@ class BusinessTransfer extends Component {
     }
     handleRelation=(e)=>{
         this.setState({...this.state,selectedRelation:e})
-        if(!this.state.edit){
+        if(!this.state.isEdit){
             this.form.current.setFieldsValue({others:null})
-        }        
+        }else if(this.state.isEdit && this.state.details.relation !='Others') {
+            this.form.current.setFieldsValue({others:null})
+        }    
     }
     getReasonForTransferData=async()=>{
         let res = await getReasonforTransferDetails();
@@ -391,7 +402,7 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}/>
+                    <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}  refreshData ={selectedTab}/>
                 
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
@@ -423,7 +434,7 @@ class BusinessTransfer extends Component {
            
                 <Form initialValues={details}
                     className="custom-label  mb-0"
-                    ref={this.form}
+                    ref={this.form1}
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >
@@ -559,7 +570,7 @@ class BusinessTransfer extends Component {
                         <RecipientAddress />
                     </Row>
                     <h2  className="adbook-head">Bank Details</h2>
-                    <InternationalTransfer type={this.props.type} form={this.form} editDocument={this.state.isEdit} />
+                    <InternationalTransfer type={this.props.type} form={this.form1} editDocument={this.state.isEdit}  refreshData ={selectedTab}/>
                     {this.props.type !== "manual" && 
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
@@ -590,7 +601,7 @@ class BusinessTransfer extends Component {
          
                 <Form initialValues={details}
                     className="custom-label  mb-0"
-                    ref={this.form}
+                    ref={this.form2}
                     onFinish={this.submitPayee}
                     scrollToFirstError
                 >                    

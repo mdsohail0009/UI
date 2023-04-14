@@ -218,7 +218,9 @@ class OthersBusiness extends Component {
         this.setState({...this.state,selectedRelation:e})
         if(!this.state.isEdit){
             this.form.current.setFieldsValue({others:null})
-        }       
+        } else if(this.state.isEdit && this.state.details.relation !="Others"){
+            this.form.current.setFieldsValue({others:null})  
+        }     
     }
     getReasonForTransferData=async()=>{
         let res = await getReasonforTransferDetails();

@@ -112,6 +112,7 @@ class PayeeBankDetails extends Component {
     }
 
     getReasonForTransferData=async()=>{
+        this.setState({...this.state,selectedReasonforTransfer:null})
         let res = await getReasonforTransferDetails();
         if(res.ok){
             this.setState({...this.state,reasonForTransferDataa:res.data,errorMessage:null})
@@ -640,7 +641,9 @@ class PayeeBankDetails extends Component {
     }
     render() {
         const {  transferType,   domesticType } = this.props;
-   
+        if(domesticType != this.state.domesticTypeName){
+            this.setState({...this.state, domesticTypeName:domesticType, selectedReasonforTransfer:null});
+        }
         
         return <>
         {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}

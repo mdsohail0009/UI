@@ -766,7 +766,7 @@ handleReasonTrnsfer=(e)=>{
                     onClick={() => {
                         let validateFileds = [];
                         if (!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {
-                            validateFileds = validateFileds.concat(["reasionOfTransfer", "files"]);
+                            validateFileds = validateFileds.concat(["reasonOfTransfer","transferOthers","files"]);
                       }
                       this.reasonForm.current.validateFields(validateFileds).then(async () => {
                           const fieldValues = this.reasonForm.current.getFieldsValue();
@@ -779,7 +779,7 @@ handleReasonTrnsfer=(e)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers });
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -878,7 +878,8 @@ handleReasonTrnsfer=(e)=>{
                {this.state.reviewDetails?.customerRemarks &&
                                 <div className="kpi-divstyle" >
                                     <div className="kpi-label">Reason For Transfer </div>
-                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"}</Text></div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"} {" "} 
+                                    {this.state.reviewDetails?.customerRemarks=="Others" && `(${this.state.reviewDetails?.others})`}</Text></div>
                                 </div>
                           }
 

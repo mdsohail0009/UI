@@ -180,7 +180,7 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);
+                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
                             }}>
                                 <Tabs.TabPane tab={ props.currency === "GBP" ? `Local ${props.currency} Transfer` : `Swift ${props.currency} Transfer`} className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab={ props.currency === "GBP" ? `International ${props.currency} Transfer` : `IBAN ${props.currency} Transfer`} className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>

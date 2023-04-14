@@ -10,6 +10,7 @@ class InternationalTransfer extends Component {
         reasonForTransferDataa:[],
         selectedReasonforTransfer:null,
         errorMessage:null,
+        domesticTypeName:this.props.refreshData,
     }
     componentDidMount(){
       this.getReasonForTransferData();  
@@ -29,6 +30,11 @@ class InternationalTransfer extends Component {
         this.props.form.current.setFieldsValue({transferOthers:null})
     }
     render() {
+        const { refreshData } = this.props;
+        if(refreshData != this.state.domesticTypeName){
+            this.setState({...this.state, domesticTypeName:refreshData, selectedReasonforTransfer:null});
+            this.props.form.current?.setFieldsValue({transferOthers:null})
+        }
         return <Row className="validateiban-content">
              {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
