@@ -321,6 +321,7 @@ saveWithdrawdata = async () => {
 
   onReviewDetailsLoading = (val) => {
     this.setState({ ...this.state, reviewDetailsLoading: val })
+    this.reviewScrool?.current?.scrollIntoView()
   }
   validateAmt = async (amt, step, values, loader) => {
     this.getPayees();
