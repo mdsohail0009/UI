@@ -120,7 +120,7 @@ const SuisseBaseCreditCom=(props)=>{
                                     <div
                                         className="security-label-style"
                                         >
-                                    Use SuisseBase Credit if Available for all transactions fees
+                                    Use SuisseBase Credits if Available for all transactions fees
                                     </div>
                                 </div>
                                             
