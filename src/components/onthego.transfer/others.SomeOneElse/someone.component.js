@@ -41,15 +41,15 @@ const SomeoneComponent = (props) => {
         const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
             setErrorMessage(null)
-            let edit = false;
+            let edit2 = false;
             setCreatePayeeObj(createPayeeData.data);
             setSelectedRelation(createPayeeData.data.relation)
             if (props.selectedAddress?.id) {
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
                 setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.docrepoitory)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
-                edit = true;
-                props?.onEdit(edit);
+                edit2 = true;
+                props?.onEdit(edit2);
                 setEdit(true);
                 setIsSelectedId(createPayeeData?.data?.id);
             }
@@ -122,7 +122,6 @@ const SomeoneComponent = (props) => {
         if (data && !data?.bankName) {
             useDivRef.current.scrollIntoView()
             setErrorMessage("No bank details are available for this IBAN number");
-            return;
         }
         else if(data) {
             setIsTabChange(false);
