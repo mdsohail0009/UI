@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Row, Col, Radio } from 'antd';
 import { useForm } from "antd/lib/form/Form";
 import ConnectStateProps from "../../utils/state.connect";
