@@ -23,7 +23,7 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: this.props.transferData?.transferType || "domestic", 
+        selectedTab: this.props.transferData?.transferType ||this.props.currency=='SGD' && "SWIFT/BIC" || "domestic", 
         isBtnLoading: false,
         showDeclaration: false,isEdit:false,
         isSelectedId: null,
@@ -49,6 +49,7 @@ class BusinessTransfer extends Component {
         this.getReasonForTransferData();
     }
     loadDetails = async () => {
+        debugger
         let data = this.props.transferData;
         this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory,selectedRelation:data.relation });
             let edit=false;
@@ -67,6 +68,8 @@ class BusinessTransfer extends Component {
             else if(data.transferType=== "internationalIBAN"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
                  this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
+            }else if(data.transferType=== "SWIFT/BIC"||this.props.currency=="SGD"){
+                this.setState({ ...this.state, selectedTab:"SWIFT/BIC" })
             }
             else{
                 this.setState({ ...this.state, selectedTab:"domestic" })  
@@ -100,7 +103,8 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
 
         _obj.addressType = "otherbusiness";
-        _obj.transferType = this.props.currency=='CHF'?'chftransfer':selectedTab;
+        // _obj.transferType = this.props.currency=='CHF'?'chftransfer':selectedTab;
+        _obj.transferType = this.props.currency=='CHF'&&'chftransfer'||this.props.currency=='SGD'&&'SWIFT/BIC' ||selectedTab;
         _obj.amount = this.props.amount;
         _obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
@@ -224,20 +228,20 @@ class BusinessTransfer extends Component {
     handleRelation=(e)=>{
         this.setState({...this.state,selectedRelation:e})
         if(!this.state.isEdit){
-            if(this.state.selectedTab=='domestic'){
-                this.form.current.setFieldsValue({others:null})
+            if(this.state.selectedTab=='domestic' || this.props.currency=="SGD"){
+                this.form.current?.setFieldsValue({others:null})
            }else if(this.state.selectedTab=='international'){
-            this.form1.current.setFieldsValue({others:null})
+            this.form1.current?.setFieldsValue({others:null})
            }else {
-            this.form2.current.setFieldsValue({others:null})
+            this.form2.current?.setFieldsValue({others:null})
            }
         }else if(this.state.isEdit && this.state.details.relation !='Others') {
             if(this.state.selectedTab=='domestic'){
-                this.form.current.setFieldsValue({others:null})
+                this.form.current?.setFieldsValue({others:null})
            }else if(this.state.selectedTab=='international'){
-            this.form1.current.setFieldsValue({others:null})
+            this.form1.current?.setFieldsValue({others:null})
            }else {
-            this.form2.current.setFieldsValue({others:null})
+            this.form2.current?.setFieldsValue({others:null})
            }
         }     
     }
@@ -277,7 +281,7 @@ class BusinessTransfer extends Component {
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
 
-            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`} className="text-white" key={"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={this.props.currency=="SGD" && "SWIFT/BIC"||"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
               
                 <Form initialValues={details}
@@ -447,7 +451,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            { (this.props.currency !="GBP" && this.props.currency !="CHF")&&   <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
+            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
            
                 <Form initialValues={details}

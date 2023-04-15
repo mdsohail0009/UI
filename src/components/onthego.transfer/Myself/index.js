@@ -98,7 +98,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         saveObj.line2=recipientDetails.line2;
         saveObj.line3=recipientDetails.line3;
         saveObj.addressType=isBusiness?'ownbusiness':'myself';
-        saveObj.transferType=currency==='EUR'?'sepa':currency==='CHF'?'chftransfer':addressOptions.tabType;
+        // saveObj.transferType=currency==='EUR'?'sepa':currency==='CHF'?'chftransfer':addressOptions.tabType;
+        saveObj.transferType=currency==='EUR'&&'sepa'||currency==='CHF'&&'chftransfer' || currency==='SGD'&& 'SWIFT/BIC' ||addressOptions.tabType;
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount;
@@ -267,7 +268,15 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 </Col>
             </Row>
         </>}
-        
+        {!showDeclartion &&<> {(currency === "SGD") && <>
+            <Row gutter={[16, 16]}>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                    <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
+                        <Tabs.TabPane tab={`${currency} SWIFT/BIC`} className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
+                    </Tabs>
+                </Col>
+            </Row>
+        </>}
         {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>}
         {currency == 'CHF' && <h2 className="adbook-head" >CHF Transfer</h2>}
         
@@ -396,7 +405,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
         </Row>}
 
         <Row>
-            {((currency == 'USD' || currency == "GBP") && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            {((currency == 'USD' || currency == "GBP" || currency=="SGD") && addressOptions.tabType !== 'internationalIBAN')  && <> <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="custom-forminput custom-label"
                     name="accountNumber"
@@ -456,7 +465,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
             </Form.Item>
         </Col>}
 
-                {currency === 'USD' && addressOptions.tabType === 'international'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {currency === 'USD' || currency === 'SGD' && addressOptions.tabType === 'international'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="swiftRouteBICNumber"
@@ -487,7 +496,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                             maxLength={50}/>
                     </Form.Item>
                 </Col>}
-                {!(currency === 'USD'  && addressOptions.tabType === 'international') && currency != 'GBP' &&   currency != "CHF" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {!(currency === 'USD'  && addressOptions.tabType === 'international') && currency != 'GBP' &&   currency != "CHF" && currency != "SGD" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="abaRoutingCode"
@@ -519,7 +528,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                         maxLength={50}/>
                     </Form.Item>
                 </Col>}
-               {currency == 'CHF' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+               {(currency == 'CHF'||currency =='SGD')  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="swiftRouteBICNumber"
@@ -685,6 +694,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj, ...props }) => {
                 {props.type !== "manual" && <Translate content="continue" />}
             </Button>
         </div>
+        </>}
         </>}
         </>}
         </>}
