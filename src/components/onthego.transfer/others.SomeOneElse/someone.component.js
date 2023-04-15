@@ -81,7 +81,8 @@ const SomeoneComponent = (props) => {
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }
-        obj['transferType'] = props.currency == "USD" || props.currency == "GBP"  ? addressOptions.domesticType : props.currency == "CHF"?'chftransfer':'sepa';
+        obj['transferType'] = (props.currency == "USD" || props.currency == "GBP") && addressOptions.domesticType || props.currency == "CHF" && 'chftransfer' || props.currency =='SGD' && 'SWIFT/BIC' ||props.currency =='EUR' && 'sepa';
+        // obj['transferType'] = props.currency == "USD" || props.currency == "GBP"  ? addressOptions.domesticType : props.currency == "CHF"?'chftransfer':'sepa';
         obj['addressType'] = addressOptions.addressType;
         if (edit) {
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
@@ -188,7 +189,19 @@ const SomeoneComponent = (props) => {
                         </Col>
                     </Row>
                 </>}
-              
+                {!showDeclartion && <>
+                {props.currency === "SGD" && <>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                            }}>
+                                <Tabs.TabPane tab="SGD SWIFT/BIC" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </>}
                 {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
                 {props.currency == 'CHF' && <h2 className="adbook-head">CHF Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
@@ -469,6 +482,7 @@ const SomeoneComponent = (props) => {
                     </Button>
                 </div>
             </Form>
+        </>}
         </>}
         </>}
         </>}
