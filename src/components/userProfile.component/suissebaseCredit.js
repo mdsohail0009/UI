@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Typography,Form, Button, Row, Col,Spin,Input,message,Alert } from 'antd';
+import { Typography,Form,Row, Col,Input,message,Alert } from 'antd';
 import Translate from 'react-translate-component';
-import { LoadingOutlined } from "@ant-design/icons";
 import { getSuissebaseCredit ,saveSuissebaseCrediate} from '../../api/apiServer';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
@@ -55,12 +54,6 @@ const SuisseBaseCreditCom=(props)=>{
         }
     }
   
-    const antIcon = (
-        <LoadingOutlined
-            style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-            spin
-        />
-    );
     const handlechange=(e)=>{
         setisSuissebaseCredit(e.target.checked)
         saveSuisseBaseCreadiateData(e.target.checked);

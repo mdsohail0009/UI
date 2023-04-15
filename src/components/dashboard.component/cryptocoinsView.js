@@ -80,7 +80,6 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
     }
       if (props?.userProfile?.isDocsRequested) {
         props.history.push("/docnotices");
-        return;
     }
    else if (!props?.userProfile?.isKYC) {
         props.history.push("/notkyc");
@@ -179,7 +178,7 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
                     <Translate content="sell" />
                     </Link>
                 </li>
-                <li onClick={() => showInternalTransfer(item)}>
+                <li onClick={() => showInternalTransfer()}>
                   <Link  value={5} className="c-pointer">
                   <Translate content="menu_internal_transfer" />
                   </Link>

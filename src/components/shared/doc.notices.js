@@ -66,7 +66,7 @@ const DocNotices = (props) => {
           className=" side-drawer"
           size="large"
         >
-          <AddressCrypto type="manual" cryptoTab={1} onCancel={(obj) => closeCryptoDrawer(obj)} props={props}  headingUpdate={headingChange} isSave={true} cryptoId={cryptoId}/>
+          <AddressCrypto type="manual" cryptoTab={1} onCancel={() => closeCryptoDrawer()} props={props}  headingUpdate={headingChange} isSave={true} cryptoId={cryptoId}/>
         </Drawer>
     </React.Fragment>
 }
