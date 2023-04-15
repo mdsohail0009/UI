@@ -11,7 +11,7 @@ import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, save
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
-import { getVerificationFields } from "./verification.component/api"
+import { getVerificationFields,getCommissionBankDetails,saveCommissions } from "./verification.component/api"
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
@@ -23,7 +23,6 @@ import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
 import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-import { getCommissionBankDetails,saveCommissions} from "./verification.component/api";
 import { getAccountWallet} from "../../api/apiServer";
 const { Text, Title } = Typography; 
 const { Option } = Select;
@@ -53,7 +52,6 @@ class OnthegoFundTransfer extends Component {
     verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
     isVerificationEnable: true,
     isVarificationLoader: true,
-    fiatWallets: [],
     isShowGreyButton: false,
     permissions: {},
     filtercoinsList: [],
@@ -857,14 +855,6 @@ verificationsData=(data)=>{
                       this.reasonForm.current.validateFields(validateFileds).then(async () => {
                           const fieldValues = this.reasonForm.current.getFieldsValue();
                           this.setState({ ...this.state, loading: true, errorMessage: null });
-                          const obj = {
-                            "payeeId": this.state.selectedPayee.id,
-                                                    "customerId": this.props.userProfile.id,
-                                                    "reasonOfTransfer": fieldValues?.reasionOfTransfer,
-                                                    "routingNumber": fieldValues?.abaRoutingCode,
-                                                    "isInternational": null,
-                                                    "docRepositories": this.state.codeDetails?.documents
-                          }
                           const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,
                              bankId:this.state.selectedbankobj[0]?.bankId, 
                             });

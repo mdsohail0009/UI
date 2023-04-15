@@ -73,17 +73,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       }
     }
   }
-  const isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (objValue.originalError &&typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
-
+ 
   const passwordResponce = (isError, msg, isloading) => {
     setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
     useDivRef.current?.scrollIntoView(0,0)

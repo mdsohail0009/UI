@@ -164,7 +164,6 @@ class SelectSellCrypto extends Component {
             screenName: "sell"
         });
         if (response.ok) {
-            const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
@@ -183,7 +182,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, isShowCoinsData: true })
     }
     render() {
-        const { Text, Paragraph } = Typography;
+        const { Paragraph } = Typography;
         const { coinDetailData } = this.props.sellData;
         return (
             <>

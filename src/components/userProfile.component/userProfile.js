@@ -3,7 +3,6 @@ import { Tabs,Typography, } from 'antd'
 import ProfileInfo from './profileInfo';
 import Security from './security'
 import QueryString from 'query-string'
-import Settings from './settings';
 import Referral from './referral.component/referral';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';

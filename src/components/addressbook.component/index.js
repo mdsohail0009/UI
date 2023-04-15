@@ -551,7 +551,7 @@ class AddressBook extends Component {
 				showCrypto = !obj?.close;
 			else
 				showFiat = !obj?.close;
-		};
+		}
 		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}})
 		setTimeout(() => this.setState({ ...this.state,showHeading:false,hideFiatHeading:false}), 2000);
 		
@@ -572,7 +572,7 @@ class AddressBook extends Component {
 			if (obj.isCrypto)
 				showCrypto = !obj?.close;
 			
-		};
+		}
 		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} })
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
@@ -584,7 +584,6 @@ class AddressBook extends Component {
 		this.props.changeStep("step1");
 	};
 	handleWithdrawToggle = (e) => {
-		debugger
 		this.setState({
 			...this.state,
 			cryptoFiat: parseInt(e) === 2,
@@ -685,7 +684,7 @@ class AddressBook extends Component {
 	};
 
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled ,errorMessage} =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled 	} =
 			this.state;
 
 		return (

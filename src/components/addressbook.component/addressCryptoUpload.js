@@ -81,7 +81,7 @@ class AddressCryptoDocument extends Component {
   };
   deleteDoc=()=>{
     let { documents: docs } = this.state;
-    let files = this.state.filesList || docs.details || docs;;
+    let files = this.state.filesList || docs.details || docs;
     for(var k in files){
         if(files[k].id===this.state.selectedObj?.id){
             files[k].state='Deleted';

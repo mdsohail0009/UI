@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Typography} from 'antd';
 import { setSelectedSellCoin, setSellHeaderHide, setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { setCoinWallet, updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
 import Loader from '../../Shared/loader'
 import { getMemberCoins, updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';

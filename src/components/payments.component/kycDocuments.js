@@ -31,7 +31,7 @@ const KycDocuments = (props) => {
                     className="upload mt-4"
                     multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
-                    beforeUpload={(props) => { this.beforeUpload(props) }}
+                    beforeUpload={(e) => { this.beforeUpload(e) }}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                 >
                     <p className="ant-upload-drag-icon">
@@ -59,7 +59,7 @@ const KycDocuments = (props) => {
                     className="upload mt-4"
                     multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
-                    beforeUpload={(props) => { this.beforeUpload(props) }}
+                    beforeUpload={(uploadData) => { this.beforeUpload(uploadData) }}
                 headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
                 >
                     <p className="ant-upload-drag-icon">

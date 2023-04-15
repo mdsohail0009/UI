@@ -1,5 +1,5 @@
 import { Input, Spin } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, isConvertionLoad, isSwaped, onCurrencySwap }) => {
     

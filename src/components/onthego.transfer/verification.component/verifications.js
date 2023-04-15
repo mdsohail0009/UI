@@ -15,7 +15,6 @@ const Verifications = (props) => {
     const [emailSeconds, setEmailSeconds] = useState(120);
     const [errorMsg, setMsg] = useState(false);
     const [phbtnColor,setPhBtnColor]=useState(false)
-    const [emailbtnColor,setEmailBtnColor]=useState(false)
     const [authbtnColor,setAuthBtnColor]=useState(false)
     const [form] = Form.useForm();
     const useOtpRef = React.useRef(null);
@@ -139,7 +138,6 @@ const goToSecurity=()=>{
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
         let response = await verifyEmailCode(email.code);
         if (response.ok) {
-            setEmailBtnColor(true)
         setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
         updateverifyObj(true, 'isEmailVerification')
         } else if (response.data == null) {
