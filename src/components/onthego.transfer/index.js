@@ -947,7 +947,8 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                                     <div className="summary-liststyle">How much Beneficiary will receive</div>
                     <div className="summarybal">
                     <NumberFormat
-                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
+                                            // value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
+                                            value={`${this.state?.reviewDetails?.totalValue}`}
                                             thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 
