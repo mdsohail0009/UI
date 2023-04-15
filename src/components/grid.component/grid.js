@@ -176,6 +176,7 @@ export function withState(WrappedGrid) {
                                         <th style={{ width:"150px"}}>Bank Account Number /IBAN</th>
                                         <th style={{ width:"100px"}}>Hash</th>
                                         <th style={{ width:"70px"}}>Status</th>
+                                        <th style={{ width:"90px"}}>Reason For Rejection</th>
                                     </thead>
                                     <tbody className='pdt-data'style={{ width:"100%"}}>
                                         {this.state?.data?.map(item => <tr>
@@ -188,6 +189,7 @@ export function withState(WrappedGrid) {
                                             <td style={{ width:"150px"}}>{this.getCombineFieldValue(item, ["accountnumber", "iban"])}</td>
                                             <td style={{ width:"100px"}}>{item.hash}</td>
                                             <td style={{ width:"70px"}}>{item.state}</td>
+                                            <td style={{ width:"90px"}}>{item.rejectReason}</td>
                                         </tr>)}
                                     </tbody>
                                 </table>
