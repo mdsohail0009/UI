@@ -13,7 +13,7 @@ const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType: 'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || 'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -196,7 +196,7 @@ const SomeoneComponent = (props) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
                                 form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
                             }}>
-                                <Tabs.TabPane tab="SGD SWIFT/BIC" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="SGD SWIFT/BIC" className="text-white text-captz" key={"SWIFT/BIC"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
