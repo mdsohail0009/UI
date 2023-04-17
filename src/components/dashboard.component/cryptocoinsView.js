@@ -128,7 +128,6 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
           props.dispatch(setSendCrypto(true));
           props.changeStep('withdraw_crypto_selected');
           props.dispatch(getScreenName({getScreen:"withdraw"}))
-          console.log(state)
       } else {
         props.dispatch(setSendCrypto(false));
         props.dispatch(setWithdrawfiatenaable(false));
@@ -310,15 +309,10 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
                             type={"text"}
                             className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
-                                ? "text-green pg-text"
-                                : "text-red red-text"
+                                ? "text-white pg-text"
+                                : "text-white red-text"
                             }`}
                           />
-                          <span className={`icon sm  ${
-                              item.coinValueinNativeCurrency > 0
-                                ? "valupp-icon pg-arrow"
-                                : "valdown-icon red-arrow"
-                            }`} />
                             </div>
                       </div>
                     }
@@ -334,7 +328,6 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
               showDrawer={state.buyDrawer}
               onClose={() => closeDrawer()}
             />
-            {console.log(state.sendDrawer,"state.sendDrawer")}
             <SendReceive showDrawer={state.sendDrawer} onClose={() => closeDrawer()} />
             {state.transactions && <TransactionsHistory
               showDrawer={state.transactions}
@@ -345,7 +338,6 @@ if(props.dashboard.cryptoPortFolios.data!==state.transactionData){
             />}
           </div>
         );
-    // }
 }
 
 const connectStateToProps = ({ sendReceive, userConfig, dashboard }) => {
