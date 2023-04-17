@@ -23,9 +23,10 @@ import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
 import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
+import { getCommissionBankDetails,saveCommissions} from "./verification.component/api";
 import { getAccountWallet} from "../../api/apiServer";
 const { Text, Title } = Typography; 
-const {Option}=Select;
+const { Option } = Select;
 class OnthegoFundTransfer extends Component {
   enteramtForm = React.createRef();
   reasonForm = React.createRef();
@@ -33,7 +34,9 @@ class OnthegoFundTransfer extends Component {
   state = {
     step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
     filterObj: [],
+    selectedBank:null,
     selectedCurrency: this.props.selectedCurrency,
+    selectedType:this.props.selectedCurrency,
     addressOptions: { addressType: "myself", transferType: this.props.selectedCurrency === "EUR" ? "sepa" : "domestic" },
         isNewTransfer: false,
         amount: "",
@@ -55,7 +58,15 @@ class OnthegoFundTransfer extends Component {
     permissions: {},
     filtercoinsList: [],
     searchFiatVal: "",
+    effectiveType:false,
+    fiatBanks:[],   
+    getBanckDetails:null,
+    withdrawAmount:null,
+    loader:false,
     fiatWallets:[],
+    isLoading:false,
+    selectedbankobj:{},
+    detailstype:false,
     reasonForTransferDataa:[],
     selectedReasonforTransfer:null,
   }
@@ -70,9 +81,22 @@ class OnthegoFundTransfer extends Component {
     }
     if (this.state.selectedCurrency) {
       this.getPayees();
+     // this.fetchMemberWallet()
+    }
+    if(this.state.selectedType){
+      this.fetchMemberWallet()
     }
   }
-
+  getAccountWallet=async()=>{
+    let walletObj=await getAccountWallet()
+    if(walletObj.ok){
+      this.setState({ ...this.state, fiatWallets: walletObj.data });
+    }
+    else{
+         this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
+    
+    }
+  }
   fetchMemberWallet= async()=>{
     
       this.setState({ ...this.state, fiatWalletsLoading: true });
@@ -106,7 +130,42 @@ class OnthegoFundTransfer extends Component {
     
     }
   }
+  getBankDetails=async()=>{
+    this.setState({...this.state,fiatBanks:null})
+    let res = await getCommissionBankDetails(this.state.selectedCurrency)
+    if(res.ok){
+      this.setState({...this.state,fiatBanks:res.data})
+    }else {
+      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(res),fiatBanks:null })
+  }
+  }
+  
+  saveCommissionsDetails=async(e)=>{
+    if((this.state.amount || this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
+      {
+        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true})
+        let obj ={
+          CustomerId:this.props.userProfile.id,      
+          amount:this.enteramtForm.current.getFieldsValue().amount,    
+          WalletCode:this.state.selectedCurrency,
+          bankId:this.state.selectedbankobj[0]?.bankId,       
+        }
+        let res = await saveCommissions(obj);
+        if(res.ok){
+          this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
+        }else {
+          this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
+      }
+        }
+    }  
+  }
+  handleBankChange=(e)=>{
+    const newRecords = this.state.fiatBanks.filter(record => record.bankName === e);
+  this.setState({...this.state,selectedBank:e,effectiveType:false,selectedbankobj:newRecords},()=> this.saveCommissionsDetails(e))
+ 
+  }
   getPayees() {
+    this.getBankDetails();
     fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
             this.setState({ ...this.state, payeesLoading: false, filterObj: response.data, payees: response.data });
@@ -148,7 +207,7 @@ amountnext = (values) => {
     let _amt = values.amount;
     _amt = _amt.replace(/,/g, "");
     if (_amt > 0) {
-        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
+        this.setState({ ...this.state, amount: _amt ,effectiveType:false}, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader"))
     } else {
         if (!_amt) {
             this.setState({ ...this.state, errorMessage: '' });
@@ -228,7 +287,7 @@ saveWithdrawdata = async () => {
         obj["beneficiaryAccountName"] = obj.beneficiaryAccountName ? apicalls.encryptValue(obj.beneficiaryAccountName, this.props.userProfile?.sk) : null;
         obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
         obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
-
+        obj["bankId"]=this.state.selectedbankobj[0].bankId
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
@@ -270,13 +329,15 @@ saveWithdrawdata = async () => {
 
   onReviewDetailsLoading = (val) => {
     this.setState({ ...this.state, reviewDetailsLoading: val })
+    this.reviewScrool?.current?.scrollIntoView()
   }
   validateAmt = async (amt, step, values, loader) => {
     this.getPayees();
     const obj = {
       CustomerId: this.props.userProfile?.id,
       amount: amt,
-      WalletCode: this.state.selectedCurrency
+      WalletCode: this.state.selectedCurrency,
+      bankId:this.state.selectedbankobj[0]?.bankId,
     }
     this.setState({ ...this.state, [loader]: true, errorMessage: null });
     const res = await validateAmount(obj);
@@ -297,7 +358,8 @@ saveWithdrawdata = async () => {
     },400)
 }
   handleCurrencyChange = (e) => {
- this.setState({ ...this.state, selectedCurrency: e });
+ this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,detailstype:false,getBanckDetails:null},(e)=>this.getBankDetails(e));
+  this.enteramtForm.current.setFieldsValue({fiatBank:null,selectedBank:null})
   }
 
   keyDownHandler = (e) => {
@@ -346,6 +408,7 @@ handleReasonTrnsfer=(e)=>{
           isNewTransfer: false,
           amount: _amt,
           onTheGoObj: this.enteramtForm.current.getFieldsValue(),
+          effectiveType:false,
         },
         () => {
           this.enteramtForm.current
@@ -366,14 +429,23 @@ handleReasonTrnsfer=(e)=>{
       } else {
         this.setState({
           ...this.state,
+          effectiveType:false,
           errorMessage: 'Amount must be greater than zero',
         })
       }
     }
   }
+  feeChange=()=>{
+    if(this.state.effectiveType){
+      this.setState({...this.state,effectiveType:false})
+    }else{
+      this.setState({...this.state,effectiveType:true})
+    }
+
+  }
 
   renderStep = (step) => {
-    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
@@ -382,7 +454,7 @@ handleReasonTrnsfer=(e)=>{
             <div>
               <div className="mt-8">
               <div
-                 className='label-style'>Send from your Suissebase FIAT Wallet</div>
+                 className='label-style'>Send from your SuisseBase FIAT Wallet</div>
               </div>
               <Search placeholder="Search Currency" value={this.state.searchFiatVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={this.handleFiatSearch} size="middle" bordered={false} className="cust-search" />
               <List
@@ -446,7 +518,7 @@ handleReasonTrnsfer=(e)=>{
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <Form.Item
-                        className="custom-forminput custom-label fund-transfer-input send-fiat-input"
+                        className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
                         name="amount"
                         label={"Enter Amount"}
                         required
@@ -481,17 +553,87 @@ handleReasonTrnsfer=(e)=>{
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
                                 {this.state.fiatWallets.map((item)=>
-                                  <option value={item.walletCode}>{item.walletCode}</option>
+                                  <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}  ({item.amount?.toLocaleString()})</option>
                                 )}
-
                               </Select>}
                           onValueChange={() => {
-                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
+                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' },()=>this.saveCommissionsDetails())
                         }}
                         />
 
                       </Form.Item>
+                    </Col>                 
+                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-label"
+                        name="fiatBank"
+                        label="Bank Name"
+                        rules={[
+                          {
+                            required: true,
+                            message:"Is required"
+                          },
+                        ]}>
+
+
+                        <Select
+                          placeholder="Select Your Bank"
+                          className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                          dropdownClassName="select-drpdwn"
+                          onChange={(e) => this.handleBankChange(e)}
+                          bordered={false}
+                        >
+                          {this.state.fiatBanks?.map((item, indx) => (
+                            <Option key={indx} value={item.bankName}>
+                              {item.bankName}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
                     </Col>
+                {this.state.detailstype &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+               {this.state.isLoading ? <Loader/> : <div className="cust-summary-new">
+                  <div> 
+                  { getBanckDetails &&  <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Withdrawal Amount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${this.state?.withdrawAmount}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>
+                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className={`${this.state.effectiveType ? "icon lg up-arrow" : "icon lg down-arrow"}`}></span></div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.effectiveFee)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>
+                  {this.state.effectiveType && <>  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Fees</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.totalFee)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>
+                {getBanckDetails?.tierDiscount !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Tier Discount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.tierDiscount)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>}
+                 {getBanckDetails?.sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">SuisseBase Credit Used</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(getBanckDetails?.sbCredit)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div>}
+                  </>}
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">How Much Beneficiary Will Receive</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${getBanckDetails?.amount}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
+                  </div></>} 
+                  </div>        
+                  </div>}
+                  </Col>}
                   </Row>
                   <Row gutter={[16, 4]} className="send-drawerbtn">
 
@@ -589,6 +731,7 @@ handleReasonTrnsfer=(e)=>{
                                 payeeId: item.id,
                                 reasonOfTransfer: '',
                                 amount: this.state.amount,
+                                bankId:this.state.selectedbankobj[0]?.bankId,
                               })
                               if (res.ok) {
                                 this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
@@ -641,7 +784,9 @@ handleReasonTrnsfer=(e)=>{
                           )
                         } else {
                             this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
-                            const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount });
+                            const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount ,
+                            bankId:this.state.selectedbankobj[0]?.bankId,
+                          });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -779,7 +924,7 @@ handleReasonTrnsfer=(e)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers });
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId,});
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -817,26 +962,48 @@ handleReasonTrnsfer=(e)=>{
                                     <div className="adbook-head" >Transfer details</div>
                   </div>
                   <div className="cust-summary-new">
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">How much you will receive</div>
-                    <div className="summarybal">
-                    <NumberFormat
-                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
-                  </div>
-                
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Total fees</div>
-                                    <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
-                  </div>
-                
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal amount</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.requestedAmount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>
+                
+                <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle 
+Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className={`${this.state.effectiveType ? "icon lg up-arrow" : "icon lg down-arrow"}`}></span></div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.comission)}`}
+                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>  
+                  
+                 {this.state.effectiveType && <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Fees</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.totalFee)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>
+                {this.state.reviewDetails?.tierDiscount !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Tier Discount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.tierDiscount)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>}
+                 {this.state.reviewDetails?.sbCredit !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">SuisseBase Credit Used</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.sbCredit)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div>}
+                
+                  </>}
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">How much Beneficiary will receive</div>
+                    <div className="summarybal">
+                    <NumberFormat
+                                            // value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
+                                            value={`${this.state?.reviewDetails?.totalValue}`}
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 
 
@@ -948,7 +1115,7 @@ handleReasonTrnsfer=(e)=>{
                 }
                 }
                     fiatHeadingUpdate={this.fiatHeading}
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} />
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} selectedbankobj={this.state.selectedbankobj} />
             </>,
       declaration: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
       <Image preview={false} src={alertIcon} className="confirm-icon"  />
