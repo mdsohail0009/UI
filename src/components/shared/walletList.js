@@ -60,7 +60,7 @@ class WalletList extends Component {
                                         title={<div className="wallet-title">{item.currencyCode}</div>}
                                     />
                                     <><div className="text-right coin-typo">
-                                        <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' && '$' || item.currencyCode=='EUR' && '€' ||item.currencyCode=='GBP' && '£' || item.currencyCode=='CHF' && '₣'}   renderText={(value, props) => <div {...props} >{value}</div>} />
+                                        <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' && '$' || item.currencyCode=='EUR' && '€' ||item.currencyCode=='GBP' && '£' || item.currencyCode=='CHF' && '₣' || item.currencyCode=='SGD' && 'S$'}   renderText={(value, props) => <div {...props} >{value}</div>} />
 
                                     </div></>
                                 </Link>
