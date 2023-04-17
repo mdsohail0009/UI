@@ -23,5 +23,5 @@ export const ApiControllers = {
     partner:"Partner/",
     security:"Security/",
     bank:"Bank/",
-    commissions:'Commissions/'
+    commissions:"Commissions/"
 }
