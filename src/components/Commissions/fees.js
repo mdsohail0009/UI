@@ -181,8 +181,8 @@ const Fees = (props) => {
                         <Translate content="No_data" />
                     } />}
             <p className='note-cont text-style'>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
-        <p  className='note-cont'>Your current tier : {feeData?.tradeVolumes[0]?.currentTier}</p>
-        <span  className='note-cont'>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
+        <p  className='note-cont'>Your current tier : <strong> {feeData?.tradeVolumes[0]?.currentTier && feeData?.tradeVolumes[0]?.currentTier || "-"}</strong></p>
+        <span  className='note-cont'>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume && feeData?.tradeVolumes[0]?.tradingVloume || "-"} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
         
          
               
