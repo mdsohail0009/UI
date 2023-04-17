@@ -178,7 +178,6 @@ export function withState(WrappedGrid) {
                                         <th style={{ width:"70px"}}>Status</th>
                                         <th style={{ width:"90px"}}>Reason For Rejection</th>
                                     </thead>
-                                    {console.log(this.state?.data,'this.state?.data')}
                                     <tbody className='pdt-data'style={{ width:"100%"}}>
                                         {this.state?.data?.map(item => <tr>
                                             <td >{item.transactionId}</td>
@@ -199,6 +198,7 @@ export function withState(WrappedGrid) {
                     </div>
                     </div>
                     <div className="cust-list main-container">
+                    {this.state.isLoading && this.loadingPanel}
                     {this.props.showExcelExport && <div className='text-right secureDropdown export-pdf'>
                      <Dropdown
                       overlayClassName="secureDropdown depwith-drpdown transacton-drpdwn mobile-transaction"
