@@ -49,7 +49,6 @@ class BusinessTransfer extends Component {
         this.getReasonForTransferData();
     }
     loadDetails = async () => {
-        debugger
         let data = this.props.transferData;
         this.setState({ ...this.state, errorMessage: null, isLoading: true,details:this.props.transferData,documents:this.props.transferData?.payeeAccountModels[0]?.docrepoitory,selectedRelation:data.relation });
             let edit=false;
@@ -129,7 +128,7 @@ class BusinessTransfer extends Component {
         
         if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments,transferOthers:_obj.transferOthers, })
+                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments,transferOthers:_obj.transferOthers,bankId:this.props?.selectedbankobj[0]?.bankId })
                 if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(confirmRes.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false,documents:null });
