@@ -155,7 +155,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.relation === " " ||
 															fiatAddress?.relation === null
 															? "-"
-															: fiatAddress?.relation}
+															: fiatAddress?.relation}{"  "}  {fiatAddress.relation=="Others" && `(${fiatAddress.others})`}
 													</div>
 												</div>
 											</Col>}
