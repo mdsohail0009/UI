@@ -343,21 +343,19 @@ const AddressFiatView = (props) => {
 															</div>
 															</div>
 														}
-														{item?.bankName && 
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																Bank Name
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{item.bankName === " " ||
+																{item.bankName === " " ||item.bankName === "" ||
 																	item.bankName === null
 																	? "-"
 																	: item.bankName}
 															</div>
 															</div>
-														}
-														{item.bic &&
+													
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																BIC
@@ -365,13 +363,13 @@ const AddressFiatView = (props) => {
 															<div level={5} className="kpi-val"   >
 
 																{item.bic === " " ||
+																item.bic === "" ||
 																	item.bic === null
 																	? "-"
 																	: item.bic}
 															</div>
 															</div>
-														}
-														{item?.bankBranch && 
+														
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 															Branch
@@ -379,13 +377,14 @@ const AddressFiatView = (props) => {
 															<div level={5} className="kpi-val"   >
 
 																{item.bankBranch === " " ||
+																item.bankBranch === ""||
 																	item.bankBranch === null
 																	? "-"
 																	: item.bankBranch}
 															</div>
 															</div>
-														}
-														{item?.country && 
+														
+													
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																Country
@@ -393,13 +392,13 @@ const AddressFiatView = (props) => {
 															<div level={5} className="kpi-val"   >
 
 																{item.country === " " ||
+																item.country === "" ||
 																	item.country === null
 																	? "-"
 																	: item.country}
 															</div>
 															</div>
-														}
-														{item?.state && 
+													
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																State
@@ -412,8 +411,7 @@ const AddressFiatView = (props) => {
 																	: item.state}
 															</div>
 															</div>
-														}
-														{item?.city&&
+													
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																City
@@ -421,26 +419,26 @@ const AddressFiatView = (props) => {
 															<div level={5} className="kpi-val"   >
 
 																{item.city === " " ||
+																item.city === "" ||
 																	item.city === null
 																	? "-"
 																	: item.city}
 															</div>
 															</div>
-														}
-														{item?.postalCode &&
+														
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
 																Zip
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{item.postalCode === "" || item.postalCode === " " ||
+																{item.postalCode === "" ||
 																	item.postalCode === null
 																	? "-"
 																	: item.postalCode}
 															</div>
 															</div>
-														}
+														
 														 {(item.walletCode!=='CHF'&&item.walletCode!=='EUR'&& fiatAddress?.transferType !== "internationalIBAN")&&
 														 <div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
