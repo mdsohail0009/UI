@@ -113,7 +113,6 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           success("Send verification details saved successfully")
           setErrorMsg(null)
           setError(null)
-          // useDivRef.current.scrollIntoView();
           setIsLoading(false)
 
         } else if(email||phone||factor||live===false){

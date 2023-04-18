@@ -461,7 +461,6 @@ class OnthegoCryptoTransfer extends Component {
                            <Col xs={19} md={22} lg={22} xl={19} xxl={19} className="small-text-align adbook-mobile">
                            <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                            {item.walletAddress && <div><Text className="address-subtext"> ({item.network})</Text></div>} 
-                           {/* {item.walletCode} */}
                             </Col>
                             </Row>}</>
                     )}
@@ -493,9 +492,7 @@ class OnthegoCryptoTransfer extends Component {
                         <Col xs={19} md={24} lg={24} xl={19} xxl={19} className=" small-text-align adbook-mobile past-respnt">
                         <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                         <div><Text className="address-subtext">({item.network})</Text></div>
-                        </Col>
-                        {/* {item?.walletCode}  */}
-                       
+                        </Col>                      
                       </Row>
 
                     )}
