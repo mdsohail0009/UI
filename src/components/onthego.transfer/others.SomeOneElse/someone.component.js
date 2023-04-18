@@ -81,8 +81,8 @@ const SomeoneComponent = (props) => {
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }
-        obj['transferType'] = (props.currency == "USD" || props.currency == "GBP") && addressOptions.domesticType || props.currency == "CHF" && 'chftransfer' || props.currency =='SGD' && 'SWIFT/BIC' ||props.currency =='EUR' && 'sepa';
-        // obj['transferType'] = props.currency == "USD" || props.currency == "GBP"  ? addressOptions.domesticType : props.currency == "CHF"?'chftransfer':'sepa';
+        //obj['transferType'] = (props.currency == "USD" || props.currency == "GBP") && addressOptions.domesticType || props.currency == "CHF" && 'chftransfer' || props.currency =='SGD' && 'SWIFT/BIC' ||props.currency =='EUR' && 'sepa';
+        obj['transferType'] = props.currency == "USD" || props.currency == "GBP"  ? addressOptions.domesticType : props.currency == "CHF"?'chftransfer':'sepa';
         obj['addressType'] = addressOptions.addressType;
         if (edit) {
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
@@ -93,7 +93,7 @@ const SomeoneComponent = (props) => {
         if (payeesave.ok) {
             setErrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, docRepositories: documents?.payee || documents?.transfer || rasonDocuments,transferOthers:obj.transferOthers, })
+                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, docRepositories: documents?.payee || documents?.transfer || rasonDocuments,transferOthers:obj.transferOthers,bankId:props.selectedbankobj[0].bankId })
                 if (confirmRes.ok) {
                     setBtnLoading(false);
                     props.onContinue(confirmRes.data);

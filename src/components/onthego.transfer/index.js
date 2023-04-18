@@ -23,7 +23,6 @@ import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
 import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-import { getCommissionBankDetails,saveCommissions} from "./verification.component/api";
 import { getAccountWallet} from "../../api/apiServer";
 const { Text, Title } = Typography; 
 const { Option } = Select;
