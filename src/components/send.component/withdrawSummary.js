@@ -597,7 +597,7 @@ class WithdrawSummary extends Component {
 	}
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, seconds2, agreeRed, showDeclartion,effectiveData } = this.state;
+		const { seconds, disable, textDisable, seconds2,showDeclartion,effectiveData } = this.state;
 		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {

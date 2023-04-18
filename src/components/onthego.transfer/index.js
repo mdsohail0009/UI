@@ -7,11 +7,11 @@ import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
-import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
-import { getVerificationFields } from "./verification.component/api"
+import { getVerificationFields,getCommissionBankDetails,saveCommissions } from "./verification.component/api"
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
@@ -67,14 +67,13 @@ class OnthegoFundTransfer extends Component {
     isLoading:false,
     selectedbankobj:{},
     detailstype:false,
+    reasonForTransferDataa:[],
+    selectedReasonforTransfer:null,
   }
   componentDidMount() {
-    this.verificationCheck()
+    this.verificationCheck();
     this.getAccountWallet();
-    if(this.state.isVerificationEnable){    
-      console.log(this.props.userProfile.id,'userProfile')
-    }
-    
+    this.getReasonForTransferData();
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
@@ -121,6 +120,16 @@ class OnthegoFundTransfer extends Component {
     }
   }
 
+  getAccountWallet=()=>{
+    let walletObj=getAccountWallet()
+    if(walletObj.ok){
+      this.setState({ ...this.state, fiatWallets: walletObj.data });
+    }
+    else{
+         this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
+    
+    }
+  }
   getBankDetails=async()=>{
     this.setState({...this.state,fiatBanks:null})
     let res = await getCommissionBankDetails(this.state.selectedCurrency)
@@ -155,7 +164,6 @@ class OnthegoFundTransfer extends Component {
   this.setState({...this.state,selectedBank:e,effectiveType:false,selectedbankobj:newRecords},()=> this.saveCommissionsDetails(e))
  
   }
-
   getPayees() {
     this.getBankDetails();
     fetchPayees( this.state.selectedCurrency).then((response) => {
@@ -375,6 +383,20 @@ verificationsData=(data)=>{
   }
 }
 
+getReasonForTransferData=async()=>{
+  let res = await getReasonforTransferDetails();
+  if(res.ok){
+      this.setState({...this.state,reasonForTransferDataa:res.data,errorMessage:null})
+  }else{
+      this.setState({...this.state,errorMessage: apicalls.isErrorDispaly(res),})
+     
+  }
+}
+
+handleReasonTrnsfer=(e)=>{
+  this.setState({...this.state,selectedReasonforTransfer:e})
+  this.reasonForm.current.setFieldsValue({transferOthers:null})
+}
 
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
@@ -455,7 +477,7 @@ verificationsData=(data)=>{
                         title={<div className="wallet-title">{item.walletCode}</div>}
                       />
                        <><div className="text-right coin-typo">
-                         <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' && '$' || item.walletCode=='EUR' && '€'|| item.walletCode =='GBP' && '£' || item.walletCode=='CHF' && '₣'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                         <NumberFormat value={item.amount} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.walletCode == 'USD' && '$' || item.walletCode=='EUR' && '€'|| item.walletCode =='GBP' && '£' || item.walletCode=='CHF' && '₣' || item.walletCode=='SGD' && 'S$'} renderText={(value, props) => <div {...props} >{value}</div>} />
                     </div></>
                     </Link>
                   </List.Item>
@@ -809,33 +831,67 @@ verificationsData=(data)=>{
             {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <React.Fragment><Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                  <Form.Item
-                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
-                    name="reasionOfTransfer"
-                    label={"Reason For Transfer"}
+                    <Form.Item
+                    className="custom-forminput custom-label"
+                    name="reasonOfTransfer"
                     required
                     rules={[
-                      {whitespace: true,
-                        message: "Is required",
-                      },
-                      {
-                        required: true,
-                        message:
-                                            apicalls.convertLocalLang("is_required"),
-                      },
-                      {
-                        validator: validateContentRule,
-                    },
+                        {
+                            required: true,
+                            message: apicalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            whitespace: true,
+                            message: apicalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            validator: validateContentRule,
+                        },
                     ]}
-                  >
-                    <Input
-                      className="cust-input "
-                      placeholder={"Reason For Transfer"}
-                      maxLength={200}
-                    />
-                  </Form.Item>
-
+                    label={
+                        "Reason For Transfer"
+                    }
+                >
+                     <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={"Reason For Transfer"}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleReasonTrnsfer(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select> 
+                </Form.Item>
                 </Col>
+                {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
               </Row>
              <AddressDocumnet documents={this.state.codeDetails.documents} onDocumentsChange={(docs) => {
                             let { documents } = this.state.codeDetails;
@@ -855,7 +911,7 @@ verificationsData=(data)=>{
                     onClick={() => {
                         let validateFileds = [];
                         if (!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {
-                            validateFileds = validateFileds.concat(["reasionOfTransfer", "files"]);
+                            validateFileds = validateFileds.concat(["reasonOfTransfer","transferOthers","files"]);
                       }
                       this.reasonForm.current.validateFields(validateFileds).then(async () => {
                           const fieldValues = this.reasonForm.current.getFieldsValue();
@@ -868,9 +924,7 @@ verificationsData=(data)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,
-                             bankId:this.state.selectedbankobj[0]?.bankId, 
-                            });
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId,});
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -947,7 +1001,6 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                                     <div className="summary-liststyle">How much Beneficiary will receive</div>
                     <div className="summarybal">
                     <NumberFormat
-                                            // value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
                                             value={`${this.state?.reviewDetails?.totalValue}`}
                                             thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
@@ -991,7 +1044,8 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                {this.state.reviewDetails?.customerRemarks &&
                                 <div className="kpi-divstyle" >
                                     <div className="kpi-label">Reason For Transfer </div>
-                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"}</Text></div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"} {" "} 
+                                    {this.state.reviewDetails?.customerRemarks=="Others" && `(${this.state.reviewDetails?.others})`}</Text></div>
                                 </div>
                           }
 

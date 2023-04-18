@@ -19,7 +19,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     );
 };
 const { Dragger } = Upload;
-const { Title, Text, Paragraph } = Typography;
+const { Text, Paragraph } = Typography;
 const BatchpaymentView = (props) => {
     const [uplaodModal, setUploadModal] = useState(false);
     const [errorMessage,setErrorMessage]=useState(null)
@@ -29,8 +29,6 @@ const BatchpaymentView = (props) => {
     const [upLoader,setUploader]=useState(false);
     const [deleteModal,setDeleteModal]=useState(false);
     const [docUpload,setDocUpload]=useState(false)
-    const [previewPath, setPreviewPath] = useState(null);
-	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
     const [isLoad,setIsLoad]=useState(false);
@@ -104,13 +102,11 @@ const BatchpaymentView = (props) => {
             setUploader(false)
             setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
-            //return true;
             return Upload.LIST_IGNORE;
         }else{
             setUploader(false)
             setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
-            //return true;
             return Upload.LIST_IGNORE;
            
         }
@@ -251,17 +247,7 @@ const BatchpaymentView = (props) => {
                     setIsLoad(false);
                 }
   }
-  const docPreview = async (file) => {
-    let res = await getFileURL({ url: file.path });
-    if (res.ok) {
-        setPreviewModal(true);
-        setPreviewPath(res.data);
-    }
-};
-const filePreviewPath = () => {
-    return previewPath;
 
-};
    const formatBytes=(bytes, decimals = 2)=>{
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -274,9 +260,9 @@ const filePreviewPath = () => {
         setDeleteModal(false)
       
       }
-      const docPreviewOpen = (data) => {
+      const docPreviewOpen = (docData) => {
 		setDocPreviewModal(true)
-		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
+		setDocPreviewDetails({ id: docData.id, fileName: docData.fileName })
 	  }
 
 	const docPreviewClose = () => {
@@ -291,49 +277,7 @@ const filePreviewPath = () => {
         setUploader(false)
         setDocUpload(false)
       }
-      const filePreviewModal = (
-		<Modal
-			className="documentmodal-width"
-			destroyOnClose={true}
-			title="Preview"
-			width={1000}
-			visible={previewModal}
-			closeIcon={
-				<Tooltip title="Close">
-					<span
-						className="icon md close-white c-pointer"
-						onClick={() => setPreviewModal(false)}
-					/>
-				</Tooltip>
-			}
-			footer={
-				<>
-                <div className="cust-pop-up-btn crypto-pop">
-                
-					<Button
-						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-						
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="primary-btn pop-btn detail-popbtn"
-						
-						onClick={() => window.open(previewPath, "_blank")}>
-						Download
-					</Button>
-                    </div>
-				</>
-			}>
-			<FilePreviewer
-				hideControls={true}
-				file={{
-					url: previewPath ? filePreviewPath() : null,
-					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
-				}}
-			/>
-		</Modal>
-	);
+     
     return (
         <>
         < div className='main-container'>

@@ -261,7 +261,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
   };
 
   render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList,showDeclartionApproved ,approvedAddress,isDocCheck} = this.state;
+    const { isLoading, errorMessage, showDeclartion, cryptoData,showDeclartionApproved ,approvedAddress,isDocCheck} = this.state;
     if (isLoading) {
       return <Loader />
     }
@@ -562,7 +562,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
           </Form>
       </>
     }
-  };
+  }
 
 }
 const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {

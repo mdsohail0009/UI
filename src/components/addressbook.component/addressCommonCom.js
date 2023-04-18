@@ -277,7 +277,6 @@ const AddressCommonCom = (props) => {
   const handleCountry = (e) => {
     let code = e;
     form.setFieldsValue({ "state": null });
-    let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
   }
 
   const getCountry = async () => {
@@ -285,7 +284,6 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       setCountry(response.data);
       form.getFieldValue("country");
-      let states = response.data?.filter((item) => item.name.toLowerCase());
     }else{
       setErrorMsg(apicalls.isErrorDispaly(response))
     }
@@ -320,7 +318,7 @@ const AddressCommonCom = (props) => {
       remarks: null,
       addressState: null,
       inputScore: 0,
-      outputScore: 0,
+      outputScore: 0,                                     
       recordStatus: editBankDetsils === true ? (recrdStatus ? recrdStatus : "Modified") : "Added",
     }
     if (editBankDetsils === true) {
@@ -380,7 +378,6 @@ const AddressCommonCom = (props) => {
     }
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
-    let Id = "00000000-0000-0000-0000-000000000000";
    
     if (!values.isAgree) {
       setBtnDisabled(false);
@@ -394,7 +391,7 @@ const AddressCommonCom = (props) => {
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")
         saveObj.documents = cryptoAddress?.documents;
-        saveObj.TransferType=props?.cryptoTab === 1&&"Crypto"
+        saveObj.TransferType=props?.cryptoTab === 1&&"Crypto";
       let response = await saveAddressBook(saveObj);
       if (response.ok) {
         setBtnDisabled(false);
@@ -423,45 +420,6 @@ const AddressCommonCom = (props) => {
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
       }
-    }
-  };
-
-  
-  
-
-  const getIbanData = async (Val) => {
-    bankDetailForm.setFieldsValue({
-      bankName: "",
-      bankAddress: "",
-      payeeAccountState: null,
-      payeeAccountCountry: null,
-      payeeAccountPostalCode: "",
-      swiftCode: "",
-    });
-
-
-    if (Val && Val.length > 14) {
-      let response = await apiCalls.getIBANData(Val);
-      if (response.ok) {
-        const oldVal = bankDetailForm.getFieldValue();
-        bankDetailForm.setFieldsValue({
-          swiftCode: response.data.routingNumber || oldVal.routingNumber,
-          bankName: response.data.bankName || oldVal.bankName,
-          bankAddress: response.data.bankAddress || oldVal.bankAddress,
-          payeeAccountPostalCode: response.data.zipCode || oldVal.zipCode,
-          payeeAccountState: response.data.state || oldVal.state,
-          payeeAccountCountry: response.data.country || oldVal.country,
-        });
-        handleCountryChange(response.data.country);
-      }
-      else{
-        setErrorMsg(apicalls.isErrorDispaly(response))
-
-      }
-    } else {
-      bankDetailForm.setFieldsValue({
-        country: ""
-      })
     }
   };
 
