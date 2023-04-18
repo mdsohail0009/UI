@@ -296,15 +296,10 @@ class YourPortfolio extends Component {
                             type={"text"}
                             className={`lg-fontsize ${
                               item.coinValueinNativeCurrency > 0
-                                ? "text-green pg-text"
-                                : "text-red red-text"
+                                ? "text-white pg-text"
+                                : "text-white red-text"
                             }`}
                           />
-                          <span className={`icon sm  ${
-                              item.coinValueinNativeCurrency > 0
-                                ? "valupp-icon pg-arrow"
-                                : "valdown-icon red-arrow"
-                            }`} />
                             </div>
                       </div>
                     }

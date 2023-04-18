@@ -1048,6 +1048,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .user-labels.active .icon.lg.suissebase-credit, .user-labels:hover .icon.lg.suissebase-credit, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.suissebase-credit, .ant-tabs-tab:hover .icon.lg.suissebase-credit{background-position: -213px -589px;}
 .Effective-Fees{color: var(--termsText);cursor: pointer;}
 .icon.lg.down-arrow{background-position: -389px -486px;margin-left: 4px;}
+.icon.lg.up-arrow{background-position: -419px -486px;margin-left: 4px;}
 /* commissions  start   */
 .first-header th{text-align: center !important;}
 .fee-withdraw{padding: 0 !important;border-right: 1px solid var(--gridborder) !important;}

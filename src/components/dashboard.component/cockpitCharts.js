@@ -74,16 +74,10 @@ const CockpitCharts=(props)=> {
             props.dispatch(setWithdrawfiatenaable(false))
             props.dispatch(setdepositCurrency(value))
             props.dispatch(getScreenName({getScreen:"deposit"}))
-            setState({
-                valNum: e
-            }, () => {
-                setState({
-                    ...state,
-                    buyFiatDrawer: true,
-                    selctedVal: value
-                })
-    
-            })
+            setState(prevState => ({
+              ...prevState,
+              buyFiatDrawer: true, selctedVal:value
+           }));
         }else if(e===3){
             props.history.push(`/payments/${value.walletCode}`)
         }else if(e===4){
@@ -238,7 +232,8 @@ const CockpitCharts=(props)=> {
                             (item?.walletCode == "USD" ? "$" : null) ||
                             (item?.walletCode == "EUR" ? "€" : null)||
                             (item?.walletCode == "GBP" ? "£" : null)||
-                            (item?.walletCode == "CHF" ? "₣" : null)
+                            (item?.walletCode == "CHF" ? "₣" : null) ||
+                            (item?.walletCode == "SGD" ? "S$" : null)
                           }
                         />
                         </div>
