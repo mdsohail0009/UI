@@ -7,11 +7,11 @@ import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
-import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
-import { getVerificationFields } from "./verification.component/api"
+import { getVerificationFields,getCommissionBankDetails,saveCommissions } from "./verification.component/api"
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchMemberWallets } from "../dashboard.component/api";
@@ -1001,7 +1001,6 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                                     <div className="summary-liststyle">How much Beneficiary will receive</div>
                     <div className="summarybal">
                     <NumberFormat
-                                            // value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
                                             value={`${this.state?.reviewDetails?.totalValue}`}
                                             thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
