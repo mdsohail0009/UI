@@ -164,6 +164,7 @@ class SelectSellCrypto extends Component {
             screenName: "sell"
         });
         if (response.ok) {
+            const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
