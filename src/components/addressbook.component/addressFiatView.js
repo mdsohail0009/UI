@@ -349,7 +349,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{!item.bankName	? "-": item.bankName}
+																{!item.bankName	&&  "-" || item.bankName}
 															</div>
 															</div>
 													
@@ -359,7 +359,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{!item.bic ? "-" : item.bic}
+																{!item.bic && "-"|| item.bic}
 															</div>
 															</div>
 														
@@ -369,7 +369,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{!item.bankBranch ? "-"	: item.bankBranch}
+																{!item.bankBranch && "-"|| item.bankBranch}
 															</div>
 															</div>
 														
@@ -380,7 +380,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{!item.country ? "-": item.country}
+																{!item.country && "-" || item.country}
 															</div>
 															</div>
 													
@@ -390,7 +390,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{!item.state ? "-" : item.state}
+																{!item.state &&  "-" || item.state}
 															</div>
 															</div>
 													
@@ -400,7 +400,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{!item.city	? "-": item.city}
+																{!item.city	 &&  "-" || item.city}
 															</div>
 															</div>
 														
@@ -410,7 +410,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<div level={5} className="kpi-val"   >
 
-																{!item.postalCode ? "-"	: item.postalCode}
+																{!item.postalCode &&  "-" || item.postalCode}
 															</div>
 															</div>
 														
