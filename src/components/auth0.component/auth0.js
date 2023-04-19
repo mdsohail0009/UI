@@ -18,6 +18,9 @@ const steps = [
 		// 	<span for="agree-check"  className="c-pointer"/> 
         //     Bussiness Account</Checkbox>
         // </Checkbox.Group>
+        <>
+        
+        </>
       ),
     },
     {
