@@ -22,17 +22,12 @@ const Layout = (props) => {
         apiMessage: "",
         error: null,
     });
-    const [tokenData, setTokenData] = useState()
-    const { isAuthenticated, loginWithRedirect, user, getAccessTokenSilently } = useAuth0();
-
-    const { isLoading, error } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, getAccessTokenSilently,isLoading, error } = useAuth0();
 
     const callApi = async () => {
         try {
             const token = await getAccessTokenSilently();
             props.acctoken(token)
-            //   const responseData = await response.json();    
-            setTokenData(token)
         } catch (error) {
         }
     };

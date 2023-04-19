@@ -33,8 +33,10 @@ const config = getConfig();
 const providerConfig = {
   domain: config.domain,
   clientId: config.clientId,
-  ...(config.audience ? { audience: config.audience } : null),
-  redirectUri: window.location.origin,
+  authorizationParams:{
+    redirect_uri: window.location.origin,
+    ...(config.audience ? { audience: config.audience } : null)
+  },
   onRedirectCallback,
 };
 ReactDOM.render(

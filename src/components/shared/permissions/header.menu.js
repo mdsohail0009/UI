@@ -54,12 +54,29 @@ import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
+import { useAuth0 } from "@auth0/auth0-react";
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
 const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
+
+const LogoutApp = (props)=>{
+    const {logout} = useAuth0()
+return(<li onClick={() => {logout();props.clearEvents();}}>
+                            <Link className="text-left">
+                                <span>
+                                    <Translate
+                                        content="logout"
+                                        className="text-white"
+                                        component={Text}
+                                    />
+                                </span>
+                            </Link>
+                        </li>)
+}
+
 class MobileHeaderMenu extends Component {
     render() {
         const { onMenuItemClick, features: { features: { data },getScreen },dispatch } = this.props;
@@ -327,7 +344,8 @@ class HeaderPermissionMenu extends Component {
         this.props.dispatch(clearPermissions());
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
-        userManager.signoutRedirect();
+        //userManager.signoutRedirect();
+        //logout();
         apicalls.trackEvent({
             Type: "User",
             Action: "User Logged out",
@@ -339,6 +357,7 @@ class HeaderPermissionMenu extends Component {
             Url: window.location.href,
             FullFeatureName: "Logout"
         });
+        window.location.reload()
     }
 
     themeSwitch = () => {
@@ -461,17 +480,7 @@ class HeaderPermissionMenu extends Component {
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
-                        <li onClick={() => this.clearEvents()}>
-                            <Link className="text-left">
-                                <span>
-                                    <Translate
-                                        content="logout"
-                                        className="text-white"
-                                        component={Text}
-                                    />
-                                </span>
-                            </Link>
-                        </li>
+                        <LogoutApp onLogout={()=>this.clearEvents()} />
                     </ul>
                 </div>
             </Menu>
