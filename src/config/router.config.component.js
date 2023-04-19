@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ErrorPage from '../components/internalTransfer.component/errorpage';
 import { KEY_URL_MAP } from '../components/shared/permissions/config';
 import SecurityLogin from '../authentication/temp.security';
+// import Auth0 from '../components/auth0.component/auth0';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -39,6 +40,7 @@ const BatchpaymentView = React.lazy(() => import("../components/batchpayment.com
 const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
 const Transactions = React.lazy(() => import("../components/transactions.history.component/index"))
 const SbCard= React.lazy(() => import("../components/dashboard.component/sbCard"))
+const Auth0= React.lazy(() => import("../components/auth0.component/auth0"))
 class RouteConfig extends Component {
   componentDidMount() {
     this.checkPermissions(window.location.pathname || "/cockpit");
@@ -85,6 +87,7 @@ class RouteConfig extends Component {
         <ReactRoute path='/caseView/:id' component={CaseView} />
         <ReactRoute path='/cryptocoinsView' component={CryptocoinsView} />
         <Route path="/error" component={ErrorPage} />
+        <Route path="/auth0" component={Auth0} />
 
         <ReactRoute
           path="/batchpayment"

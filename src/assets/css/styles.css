@@ -543,6 +543,13 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .drawer-content{display: flex !important; justify-content: center !important; align-items: center !important;height: 500px !important;}
 .batch-list{font-size: 20px; font-weight: 500; color: white !important;}
 /** masspayments end**/
+/*Auth0 start*/
+.ant-steps-item-title{color: #fff !important;}
+.ant-steps-item-finish .ant-steps-item-icon{    background-color: #CCC3FF;
+    border-color: #CCC3FF;}
+.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after{background-color: #CCC3FF !important;}
+.ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path{stroke: #CCC3FF !important;}
+/*Auth0 End*/
 /*-- Cases--*/
 
 .icon.md.Type{background-position:-577px -102px;}
