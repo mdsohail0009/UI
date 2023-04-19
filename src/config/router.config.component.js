@@ -41,6 +41,9 @@ const Transactions = React.lazy(() => import("../components/transactions.history
 const SbCard= React.lazy(() => import("../components/dashboard.component/sbCard"))
 class RouteConfig extends Component {
   componentDidMount() {
+    if(!this.props.userProfile.isKYC){
+      this.props.history.push('/sumsub');
+    }
     this.checkPermissions(window.location.pathname || "/cockpit");
     this.props.history.listen((location) => {
       this.checkPermissions(location.pathname)
@@ -119,8 +122,8 @@ class RouteConfig extends Component {
   }
 
 }
-const connectStateToProps = ({ menuItems }) => {
-  return { menuItems }
+const connectStateToProps = ({ menuItems,userProfile }) => {
+  return { menuItems,userProfile }
 }
 
 export default withRouter(connect(connectStateToProps)(RouteConfig));
