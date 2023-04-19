@@ -558,6 +558,19 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     background: rgb(255 255 255 / 15%);
     margin: auto;
     text-transform: capitalize;}
+.text-personal{font-weight: 700;
+    font-size: 18px;
+    color: #CCC3FF;}
+    .account-content {
+        margin-bottom: 24px;
+    }
+.auth-steps{margin-bottom: 30px !important;}
+.formfields-block .ant-col-xxl-12 {
+    padding: 0 10px !important;
+}
+.form-disable{    background: #3d3b3b !important;
+    cursor: not-allowed;
+    border: 1px solid #616161 !important;}
 /*Auth0 End*/
 /*-- Cases--*/
 
