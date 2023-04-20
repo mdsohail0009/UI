@@ -859,6 +859,15 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-input-group-addon .ant-select.currecny-drpdwn{margin: -5px -11px -11px 0px;}
 .currecny-drpdwn .ant-select-arrow{top: 22px;}
 /* coin detail view end */
+/*Auth0 start*/
+
+.form-block{width: 480px;position: relative;z-index: 25;padding: 54px 64px;border-radius: 20px;background: rgb(255 255 255 / 15%);margin: auto;text-transform: capitalize;}
+.text-personal{font-weight: 700;font-size: 18px;color: #CCC3FF;}
+.form-block .heading {font-size: 25px;font-weight: 800;color: #ffffff;margin-bottom: 24px;line-height: 28px;}
+.form-block .new-custom-radiobtn .ant-radio-button-wrapper:first-child{padding-left: 0 !important;}
+.mb-24{margin-bottom: 24px;}
+
+/*Auth0 End*/
 /* coin view start */
 .trade-graph .ant-radio-button-wrapper{background-color: var(--coinviewradio);border-color: var(--coinviewradio) !important;}
 .trade-graph .ant-radio-button-wrapper:first-child{border-radius: 8px 0 0 8px;}
@@ -1177,6 +1186,11 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .login-user{width: 100%;padding: 2px 0;}  
 }
 @media (max-width: 767.98px){
+    .form-block {
+        width: 100% !important;
+        padding: 60px 20px !important;
+        margin: 0 0 40px 0 !important;
+    }
     .new-viewpage .search-box{margin-left: 0;}
     .fait-wallets-style.new-viewpage{display: block !important;}
     .footer-links a{margin-right: 20px !important;}
