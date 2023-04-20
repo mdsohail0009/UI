@@ -7,7 +7,7 @@ export function getConfig() {
     // with the audience.
   
     return {
-      domain: 'dev-eesvdd6r78ww4qr3.us.auth0.com',
+      domain: process.env.REACT_APP_AUTHORITY,
       clientId: 'DVFDDXgrHBTmtzRrVfHsIK7amcxGetkA',
       audience: 'https://suissebase-api/',
     };
