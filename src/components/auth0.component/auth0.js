@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
-import { Steps, Button, Checkbox,Row,Col,Form,Select,Input,Radio  } from 'antd';
+import {  Button,Row,Col,Form,Select,Input,Radio,Modal,Tooltip  } from 'antd';
 import {Link } from "react-router-dom";
 
 const { Option } = Select;
 
 
   const Auth0 = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+      debugger;
+      setIsModalOpen(true);
+    };
+  
+    const handleOk = () => {
+      setIsModalOpen(false);
+    };
+  
+    const handleCancel = () => {
+      setIsModalOpen(false);
+    };
+
+
     const [value, setValue] = useState(1);
     const onChange = (e) => {
       console.log('radio checked', e.target.value);
@@ -333,7 +350,74 @@ const { Option } = Select;
         </div>
         <div><Link to="/emailVerification" className="text-personal">Email Verification</Link></div>
         <div><Link to="/phoneVerification" className="text-personal">Phone Verification</Link></div>
+        <div className="text-personal" onClick={showModal}>Change Email</div>
+        <div className="text-personal"  onClick={showModal}>Change Phone Number</div>
       </div>
+
+      <Modal title="Change Email" visible={isModalOpen} closeIcon={
+            <Tooltip title="Close">
+              <span
+                className="icon md close-white c-pointer"
+                // onClick={() => this.handleModalCancel()}
+              />
+            </Tooltip>
+
+          } 
+          footer={[
+            <>
+              <Button className="primary-btn pop-btn"  block > Save </Button>
+            </>
+          ]}
+          onOk={handleOk} onCancel={handleCancel}>
+          <Row>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+              <Form.Item
+                className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                name="Enter Email"
+                label="Enter Email"
+              >
+                <Input
+                  className="cust-input "
+                  maxLength={100}
+                  placeholder="Enter New Email"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+      </Modal>
+      {/* <Modal title="Change Phone Number" visible={isModalOpen} closeIcon={
+            <Tooltip title="Close">
+              <span
+                className="icon md close-white c-pointer"
+                // onClick={() => this.handleModalCancel()}
+              />
+            </Tooltip>
+
+          } 
+          footer={[
+            <>
+              <Button className="primary-btn pop-btn"  block > Save </Button>
+            </>
+          ]}
+          onOk={handleOk} onCancel={handleCancel}>
+          <Row>
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+              <Form.Item
+                className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                name="Enter Phone Number"
+                label="Enter Phone Number"
+              >
+                <Input
+                  className="cust-input "
+                  maxLength={100}
+                  placeholder="Enter Phone Number"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+      </Modal> */}
 
 
 
