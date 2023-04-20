@@ -169,7 +169,7 @@ class OthersBusiness extends Component {
         
         _obj.addressType = "otherbusiness";
         _obj.transferType = this.props.currency=='CHF'?'chftransfer':"sepa";
-        _obj.amount = this.props.amount;
+        _obj.amount = this.props.amount||0;
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -183,16 +183,16 @@ class OthersBusiness extends Component {
 
        if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
-                    docRepositories:this.state.rasonDocuments ,transferOthers:_obj.transferOthers,bankId:this.props.selectedbankobj[0].bankId
-                 })
-                if (confirmRes.ok) {
-                    this.props.onContinue(confirmRes.data);
+                // const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
+                //     docRepositories:this.state.rasonDocuments ,transferOthers:_obj.transferOthers,bankId:this.props.selectedbankobj[0].bankId
+                //  })
+                // if (confirmRes.ok) {
+                    this.props.onContinue(response.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
-                  window.scrollTo(0, 0);
-                }
+                // } else {
+                //     this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
+                //   window.scrollTo(0, 0);
+                // }
             } else {
                 this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
                 this.useDivRef.current?.scrollIntoView(0,0)
