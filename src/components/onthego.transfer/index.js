@@ -548,7 +548,8 @@ handleReasonTrnsfer=(e)=>{
 
   }
   handleToggle=()=>{
-      let _formAmt = this.enteramtForm.current.getFieldsValue()?.amount?.replace(/,/g, '')
+      let getAmt=this.enteramtForm.current.getFieldsValue()?.amount
+      let _formAmt =typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
       let updateAmount=parseFloat(_formAmt) + parseFloat(this.state.getBanckDetails?.effectiveFee || 0);
       this.enteramtForm.current.setFieldsValue({amount:updateAmount});
       this.setState({ ...this.state, amount: updateAmount, errorMessage: '' },()=>this.saveCommissionsDetails())
@@ -826,7 +827,7 @@ handleReasonTrnsfer=(e)=>{
                 allowNegative={false}
                 thousandSeparator={","}
                 onKeyDown={this.keyDownHandler}
-                addonAfter={<span className="icon commission-toggle"></span>}
+                addonAfter={<span className="icon commission-toggle" onClick={this.handleToggle}></span>}
                 addonBefore={<Select defaultValue={this.state.selectedCurrency} 
                     onChange={(e) => this.handleCurrencyChange(e)}
                     className="currecny-drpdwn sendfiat-dropdown"
