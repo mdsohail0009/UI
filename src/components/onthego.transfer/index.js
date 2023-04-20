@@ -601,7 +601,7 @@ handleReasonTrnsfer=(e)=>{
 
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                      <div className="summarybal">
+                      <div className="summarybal total-amount">
                       {this.state.selectedCurrency} {" "}
                         <NumberFormat
                           decimalScale={2}
@@ -799,6 +799,7 @@ handleReasonTrnsfer=(e)=>{
                 allowNegative={false}
                 thousandSeparator={","}
                 onKeyDown={this.keyDownHandler}
+                addonAfter={<span className="icon commission-toggle"></span>}
                 addonBefore={<Select defaultValue={this.state.selectedCurrency} 
                     onChange={(e) => this.handleCurrencyChange(e)}
                     className="currecny-drpdwn sendfiat-dropdown"
