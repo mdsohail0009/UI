@@ -111,16 +111,16 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         if (response.ok) {
             seterrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null ,bankId:selectedbankobj[0]?.bankId})
-                if (confirmRes.ok) {
-                    seterrorMessage(null)
-                    setBtnLoading(false);
-                    props.onContinue(confirmRes.data);
-                } else {
-                    setBtnLoading(false);
-                    seterrorMessage(apiCalls.isErrorDispaly(confirmRes));
-                    useDivRef.current.scrollIntoView();
-                }
+                // const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null ,bankId:selectedbankobj[0]?.bankId})
+                // if (confirmRes.ok) {
+                //     seterrorMessage(null)
+                //     setBtnLoading(false);
+                    props.onContinue();
+                // } else {
+                //     setBtnLoading(false);
+                //     // seterrorMessage(apiCalls.isErrorDispaly(confirmRes));
+                //     useDivRef.current.scrollIntoView();
+                // }
             }
             else {
                 setShowDeclartion(true);
