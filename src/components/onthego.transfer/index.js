@@ -30,6 +30,7 @@ class OnthegoFundTransfer extends Component {
   enteramtForm = React.createRef();
   reasonForm = React.createRef();
   reviewScrool = React.createRef();
+  amountScrool=React.createRef();
   state = {
     step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
     filterObj: [],
@@ -440,7 +441,7 @@ handleReasonTrnsfer=(e)=>{
   }
 
   goToAddressBook = () => {
-    
+    debugger
     let _amt = this.enteramtForm.current.getFieldsValue().amount
     _amt = _amt.replace(/,/g, '')
     if (_amt > 0) {
@@ -468,7 +469,9 @@ handleReasonTrnsfer=(e)=>{
           ...this.state,
           effectiveType:false,
           errorMessage: 'Amount must be greater than zero',
+          selectCurrencyLabelShow:true
         })
+        this.amountScrool.current.scrollIntoView()
       }
     }
   }
@@ -654,13 +657,6 @@ handleReasonTrnsfer=(e)=>{
       ),
       addressselection: (
         <>
-        <Form
-              autoComplete="off"
-              initialValues={{ amount: "" }}
-              ref={this.enteramtForm}
-              onFinish={this.amountnext}
-              scrollToFirstError
-            >
               {!this.state.selectCurrencyLabelShow &&<>
         <React.Fragment>
            {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
@@ -764,10 +760,21 @@ handleReasonTrnsfer=(e)=>{
           )}
         </React.Fragment>
         </>}
-        <>{this.state.selectCurrencyLabelShow &&<>  
+        <>
+        <div ref={this.amountScrool}></div>
+        <Form
+              autoComplete="off"
+              initialValues={{ amount: "" }}
+              ref={this.enteramtForm}
+              onFinish={this.amountnext}
+              scrollToFirstError
+            >
+                      {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+        {this.state.selectCurrencyLabelShow &&<>  
           <Row gutter={[16, 16]}>
-          <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
           <div><Button className="pop-btn custom-send cust-disabled"  htmlType="button"  onClick={this.handleToggle}>toggle</Button></div>
+          <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+
             <Form.Item
               className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
               name="amount"
@@ -904,8 +911,9 @@ handleReasonTrnsfer=(e)=>{
               </Form.Item>
             </Col>
           </Row>
-          </>}</>
-          </Form>
+          </>}
+          </Form></>
+
           </>
       ),
       reasonfortransfer: (
