@@ -173,6 +173,7 @@ const Fees = (props) => {
           {commFees.length==0&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
             <Translate content="No_data" />
           } />}
+          {feeData?.customerTiers?.length &&<>
             <div className="grid-title text-style">Fee discount for each tier</div>
             {feeData?.customerTiers.length!=0&&<div> {feeData&&<div className="transaction-custom-table p-0 responsive_table">
                            
@@ -180,8 +181,10 @@ const Fees = (props) => {
            {(feeData?.customerTiers?.length==0)&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
                         <Translate content="No_data" />
                     } />}
-            <p className='note-cont text-style'>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
-        <p  className='note-cont'>Your current tier : <strong> {feeData?.tradeVolumes[0]?.currentTier && feeData?.tradeVolumes[0]?.currentTier || "-"}</strong></p>
+           
+        <p  className='note-cont text-style'>Your current tier : <strong> {feeData?.tradeVolumes[0]?.currentTier && feeData?.tradeVolumes[0]?.currentTier || "-"}</strong></p>
+        </>}
+        <p className='note-cont text-style'>Past 30 days trading volume(Upon fiat withdrawal or deposit, crypto buy/sell or withdrawal/deposit)</p>
         <span  className='note-cont'>Trading volume (30 days)  : </span><NumberFormat value={feeData?.tradeVolumes[0]?.tradingVloume && feeData?.tradeVolumes[0]?.tradingVloume || "-"} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} />
         
          
