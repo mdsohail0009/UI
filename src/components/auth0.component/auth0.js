@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Steps, Button, Checkbox,Row,Col,Form,Select,Input,Radio  } from 'antd';
+import {Link } from "react-router-dom";
+
 const { Option } = Select;
 
 
@@ -329,6 +331,8 @@ const { Option } = Select;
         </Col>
         </Row>
         </div>
+        <div><Link to="/emailVerification" className="text-personal">Email Verification</Link></div>
+        <div><Link to="/phoneVerification" className="text-personal">Phone Verification</Link></div>
       </div>
 
 
