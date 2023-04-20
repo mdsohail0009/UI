@@ -20,7 +20,7 @@ const steps = [
         // </Checkbox.Group>
         <>
             <div className='account-content'>
-                <div className='text-personal account-content'>Personal Account</div>
+                <div className='text-personal account-content acc-topspace'>Personal Account</div>
                 <div className='text-personal account-content'>Bussiness Account</div>
             </div>
         </>
@@ -63,11 +63,8 @@ const steps = [
                 {              
                   required: true,
                   message: "Is required",
-                },
-               
-                
-              ]}
-            >
+                }, 
+              ]}>
               <Input
                 className="cust-input form-disable"
                 maxLength={100}
@@ -86,10 +83,7 @@ const steps = [
                   required: true,
                   message: "Is required",
                 },
-               
-                
-              ]}
-            >
+              ]}>
               <Input
                 className="cust-input form-disable"
                 maxLength={100}
@@ -108,10 +102,7 @@ const steps = [
                   required: true,
                   message: "Is required",
                 },
-               
-                
-              ]}
-            >
+              ]}>
               <Input
                 className="cust-input form-disable"
                 maxLength={100}
@@ -130,10 +121,7 @@ const steps = [
                   required: true,
                   message: "Is required",
                 },
-               
-                
-              ]}
-            >
+              ]}>
               <Input
                 className="cust-input form-disable"
                 maxLength={100}
@@ -151,11 +139,8 @@ const steps = [
                 {              
                   required: true,
                   message: "Is required",
-                },
-               
-                
-              ]}
-            >
+                }, 
+              ]} >
               <Input
                 className="cust-input form-disable"
                 maxLength={100}
@@ -174,10 +159,7 @@ const steps = [
                   required: true,
                   message: "Is required",
                 },
-               
-                
-              ]}
-            >
+              ]}>
               <Input
                 className="cust-input form-disable"
                 maxLength={100}
@@ -195,11 +177,8 @@ const steps = [
                 {              
                   required: true,
                   message: "Is required",
-                },
-               
-                
-              ]}
-            >
+                }, 
+              ]}>
               <Input
                 className="cust-input form-disable"
                 maxLength={100}
@@ -218,10 +197,7 @@ const steps = [
                   required: true,
                   message: "Is required",
                 },
-               
-                
-              ]}
-            >
+              ]}>
               <Input
                 className="cust-input"
                 maxLength={100}
@@ -240,10 +216,7 @@ const steps = [
                   required: true,
                   message: "Is required",
                 },
-               
-                
-              ]}
-            >
+              ]}>
               <Input
                 className="cust-input"
                 maxLength={100}
@@ -298,14 +271,9 @@ const steps = [
           ))}
         </Steps>
         <div>{steps[current].content}</div>
-        <div>
+        <div className='text-right mt-24'>
           {current < steps.length - 1 && (
-            <Button className="profile-sm-btn " type="primary" onClick={() => next()}>
-              Next
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button className="profile-sm-btn " type="primary" onClick={() => console.log('Processing complete!')}>
+            <Button className="profile-sm-btn custom-btn prime" type="primary" onClick={() => next()}>
               Next
             </Button>
           )}
@@ -314,6 +282,12 @@ const steps = [
               Back
             </Button>
           )}
+          {current === steps.length - 1 && (
+            <Button className="profile-sm-btn custom-btn prime" type="primary" onClick={() => console.log('Processing complete!')}>
+              Next
+            </Button>
+          )}
+          
         </div>
       </div>
     );

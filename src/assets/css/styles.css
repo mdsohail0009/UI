@@ -545,32 +545,22 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 /** masspayments end**/
 /*Auth0 start*/
 .ant-steps-item-title{color: #fff !important;}
-.ant-steps-item-finish .ant-steps-item-icon{    background-color: #CCC3FF;
-    border-color: #CCC3FF;}
-.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after{background-color: #CCC3FF !important;}
-.ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path{stroke: #CCC3FF !important;}
-.form-block {
-    width: 480px;
-    position: relative;
-    z-index: 25;
-    padding: 54px 64px;
-    border-radius: 20px;
-    background: rgb(255 255 255 / 15%);
-    margin: auto;
-    text-transform: capitalize;}
-.text-personal{font-weight: 700;
-    font-size: 18px;
-    color: #CCC3FF;}
-    .account-content {
-        margin-bottom: 24px;
-    }
+.ant-steps-item-finish .ant-steps-item-icon{    background-color: #3653E4;border-color: #3653E4;}
+.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after{background-color: #3653E4 !important;}
+.ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path{stroke: #3653E4 !important;}
+.form-block{width: 480px;position: relative;z-index: 25;padding: 54px 64px;border-radius: 20px;background: rgb(255 255 255 / 15%);margin: auto;text-transform: capitalize;}
+.text-personal{font-weight: 700;font-size: 18px;color: #CCC3FF;}
+.account-content{margin-bottom: 24px;cursor: pointer;}
 .auth-steps{margin-bottom: 30px !important;}
-.formfields-block .ant-col-xxl-12 {
-    padding: 0 10px !important;
-}
-.form-disable{    background: #3d3b3b !important;
-    cursor: not-allowed;
-    border: 1px solid #616161 !important;}
+.formfields-block .ant-col-xxl-12{padding: 0 10px !important;}
+.form-disable{background: #3d3b3b !important;cursor: not-allowed;border: 1px solid #616161 !important;}
+.acc-topspace{margin-top: 50px !important;}
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon{background: #3653E4;}
+.ant-steps-item-process .ant-steps-item-icon{background-color: #fff;border-color: #3653E4;}
+.ant-steps-item-wait .ant-steps-item-icon{background-color: #f1f1f1 !important; border-color: rgb(246 246 246 / 25%) !important;}
+.auth-steps .anticon-copy svg, .anticon-check svg{color: transparent;background: var(--lightThemeIcons) no-repeat !important;display: inline-block;vertical-align: middle;width: 26px;height: 26px;background-position: -364px -36px !important;}
+.ant-steps-item-wait .ant-steps-item-icon span{color: #000;}
+.mt-24{margin-top: 24px !important;}
 /*Auth0 End*/
 /*-- Cases--*/
 
