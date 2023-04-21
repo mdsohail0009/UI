@@ -34,7 +34,7 @@ const providerConfig = {
   domain: config.domain,
   clientId: config.clientId,
   authorizationParams:{
-    redirect_uri: window.location.origin,
+    redirect_uri: `http://localhost:3000/callback`,
     ...(config.audience ? { audience: config.audience } : null)
   },
   onRedirectCallback,
