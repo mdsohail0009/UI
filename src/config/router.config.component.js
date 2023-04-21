@@ -38,14 +38,23 @@ const AuditLogs = React.lazy(() => import("../components/auditlogs.component"));
 const BatchpaymentView = React.lazy(() => import("../components/batchpayment.component/uploadGrid"));
 const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
 const Transactions = React.lazy(() => import("../components/transactions.history.component/index"))
-const SbCard= React.lazy(() => import("../components/dashboard.component/sbCard"))
-const Auth0= React.lazy(() => import("../components/auth0.component/auth0"))
-const EmailVerification= React.lazy(() => import("../components/auth0.component/emailVerification"))
-const PhoneVerification= React.lazy(() => import("../components/auth0.component/phoneVerification"))
+const SbCard = React.lazy(() => import("../components/dashboard.component/sbCard"))
+const Auth0 = React.lazy(() => import("../components/auth0.component/auth0"))
+const EmailVerification = React.lazy(() => import("../components/auth0.component/emailVerification"))
+const PhoneVerification = React.lazy(() => import("../components/auth0.component/phoneVerification"))
 class RouteConfig extends Component {
   componentDidMount() {
-    if(!this.props.userProfile.isKYC){
+    if (!this.props.userProfile.isEmailVerified) {
+      this.props.history.push('/emailVerification');
+    }
+    else if (!this.props.userProfile?.isCustomerUpdated) {
+      this.props.history.push('/auth0');
+    }
+    else if (!this.props.userProfile.isKYC) {
       this.props.history.push('/sumsub');
+    }
+    else if (!this.props.userProfile?.isPhoneNumberVerified) {
+      this.props.history.push('/phoneVerification');
     }
     this.checkPermissions(window.location.pathname || "/cockpit");
     this.props.history.listen((location) => {
@@ -123,13 +132,13 @@ class RouteConfig extends Component {
         <ReactRoute path="/relogin" component={SecurityLogin} exact />
         <ReactRoute path="/sbcard" component={InternalTransfer} exact />
         <ReactRoute path="/" component={Dashboard} exact />
-       </React.Suspense>
+      </React.Suspense>
     </Switch>
   }
 
 }
-const connectStateToProps = ({ menuItems,userProfile }) => {
-  return { menuItems,userProfile }
+const connectStateToProps = ({ menuItems, userProfile }) => {
+  return { menuItems, userProfile }
 }
 
 export default withRouter(connect(connectStateToProps)(RouteConfig));

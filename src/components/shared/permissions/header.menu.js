@@ -43,7 +43,7 @@ import {
     setSendCrypto,
     hideSendCrypto
 } from "../../../reducers/sendreceiveReducer";
-import { getmemeberInfo } from "../../../reducers/configReduser";
+import { clearUserInfo, getmemeberInfo } from "../../../reducers/configReduser";
 import { clearPermissions, fetchFeatures, getScreenName, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
@@ -55,6 +55,7 @@ import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
 import { useAuth0 } from "@auth0/auth0-react";
+import { userLogout } from "../../../reducers/authReducer";
 
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
@@ -342,6 +343,8 @@ class HeaderPermissionMenu extends Component {
     }
     clearEvents = () => {
         this.props.dispatch(clearPermissions());
+        this.props.dispatch(clearUserInfo());
+        this.props.dispatch(userLogout());
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
         //userManager.signoutRedirect();
@@ -480,7 +483,7 @@ class HeaderPermissionMenu extends Component {
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
-                        <LogoutApp onLogout={()=>this.clearEvents()} />
+                        <LogoutApp clearEvents={()=>this.clearEvents()} />
                     </ul>
                 </div>
             </Menu>
