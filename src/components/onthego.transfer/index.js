@@ -72,7 +72,7 @@ class OnthegoFundTransfer extends Component {
     selectedCurrencyAmount:null,
     selectCurrencyLabelShow:false,
     typeOntheGoObj:null,
-    withdrawValidation:null,
+    withdrawValidations:null,
   }
   componentDidMount() {
     this.verificationCheck();
@@ -95,7 +95,6 @@ class OnthegoFundTransfer extends Component {
   getWithdrawValidations=async()=>{
 let withdrawValidation=await getWithdrawValidation();
 if(withdrawValidation.ok){
-  console.log(withdrawValidation);
 this.setState({...this.state,withdrawValidations:null})
 }else{
   this.setState({...this.state,withdrawValidations:apicalls.isErrorDispaly(withdrawValidation)})
@@ -431,18 +430,22 @@ handleReasonTrnsfer=(e)=>{
   this.reasonForm.current.setFieldsValue({transferOthers:null})
 }
   addressBook = () => {
-    this.setState(
-      {
-        ...this.state,
-        isNewTransfer: false,
-        effectiveType: false,
-        newtransfer: false,
-        selectCurrencyLabelShow:false
-      },
-    )
-    this.chnageStep("addressselection");
+    if(!this.state.withdrawValidations){
+      this.setState(
+        {
+          ...this.state,
+          isNewTransfer: false,
+          effectiveType: false,
+          newtransfer: false,
+          selectCurrencyLabelShow:false
+        },
+      )
+      this.chnageStep("addressselection");
+    }
+   
   }
   newAddressBook = () => {
+    if(!this.state.withdrawValidations){
     this.setState(
       {
         ...this.state,
@@ -452,6 +455,7 @@ handleReasonTrnsfer=(e)=>{
       },
     )
     this.chnageStep("newtransfer");
+    }
   }
   handleForm=(item)=>{
     this.setState(
@@ -469,7 +473,6 @@ handleReasonTrnsfer=(e)=>{
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
     _amt = _amt.replace(/,/g, '')
-    // if(this.state.withdrawValidations!==null){
     if (_amt > 0) {
       this.setState(
         {
@@ -500,7 +503,6 @@ handleReasonTrnsfer=(e)=>{
         this.amountScrool.current.scrollIntoView();
       }
     }
-  // }
   }
   handleContinue = async() => {
     if (
