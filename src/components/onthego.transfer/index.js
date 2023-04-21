@@ -7,7 +7,7 @@ import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
-import { fetchPayees, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails,getWithdrawValidation } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
@@ -63,7 +63,6 @@ class OnthegoFundTransfer extends Component {
     getBanckDetails:null,
     withdrawAmount:null,
     loader:false,
-    fiatWallets:[],
     isLoading:false,
     selectedbankobj:{},
     detailstype:false,
@@ -72,11 +71,13 @@ class OnthegoFundTransfer extends Component {
     newtransfer:false,
     selectedCurrencyAmount:null,
     selectCurrencyLabelShow:false,
-    typeOntheGoObj:null
+    typeOntheGoObj:null,
+    withdrawValidation:null,
   }
   componentDidMount() {
     this.verificationCheck();
     this.getAccountWallet();
+    this.getWithdrawValidations();
     this.getReasonForTransferData();
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
@@ -90,6 +91,15 @@ class OnthegoFundTransfer extends Component {
     if(this.state.selectedType){
       this.fetchMemberWallet()
     }
+  }
+  getWithdrawValidations=async()=>{
+let withdrawValidation=await getWithdrawValidation();
+if(withdrawValidation.ok){
+  console.log(withdrawValidation);
+this.setState({...this.state,withdrawValidations:null})
+}else{
+  this.setState({...this.state,withdrawValidations:apicalls.isErrorDispaly(withdrawValidation)})
+}
   }
   getAccountWallet=async()=>{
     let walletObj=await getAccountWallet()
@@ -144,13 +154,12 @@ class OnthegoFundTransfer extends Component {
     if(res.ok){
       this.setState({...this.state,fiatBanks:res.data})
     }else {
-      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(res),fiatBanks:null })
+      this.setState({ ...this.state, errorMessage: apicalls.isErrorDispaly(res),fiatBanks:null, })
   }
   }
   
   saveCommissionsDetails=async(e)=>{
-    
-    if((this.state.amount || this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
+    if((this.state.amount|| !this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
       {
         this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,})
         let obj ={
@@ -214,12 +223,10 @@ class OnthegoFundTransfer extends Component {
     }
 }
 amountnext = (values) => {
-  debugger
     let _amt = values.amount;
-    _amt = _amt.replace(/,/g, "");
+    _amt =typeof _amt=="string" ? _amt?.replace(/,/g, '') : _amt;
     if (_amt > 0) {
         this.setState({ ...this.state, amount: _amt ,effectiveType:false}, () => this.validateAmt(_amt, "reviewdetails", values, "newtransferLoader"))
-        // this.chnageStep("reviewdetails")
     } else {
         if (!_amt) {
             this.setState({ ...this.state, errorMessage: '' });
@@ -345,7 +352,6 @@ saveWithdrawdata = async () => {
     this.reviewScrool?.current?.scrollIntoView()
   }
   validateAmt = async (amt, step, values, loader) => {
-    debugger
     this.getPayees();
     const obj = {
       CustomerId: this.props.userProfile?.id,
@@ -357,7 +363,6 @@ saveWithdrawdata = async () => {
     const res = await validateAmount(obj);
     if (res.ok) {
         this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
-        // this.props.dispatch(setSendFiatHead(true));
         const response = await confirmTransaction({ 
             payeeId: this.state.typeOntheGoObj?.id,
             amount: amt,
@@ -366,6 +371,7 @@ saveWithdrawdata = async () => {
         });
         if(response.ok){
           this.setState({ ...this.state, [loader]: false, errorMessage: null,reviewDetails: response.data });
+          this.props.dispatch(setSendFiatHead(true));
         }else{
           this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(response) })
         }
@@ -463,6 +469,7 @@ handleReasonTrnsfer=(e)=>{
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
     _amt = _amt.replace(/,/g, '')
+    // if(this.state.withdrawValidations!==null){
     if (_amt > 0) {
       this.setState(
         {
@@ -493,6 +500,7 @@ handleReasonTrnsfer=(e)=>{
         this.amountScrool.current.scrollIntoView();
       }
     }
+  // }
   }
   handleContinue = async() => {
     if (
@@ -555,7 +563,7 @@ handleReasonTrnsfer=(e)=>{
       this.setState({ ...this.state, amount: updateAmount, errorMessage: '' },()=>this.saveCommissionsDetails())
   }
   renderStep = () => {
-    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails,withdrawValidations } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
@@ -605,6 +613,7 @@ handleReasonTrnsfer=(e)=>{
               autoComplete="off"
               scrollToFirstError
             >
+              {withdrawValidations!==null && <Alert type="error" description={withdrawValidations} showIcon />}
               {!isVerificationEnable && (
                   <Alert 
                   message="Verification alert !"
@@ -793,9 +802,7 @@ handleReasonTrnsfer=(e)=>{
                       {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
         
           <Row gutter={[16, 16]}>
-          <div><Button className="pop-btn custom-send cust-disabled"  htmlType="button"  onClick={this.handleToggle}>toggle</Button></div>
           <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-
             <Form.Item
               className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
               name="amount"
