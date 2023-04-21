@@ -455,7 +455,6 @@ class PayeeBankDetails extends Component {
 
               {this.props.currency == 'GBP' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
-               // name="ukSortCode"
                name={["payeeAccountModels","ukSortCode"]}
                 label="Uk Sort Code"
                 className="custom-label"

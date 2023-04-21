@@ -88,4 +88,7 @@ const getRelationDetails = () => {
 const getReasonforTransferDetails = () => {
     return apiClient.get(ApiControllers.common + `controlcodes?codecategory=Reason For Transfer`)
 }
-export { fetchIBANDetails, getCoinwithBank,createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount, validateCryptoAmount,getRelationDetails,getReasonforTransferDetails };
+const getWithdrawValidation=()=>{
+    return apiClient.get(ApiControllers.withdraw + `Validation`)
+}
+export { fetchIBANDetails, getCoinwithBank,createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount, validateCryptoAmount,getRelationDetails,getReasonforTransferDetails,getWithdrawValidation };

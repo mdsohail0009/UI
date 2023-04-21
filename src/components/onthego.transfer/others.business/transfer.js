@@ -102,9 +102,8 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
 
         _obj.addressType = "otherbusiness";
-        // _obj.transferType = this.props.currency=='CHF'?'chftransfer':selectedTab;
         _obj.transferType = this.props.currency=='CHF'&&'chftransfer'||this.props.currency=='SGD'&&'SWIFT/BIC' ||selectedTab;
-        _obj.amount = this.props.amount;
+        _obj.amount = this.props.amount || 0;
         _obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
         _obj.payeeAccountModels[0].state = ibanDetails?.state;
@@ -128,13 +127,8 @@ class BusinessTransfer extends Component {
         
         if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments,transferOthers:_obj.transferOthers,bankId:this.props?.selectedbankobj[0]?.bankId })
-                if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
-                    this.props.onContinue(confirmRes.data);
-                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false,documents:null });
-                } else {
-                    this.setState({ ...this.state, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
-                }
+                    this.useDivRef.current.scrollIntoView()
+                    this.props.onContinue(response.data);
             } else {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
                 this.props?.updatedHeading(true)

@@ -98,11 +98,10 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         saveObj.line2=recipientDetails.line2;
         saveObj.line3=recipientDetails.line3;
         saveObj.addressType=isBusiness?'ownbusiness':'myself';
-        // saveObj.transferType=currency==='EUR'?'sepa':currency==='CHF'?'chftransfer':addressOptions.tabType;
         saveObj.transferType=currency==='EUR'&&'sepa'||currency==='CHF'&&'chftransfer' || currency==='SGD'&& 'SWIFT/BIC' ||addressOptions.tabType;
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
-        saveObj.amount=onTheGoObj?.amount;
+        saveObj.amount=onTheGoObj?.amount || 0;
         saveObj.createdBy = props.userConfig?.userName;
         if(isEdit){
             saveObj.id = isSelectedId ? isSelectedId: saveObj.payeeId;
@@ -111,16 +110,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         if (response.ok) {
             seterrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: onTheGoObj?.amount, reasonOfTransfer: null ,bankId:selectedbankobj[0]?.bankId})
-                if (confirmRes.ok) {
-                    seterrorMessage(null)
-                    setBtnLoading(false);
-                    props.onContinue(confirmRes.data);
-                } else {
-                    setBtnLoading(false);
-                    seterrorMessage(apiCalls.isErrorDispaly(confirmRes));
-                    useDivRef.current.scrollIntoView();
-                }
+                props.onContinue(response.data);
             }
             else {
                 setShowDeclartion(true);

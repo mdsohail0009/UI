@@ -1048,7 +1048,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .user-labels.active .icon.lg.suissebase-credit, .user-labels:hover .icon.lg.suissebase-credit, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.suissebase-credit, .ant-tabs-tab:hover .icon.lg.suissebase-credit{background-position: -213px -589px;}
 .Effective-Fees{color: var(--termsText);cursor: pointer;}
 .icon.lg.down-arrow{background-position: -389px -486px;margin-left: 4px;}
-.icon.lg.up-arrow{background-position: -419px -486px;margin-left: 4px;}
+.icon.lg.up-arrow{background-position: -411px -486px;margin-left: 4px;}
 /* commissions  start   */
 .first-header th{text-align: center !important;}
 .fee-withdraw{padding: 0 !important;border-right: 1px solid var(--gridborder) !important;}
@@ -1071,6 +1071,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .table-border thead{background-color: rgb(114 114 114 / 40%) !important;}
 table tr:last-child td:first-child{border-bottom-left-radius: 20px;}
 table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
+.icon.commission-toggle{background-position: -256px -555px;height: 24px;width: 24px;cursor: pointer;}
+.icon.commission-toggle:hover{background-position: -256px -589px;}
+.summarybal.total-amount{padding: 12px;border-radius: 12px;font-weight: 600;font-size: 18px;text-align: center;}
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){
