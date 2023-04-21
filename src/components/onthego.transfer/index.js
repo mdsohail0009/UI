@@ -91,13 +91,13 @@ class OnthegoFundTransfer extends Component {
       this.fetchMemberWallet()
     }
   }
-  getWithdrawValidations=async()=>{
-let withdrawValidation=await getWithdrawValidation();
-if(withdrawValidation.ok){
-this.setState({...this.state,withdrawValidations:null})
-}else{
-  this.setState({...this.state,withdrawValidations:apicalls.isErrorDispaly(withdrawValidation)})
-}
+  getWithdrawValidations = async () => {
+    let withdrawValidation = await getWithdrawValidation();
+    if (withdrawValidation.ok) {
+      this.setState({ ...this.state, withdrawValidations: null })
+    } else {
+      this.setState({ ...this.state, withdrawValidations: apicalls.isErrorDispaly(withdrawValidation) })
+    }
   }
   getAccountWallet=async()=>{
     let walletObj=await getAccountWallet()
@@ -168,7 +168,7 @@ this.setState({...this.state,withdrawValidations:null})
         }
         let res = await saveCommissions(obj);
         if(res.ok){
-          this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false,});
+          this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
         }else {
           this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
           this.amountScrool.current.scrollIntoView();
@@ -250,7 +250,6 @@ handleFiatSearch = ({ target: { value: val } }) => {
         this.setState({ ...this.state, fiatWallets: this.state.filtercoinsList, searchFiatVal: val });
 }
 saveWithdrawdata = async () => {
-  
     this.setState({ ...this.state, isBtnLoading: true ,errorMessage:null})
     if (this.state.verifyData?.verifyData) {
         if (this.state.verifyData.verifyData.isPhoneVerified) {
@@ -487,7 +486,6 @@ handleReasonTrnsfer=(e)=>{
           this.enteramtForm.current?.validateFields()
             .then(() => this.handleContinue()
             )
-           
         },
       )
     } else {
@@ -796,8 +794,6 @@ selectsCurrency=(item)=>{
               </Tabs.TabPane>
                 </Tabs>
 							</div>
-          
-          
             </>
           )}
         </React.Fragment>

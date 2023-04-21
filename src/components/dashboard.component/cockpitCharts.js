@@ -67,7 +67,7 @@ const CockpitCharts=(props)=> {
             props.dispatch(getScreenName({getScreen:"withdraw"}));
             setState(prevState => ({
                 ...prevState,
-                showFuntransfer: true, selectedCurrency:value,
+                showFuntransfer: true, selectedCurrency:value
              }));
         } else if (e === 1) {
             props.dispatch(setReceiveFiatHead(true));

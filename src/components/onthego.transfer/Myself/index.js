@@ -111,7 +111,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
             seterrorMessage(null)
             if (props.type !== "manual") {
                 props.onContinue(response.data);
-                props.headingUpdate(true)
             }
             else {
                 setShowDeclartion(true);
