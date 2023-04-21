@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs, Tooltip } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -86,7 +86,6 @@ class OnthegoFundTransfer extends Component {
     }
     if (this.state.selectedCurrency) {
       this.getPayees();
-     // this.fetchMemberWallet()
     }
     if(this.state.selectedType){
       this.fetchMemberWallet()
@@ -158,7 +157,7 @@ this.setState({...this.state,withdrawValidations:null})
   }
   
   saveCommissionsDetails=async(e)=>{
-    if((this.state.amount|| !this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
+    if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
       {
         this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,})
         let obj ={
@@ -361,7 +360,6 @@ saveWithdrawdata = async () => {
     this.setState({ ...this.state, [loader]: true, errorMessage: null });
     const res = await validateAmount(obj);
     if (res.ok) {
-        this.setState({ ...this.state, [loader]: false, errorMessage: null }, () => this.chnageStep(step, values));
         const response = await confirmTransaction({ 
             payeeId: this.state.typeOntheGoObj?.id,
             amount: amt,
@@ -370,6 +368,7 @@ saveWithdrawdata = async () => {
         });
         if(response.ok){
           this.setState({ ...this.state, [loader]: false, errorMessage: null,reviewDetails: response.data });
+         this.chnageStep(step, values);
           this.props.dispatch(setSendFiatHead(true));
         }else{
           this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(response) })
@@ -386,6 +385,7 @@ saveWithdrawdata = async () => {
     }
     setTimeout(()=>{
       this.chnageStep('selectcurrency');
+      this.setState({...this.state,getBanckDetails:null,selectedBank:null,selectCurrencyLabelShow:false});
     this.props.dispatch(setSendFiatHead(false));
     },400)
 }
@@ -472,7 +472,7 @@ handleReasonTrnsfer=(e)=>{
 
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
-    _amt = _amt.replace(/,/g, '')
+    _amt =typeof _amt=="string" ? _amt?.replace(/,/g, '') : _amt;
     if (_amt > 0) {
       this.setState(
         {
@@ -549,6 +549,16 @@ handleReasonTrnsfer=(e)=>{
     }
   
 }
+selectsCurrency=(item)=>{
+  this.setState({ ...this.state, selectedCurrency: item.walletCode,selectedCurrencyAmount:item.amount,errorMessage:null }, () => { this.getPayees();
+    if (item.amount) {
+      this.chnageStep("enteramount")
+    }
+    else {
+      this.setState({...this.state,errorMessage:"Insufficient balance"})
+    }
+  })
+}
   feeChange=()=>{
     if(this.state.effectiveType){
       this.setState({...this.state,effectiveType:false})
@@ -565,12 +575,13 @@ handleReasonTrnsfer=(e)=>{
       this.setState({ ...this.state, amount: updateAmount, errorMessage: '' },()=>this.saveCommissionsDetails())
   }
   renderStep = () => {
-    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails,withdrawValidations } = this.state;
+    const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails,withdrawValidations,selectedCurrencyAmount } = this.state;
     const steps = {
       selectcurrency: (
         <React.Fragment>
           {this.state.fiatWalletsLoading && <Loader />}
-          {!this.state.fiatWalletsLoading && (
+          {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
+          {!this.state.fiatWalletsLoading  && (
             <div>
               <div className="mt-8">
               <div
@@ -589,7 +600,7 @@ handleReasonTrnsfer=(e)=>{
                 }}
                 renderItem={item => (
 
-                    <List.Item className="drawer-list-fiat sendfiat-coins" onClick={() => this.setState({ ...this.state, selectedCurrency: item.walletCode,selectedCurrencyAmount:item.amount }, () => { this.getPayees(); this.chnageStep("enteramount") })}>
+                    <List.Item className="drawer-list-fiat sendfiat-coins" onClick={() => this.selectsCurrency(item)}>
                     <Link>
                       <List.Item.Meta className='drawer-coin'
                         avatar={<Image preview={false} src={item.imagePath} />}
@@ -631,7 +642,7 @@ handleReasonTrnsfer=(e)=>{
               />
               )}
               {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-              {isVerificationEnable && (
+              {(isVerificationEnable && selectedCurrencyAmount) && (
                 <>
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -642,7 +653,7 @@ handleReasonTrnsfer=(e)=>{
                           placeholder={"Enter Amount"}
                           thousandSeparator={true} displayType={"text"}
                           disabled
-                          value={this.state.selectedCurrencyAmount}
+                          value={selectedCurrencyAmount}
                         />
                       </div>
                     </Col>
@@ -655,7 +666,7 @@ handleReasonTrnsfer=(e)=>{
                             htmlType="submit"
                             size="large"
                             className="newtransfer-card"
-                            loading={this.state.newtransferLoader}
+                            loading={this.state.addressLoader}
                             disabled={this.state.addressLoader}
                             onClick={this.newAddressBook}
                           >
@@ -836,7 +847,7 @@ handleReasonTrnsfer=(e)=>{
                 allowNegative={false}
                 thousandSeparator={","}
                 onKeyDown={this.keyDownHandler}
-                addonAfter={<span className="icon commission-toggle" onClick={this.handleToggle}></span>}
+                addonAfter={<Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip>}
                 addonBefore={<Select defaultValue={this.state.selectedCurrency} 
                     onChange={(e) => this.handleCurrencyChange(e)}
                     className="currecny-drpdwn sendfiat-dropdown"
@@ -866,7 +877,7 @@ handleReasonTrnsfer=(e)=>{
 
 
               <Select
-                placeholder="Select Your Bank"
+                placeholder="Select Bank Name"
                 className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                 dropdownClassName="select-drpdwn"
                 onChange={(e) => this.handleBankChange(e)}
@@ -881,9 +892,11 @@ handleReasonTrnsfer=(e)=>{
             </Form.Item>
           </Col>
       {this.state.detailstype &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-     {this.state.isLoading ? <Loader/> : <div className="cust-summary-new">
+     {this.state.isLoading ? <Loader/> :
+      getBanckDetails &&  <div className="cust-summary-new">
+     
         <div> 
-        { getBanckDetails &&  <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
+         <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
                           <div className="summary-liststyle">Withdrawal Amount</div>
                           <div className="summarybal"><NumberFormat
                               value={`${this.state?.withdrawAmount}`}
@@ -919,9 +932,9 @@ handleReasonTrnsfer=(e)=>{
                           <div className="summarybal"><NumberFormat
                               value={`${getBanckDetails?.amount}`}
                               thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
-        </div></>} 
+        </div></>
         </div>        
-        </div>}
+     </div>}
         </Col>}
         </Row>
         <Row gutter={[16, 16]} className="send-drawerbtn">
@@ -1240,7 +1253,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                         this.props.dispatch(setSendFiatHead(false));
                         this.amountScrool?.current?.scrollIntoView();
                         this.chnageStep("addressselection")
-                        // this.chnageStep("reviewdetails")
+  
                     })
                 }
                 }
