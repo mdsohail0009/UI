@@ -7,7 +7,7 @@ import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
-import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount } from "./api";
+import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
@@ -23,8 +23,9 @@ import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {validateContentRule} from '../../utils/custom.validator'
 import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-
+import { getAccountWallet} from "../../api/apiServer";
 const { Text, Title } = Typography; 
+const {Option}=Select;
 class OnthegoFundTransfer extends Component {
   enteramtForm = React.createRef();
   reasonForm = React.createRef();
@@ -54,9 +55,14 @@ class OnthegoFundTransfer extends Component {
     permissions: {},
     filtercoinsList: [],
     searchFiatVal: "",
+    fiatWallets:[],
+    reasonForTransferDataa:[],
+    selectedReasonforTransfer:null,
   }
   componentDidMount() {
-    this.verificationCheck()
+    this.verificationCheck();
+    this.getAccountWallet();
+    this.getReasonForTransferData();
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
     if (!this.state.selectedCurrency) {
@@ -90,7 +96,16 @@ class OnthegoFundTransfer extends Component {
     }
   }
 
- 
+  getAccountWallet=()=>{
+    let walletObj=getAccountWallet()
+    if(walletObj.ok){
+      this.setState({ ...this.state, fiatWallets: walletObj.data });
+    }
+    else{
+         this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
+    
+    }
+  }
   getPayees() {
     fetchPayees( this.state.selectedCurrency).then((response) => {
         if (response.ok) {
@@ -229,41 +244,29 @@ saveWithdrawdata = async () => {
       }
     }
   }
-  changesVerification = (obj) => {
-    if(obj.isPhoneVerification && obj.verifyData?.isPhoneVerified &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else if(obj.isAuthenticatorVerification &&obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification ){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else if(obj.isEmailVerification && obj.verifyData?.isEmailVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isPhoneVerified){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else if(obj.verifyData?.isLiveVerification &&!obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified  ){
-      this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }else
-    if (obj.isPhoneVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.isEmailVerification && !obj.verifyData?.twoFactorEnabled)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification && !obj.verifyData?.isPhoneVerified)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.isPhoneVerification && obj.isAuthenticatorVerification && obj.isEmailVerification && (obj.verifyData?.isPhoneVerified && obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification)) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.verifyData?.isLiveVerification && obj.isEmailVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.twoFactorEnabled && obj.verifyData?.isEmailVerification) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else if (obj.verifyData?.isLiveVerification && obj.isPhoneVerification && !obj.verifyData?.twoFactorEnabled && !obj.verifyData?.isEmailVerification && obj.verifyData?.isPhoneVerified) {
-        this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-    }
-    else {
-        if (obj.verifyData?.isLiveVerification && obj.isAuthenticatorVerification && !obj.verifyData?.isPhoneVerified && !obj.verifyData?.isEmailVerification && obj.verifyData?.twoFactorEnabled) {
-            this.setState({ ...this.state, isShowGreyButton: true, verifyData: obj });
-        }
+  isAllVerificationsFullfilled = (obj) => {
+    const vdata=this.state.verifyData ||{}
+    const vDetails=Object.keys(vdata).length===0?obj:this.state.verifyData;
+    let _verficationDetails = { ...vDetails,...obj };
+    let _verificationCount = 0;
+    let _currentVerificationCount = 0;
+    for (let key in _verficationDetails) {
+      if (["isPhoneVerification", "isEmailVerification", "isAuthenticatorVerification"].includes(key) && _verficationDetails[key]) {
+        _currentVerificationCount++;
+      }
     }
 
-}
+    for (let key in _verficationDetails?.verifyData) {
+      if (["isPhoneVerified", "isEmailVerification", "twoFactorEnabled"].includes(key) && _verficationDetails?.verifyData[key]) {
+        _verificationCount++;
+      }
+    }
+    return _verificationCount === _currentVerificationCount;
+  }
+
+  changesVerification = (obj) => {
+    this.setState({ ...this.state, isShowGreyButton: this.isAllVerificationsFullfilled(obj), verifyData: {...this.state.verifyData,...obj} })
+  }
 
   onReviewDetailsLoading = (val) => {
     this.setState({ ...this.state, reviewDetailsLoading: val })
@@ -318,6 +321,20 @@ verificationsData=(data)=>{
   }
 }
 
+getReasonForTransferData=async()=>{
+  let res = await getReasonforTransferDetails();
+  if(res.ok){
+      this.setState({...this.state,reasonForTransferDataa:res.data,errorMessage:null})
+  }else{
+      this.setState({...this.state,errorMessage: apicalls.isErrorDispaly(res),})
+     
+  }
+}
+
+handleReasonTrnsfer=(e)=>{
+  this.setState({...this.state,selectedReasonforTransfer:e})
+  this.reasonForm.current.setFieldsValue({transferOthers:null})
+}
 
   goToAddressBook = () => {
     let _amt = this.enteramtForm.current.getFieldsValue().amount
@@ -463,10 +480,10 @@ verificationsData=(data)=>{
                               onChange={(e) => this.handleCurrencyChange(e)}
                               className="currecny-drpdwn sendfiat-dropdown"
                               placeholder="Select">
-                              <option value="USD">USD</option>
-                              <option value="EUR">EUR</option>
-                              {/* <option value="GBP">GBP</option>
-                              <option value="CHF">CHF</option> */}
+                                {this.state.fiatWallets.map((item)=>
+                                  <option value={item.walletCode}>{item.walletCode}</option>
+                                )}
+
                               </Select>}
                           onValueChange={() => {
                             this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
@@ -669,33 +686,67 @@ verificationsData=(data)=>{
             {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
                     <React.Fragment><Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                  <Form.Item
-                    className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
-                    name="reasionOfTransfer"
-                    label={"Reason For Transfer"}
+                    <Form.Item
+                    className="custom-forminput custom-label"
+                    name="reasonOfTransfer"
                     required
                     rules={[
-                      {whitespace: true,
-                        message: "Is required",
-                      },
-                      {
-                        required: true,
-                        message:
-                                            apicalls.convertLocalLang("is_required"),
-                      },
-                      {
-                        validator: validateContentRule,
-                    },
+                        {
+                            required: true,
+                            message: apicalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            whitespace: true,
+                            message: apicalls.convertLocalLang("is_required"),
+                        },
+                        {
+                            validator: validateContentRule,
+                        },
                     ]}
-                  >
-                    <Input
-                      className="cust-input "
-                      placeholder={"Reason For Transfer"}
-                      maxLength={200}
-                    />
-                  </Form.Item>
-
+                    label={
+                        "Reason For Transfer"
+                    }
+                >
+                     <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={"Reason For Transfer"}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleReasonTrnsfer(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select> 
+                </Form.Item>
                 </Col>
+                {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
               </Row>
              <AddressDocumnet documents={this.state.codeDetails.documents} onDocumentsChange={(docs) => {
                             let { documents } = this.state.codeDetails;
@@ -715,7 +766,7 @@ verificationsData=(data)=>{
                     onClick={() => {
                         let validateFileds = [];
                         if (!["myself", "1stparty", "ownbusiness"].includes(this.state.selectedPayee.addressType?.toLowerCase())) {
-                            validateFileds = validateFileds.concat(["reasionOfTransfer", "files"]);
+                            validateFileds = validateFileds.concat(["reasonOfTransfer","transferOthers","files"]);
                       }
                       this.reasonForm.current.validateFields(validateFileds).then(async () => {
                           const fieldValues = this.reasonForm.current.getFieldsValue();
@@ -728,7 +779,7 @@ verificationsData=(data)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasionOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents });
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -827,7 +878,8 @@ verificationsData=(data)=>{
                {this.state.reviewDetails?.customerRemarks &&
                                 <div className="kpi-divstyle" >
                                     <div className="kpi-label">Reason For Transfer </div>
-                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"}</Text></div>
+                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"} {" "} 
+                                    {this.state.reviewDetails?.customerRemarks=="Others" && `(${this.state.reviewDetails?.others})`}</Text></div>
                                 </div>
                           }
 

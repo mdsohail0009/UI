@@ -219,6 +219,12 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
+		{
+			field: "rejectReason",
+			title: apiCalls.convertLocalLang("Reason_For_Rejection"),
+			filter: true,
+			width: 200,
+		},
 	];
 	columnsCrypto = [
 		{
@@ -296,6 +302,12 @@ class AddressBook extends Component {
 			title: apiCalls.convertLocalLang("Status"),
 			filter: true,
 			width: 100,
+		},
+		{
+			field: "rejectReason",
+			title: apiCalls.convertLocalLang("Reason_For_Rejection"),
+			filter: true,
+			width: 200,
 		},
 	];
 	async downloadDeclarationForm(dataItem) {

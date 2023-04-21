@@ -14,7 +14,8 @@ import Notices from './notices';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import BankWallets from '../bankui.component'
 import SbCard from './sbCard';
-import AddressCrypto from "../addressbook.component/addressCrypto"
+import AddressCrypto from "../addressbook.component/addressCrypto";
+import {Link } from "react-router-dom";
 import {
 	rejectCoin,
 	clearValues,
@@ -82,6 +83,7 @@ class Home extends Component {
 	}
     render() {
         const { data: notices } = this.props.dashboard?.notices;
+        const {userProfileInfo}=this.props;
         const {beneficiaryDetails,hideFiatHeading}=this.state;
         return (
             <div className="main-container dashbord-space case-carsl">
@@ -104,9 +106,13 @@ class Home extends Component {
                     </div>)}
                 </Carousel> : ""}
             <div className='d-flex align-center'>
-                <Translate content="Dashboard" component={Title} className="db-main-title" />
-                <span className='acount-type'>{this.props.userProfileInfo?.isBusiness ? "Business":"Personal"}</span>
+                <span className="db-main-title"> {(!userProfileInfo.isBusiness  && `${userProfileInfo.firstName} ${userProfileInfo.lastName}`) ||  (userProfileInfo.isBusiness && `${userProfileInfo.businessName}`)}
+                </span>
+                <span className='acount-type'>{userProfileInfo?.isBusiness ? "Business":"Personal"}</span>
+                <div className='acount-type'><Link to="/auth0">Auth0</Link> </div>
             </div>
+
+           
             {this.state.permissions.Notices && <Notices />}
                 <Row justify="center mt-16" gutter={[16,16]}>
                 <Col xs={24} md={12} xl={15} lg={15} xxl={15} className="db-flex-style">

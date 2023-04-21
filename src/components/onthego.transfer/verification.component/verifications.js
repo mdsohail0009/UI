@@ -158,7 +158,7 @@ const goToSecurity=()=>{
             setEmail({ ...email, btnName: 'verifyOtpBtn', code: e.target.value })
         } else if(emailSeconds===0 && email.btnName==='code_Sent'){
             setEmail({ ...email, btnName: 'resendotp', code: '' })
-        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {// && phone.btnName==='code_Sent'
+        } else if(emailSeconds===0 && (email.btnName==='verifyOtpBtn' || email.btnName==='resendotp') && e.target.value == "") {
             setEmail({ ...email, btnName: 'resendotp', code: '' })
         } else {
             setEmail({ ...email, btnName: 'code_Sent', code: '' })
@@ -181,7 +181,7 @@ const goToSecurity=()=>{
         } else if(phoneSeconds===0 && phone.btnName==='code_Sent') {
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }
-        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") {// && phone.btnName==='code_Sent'
+        else if(phoneSeconds===0 && (phone.btnName==='resendotp' || phone.btnName==='verifyOtpBtn') && e.target.value == "") { 
             setPhone({ ...phone, btnName: 'resendotp', code: '' })
         }else {
             setPhone({ ...phone, btnName: 'code_Sent', code: '' })
@@ -213,11 +213,11 @@ const goToSecurity=()=>{
  
     const updateverifyObj = (val, name) => {
         if (name === 'isEmailVerification') {
-            props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: phone.verified })
+        props.onchangeData({ verifyData: verifyData,phBtn:phbtnColor, isEmailVerification: val})
         } else if (name === 'isPhoneVerification') {
-            props.onchangeData({ verifyData: verifyData,emailBtn:emailbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: authenticator.verified, isPhoneVerification: val })
+        props.onchangeData({ verifyData: verifyData, isPhoneVerification: val })
         } else if (name === 'isAuthenticatorVerification') {
-            props.onchangeData({ verifyData: verifyData,authBtn:authbtnColor, isEmailVerification: email.verified, isAuthenticatorVerification: val, isPhoneVerification: phone.verified })
+            props.onchangeData({ verifyData: verifyData,authBtn:authbtnColor, isAuthenticatorVerification: val })
         }
     }
     const verifyAuthenticatorOTP = async () => {

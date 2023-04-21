@@ -186,7 +186,8 @@ if (res.ok){
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      docRepositories:values.isDocumentUpload===true? this.state.details.docRepositories :null
+      docRepositories:values.isDocumentUpload===true? this.state.details.docRepositories :null,
+      createdBy : this.props.userProfile?.userName,
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;

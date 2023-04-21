@@ -795,6 +795,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     
 }
 @media (min-width: 1400px){
+    .register-blockwid{    
+        width: 900px !important;
+        margin: 0 auto !important;}
     .custom-font{font-size:30px !important;}
     .mega-menu{max-width: 1320px;}
     .side-drawer .side-drawer-header{padding: 15px 0px 15px 0px;}
