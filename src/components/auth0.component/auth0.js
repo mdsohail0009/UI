@@ -120,9 +120,9 @@ const Auth0 = (props) => {
                     },
                   ]}>
                   <Input
-                    addonBefore={<Select id='phoneCode-menu' value={phoneCode} showSearch onSearch={handlePhoneCodeSearch} onChange={handlePhoneCode}>
+                    addonBefore={<Select id='phoneCode-menu' value={phoneCode}  onChange={handlePhoneCode}>
                       <Option value={""}>Select Code</Option>
-                      {filteredCodeCountries.map((country) => <Option key={country.dial_code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
+                      {filteredCodeCountries.map((country) => <Option key={country.name} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
                     </Select>}
                     className="cust-input form-disable"
                     maxLength={100}
@@ -274,7 +274,7 @@ const Auth0 = (props) => {
                   ]}
                 >
                   <Input
-                    addonBefore={<Select id='phoneCode-menu' value={phoneCode} showSearch onSearch={handlePhoneCodeSearch} onChange={handlePhoneCode}>
+                    addonBefore={<Select id='phoneCode-menu' value={phoneCode} onChange={handlePhoneCode}>
                       <Option value={""}>Select Code</Option>
                       {filteredCodeCountries.map((country) => <Option key={country.dial_code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
                     </Select>}
