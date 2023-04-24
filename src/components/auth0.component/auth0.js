@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert } from 'antd';
+import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert,Checkbox } from 'antd';
 import { saveCustomer } from './api';
 import Countries from './countries.json';
-import {Link } from "react-router-dom";
 import apicalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
+import  { CheckboxChangeEvent } from 'antd/es/checkbox';
 const { Option } = Select;
 
 
@@ -15,8 +15,11 @@ const Auth0 = (props) => {
   const [isBusinessAccount, setIsBusinessAccount] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const onChange1 = (e) => {
+    console.log(`checked = ${e.target.checked}`);
+  };
   const selectBefore = (
-    <Select id='phoneCode-menu'>
+    <Select id='phoneCode-menu' defaultValue="Select">
       <Option>Select Code</Option>
       {Countries.map((country) => <Option key={country.code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
 
@@ -199,8 +202,19 @@ const Auth0 = (props) => {
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <div className='policy-content terms-text'>
-                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <Link className="blue-color">Term Of Use Agreement</Link> And I've Read The <Link className="blue-color">Privacy Policy</Link>.</div>
+                <div className='policy-content terms-text d-flex'>
+                  <div>
+                    <label className="text-center custom-checkbox c-pointer cust-check-outline">
+                      <input
+                        className="c-pointer"
+                        name="isCheck"
+                        type="checkbox"
+                        onChange1={(e) => this.handleInputChange(props, e)}
+                      />
+                      <span></span>{" "}
+                    </label>
+                  </div>
+                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term Of Use Agreement</a> And I've Read The <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy Policy</a>.</div>
                 </div>
               </Col>
             </Row>
@@ -383,10 +397,21 @@ const Auth0 = (props) => {
                 </Form.Item>
               </Col>   
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <div className='policy-content terms-text'>
-                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <Link className="blue-color">Term Of Use Agreement</Link> And I've Read The <Link className="blue-color">Privacy Policy</Link>.</div>
+                <div className='policy-content terms-text d-flex'>
+                  <div>
+                    <label className="text-center custom-checkbox c-pointer cust-check-outline">
+                      <input
+                        className="c-pointer"
+                        name="isCheck"
+                        type="checkbox"
+                        onChange1={(e) => this.handleInputChange(props, e)}
+                      />
+                      <span></span>{" "}
+                    </label>
+                  </div>
+                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term Of Use Agreement</a> And I've Read The <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy Policy</a>.</div>
                 </div>
-              </Col> 
+              </Col>
             </Row>
             <div className="text-right view-level-btn">
               <Button
