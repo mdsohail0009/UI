@@ -19,6 +19,7 @@ const Auth0 = (props) => {
   };
   const handleSubmmit = async (values) => {
     setLoading(true);
+    debugger
     setError(null);
     let obj = {
       "userName": null,
@@ -132,7 +133,7 @@ const Auth0 = (props) => {
                   />
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
+              <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
                   name="userName"
@@ -150,7 +151,7 @@ const Auth0 = (props) => {
                     placeholder="Username"
                   />
                 </Form.Item>
-              </Col> */}
+              </Col>
               {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
@@ -185,13 +186,14 @@ const Auth0 = (props) => {
               </Col>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <div className="text-right view-level-btn">
+                  <Form.Item>
                   <Button
                     type='primary'
                     className='pop-btn'
-                    htmlType='submit'
-                    onClick={handleSubmmit}>
+                    htmlType="submit">
                     Submit
                   </Button>
+                  </Form.Item>
                 </div>
               </Col>
             </Row>
@@ -305,10 +307,10 @@ const Auth0 = (props) => {
                   </Select>
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
+              <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="User Name"
+                  name="userName"
                   label="User Name"
                   required
                   rules={[
@@ -326,7 +328,7 @@ const Auth0 = (props) => {
                     placeholder="User Name"
                   />
                 </Form.Item>
-              </Col> */}
+              </Col>
               {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"

@@ -4,7 +4,7 @@ import { ApiControllers } from "../../api/config"
 
 
 const saveCustomer = (obj)=>{
-    return apiClient.post(ApiControllers.customers+'SaveUser',obj);
+    return apiClient.put(ApiControllers.customers+'SaveUser',obj);
 }
 
 export {saveCustomer}
