@@ -44,7 +44,6 @@ const EmailVerification = React.lazy(() => import("../components/auth0.component
 const PhoneVerification = React.lazy(() => import("../components/auth0.component/phoneVerification"))
 class RouteConfig extends Component {
   componentDidMount() {
-    debugger
     if (!this.props.userProfile.isEmailVerified) {
       this.props.history.push('/emailVerification');
     }

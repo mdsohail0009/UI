@@ -4,7 +4,7 @@ import Mobile from '.././../assets/images/mobile.png';
 import { Link } from "react-router-dom";
 import { sendOtp, verifyOtp } from './api';
 
-const PhoneVerification = () => {
+const PhoneVerification = (props) => {
     const [isOtpSent, setSendOTP] = useState(false);
     const [isOtpReSent, setReSendOTP] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -29,9 +29,9 @@ const PhoneVerification = () => {
         setLoading(true);
         const res = await verifyOtp(values.otp);
         if (res.ok) {
-
+            props.history.push("/sumsub")
         } else {
-
+            setError(res.data?.title || res.data?.message || res.data || res.originalError?.message)
         }
         setLoading(false);
     }
