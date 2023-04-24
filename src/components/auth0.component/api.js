@@ -9,4 +9,10 @@ const saveCustomer = (obj) => {
 const resendEmail = () => {
   return apiClient.get(ApiControllers.customers+"VerifyEmail")
 }
-export { saveCustomer,resendEmail }
+const sendOtp = ()=>{
+    return apiClient.get(ApiControllers.master+"SendOTP/send")
+}
+const verifyOtp = (otp)=>{
+    return apiClient.get(ApiControllers.customers+"PhoneVerification/"+otp)
+}
+export { saveCustomer,resendEmail,sendOtp,verifyOtp }

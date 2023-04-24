@@ -3,6 +3,8 @@ import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert } f
 import { saveCustomer } from './api';
 import Countries from './countries.json';
 import {Link } from "react-router-dom";
+import apicalls from '../../api/apiCalls';
+import { connect } from 'react-redux';
 const { Option } = Select;
 
 
@@ -40,6 +42,7 @@ const Auth0 = (props) => {
       "businessName": null
     }
     obj = { ...obj, ...values };
+    obj.phoneNumber = apicalls.encryptValue(obj.phoneNumber,props?.userProfile?.sk);
     const response = await saveCustomer(obj);
     if (response.ok) {
       props.history.push("/sumsub");
@@ -400,4 +403,10 @@ const Auth0 = (props) => {
     </>
   );
 };
-export default Auth0;
+const connectStateToProps = ({ userConfig }) => {
+  return { userProfile: userConfig?.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+  return { dispatch }
+}
+export default connect(connectStateToProps,connectDispatchToProps)(Auth0);
