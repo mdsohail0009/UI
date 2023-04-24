@@ -7,14 +7,28 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { clearPermissions } from '../../reducers/feturesReducer';
 import { clearUserInfo } from '../../reducers/configReduser';
 import { userLogout } from '../../reducers/authReducer';
-
 const EmailVerification = (props) => {
   const [isEmailResent, setEmailResent] = useState(false);
   const { logout } = useAuth0();
+  const [counter, setCounter] = useState(60);
+  const inititeCounter = () => {
+      let _count = 60;
+      const interval = setInterval(() => {
+          if (_count === 0) {
+              clearInterval(interval);
+              setEmailResent(false);
+          } else {
+              _count--;
+              setCounter(_count);
+          }
+      }, 1000);
+
+  }
   const reSendMail = async () => {
     const res = await resendEmail();
     if (res.ok) {
       setEmailResent(true);
+      inititeCounter();
     }
   }
   const signOutUser = () => {
@@ -31,7 +45,7 @@ const EmailVerification = (props) => {
           <h2 class="db-main-title mb-8">Verify Your Email</h2>
           <div className='text-style mb-8'>We Sent A Verification Email To:</div>
           <div className='text-style mb-8 mt-0'>{props?.userProfile?.email}. Please Click The Link In The Email To Continue.</div>
-          <div className='text-style mb-8'>Email Didn't Arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend</span>}{isEmailResent && <span>You can resend again in </span>}</div>
+          <div className='text-style mb-8'>Email Didn't Arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend</span>}{isEmailResent && <span>You can resend email again in {counter}</span>}</div>
           <div className='text-personal c-pointer' onClick={signOutUser}>Sign In</div>
         </div>
       </div>

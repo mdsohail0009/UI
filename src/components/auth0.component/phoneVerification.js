@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
 import { Steps, Button, Checkbox, Row, Col, Form, Select, Input, Radio, Image, Alert } from 'antd';
 import Mobile from '.././../assets/images/mobile.png';
-import { Link } from "react-router-dom";
 import { sendOtp, verifyOtp } from './api';
-
 const PhoneVerification = (props) => {
     const [isOtpSent, setSendOTP] = useState(false);
     const [isOtpReSent, setReSendOTP] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [counter, setCounter] = useState(60);
+    const [enableResend, setEnableResend] = useState(true);
+    const inititeCounter = () => {
+        let _count = 60;
+        setEnableResend(false);
+        const interval = setInterval(() => {
+            if (_count === 0) {
+                clearInterval(interval);
+                setEnableResend(true);
+                setReSendOTP(false);
+            } else {
+                _count--;
+                setCounter(_count);
+            }
+        }, 1000);
+
+    }
     const handleOtp = async (type) => {
+        if (type === "resend") {
+            setCounter(60);
+        }
         setLoading(true);
         setError(null);
-        const res = await sendOtp(type==="resend"?"resend":"send");
+        const res = await sendOtp(type === "resend" ? "resend" : "send");
         if (res.ok) {
             if (type === "resend") {
                 setReSendOTP(true);
+                inititeCounter();
             } else {
                 setSendOTP(true);
             }
@@ -67,8 +86,8 @@ const PhoneVerification = (props) => {
 
                     <div className='text-center my-24'>
                         <div className='text-style mb-8' >Didn't Receive The Code?</div>
-                        {!isOtpReSent && <div className='text-personal c-pointer' onClick={() => sendOtp("resend")}>Resend</div>}
-                        {isOtpReSent && <div className='text-style mb-8'>You can resend otp again in</div>}
+                        {!isOtpReSent && <div className='text-personal c-pointer' onClick={() => handleOtp("resend")}>Resend</div>}
+                        {isOtpReSent && <div className='text-style mb-8'>You can resend otp again in {counter}</div>}
                     </div>
                     <div className='text-center my-24'>
                         <div className='text-style mb-8'>Having Issues With The Mobile Verification? Please Contact Us At</div>
