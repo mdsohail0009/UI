@@ -3,14 +3,7 @@ import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert } f
 import { saveCustomer } from './api';
 import Countries from './countries.json';
 const { Option } = Select;
-const selectBefore = (
-  <Select defaultValue="India(+91) " id='phoneCode-menu'>
-    <Option value="http://">India(+91) </Option>
-    <Option value="https://">Abkhazia(+7 840) </Option>
-    <Option value="https://">Afghanistan(+93) </Option>
-    <Option value="https://">Armenia(+374) </Option>
-  </Select>
-);
+
 
 const Auth0 = (props) => {
   const busssinessForm = useRef();
@@ -19,6 +12,14 @@ const Auth0 = (props) => {
   const [isBusinessAccount, setIsBusinessAccount] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const selectBefore = (
+    <Select id='phoneCode-menu'>
+      <Option>Select Code</Option>
+      {Countries.map((country) => <Option key={country.code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
+
+
+    </Select>
+  );
   const onChange = (e) => {
     setValue(e.target.value);
     setIsBusinessAccount("bussiness" === e.target.value);
@@ -114,15 +115,15 @@ const Auth0 = (props) => {
                     },
                   ]}>
                   <Input
-                   addonBefore={selectBefore}
+                    addonBefore={selectBefore}
                     className="cust-input form-disable"
                     maxLength={100}
-                    // placeholder="Phone"
+                  // placeholder="Phone"
                   />
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-              <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error form-arrowicon"
+                <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error form-arrowicon"
                   name="country" label="Country Of Residence"
                   rules={[
                     {
@@ -137,8 +138,8 @@ const Auth0 = (props) => {
                     optionFilterProp="children"
                   >
                     <Option value={""}>Select</Option>
-                     {Countries.map((country)=> <Option key={country.code} value={country.name}>{country.name}</Option>)}
-                  
+                    {Countries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
+
                   </Select>
                 </Form.Item>
               </Col>
@@ -200,15 +201,15 @@ const Auth0 = (props) => {
               </Col>
             </Row>
             <div className="text-right view-level-btn">
-                  <Form.Item>
-                  <Button
-                    type='primary'
-                    className='pop-btn'
-                    htmlType="submit">
-                    Submit
-                  </Button>
-                  </Form.Item>
-                </div>
+              <Form.Item>
+                <Button
+                  type='primary'
+                  className='pop-btn'
+                  htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </div>
           </Form>
         </div>}
 
@@ -292,10 +293,10 @@ const Auth0 = (props) => {
                   ]}
                 >
                   <Input
-                  addonBefore={selectBefore}
+                    addonBefore={selectBefore}
                     className="cust-input "
                     maxLength={100}
-                    // placeholder="Phone"
+                  // placeholder="Phone"
                   />
                 </Form.Item>
               </Col>
@@ -315,8 +316,8 @@ const Auth0 = (props) => {
                     optionFilterProp="children"
                   >
                     <Option value={""}>Select</Option>
-                     {Countries.map((country)=> <Option key={country.code} value={country.name}>{country.name}</Option>)}
-                  
+                    {Countries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
+
                   </Select>
                 </Form.Item>
               </Col>
@@ -376,17 +377,17 @@ const Auth0 = (props) => {
                     placeholder="Referral Code"
                   />
                 </Form.Item>
-              </Col>    
+              </Col>
             </Row>
             <div className="text-right view-level-btn">
-                  <Button
-                    type='primary'
-                    className='pop-btn'
-                    htmlType='submit'
-                    onClick={handleSubmmit}>
-                    Submit
-                  </Button>
-                </div>
+              <Button
+                type='primary'
+                className='pop-btn'
+                htmlType='submit'
+                onClick={handleSubmmit}>
+                Submit
+              </Button>
+            </div>
           </Form>
         </div>}
       </div>
