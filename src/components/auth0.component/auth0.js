@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert } from 'antd';
-import { Link } from "react-router-dom";
 import { saveCustomer } from './api';
-
+import Countries from './countries.json';
 const { Option } = Select;
 
 
@@ -115,22 +114,24 @@ const Auth0 = (props) => {
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                  className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="country"
-                  label="Country Of Business"
-                  required
+              <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                  name="country" label="Country Of Residence"
                   rules={[
                     {
                       required: true,
                       message: "Is required",
                     },
                   ]}>
-                  <Input
-                    className="cust-input form-disable"
+                  <Select
+                    className="cust-input Approved"
                     maxLength={100}
-                    placeholder="Country Of Business"
-                  />
+                    placeholder="Select Country"
+                    optionFilterProp="children"
+                  >
+                    <Option value={""}>Select</Option>
+                     {Countries.map((country)=> <Option key={country.code} value={country.name}>{country.name}</Option>)}
+                  
+                  </Select>
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
@@ -301,9 +302,9 @@ const Auth0 = (props) => {
                     placeholder="Select Country"
                     optionFilterProp="children"
                   >
-                    <Option>India</Option>
-                    <Option>Angola</Option>
-                    <Option>Singapore</Option>
+                    <Option value={""}>Select</Option>
+                     {Countries.map((country)=> <Option key={country.code} value={country.name}>{country.name}</Option>)}
+                  
                   </Select>
                 </Form.Item>
               </Col>
