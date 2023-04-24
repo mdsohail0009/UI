@@ -18,7 +18,7 @@ const Auth0 = (props) => {
     console.log(`checked = ${e.target.checked}`);
   };
   const selectBefore = (
-    <Select id='phoneCode-menu'>
+    <Select id='phoneCode-menu' defaultValue="Select">
       <Option>Select Code</Option>
       {Countries.map((country) => <Option key={country.code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
 
