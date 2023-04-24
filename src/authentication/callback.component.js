@@ -27,7 +27,7 @@ const CallbackPage = () => {
         //         }
         //     }}
         // >
-        <div className="loader">Loading .....ssssss</div>
+        <div className="loader">Loading ....</div>
         // </CallbackComponent>
     );
 
