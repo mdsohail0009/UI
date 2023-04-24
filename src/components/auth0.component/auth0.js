@@ -15,8 +15,8 @@ const Auth0 = (props) => {
   const [isBusinessAccount, setIsBusinessAccount] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [filteredCountries, setFilteredCountries] = useState(Countries);
-  const [filteredCodeCountries, setFilteredCodeCountries] = useState(Countries);
+  const [filteredCountries, setFilteredCountries] = useState([...Countries]);
+  const [filteredCodeCountries, setFilteredCodeCountries] = useState([...Countries]);
   const [phoneCode, setPhoneCode] = useState("");
   const onChange1 = (e) => {
     console.log(`checked = ${e.target.checked}`);
@@ -32,12 +32,6 @@ const Auth0 = (props) => {
   const handlePhoneCode = (value) => {
     setPhoneCode(value);
   }
-  const selectBefore = (
-    <Select id='phoneCode-menu' defaultValue="" showSearch onSearch={handlePhoneCodeSearch} onChange={handlePhoneCode}>
-      <Option value={""}>Select Code</Option>
-      {filteredCodeCountries.map((country) => <Option key={country.code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
-    </Select>
-  );
   const handleSearch = (value) => {
     if (value) {
       let _filterredItems = Countries.filter(country => country.name?.toLowerCase().includes(value?.toLowerCase()))
@@ -113,25 +107,6 @@ const Auth0 = (props) => {
                   />
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                  className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="Email"
-                  label="Email"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Is required",
-                    },
-                  ]}>
-                  <Input
-                    className="cust-input form-disable"
-                    maxLength={100}
-                    placeholder="Email"
-                  />
-                </Form.Item>
-              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error form-arrowicon"
@@ -145,7 +120,10 @@ const Auth0 = (props) => {
                     },
                   ]}>
                   <Input
-                    addonBefore={selectBefore}
+                    addonBefore={<Select id='phoneCode-menu' value={phoneCode} showSearch onSearch={handlePhoneCodeSearch} onChange={handlePhoneCode}>
+                      <Option value={""}>Select Code</Option>
+                      {filteredCodeCountries.map((country) => <Option key={country.dial_code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
+                    </Select>}
                     className="cust-input form-disable"
                     maxLength={100}
                   // placeholder="Phone"
@@ -296,7 +274,10 @@ const Auth0 = (props) => {
                   ]}
                 >
                   <Input
-                    addonBefore={selectBefore}
+                    addonBefore={<Select id='phoneCode-menu' value={phoneCode} showSearch onSearch={handlePhoneCodeSearch} onChange={handlePhoneCode}>
+                      <Option value={""}>Select Code</Option>
+                      {filteredCodeCountries.map((country) => <Option key={country.dial_code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
+                    </Select>}
                     className="cust-input "
                     maxLength={100}
                   // placeholder="Phone"
