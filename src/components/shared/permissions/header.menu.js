@@ -15,7 +15,7 @@ import ch from "../../../lang/ch";
 import my from "../../../lang/my";
 import DefaultUser from "../../../assets/images/defaultuser.jpg";
 import counterpart from "counterpart";
-import { connect } from "react-redux";
+import { connect,useDispatch } from "react-redux";
 import BuySell from "../../buy.component";
 import SendReceive from "../../send.component";
 import SwapCrypto from "../../swap.component";
@@ -56,7 +56,6 @@ import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
 import { useAuth0 } from "@auth0/auth0-react";
 import { userLogout } from "../../../reducers/authReducer";
-
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -65,7 +64,18 @@ const { Sider } = Layout;
 
 const LogoutApp = (props)=>{
     const {logout} = useAuth0()
-return(<li onClick={() => {logout();props.clearEvents();}}>
+    const dispatch = useDispatch()
+    const clearEvents = () => {
+        dispatch(clearPermissions());
+        dispatch(clearUserInfo());
+        dispatch(userLogout());
+        window.$zoho?.salesiq?.chat.complete();
+        window.$zoho?.salesiq?.reset();
+        //userManager.signoutRedirect();
+        logout();
+        //window.location.reload()
+    }
+return(<li onClick={() => {clearEvents()}}>
                             <Link className="text-left">
                                 <span>
                                     <Translate
@@ -342,25 +352,26 @@ class HeaderPermissionMenu extends Component {
         )
     }
     clearEvents = () => {
-        this.props.dispatch(clearPermissions());
-        this.props.dispatch(clearUserInfo());
-        this.props.dispatch(userLogout());
-        window.$zoho?.salesiq?.chat.complete();
-        window.$zoho?.salesiq?.reset();
-        //userManager.signoutRedirect();
-        //logout();
-        apicalls.trackEvent({
-            Type: "User",
-            Action: "User Logged out",
-            Username: null,
-            customerId: null,
-            Feature: "Logout",
-            Remarks: "User Logged out",
-            Duration: 1,
-            Url: window.location.href,
-            FullFeatureName: "Logout"
-        });
-        window.location.reload()
+        // this.props.dispatch(clearPermissions());
+        // this.props.dispatch(clearUserInfo());
+        // this.props.dispatch(userLogout());
+        // window.$zoho?.salesiq?.chat.complete();
+        // window.$zoho?.salesiq?.reset();
+        // //userManager.signoutRedirect();
+        // //logout();
+        // apicalls.trackEvent({
+        //     Type: "User",
+        //     Action: "User Logged out",
+        //     Username: null,
+        //     customerId: null,
+        //     Feature: "Logout",
+        //     Remarks: "User Logged out",
+        //     Duration: 1,
+        //     Url: window.location.href,
+        //     FullFeatureName: "Logout"
+        // });
+        // window.location.reload()
+        //this.props.logOutUser()
     }
 
     themeSwitch = () => {
@@ -483,7 +494,19 @@ class HeaderPermissionMenu extends Component {
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
+                        {/* <li onClick={() => {this.clearEvents()}}>
+                            <Link className="text-left">
+                                <span>
+                                    <Translate
+                                        content="logout"
+                                        className="text-white"
+                                        component={Text}
+                                    />
+                                </span>
+                            </Link>
+                        </li> */}
                         <LogoutApp clearEvents={()=>this.clearEvents()} />
+
                     </ul>
                 </div>
             </Menu>
