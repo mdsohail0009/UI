@@ -12,7 +12,7 @@ const PhoneVerification = (props) => {
     const handleOtp = async (type) => {
         setLoading(true);
         setError(null);
-        const res = await sendOtp(type||"send");
+        const res = await sendOtp(type==="resend"?"resend":"send");
         if (res.ok) {
             if (type === "resend") {
                 setReSendOTP(true);
