@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image } from 'antd';
+import { Image, Spin } from 'antd';
 import SuccessImage from '../../assets/images/success.svg'
 import { connect } from 'react-redux';
 import { resendEmail } from './api';
@@ -11,6 +11,7 @@ const EmailVerification = (props) => {
   const [isEmailResent, setEmailResent] = useState(false);
   const { logout } = useAuth0();
   const [counter, setCounter] = useState(60);
+  const [loading,setLoading] = useState(false)
   const inititeCounter = () => {
       let _count = 60;
       const interval = setInterval(() => {
@@ -25,11 +26,14 @@ const EmailVerification = (props) => {
 
   }
   const reSendMail = async () => {
+    setLoading(true);
     const res = await resendEmail();
     if (res.ok) {
       setEmailResent(true);
       inititeCounter();
+     
     }
+    setLoading(false);
   }
   const signOutUser = () => {
     props.dispatch(clearPermissions());
@@ -45,7 +49,7 @@ const EmailVerification = (props) => {
           <h2 class="db-main-title mb-8">Verify Your Email</h2>
           <div className='text-style mb-8'>We Sent A Verification Email To:</div>
           <div className='text-style mb-8 mt-0'>{props?.userProfile?.email}. Please Click The Link In The Email To Continue.</div>
-          <div className='text-style mb-8'>Email Didn't Arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend</span>}{isEmailResent && <span>You can resend email again in {counter}</span>}</div>
+          <div className='text-style mb-8'>Email Didn't Arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend {loading&&<Spin size='small' />} </span>}{isEmailResent && <span>You can resend email again in {counter}</span>}</div>
           <div className='text-personal c-pointer' onClick={signOutUser}>Sign In</div>
         </div>
       </div>
