@@ -1,19 +1,26 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import { useEffect } from "react";
+import { connect } from "react-redux";
+import { checkCustomerState } from "../utils/service";
 
-const CallbackPage = () => {
+const CallbackPage = (props) => {
     const { isLoading, error, isAuthenticated } = useAuth0()
     const handleSuccess = (user) => {
-        this.handleRedirect(user)
+        handleRedirect(user)
     }
     useEffect(() => {
         handleRedirect();
     }, []);
     const handleRedirect = (user) => {
         const url = localStorage.getItem("__url");
+        if(checkCustomerState(props.userProfile)){
+            props.history.push("/cockpit")
+        }else{
+            props.history.push("/sumsub")
+        }
         localStorage.removeItem("__url");
-        this.props.history.push(url && url !== "/callback" ? url : "/onboading")
+    
     }
 
     return (
@@ -33,4 +40,7 @@ const CallbackPage = () => {
     );
 
 }
-export default CallbackPage;
+const connectStateToProps = ({ userConfig, menuItems }) => {
+    return { userProfile: userConfig.userProfileInfo, menuItems }
+}
+export default connect(connectStateToProps)(CallbackPage);
