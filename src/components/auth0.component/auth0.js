@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert } from 'antd';
 import { saveCustomer } from './api';
 import Countries from './countries.json';
+import {Link } from "react-router-dom";
 const { Option } = Select;
 const selectBefore = (
   <Select defaultValue="India(+91) " id='phoneCode-menu'>
@@ -194,8 +195,8 @@ const Auth0 = (props) => {
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <div className='policy-content'>
-                  By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's Term Of Use Agreement And I've Read The Privacy Policy.
+                <div className='policy-content terms-text'>
+                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <Link className="blue-color">Term Of Use Agreement</Link> And I've Read The <Link className="blue-color">Privacy Policy</Link>.</div>
                 </div>
               </Col>
             </Row>
@@ -376,7 +377,12 @@ const Auth0 = (props) => {
                     placeholder="Referral Code"
                   />
                 </Form.Item>
-              </Col>    
+              </Col>   
+              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                <div className='policy-content terms-text'>
+                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <Link className="blue-color">Term Of Use Agreement</Link> And I've Read The <Link className="blue-color">Privacy Policy</Link>.</div>
+                </div>
+              </Col> 
             </Row>
             <div className="text-right view-level-btn">
                   <Button
