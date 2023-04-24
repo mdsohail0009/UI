@@ -3,8 +3,10 @@ import { ApiControllers } from "../../api/config"
 
 
 
-const saveCustomer = (obj)=>{
-    return apiClient.put(ApiControllers.customers+'SaveUser',obj);
+const saveCustomer = (obj) => {
+    return apiClient.put(ApiControllers.customers + 'SaveUser', obj);
 }
-
-export {saveCustomer}
+const resendEmail = () => {
+  return apiClient.get(ApiControllers.customers+"VerifyEmail")
+}
+export { saveCustomer,resendEmail }
