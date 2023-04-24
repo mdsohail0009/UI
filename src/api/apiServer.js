@@ -3,7 +3,7 @@ import { ApiControllers } from './config'
 
 export const changePassword = (obj) => {
 
-    return apiClient.put(ApiControllers.customers + "ChangePassword", obj);
+    return apiClient.put(ApiControllers.customers + "ChangePWD", obj);
 }
 export const withdrawRecepientNamecheck = (customerId, name) => {
 
