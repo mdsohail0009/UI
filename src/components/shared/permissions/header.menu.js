@@ -288,7 +288,7 @@ class HeaderPermissionMenu extends Component {
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
             const ignoreKycLst = ["transactions"];
-            if ((this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && checkCustomerState(this.props.userConfig)) || ignoreKycLst.includes(menuItem.key)) {
+            if ((this.props.userConfig?.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled && checkCustomerState(this.props.userConfig)) || ignoreKycLst.includes(menuItem.key)) {
                 if (!this.props.menuItems.featurePermissions[menuItem.key]) {
                     getFeaturePermissionsByKey(menuItem.key, (data) => {
                         if (data.ok) {
@@ -300,7 +300,7 @@ class HeaderPermissionMenu extends Component {
                 }
 
             } else {
-                const isKyc = !this.props.userConfig.isKYC;
+                const isKyc = !this.props.userConfig?.isKYC;
                 if (isKyc) {
                     this.props.history.push("/notkyc");
                 } else {

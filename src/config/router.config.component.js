@@ -45,13 +45,13 @@ const PhoneVerification = React.lazy(() => import("../components/auth0.component
 class RouteConfig extends Component {
   componentDidMount() {
     debugger
-    if (!this.props.userProfile.isEmailVerified) {
+    if (!this.props.userProfile?.isEmailVerified) {
       this.props.history.push('/emailVerification');
     }
     else if (!this.props.userProfile?.isCustomerUpdated) {
       this.props.history.push('/auth0');
     }
-    else if (!this.props.userProfile.isKYC) {
+    else if (!this.props?.userProfile?.isKYC) {
       this.props.history.push('/sumsub');
     }
     else if (!this.props.userProfile?.isPhoneNumberVerified) {

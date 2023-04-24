@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert,Checkbox } from 'antd';
+import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert, Checkbox } from 'antd';
 import { saveCustomer } from './api';
 import Countries from './countries.json';
 import apicalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
-import  { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 const { Option } = Select;
 
 
@@ -15,17 +15,38 @@ const Auth0 = (props) => {
   const [isBusinessAccount, setIsBusinessAccount] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [filteredCountries, setFilteredCountries] = useState(Countries);
+  const [filteredCodeCountries, setFilteredCodeCountries] = useState(Countries);
+  const [phoneCode, setPhoneCode] = useState("");
   const onChange1 = (e) => {
     console.log(`checked = ${e.target.checked}`);
   };
+  const handlePhoneCodeSearch = (value) => {
+    if (value) {
+      let _filterredItems = Countries.filter(country => country.name?.toLowerCase().includes(value?.toLowerCase()))
+      setFilteredCodeCountries(_filterredItems)
+    } else {
+      setFilteredCodeCountries(Countries);
+    }
+  }
+  const handlePhoneCode = (value) => {
+    setPhoneCode(value);
+  }
   const selectBefore = (
-    <Select id='phoneCode-menu' defaultValue="Select">
-      <Option>Select Code</Option>
-      {Countries.map((country) => <Option key={country.code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
-
-
+    <Select id='phoneCode-menu' defaultValue="" showSearch onSearch={handlePhoneCodeSearch} onChange={handlePhoneCode}>
+      <Option value={""}>Select Code</Option>
+      {filteredCodeCountries.map((country) => <Option key={country.code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
     </Select>
   );
+  const handleSearch = (value) => {
+    if (value) {
+      let _filterredItems = Countries.filter(country => country.name?.toLowerCase().includes(value?.toLowerCase()))
+      setFilteredCountries(_filterredItems)
+    } else {
+      setFilteredCountries(Countries);
+    }
+  }
+
   const onChange = (e) => {
     setValue(e.target.value);
     setIsBusinessAccount("bussiness" === e.target.value);
@@ -45,7 +66,9 @@ const Auth0 = (props) => {
       "businessName": null
     }
     obj = { ...obj, ...values };
-    obj.phoneNumber = apicalls.encryptValue(obj.phoneNumber,props?.userProfile?.sk);
+    if (obj.phoneNumber)
+      obj.phoneNumber = phoneCode + obj.phoneNumber;
+    obj.phoneNumber = apicalls.encryptValue(obj.phoneNumber, props?.userProfile?.sk);
     const response = await saveCustomer(obj);
     if (response.ok) {
       props.history.push("/sumsub");
@@ -143,9 +166,11 @@ const Auth0 = (props) => {
                     maxLength={100}
                     placeholder="Select Country"
                     optionFilterProp="children"
+                    showSearch
+                    onSearch={handleSearch}
                   >
                     <Option value={""}>Select</Option>
-                    {Countries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
+                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
 
                   </Select>
                 </Form.Item>
@@ -169,25 +194,6 @@ const Auth0 = (props) => {
                   />
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                  className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="Password"
-                  label="Password"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Is required",
-                    },
-                  ]}>
-                  <Input
-                    className="cust-input form-disable"
-                    maxLength={100}
-                    placeholder="Password"
-                  />
-                </Form.Item>
-              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
@@ -221,6 +227,7 @@ const Auth0 = (props) => {
             <div className="text-right view-level-btn">
               <Form.Item>
                 <Button
+                  loading={loading}
                   type='primary'
                   className='pop-btn'
                   htmlType="submit">
@@ -273,28 +280,6 @@ const Auth0 = (props) => {
                   />
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                  className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="Email"
-                  label="Email"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Is required",
-                    },
-
-
-                  ]}
-                >
-                  <Input
-                    className="cust-input "
-                    maxLength={100}
-                    placeholder="Email"
-                  />
-                </Form.Item>
-              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error form-arrowicon"
@@ -332,9 +317,11 @@ const Auth0 = (props) => {
                     maxLength={100}
                     placeholder="Select Country"
                     optionFilterProp="children"
+                    showSearch
+                    onSearch={handleSearch}
                   >
                     <Option value={""}>Select</Option>
-                    {Countries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
+                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
 
                   </Select>
                 </Form.Item>
@@ -361,28 +348,6 @@ const Auth0 = (props) => {
                   />
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                  className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="Password"
-                  label="Password"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Is required",
-                    },
-
-
-                  ]}
-                >
-                  <Input
-                    className="cust-input "
-                    maxLength={100}
-                    placeholder="Password"
-                  />
-                </Form.Item>
-              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
@@ -395,7 +360,7 @@ const Auth0 = (props) => {
                     placeholder="Referral Code"
                   />
                 </Form.Item>
-              </Col>   
+              </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <div className='policy-content terms-text d-flex'>
                   <div>
@@ -415,6 +380,7 @@ const Auth0 = (props) => {
             </Row>
             <div className="text-right view-level-btn">
               <Button
+                loading={loading}
                 type='primary'
                 className='pop-btn'
                 htmlType='submit'
@@ -434,4 +400,4 @@ const connectStateToProps = ({ userConfig }) => {
 const connectDispatchToProps = dispatch => {
   return { dispatch }
 }
-export default connect(connectStateToProps,connectDispatchToProps)(Auth0);
+export default connect(connectStateToProps, connectDispatchToProps)(Auth0);
