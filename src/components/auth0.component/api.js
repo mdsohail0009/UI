@@ -7,12 +7,12 @@ const saveCustomer = (obj) => {
     return apiClient.put(ApiControllers.customers + 'SaveUser', obj);
 }
 const resendEmail = () => {
-  return apiClient.get(ApiControllers.customers+"VerifyEmail")
+    return apiClient.get(ApiControllers.customers + "VerifyEmail")
 }
-const sendOtp = ()=>{
-    return apiClient.get(ApiControllers.master+"SendOTP/send")
+const sendOtp = (type) => {
+    return apiClient.get(ApiControllers.master + "SendOTP/" + type)
 }
-const verifyOtp = (otp)=>{
-    return apiClient.get(ApiControllers.customers+"PhoneVerification/"+otp)
+const verifyOtp = (otp) => {
+    return apiClient.get(ApiControllers.customers + "PhoneVerification/" + otp)
 }
-export { saveCustomer,resendEmail,sendOtp,verifyOtp }
+export { saveCustomer, resendEmail, sendOtp, verifyOtp }
