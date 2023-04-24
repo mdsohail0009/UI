@@ -22,7 +22,7 @@ const Layout = (props) => {
         apiMessage: "",
         error: null,
     });
-    const { isAuthenticated, loginWithRedirect, user, getAccessTokenSilently,isLoading, error } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, getAccessTokenSilently, isLoading, error } = useAuth0();
 
     const callApi = async () => {
         try {
@@ -31,29 +31,14 @@ const Layout = (props) => {
         } catch (error) {
         }
     };
-
-
     useEffect(() => {
-        callApi()
-        console.log(isAuthenticated);
-        console.log(user);
-        console.log(getAccessTokenSilently);
         if (!isAuthenticated) {
             loginWithRedirect();
         } else {
-            props.updateProfile(user)
+            callApi();
+            props.updateProfile(user);
         }
-    }, [])
-    // componentDidMount() {
-    // if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
-    //     localStorage.setItem("__url", window.location.pathname);
-    //     userManager.clearStaleState().then(()=>{
-    //         this.props.dispatch(clearUserInfo());
-    //         userManager.signinRedirect();
-    //     });
-    // }
-
-    // }
+    }, []);
     const redirect = () => {
 
         userManager.removeUser()

@@ -25,7 +25,7 @@ import serviceWorkerReducer from '../reducers/serviceWorker';
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["oidc", "userConfig", "dashboard","menuItems","currentAction","permissions"]
+    whitelist: ["oidc", "dashboard","menuItems","currentAction","permissions"]
 }
 const rootReducer = combineReducers({
     oidc: authReducer,

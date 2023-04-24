@@ -13,6 +13,7 @@ const PhoneVerification = () => {
         setLoading(true);
         setError(null);
         const res = await sendOtp();
+        debugger
         if (res.ok) {
             if (type === "resend") {
                 setReSendOTP(true);
