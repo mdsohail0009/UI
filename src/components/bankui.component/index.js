@@ -133,7 +133,8 @@ class BankWallets extends Component {
                 </Dropdown> )}</div></>}
                   title={
                     <div className="coin-style">
-                      {item.currency}
+                      {item.currency} 
+                      {/* {item.currency==="EUR" &&<> { " "} (SEPA)</>} */}
                     </div>
                   }
                   description={

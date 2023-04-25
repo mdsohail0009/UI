@@ -7,7 +7,7 @@ import FiatAddress from "../addressbook.component/fiat.address";
 import alertIcon from '../../assets/images/pending.png';
 import success from '../../assets/images/success.svg';
 import NumberFormat from "react-number-format";
-import { fetchPayees, getCoinwithBank, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails } from "./api";
+import { fetchPayees, fetchPastPayees, confirmTransaction, saveWithdraw, validateAmount,getReasonforTransferDetails } from "./api";
 import Loader from "../../Shared/loader";
 import Search from "antd/lib/input/Search";
 import Verifications from "./verification.component/verifications"
@@ -97,9 +97,10 @@ class OnthegoFundTransfer extends Component {
   }
 
   getAccountWallet=()=>{
+    this.setState({...this.state,errorMessage:null})
     let walletObj=getAccountWallet()
     if(walletObj.ok){
-      this.setState({ ...this.state, fiatWallets: walletObj.data });
+      this.setState({ ...this.state, fiatWallets: walletObj.data ,errorMessage:null});
     }
     else{
          this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
@@ -119,7 +120,7 @@ class OnthegoFundTransfer extends Component {
     });
   }
   verificationCheck = async () => {
-    this.setState({ ...this.state, isVarificationLoader: true })
+    this.setState({ ...this.state, isVarificationLoader: true,errorMessage:null })
     const verfResponse = await getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
@@ -129,9 +130,9 @@ class OnthegoFundTransfer extends Component {
         }
       }
       if (minVerifications >= 1) {
-        this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
+        this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true ,errorMessage:null})
             } else {
-                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false ,errorMessage:null})
       }
     } else {
         this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
@@ -800,10 +801,8 @@ handleReasonTrnsfer=(e)=>{
       reviewdetails: (
         <React.Fragment>
           <div ref={this.reviewScrool}></div>
-          {/* <div className="drawer-maintitle"> */}
           <div Paragraph
             className='drawer-maintitle text-center'>Review Details Of Transfer</div>
-          {/* </div> */}
           <Spin spinning={this.state.reviewDetailsLoading}>
             <Form className="send-fiatform"
               name="advanced_search"
