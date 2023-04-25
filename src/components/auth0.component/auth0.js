@@ -1,12 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert, Checkbox } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Row, Col, Form, Select, Input, Radio, Modal, Tooltip, Alert, Checkbox,SelectProps } from 'antd';
 import { saveCustomer } from './api';
 import Countries from './countries.json';
 import apicalls from '../../api/apiCalls';
+
 import { connect } from 'react-redux';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-const { Option } = Select;
 
+const {Option} = Select;
 
 const Auth0 = (props) => {
   const busssinessForm = useRef();
@@ -18,6 +19,23 @@ const Auth0 = (props) => {
   const [filteredCountries, setFilteredCountries] = useState([...Countries]);
   const [filteredCodeCountries, setFilteredCodeCountries] = useState([...Countries]);
   const [phoneCode, setPhoneCode] = useState("");
+
+  
+  
+  useEffect(()=>{
+    phonecodeOptions()
+  },[])
+
+ const phonecodeOptions = () =>{
+    let optionsphone = [];
+    let optionscountry = [];
+    for(var i in Countries){
+      optionsphone.push({label:`${Countries[i].name}(${Countries[i].dial_code})`,value:Countries[i].dial_code});
+      optionscountry.push({label:Countries[i].name,value:Countries[i].name});
+    }
+   setFilteredCountries([...optionscountry]);
+   setFilteredCodeCountries([...optionsphone]);
+  }
   const onChange1 = (e) => {
     console.log(`checked = ${e.target.checked}`);
   };
@@ -29,6 +47,7 @@ const Auth0 = (props) => {
       setFilteredCodeCountries(Countries);
     }
   }
+  
   const handlePhoneCode = (value) => {
     setPhoneCode(value);
   }
@@ -47,7 +66,6 @@ const Auth0 = (props) => {
   };
   const handleSubmmit = async (values) => {
     setLoading(true);
-    debugger
     setError(null);
     let obj = {
       "userName": null,
@@ -120,14 +138,25 @@ const Auth0 = (props) => {
                     },
                   ]}>
                   <Input
-                    addonBefore={<Select id='phoneCode-menu' value={phoneCode}  onChange={handlePhoneCode}>
-                      <Option value={""}>Select Code</Option>
-                      {filteredCodeCountries.map((country) => <Option key={country.name} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
-                    </Select>}
+                    addonBefore={<Select  
+                      style={{width:'150px'}}                  
+                      className="cust-input Approved"
+                      showSearch
+                      placeholder="Phone"
+                      optionFilterProp="children"
+                       onChange={handlePhoneCode}
+                      // onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                      }
+                      options={filteredCodeCountries}
+  
+  
+                    />}
                     className="cust-input form-disable"
                     maxLength={100}
                   // placeholder="Phone"
-                  />
+                  />                 
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
@@ -145,12 +174,17 @@ const Auth0 = (props) => {
                     placeholder="Select Country"
                     optionFilterProp="children"
                     showSearch
-                    onSearch={handleSearch}
+                    //onSearch={handleSearch}
+                    filterOption={(input, option) =>
+                      (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                    }
+                    options={filteredCountries}
                   >
-                    <Option value={""}>Select</Option>
-                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
+                    {/* <Option value={""}>Select</Option>
+                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)} */}
 
                   </Select>
+
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
@@ -274,10 +308,21 @@ const Auth0 = (props) => {
                   ]}
                 >
                   <Input
-                    addonBefore={<Select id='phoneCode-menu' value={phoneCode} onChange={handlePhoneCode}>
-                      <Option value={""}>Select Code</Option>
-                      {filteredCodeCountries.map((country) => <Option key={country.dial_code} value={country.dial_code}>{country.name} ({country.dial_code}) </Option>)}
-                    </Select>}
+                    addonBefore={ <Select  
+                      style={{width:'150px'}}                  
+                      className="cust-input Approved"
+                      showSearch
+                      placeholder="Phone"
+                      optionFilterProp="children"
+                       onChange={handlePhoneCode}
+                      // onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                      }
+                      options={filteredCodeCountries}
+  
+  
+                    />}
                     className="cust-input "
                     maxLength={100}
                   // placeholder="Phone"
@@ -299,10 +344,14 @@ const Auth0 = (props) => {
                     placeholder="Select Country"
                     optionFilterProp="children"
                     showSearch
-                    onSearch={handleSearch}
+                    //onSearch={handleSearch}
+                    filterOption={(input, option) =>
+                      (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                    }
+                    options={filteredCountries}
                   >
-                    <Option value={""}>Select</Option>
-                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)}
+                    {/* <Option value={""}>Select</Option>
+                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)} */}
 
                   </Select>
                 </Form.Item>
