@@ -109,7 +109,7 @@ class Home extends Component {
                 <span className="db-main-title"> {(!userProfileInfo?.isBusiness  && `${userProfileInfo?.firstName} ${userProfileInfo.lastName}`) ||  (userProfileInfo?.isBusiness && `${userProfileInfo.businessName}`)}
                 </span>
                 <span className='acount-type'>{userProfileInfo?.isBusiness ? "Business":"Personal"}</span>
-                <div className='acount-type'><Link to="/auth0">Auth0</Link> </div>
+                {/* <div className='acount-type'><Link to="/auth0">Auth0</Link> </div> */}
             </div>
 
            
