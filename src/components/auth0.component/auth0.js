@@ -139,7 +139,7 @@ const Auth0 = (props) => {
                   ]}>
                   <Input
                     addonBefore={<Select  
-                      style={{width:'150px'}}                  
+                      style={{width:'150px',border:"0"}}                  
                       className="cust-input Approved"
                       showSearch
                       placeholder="Phone"
@@ -153,7 +153,7 @@ const Auth0 = (props) => {
   
   
                     />}
-                    className="cust-input form-disable"
+                    className="cust-input form-disable phone-he"
                     maxLength={100}
                   // placeholder="Phone"
                   />                 
@@ -323,7 +323,7 @@ const Auth0 = (props) => {
   
   
                     />}
-                    className="cust-input "
+                    className="cust-input phone-he"
                     maxLength={100}
                   // placeholder="Phone"
                   />
