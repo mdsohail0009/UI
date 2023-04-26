@@ -50,7 +50,8 @@ const Fees = (props) => {
                     dataIndex: 'fromValue',
                     key: 'fromValue',
                     width: 150,
-                    render:(_,row)=>{return <div>${row.fromValue} - ${row.toValue}</div>}
+                    render:(_,row)=>{return <div>
+                       <NumberFormat value={row.fromValue} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} >{value}</div>} />{row.toValue&&<>-</>}<NumberFormat value={row.toValue} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} >{value}</div>} /></div>}
                   }
             ]
         },
@@ -140,21 +141,21 @@ const Fees = (props) => {
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label>Min: <span className="minmax-value"><>{item.minFee?<>{`${item.minFee}`}</>:"-"}</></span></label>
+                                    <label>Min : <span className="minmax-value"><>{item.minFee?<>{`${item.minFee}`}</>:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label>Max:<span className="minmax-value"><>{item.maxFee?<>{`${item.maxFee}%`}</>:"-"}</></span></label>
+                                    <label>Max : <span className="minmax-value"><>{item.maxFee?<>{`${item.maxFee}%`}</>:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label>Flat: <span className="minmax-value"><>{item.flatFee?<>{`${item.flatFee}`}</>:"-"}</></span></label>
+                                    <label>Flat : <span className="minmax-value"><>{item.flatFee?<>{`${item.flatFee}`}</>:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
@@ -173,11 +174,12 @@ const Fees = (props) => {
           {commFees.length==0&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
             <Translate content="No_data" />
           } />}
-          {feeData?.customerTiers?.length &&<>
+          {feeData?.customerTiers?.length!=0 &&<>
             <div className="grid-title text-style">Fee discount for each tier</div>
             {feeData?.customerTiers.length!=0&&<div> {feeData&&<div className="transaction-custom-table p-0 responsive_table">
                            
-            <Table className="fee-discount-table" columns={columns} dataSource={feeData.customerTiers} pagination={false} /></div>}</div>}
+            <Table className="fee-discount-table" columns={columns} dataSource={feeData.customerTiers} pagination={false} />
+            </div>}</div>}
            {(feeData?.customerTiers?.length==0)&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
                         <Translate content="No_data" />
                     } />}
