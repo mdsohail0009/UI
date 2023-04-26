@@ -391,7 +391,7 @@ const Auth0 = (props) => {
                   />
                 </Form.Item>
               </Col>
-              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+              <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
                 <div className='policy-content terms-text d-flex'>
                   <div>
                     <label className="text-center custom-checkbox c-pointer cust-check-outline">
