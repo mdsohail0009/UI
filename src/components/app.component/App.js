@@ -13,6 +13,7 @@ import { updatetwofactor } from "../../reducers/configReduser";
 import SecurityLogin from "../../authentication/temp.security";
 import ConnectStateProps from "../../utils/state.connect";
 import { useAuth0 } from "@auth0/auth0-react";
+import { userLogout } from "../../reducers/authReducer";
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
@@ -38,8 +39,9 @@ function App(props) {
 
   useEffect(() => {
     localStorage.setItem("__url", window.location.pathname);
-    if(!isAuthenticated && !isLoading){
-loginWithRedirect();
+    if (!isAuthenticated && !isLoading) {
+      props.dispatch(userLogout());
+      loginWithRedirect();
     }
     // loadUser(store, userManager).then(user => {
     //   setLoading(false);

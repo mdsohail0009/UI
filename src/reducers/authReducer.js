@@ -41,7 +41,7 @@ const authReducer = (state = initialState, action) => {
         case USER_EXPIRING:
             return state;
         case USER_LOG_OUT:
-            state = {...state, user: null, profile: null,isLogout:true };
+            state = {...state, user: null, profile: null,isLogout:true,deviceToken:null };
             return state;
             case USER_TOKEN:
                 state = {...state, token: action.payload};

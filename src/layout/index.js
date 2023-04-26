@@ -1,20 +1,15 @@
-import React, { Component } from 'react'
+import React, { useEffect,useState } from 'react'
 import { Layout as AntLayout } from 'antd';
 import './layout.css'
 import Content from './content.component';
 import Header from '../layout/header.component';
 import Footer from './footer.component';
-import ConnectStateProps from '../utils/state.connect';
-import { userManager } from '../authentication';
 import OnBoarding from './onboard.component';
-import CallbackPage from '../authentication/callback.component';
-import { clearUserInfo } from '../reducers/configReduser';
 import { profileSuccess, setToken } from "../reducers/authReducer";
 import { withCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useState } from 'react';
+import { userLogout } from "../reducers/authReducer";
 
 const Layout = (props) => {
     const [state, setState] = useState({
@@ -28,20 +23,21 @@ const Layout = (props) => {
         try {
             const token = await getAccessTokenSilently();
             props.acctoken(token)
+            props.updateProfile(user);
         } catch (error) {
         }
     };
     useEffect(() => {
         if (!isAuthenticated) {
+            props.dispatch(userLogout());
             loginWithRedirect();
         } else {
             callApi();
-            props.updateProfile(user);
         }
     }, []);
     const redirect = () => {
 
-        userManager.removeUser()
+        //userManager.removeUser()
         window.open(process.env.REACT_APP_ADMIN_URL, "_self")
     }
     if (!isAuthenticated || !props.oidc.profile || !props.oidc.deviceToken) {
@@ -79,7 +75,8 @@ const mapStateToProps = ({ oidc, userConfig }) => {
 const mapDispatchToProps = dispatch => {
     return {
         updateProfile: (info) => { dispatch(profileSuccess(info)) },
-        acctoken: (data) => { dispatch(setToken(data)) }
+        acctoken: (data) => { dispatch(setToken(data)) },
+        dispatch
     }
 
 }
