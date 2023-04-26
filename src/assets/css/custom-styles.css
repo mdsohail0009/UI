@@ -1063,7 +1063,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .fee-table th:last-child{border-top-right-radius: 20px;}
 .view-commition-table,.view-commition-table label{color: var(--gridcontent);}
 .view-commition-table{width: 100%;}
-.table-border tr .row-border:nth-child(2) tr{border-top:1px solid var(--gridborder);}
+.table-border tr .row-border:not(:first-child) tr{border-top:1px solid var(--gridborder);}
 .inside-table tr td{ border-right: 1px solid rgba(0, 0, 0, 0.08);}
 .table-border-right{border-right: 1px solid rgba(0, 0, 0, 0.08);}
 .table-border{border: transparent;}
