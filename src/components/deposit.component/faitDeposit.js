@@ -14,6 +14,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import apicalls from '../../api/apiCalls';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import OnthegoFundTransfer from '../onthego.transfer';
+import { getAccountWallet} from "../../api/apiServer";
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
@@ -30,9 +31,11 @@ class FaitDeposit extends Component {
     tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false,
     bankLoader: false,
     selectLuLoader:false,
+    currenciesWithBankInfo:([]),
   }
   componentDidMount() {
     this.props.fiatRef(this)
+    this.getAccountWallet();
     this.setState({ ...this.state, Loader: true })
     if (this.props.sendReceive.withdrawFiatEnable||this.props?.isShowSendFiat) {
       getFeaturePermissionsByKeyName(`send_fiat`);
@@ -46,9 +49,21 @@ class FaitDeposit extends Component {
       depObj.currency = this.props.depositInfo ? this.props.depositInfo.depositCurrency : null;
       this.setState({ ...this.state, depObj: depObj })
       this.formRef.current.setFieldsValue({ ...depObj })
-      if (this.props.depositInfo?.depositCurrency && this.props.depositInfo?.currenciesWithBankInfo) {
-        this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
+      if (this.props.depositInfo?.depositCurrency && this.state?.currenciesWithBankInfo) {
+        this.getBankDetails(this.props.depositInfo?.depositCurrency);
+       // this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.state?.currenciesWithBankInfo)
       }
+    }
+  }
+  getAccountWallet=async()=>{
+    let walletObj = await getAccountWallet()
+    if(walletObj.ok){
+      this.setState({ ...this.state, currenciesWithBankInfo: walletObj.data });
+    }else if (this.props.depositInfo?.depositCurrency && walletObj.data) {
+      this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.state?.currenciesWithBankInfo)
+    }
+    else{
+         this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
     }
   }
   clearfiatValues = () => {
@@ -84,9 +99,9 @@ class FaitDeposit extends Component {
       apicalls.trackEvent({
         "Type": 'User', "Action": 'Deposit Fiat page view', "Username": this.props.member.userName, "customerId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
       });
-      let currencyLu = this.props.depositInfo?.currenciesWithBankInfo;
+      let currencyLu = this.state.currenciesWithBankInfo;
       for (var k in currencyLu) {
-        if (currencyLu[k].walletCode === this.props.depositInfo?.depositCurrency) {
+        if (currencyLu[k].currencyCode === this.state?.depositCurrency) {
           if (currencyLu[k].bankDetailModel?.length === 1) {
             this.setState({ ...this.state, Loader: true })
           } else {
@@ -106,20 +121,9 @@ class FaitDeposit extends Component {
     depObj.BankName = null;
     depObj.Amount = null;
     for (var k in currencyLu) {
-      if (currencyLu[k].walletCode === e) {
+      if (currencyLu[k].currencyCode === e) {
         if (currencyLu[k].bankDetailModel?.length === 1) {
           this.setState({ ...this.state, bankLoader: false,BankInfo:null },()=>this.getBankDetails(e))
-          // let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId);
-          // if (reqdepositObj.ok === true) {
-          //   this.setState({...this.state,bankLoader:false})
-          //   this.setState({
-          //     ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data,depObj: depObj, bankLoader: false, isTermsAgreed: false
-          //   });
-          // } else {
-          //   this.setState({
-          //     ...this.state, bankLoader: false, errorMessage: apicalls.isErrorDispaly(reqdepositObj)
-          //   });
-          // }
         } else {
           this.setState({
             ...this.state, fiatDepEur: e === "EUR", BankInfo: null, depObj: depObj, isTermsAgreed: false, Loader: false,
@@ -200,7 +204,7 @@ class FaitDeposit extends Component {
   render() {
     const { Paragraph, Text, Title } = Typography;
     const { faitdeposit, BankInfo, depObj } = this.state;
-    const { currenciesWithBankInfo } = this.props.depositInfo;
+    const { currenciesWithBankInfo } = this.state;
     return (
       <>
         {faitdeposit ?
@@ -230,7 +234,7 @@ class FaitDeposit extends Component {
                     <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('SelectCurrency')} className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true}
                       onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }} value={depObj.currency}>
                       {currenciesWithBankInfo?.map((item, idx) =>
-                        <Option key={idx} value={item.walletCode}>{item.walletCode}
+                        <Option key={idx} value={item.currencyCode}>{item.currencyCode}
                         </Option>
                       )}
                     </Select>
