@@ -376,7 +376,7 @@ class OnthegoCryptoTransfer extends Component {
 </div>
               </Row>
               <div className="display-items moblie-order">
-              <div class="text-center mr-16">
+              <div class="text-center mr-16 radio-grp">
                                 <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left send-minmax" onChange={({ target: { value } }) => {
                                     this.clickMinamnt(value)
                                 }}>
@@ -386,7 +386,7 @@ class OnthegoCryptoTransfer extends Component {
                                 </Radio.Group>
         </div>
                             
-                  <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue={this.props?.selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={this.props?.selectedWallet?.coin} className="marginL sellbal-style" /></div>
+                  <div className='crypto-details crypto-bal'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue={this.props?.selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={this.props?.selectedWallet?.coin} className="marginL sellbal-style" /></div>
                   </div>
               <Row gutter={[16,0]} className="text-center transfer-designstyle">
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">

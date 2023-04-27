@@ -1075,6 +1075,8 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .icon.commission-toggle:hover{background-position: -256px -589px;}
 .summarybal.total-amount{padding: 12px;border-radius: 12px;font-weight: 600;font-size: 18px;text-align: center;}
 .minmax-value{vertical-align: middle;}
+.crypto-details.crypto-bal{align-items: start;}
+.display-items.moblie-order .radio-grp{flex: 170px 0 0;}
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){

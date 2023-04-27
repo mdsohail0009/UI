@@ -165,7 +165,7 @@ class SelectCrypto extends Component {
                         }}
                         isConvertionLoad={isConvertionLoading} /></div>}
                             <div className="crypto-amount">
-                               <div className="crypto-details"><span className='buy-balance'>Balance: </span><Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /><span className='buycoin-style marginL'>{coin }</span> </div>
+                               <div className="crypto-details crypto-bal"><span className='buy-balance'>Balance: </span><Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /><span className='buycoin-style marginL'>{coin }</span> </div>
 
                             </div>
 
