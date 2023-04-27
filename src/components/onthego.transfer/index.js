@@ -77,7 +77,6 @@ class OnthegoFundTransfer extends Component {
   componentDidMount() {
     this.verificationCheck();
     this.getAccountWallet();
-    this.getWithdrawValidations();
     this.getReasonForTransferData();
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
@@ -206,6 +205,7 @@ class OnthegoFundTransfer extends Component {
       }
       if (minVerifications >= 1) {
         this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
+        this.getWithdrawValidations();
             } else {
                 this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
       }
