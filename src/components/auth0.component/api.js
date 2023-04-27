@@ -15,4 +15,7 @@ const sendOtp = (type) => {
 const verifyOtp = (otp) => {
     return apiClient.get(ApiControllers.customers + "PhoneVerification/" + otp)
 }
-export { saveCustomer, resendEmail, sendOtp, verifyOtp }
+const referalCode = (code)=>{
+    return apiClient.get(ApiControllers.customers + "GetReferralMemberDetails/" + code)
+}
+export { saveCustomer, resendEmail, sendOtp, verifyOtp, referalCode }
