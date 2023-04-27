@@ -87,7 +87,7 @@ const SuisseBaseCreditCom=(props)=>{
                         ]}
                        
                     >
-                         <Input placeholder="Suisse Base Credits"  disabled={disable} 
+                         <Input placeholder="SuisseBase Credits"  disabled={disable} 
                             className="cust-input cust-select mb-0"
                            >
                         </Input>
