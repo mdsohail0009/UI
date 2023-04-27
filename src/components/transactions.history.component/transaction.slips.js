@@ -23,7 +23,7 @@ class TransactionSlips extends Component {
         const pdfUrl = response.data;
         const link = document.createElement('a');
         link.href = pdfUrl;
-        link.target = '_blank';
+        link.target = '_self';
         link.download = 'file.pdf';
         link.click();
         message.success({ content: "Downloaded successfully", className: 'custom-msg', duration: 3 });
