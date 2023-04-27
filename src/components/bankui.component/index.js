@@ -134,7 +134,7 @@ class BankWallets extends Component {
                   title={
                     <div className="coin-style">
                       {item.currency} 
-                      {/* {item.currency==="EUR" &&<> { " "} (SEPA)</>} */}
+                      {item.currency==="EUR" &&<> { " "} (SEPA)</>}
                     </div>
                   }
                   description={
