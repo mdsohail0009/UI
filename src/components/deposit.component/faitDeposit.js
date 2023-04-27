@@ -237,7 +237,7 @@ class FaitDeposit extends Component {
                   </div></Form.Item>}
                 {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && !this.state.bankLoader && <Text className="fs-20 d-block preview-file" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {/* this.state.BankDetails?.length > 1 && depObj.currency !== null && */}
-                {this.state.selectLuLoader ? <Loader /> : <Form.Item><Translate
+                {this.state.selectLuLoader ? <Loader /> :<> { this.state.BankDetails.length !=0 && <Form.Item><Translate
                   className="label-style"
                   content="BankName"
                   component={Text}
@@ -252,7 +252,7 @@ class FaitDeposit extends Component {
                         </Select.Option>
                       )}
                     </Select>
-                  </div></Form.Item> }
+                  </div></Form.Item>}</> }
                   {this.state.bankLoader && <Loader />}
 
                 {(this.state.BankInfo && !this.state.bankLoader) &&
