@@ -205,14 +205,15 @@ class SelectSellCrypto extends Component {
                                 isSwaped={this.state.isSwap}
                             />
                                 <div className='display-items moblie-order buy-sell-mobile' >
+                                    <div className='radio-grp'>
                                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
                                         this.clickMinamnt(value)
                                     }}>
                                         <Translate value="min" content="min" component={Radio.Button} />
 
                                         <Translate value="all" content="all" component={Radio.Button} />
-                                    </Radio.Group>
-                                    {<div className='crypto-details'><div className='sellcrypto-style'>Balance:
+                                    </Radio.Group></div>
+                                    {<div className='crypto-details crypto-bal'><div className='sellcrypto-style'>Balance:
                                     </div> <Currency 
                                     defaultValue={`${this.props.sellData.coinDetailData.coinBalance}`} 
                                     prefix={""} 

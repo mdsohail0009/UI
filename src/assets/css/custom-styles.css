@@ -1043,7 +1043,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .align-declaration .declaration-content{margin-top: 50px;}
 .batch-upload .docnames{text-overflow: ellipsis; overflow: hidden;}
 .grid-content{color: var(--gridcontent);}
-.commission-text{color: var(--viewAll);margin-bottom: 0;}
+.commission-text{color: var(--termsText);margin-bottom: 0;}
 .icon.lg.suissebase-credit{background-position: -213px -555px;}
 .user-labels.active .icon.lg.suissebase-credit, .user-labels:hover .icon.lg.suissebase-credit, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.suissebase-credit, .ant-tabs-tab:hover .icon.lg.suissebase-credit{background-position: -213px -589px;}
 .Effective-Fees{color: var(--termsText);cursor: pointer;}
@@ -1074,6 +1074,9 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .icon.commission-toggle{background-position: -256px -555px;height: 24px;width: 24px;cursor: pointer;}
 .icon.commission-toggle:hover{background-position: -256px -589px;}
 .summarybal.total-amount{padding: 12px;border-radius: 12px;font-weight: 600;font-size: 18px;text-align: center;}
+.minmax-value{vertical-align: middle;}
+.crypto-details.crypto-bal{align-items: start;}
+.display-items.moblie-order .radio-grp{flex: 170px 0 0;}
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){

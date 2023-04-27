@@ -141,21 +141,21 @@ const Fees = (props) => {
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label>Min : <span className="minmax-value"><>{item.minFee?<>{`${item.minFee}`}</>:"-"}</></span></label>
+                                    <label> <span>Min : </span><span className="minmax-value"><>{item.minFee?<NumberFormat value={item.minFee} className="drawer-list-font" displayType={'text'} thousandSeparator={true} renderText={(value, props) => <span {...props} >{value}</span>} />:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label>Max : <span className="minmax-value"><>{item.maxFee?<>{`${item.maxFee}%`}</>:"-"}</></span></label>
+                                    <label><span>Max : </span><span className="minmax-value"><>{item.maxFee?<>{`${item.maxFee}%`}</>:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label>Flat : <span className="minmax-value"><>{item.flatFee?<>{`${item.flatFee}`}</>:"-"}</></span></label>
+                                    <label><span>Flat : </span><span className="minmax-value"><>{item.flatFee?<NumberFormat value={item.flatFee} className="drawer-list-font" displayType={'text'} thousandSeparator={true} renderText={(value, props) => <span {...props} >{value}</span>} />:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
