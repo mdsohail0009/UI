@@ -895,6 +895,7 @@ selectsCurrency=(item)=>{
          <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
                           <div className="summary-liststyle">Withdrawal Amount</div>
                           <div className="summarybal"><NumberFormat
+                              decimalScale={2}
                               value={`${this.state?.withdrawAmount}`}
                               thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
         </div>
@@ -1103,6 +1104,7 @@ selectsCurrency=(item)=>{
                   <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal amount</div>
                                     <div className="summarybal"><NumberFormat
+                                    decimalScale={2}
                                         value={`${(this.state.reviewDetails?.requestedAmount)}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
@@ -1111,14 +1113,15 @@ selectsCurrency=(item)=>{
                                     <div className="summary-liststyle 
 Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span className={`${this.state.effectiveType ? "icon lg up-arrow" : "icon lg down-arrow"}`}></span></div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.comission)}`}
+                                        value={`${(this.state.reviewDetails?.totalFee)}`}
                                         thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>  
                   
                  {this.state.effectiveType && <> <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Fees</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.totalFee)}`}
+                                        value={`${(this.state.reviewDetails?.comission)}`}
+
                                         thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
                 {this.state.reviewDetails?.tierDiscount !=0 &&<div className="pay-list" style={{ alignItems: 'baseline' }}>

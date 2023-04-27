@@ -799,7 +799,7 @@ Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</
 											</div>
                   </div>}
 				 {effectiveData?.tierDiscount !=0 &&  <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">tierDiscount</div>
+                                    <div className="summary-liststyle">Tier Discount</div>
                     <div className="summarybal">
 					<Currency
 							defaultValue={effectiveData?.tierDiscount}
@@ -811,7 +811,7 @@ Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</
 											</div>
                   </div>}
 				  </>}
-						<div className="pay-list">
+						{/* <div className="pay-list">
 							<Translate
 								className="summary-liststyle"
 								content="WithdrawalFee"
@@ -828,7 +828,7 @@ Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</
 								}}>
 								{this.state?.comission}
 							</Text>
-						</div>
+						</div> */}
 						<div className="pay-list">
 							<Translate
 								className="summary-liststyle"
