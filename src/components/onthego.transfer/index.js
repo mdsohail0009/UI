@@ -391,7 +391,7 @@ saveWithdrawdata = async () => {
 }
   handleCurrencyChange = (e) => {
     this.enteramtForm.current.setFieldsValue({fiatBank:null,selectedBank:null})
- this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,detailstype:false,getBanckDetails:null},(e)=>this.getBankDetails(e));
+ this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,detailstype:false,getBanckDetails:null,selectedBank:null},(e)=>this.getBankDetails(e));
   }
 
   keyDownHandler = (e) => {
