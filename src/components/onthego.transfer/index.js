@@ -845,14 +845,9 @@ selectsCurrency=(item)=>{
                 thousandSeparator={","}
                 onKeyDown={this.keyDownHandler}
                 addonAfter={<Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip>}
-                addonBefore={<Select defaultValue={this.state.selectedCurrency} 
-                    onChange={(e) => this.handleCurrencyChange(e)}
-                    className="currecny-drpdwn sendfiat-dropdown"
-                    placeholder="Select">
-                      {this.state.fiatWallets.map((item)=>
-                        <option value={item.walletCode} thousandSeparator={true}>{item.walletCode}  ({item.amount?.toLocaleString()})</option>
-                      )}
-                    </Select>}
+                addonBefore={
+                  <span  className="btn-space">{this.state.selectedCurrency} ({this.state.selectedCurrencyAmount.toLocaleString()})</span>
+                    }
                 onValueChange={() => {
                   this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' },()=>this.saveCommissionsDetails())
               }}
