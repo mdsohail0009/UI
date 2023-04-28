@@ -356,7 +356,7 @@ saveWithdrawdata = async () => {
       WalletCode: this.state.selectedCurrency,
       bankId:this.state.selectedbankobj[0]?.bankId,
     }
-    this.setState({ ...this.state, [loader]: true, errorMessage: null });
+    this.setState({ ...this.state, [loader]: true, errorMessage: null,addressLoader:true });
     const res = await validateAmount(obj);
     if (res.ok) {
         const response = await confirmTransaction({ 
@@ -366,7 +366,8 @@ saveWithdrawdata = async () => {
             bankId:this.state.selectedbankobj[0]?.bankId
         });
         if(response.ok){
-          this.setState({ ...this.state, [loader]: false, errorMessage: null,reviewDetails: response.data });
+          this.setState({ ...this.state, [loader]: false, 
+            addressLoader:false,errorMessage: null,reviewDetails: response.data });
          this.chnageStep(step, values);
           this.props.dispatch(setSendFiatHead(true));
         }else{
@@ -389,8 +390,8 @@ saveWithdrawdata = async () => {
     },400)
 }
   handleCurrencyChange = (e) => {
- this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,detailstype:false,getBanckDetails:null},(e)=>this.getBankDetails(e));
-  this.enteramtForm.current.setFieldsValue({fiatBank:null,selectedBank:null})
+    this.enteramtForm.current.setFieldsValue({fiatBank:null,selectedBank:null})
+ this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,detailstype:false,getBanckDetails:null,selectedBank:null},(e)=>this.getBankDetails(e));
   }
 
   keyDownHandler = (e) => {
@@ -940,7 +941,6 @@ selectsCurrency=(item)=>{
               <Button
                htmlType={this.state.newtransfer?"submit":"button"}
                loading={this.state.addressLoader}
-               disabled={this.state.newtransferLoader}
                onClick={!this.state.newtransfer && this.goToAddressBook}
                size="large"
                block
