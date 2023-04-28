@@ -51,7 +51,6 @@
         "sbFee":"Effective Fees",
         "fees":"Fees",
         "tierDiscount":"Tier Discount",
-        "sbCredit":"SuisseBase Credit Used", 
         "state":"Status"
     },
     "Withdraw Fiat":{
