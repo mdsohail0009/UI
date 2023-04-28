@@ -17,6 +17,7 @@ const Auth0 = (props) => {
   const [isBusinessAccount, setIsBusinessAccount] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [saveError, setSaveError] = useState(null);
   const [businessError, setBusinessError] = useState(null);
   const [filteredCountries, setFilteredCountries] = useState([...Countries]);
   const [filteredCodeCountries, setFilteredCodeCountries] = useState([...Countries]);
@@ -81,6 +82,7 @@ const Auth0 = (props) => {
     setError(null)
     setReferalError(null)
     setReferralWrong(false)
+    setSaveError(null)
     form.resetFields()
     getIpStockLocation()
     setValue(e.target.value);
@@ -95,7 +97,8 @@ const Auth0 = (props) => {
     if ( businessIsChecked === true || isChecked === true ) {
      
      setLoading(true);
-      setError(null);
+     setSaveError(null);
+     setError(null)
       let obj = {
         "userName": null,
         "firstName": null,
@@ -114,7 +117,7 @@ const Auth0 = (props) => {
       if (response.ok) {
         props.history.push("/sumsub");
       } else {
-        setError(response.data?.message || response.data || response.originalError?.message);
+        setSaveError(apicalls.isErrorDispaly(response));
       }
       setLoading(false);
     } else {
@@ -157,6 +160,14 @@ const Auth0 = (props) => {
             <Radio.Button value="personal" className=""><span className="lg icon" />Personal Account</Radio.Button>
           </Radio.Group>
         </div>       
+        {saveError !== null && (
+                <Alert
+                  type="error"
+                  description={saveError}
+                  onClose={() => setSaveError(null)}
+                  showIcon
+                />
+              )}
         {isBusinessAccount && <div>
           <h2 class="heading mob-center">Sign up for business account</h2>
           <Form name='busssinessForm' 
