@@ -144,7 +144,7 @@ const Auth0 = (props) => {
      let res =await apicalls.getIpStock()
     if (res.ok) {
       form.setFieldsValue({country:res.data.country_name})  
-      setPhoneCode(res.data.location.calling_code)   
+      setPhoneCode(res.data.country_name + `(${res.data.location.calling_code})` )   
     }
   }
   return (
@@ -529,6 +529,7 @@ const Auth0 = (props) => {
                   </div>
                   <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And I've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
                 </div>
+                {error != null && <Alert type='error' closable={false} showIcon message={error} />}
               </Col>
             </Row>
             <div className="text-right view-level-btn">
