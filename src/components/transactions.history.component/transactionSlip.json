@@ -35,8 +35,7 @@
         "hashId":"Hash",
         "sbFee":"Effective Fees",
         "fees":"Fees",
-        "tierDiscount":"Tier Discount",
-        "sbCredit":"SuisseBase Credit Used",       
+        "tierDiscount":"Tier Discount",    
         "sourceWallet":"Source Wallet",
         "state":"Status"
     },
