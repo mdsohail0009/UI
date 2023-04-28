@@ -293,7 +293,7 @@ export function withState(WrappedGrid) {
                 })
             }
             this.setState({ ...this.state, isLoading: true })
-            const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+            const { oidc: { deviceToken }, userConfig: { userProfileInfo }, currentAction: { action },
                 menuItems } = store.getState();
             let queryStr = `${toDataSourceRequestString(dataState)}`; // Serialize the state.
             const hasGroups = dataState.group && dataState.group.length;
@@ -309,7 +309,7 @@ export function withState(WrappedGrid) {
             const base_url = this.props.url;
             const init = {
                 method: 'GET', accept: 'application/json', headers: {
-                    "Authorization": `Bearer ${user.access_token}`,
+                    "Authorization": `Bearer ${deviceToken}`,
                     "AuthInformation": userProfileInfo?.id ? this._encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
                         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
                 }

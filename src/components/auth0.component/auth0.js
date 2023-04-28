@@ -12,6 +12,7 @@ const { Option } = Select;
 const Auth0 = (props) => {
   const busssinessForm = useRef();
   const personalForm = useRef();
+  const [form] = Form.useForm();
   const [value, setValue] = useState("bussiness");
   const [isBusinessAccount, setIsBusinessAccount] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -20,15 +21,16 @@ const Auth0 = (props) => {
   const [filteredCountries, setFilteredCountries] = useState([...Countries]);
   const [filteredCodeCountries, setFilteredCodeCountries] = useState([...Countries]);
   const [phoneCode, setPhoneCode] = useState("");
-  const [isChecked, setIsChecked] = useState(null)
-  const [businessIsChecked, setBusinessIsChecked] = useState(null)
+  const [isChecked, setIsChecked] = useState(false)
+  const [businessIsChecked, setBusinessIsChecked] = useState(false)
   const [referalError, setReferalError] = useState(null);
   const [referralVerified, setReferralVerified] = useState(false)
   const [referralWrong, setReferralWrong] = useState(false)
-
+  const [referralRes, setReferralRes] = useState(false)
 
   useEffect(() => {
     phonecodeOptions()
+    getIpStockLocation()
   }, [])
 
   const checkBoxChecked = (e) => {
@@ -77,68 +79,74 @@ const Auth0 = (props) => {
 
   const onChange = (e) => {
     setError(null)
-    setReferalError(null)  
+    setReferalError(null)
     setReferralWrong(false)
+    form.resetFields()
+    getIpStockLocation()
     setValue(e.target.value);
     setIsBusinessAccount("bussiness" === e.target.value);
   };
 
   const handleSubmmit = async (values) => {
-    if(values.referralCode && referralVerified == false ){
-      return setReferalError("Invalid referral code");
+    if (values.referralCode && referralVerified == false) {
+            return Promise.resolve(true);
     }
-        
-      if (isChecked == false || businessIsChecked == false) {
-        setError("Please check the terms and conditions")
-      } else {
-        setLoading(true);
-        setError(null);
-        let obj = {
-          "userName": null,
-          "firstName": null,
-          "lastName": null,
-          "phoneNumber": null,
-          "country": null,
-          "referralCode": null,
-          "isBusiness": isBusinessAccount,
-          "businessName": null
-        }
-        obj = { ...obj, ...values };
-        if (obj.phoneNumber)
-          obj.phoneNumber = phoneCode + obj.phoneNumber;
-        obj.phoneNumber = apicalls.encryptValue(obj.phoneNumber, props?.userProfile?.sk);
-        const response = await saveCustomer(obj);
-        if (response.ok) {
-          props.history.push("/sumsub");
-        } else {
-          setError(response.data?.message || response.data || response.originalError?.message);
-        }
-        setLoading(false);
+
+    if ( businessIsChecked === true || isChecked === true ) {
+     
+     setLoading(true);
+      setError(null);
+      let obj = {
+        "userName": null,
+        "firstName": null,
+        "lastName": null,
+        "phoneNumber": null,
+        "country": null,
+        "referralCode": null,
+        "isBusiness": isBusinessAccount,
+        "businessName": null
       }
-      
+      obj = { ...obj, ...values };
+      if (obj.phoneNumber)
+        obj.phoneNumber = phoneCode + obj.phoneNumber;
+      obj.phoneNumber = apicalls.encryptValue(obj.phoneNumber, props?.userProfile?.sk);
+      const response = await saveCustomer(obj);
+      if (response.ok) {
+        props.history.push("/sumsub");
+      } else {
+        setError(response.data?.message || response.data || response.originalError?.message);
+      }
+      setLoading(false);
+    } else {
+       setError("Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding")
+    }
+
   }
 
- const ReferralCode= async(e) =>{
-  setReferalError(null)
-  setReferralWrong(false)
-  if(e.target.value != null && e.target.value.length > 2){
-    const response = await referalCode(e.target.value)
-    if (response.ok) {
-       setReferalError(null)
-       setReferralVerified(true)
-       setReferralWrong(false)
-     } else {
-       setReferralVerified(false)
-       setReferralWrong(true)
-       setReferalError(apicalls.isErrorDispaly(response))      
-     }
-  }else if(e.target.value.length == 1 || e.target.value.length == 2 ){
-    setReferalError("Invalid referral code")   
-    setReferralVerified(false)
-       setReferralWrong(true)
+    const handleReferralValidation = async (_, referralCode) => {
+    if(!referralCode){
+      return Promise.resolve(true);
+    }
+    if (referralCode?.length > 2) {
+      const res = await referalCode(referralCode);
+      if (!res.ok) {
+        setReferalError(null)
+        setReferralRes(res)
+        return Promise.reject(apicalls.isErrorDispaly(res));
+      }
+      return Promise.resolve(true);
+    } else {
+      return Promise.reject("Invalid referral code")       
+    }
   }
-   
-}
+
+  const getIpStockLocation = async () => {
+     let res =await apicalls.getIpStock()
+    if (res.ok) {
+      form.setFieldsValue({country:res.data.country_name})  
+      setPhoneCode(res.data.location.calling_code)   
+    }
+  }
   return (
     <>
       <div className='register-blockwid form-block'>
@@ -148,11 +156,14 @@ const Auth0 = (props) => {
             <Radio.Button value="bussiness" className=""><span className="lg icon" />Bussiness Account</Radio.Button>
             <Radio.Button value="personal" className=""><span className="lg icon" />Personal Account</Radio.Button>
           </Radio.Group>
-        </div>
-        {error != null && <Alert type='error' closable={false} showIcon message={error} />}
+        </div>       
         {isBusinessAccount && <div>
-          <h2 class="heading mob-center">Sign Up For Business Account</h2>
-          <Form name='busssinessForm' ref={busssinessForm} onFinish={handleSubmmit}>
+          <h2 class="heading mob-center">Sign up for business account</h2>
+          <Form name='busssinessForm' 
+          ref={busssinessForm}
+           onFinish={handleSubmmit} 
+           form={form}
+        >
             <Row className='formfields-block' gutter={24}>
 
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
@@ -209,7 +220,7 @@ const Auth0 = (props) => {
                       placeholder="Phone"
                       optionFilterProp="children"
                       onChange={handlePhoneCode}
-                      // onSearch={onSearch}
+                      value={phoneCode}
                       filterOption={(input, option) =>
                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                       }
@@ -219,7 +230,6 @@ const Auth0 = (props) => {
                     />}
                     className="cust-input form-disable phone-he"
                     maxLength={100}
-                  // placeholder="Phone"
                   />
                 </Form.Item>
               </Col>
@@ -238,15 +248,13 @@ const Auth0 = (props) => {
                     placeholder="Select Country"
                     optionFilterProp="children"
                     showSearch
-                    //onSearch={handleSearch}
+                    value={phoneCode}
                     filterOption={(input, option) =>
                       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                     }
                     options={filteredCountries}
                   >
-                    {/* <Option value={""}>Select</Option>
-                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)} */}
-
+                    
                   </Select>
 
                 </Form.Item>
@@ -284,17 +292,20 @@ const Auth0 = (props) => {
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
                   name="referralCode"
                   label="Referral Code"
+                  rules={[
+                     { validator: handleReferralValidation }
+                    
+                  ]}
                 >
                   <Input
                     className="cust-input form-disable"
                     maxLength={100}
                     placeholder="Referral Code"
-                    onChange={(e)=>ReferralCode(e)}
-                  />                 
+                  />
                 </Form.Item>
                 <span style={{ color: "red" }}>{referalError}</span>
-                  {referralVerified === true ? (<span>right</span>) : ("")}
-                  {referralWrong === true ? (<span>wrong</span>) : ("")}
+                  {/* {referralVerified === true ? (<span>right</span>) : ("")}
+                  {referralWrong === true ? (<span>wrong</span>) : ("")} */}
               </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
                 <div className='policy-content terms-text d-flex'>
@@ -310,8 +321,9 @@ const Auth0 = (props) => {
                       <span></span>{" "}
                     </label>
                   </div>
-                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term Of Use Agreement</a> And I've Read The <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy Policy</a>.</div>
+                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
                 </div>
+                {error != null && <Alert type='error' closable={false} showIcon message={error} />}
               </Col>
             </Row>
             <div className="text-right view-level-btn">
@@ -329,8 +341,8 @@ const Auth0 = (props) => {
         </div>}
 
         {!isBusinessAccount && <div>
-          <h2 class="heading mob-center">Sign Up For Personal Account</h2>
-          <Form name='persionalAccount' ref={personalForm} onFinish={handleSubmmit}>
+          <h2 class="heading mob-center">Sign up for personal account</h2>
+          <Form name='persionalAccount' ref={personalForm} onFinish={handleSubmmit}  form={form}>
             <Row className='formfields-block' gutter={24}>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
@@ -414,6 +426,7 @@ const Auth0 = (props) => {
                       placeholder="Phone"
                       optionFilterProp="children"
                       onChange={handlePhoneCode}
+                      value={phoneCode}
                       // onSearch={onSearch}
                       filterOption={(input, option) =>
                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
@@ -443,15 +456,12 @@ const Auth0 = (props) => {
                     placeholder="Select Country"
                     optionFilterProp="children"
                     showSearch
-                    //onSearch={handleSearch}
                     filterOption={(input, option) =>
                       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                     }
                     options={filteredCountries}
                   >
-                    {/* <Option value={""}>Select</Option>
-                    {filteredCountries.map((country) => <Option key={country.code} value={country.name}>{country.name}</Option>)} */}
-
+                   
                   </Select>
                 </Form.Item>
               </Col>
@@ -488,17 +498,20 @@ const Auth0 = (props) => {
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
                   name="referralCode"
                   label="Referral Code"
+                  rules={[
+                    { validator: handleReferralValidation }
+                   
+                 ]}
                 >
                   <Input
                     className="cust-input "
                     maxLength={100}
                     placeholder="Referral Code"
-                    onChange={(e)=>ReferralCode(e)}
-                  />                  
+                  />
                 </Form.Item>
-                <span style={{ color: "red" }}>{referalError}</span>
-                  {referralVerified === true ? (<span>right</span>) : ("")}
-                  {referralWrong === true ? (<span>wrong</span>) : ("")}
+                {/* <span style={{ color: "red" }}>{referalError}</span>
+                {referralVerified === true ? (<span>right</span>) : ("")}
+                {referralWrong === true ? (<span>wrong</span>) : ("")} */}
               </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
                 <div className='policy-content terms-text d-flex'>
@@ -514,7 +527,7 @@ const Auth0 = (props) => {
                       <span></span>{" "}
                     </label>
                   </div>
-                  <div className='terms-text'>By Clicking Sign Up, I Here By Acknowledge That I Agree To Suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term Of Use Agreement</a> And I've Read The <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy Policy</a>.</div>
+                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And I've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
                 </div>
               </Col>
             </Row>
@@ -524,8 +537,8 @@ const Auth0 = (props) => {
                 type='primary'
                 className='pop-btn'
                 htmlType='submit'
-               // onClick={handleSubmmit}
-                >
+              // onClick={handleSubmmit}
+              >
                 Submit
               </Button>
             </div>

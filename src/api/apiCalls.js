@@ -1,4 +1,4 @@
-import { apiClient, ipRegistry ,bankClient} from "./";
+import { apiClient, ipRegistry ,bankClient,ipStackClient} from "./";
 import { ApiControllers } from "./config";
 import counterpart from "counterpart";
 import CryptoJS from "crypto-js";
@@ -169,6 +169,9 @@ const getPayeeCrypto = (currency) => {
 		ApiControllers.addressbook + `PayeeCrypto/${currency}`
 	);
 };
+const getIpStock = ()=>{
+	return ipStackClient.get('check?access_key=f16009057980d892d3b078963e5c51af')
+}
 const confirmCryptoTransaction = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `/Crypto/Confirm`, obj);
 }
@@ -251,6 +254,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay,getFileURL
+	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay,getFileURL,getIpStock
 };
 export default apicalls;

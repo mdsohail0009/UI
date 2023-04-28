@@ -359,7 +359,7 @@ class ProfileInfo extends Component {
                 </label>
                 <div style={{ flexGrow: 12 }}>
                   <p className="profile-value">
-                    {this.props.userConfig.phoneNo || "--"}
+                    {this.props.userConfig.phoneNumber || "--"}
                   </p>
                 </div>
                 {/* <div></div> */}

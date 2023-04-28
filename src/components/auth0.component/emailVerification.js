@@ -25,6 +25,10 @@ const EmailVerification = (props) => {
       }, 1000);
 
   }
+  const formattedCount = `${Math.floor(counter / 60)
+    .toString()
+    .padStart(2, '0')}:${(counter % 60).toString().padStart(2, '0')}`;
+
   const reSendMail = async () => {
     setLoading(true);
     const res = await resendEmail();
@@ -46,10 +50,10 @@ const EmailVerification = (props) => {
       <div className='main-container'>
         <div className='register-blockwid form-block  mobile-verification text-center'>
           <Image src={SuccessImage} preview={false} />
-          <h2 class="db-main-title mb-8">Verify Your Email</h2>
-          <div className='text-style mb-8'>We Sent A Verification Email To:</div>
-          <div className='text-style mb-8 mt-0'>{props?.userProfile?.email}. Please Click The Link In The Email To Continue.</div>
-          <div className='text-style mb-8'>Email Didn't Arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend {loading&&<Spin size='small' />} </span>}{isEmailResent && <span>You can resend email again in {counter}</span>}</div>
+          <h2 class="db-main-title mb-8">Verify your email</h2>
+          <div className='text-style mb-8'>We sent a verification email to:</div>
+          <div className='text-style mb-8 mt-0'>{props?.userProfile?.email}. Please click the link in the email to continue.</div>
+          <div className='text-style mb-8'>Email didn't arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend {loading&&<Spin size='small' />} </span>}{isEmailResent && <span>{formattedCount}</span>}</div>
           <div className='text-personal c-pointer' onClick={signOutUser}>Sign In</div>
         </div>
       </div>

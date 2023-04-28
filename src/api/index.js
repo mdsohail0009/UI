@@ -22,6 +22,9 @@ const uploadClient = create({
 const bankClient = create({
     baseURL: process.env.REACT_APP_BANKAPI_END_POINT
 })
+const ipStackClient = create({
+    baseURL: process.env.REACT_APP_IPSTACK_API
+})
 const _encrypt = (msg, key) => {
 
     msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
@@ -65,4 +68,4 @@ uploadClient.axiosInstance.interceptors.request.use((config) => {
     return config;
 });
 
-export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub, bankClient }
+export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub, bankClient, ipStackClient }
