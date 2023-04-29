@@ -30,7 +30,7 @@ class SuccessMsg extends Component {
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="success-title" />
                     <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> 
-                    <NumberFormat value={sd.tovalue} displayType="text" thousandSeparator={true} prefix="" />
+                    <NumberFormat value={sd.tovalue} displayType="text" thousandSeparator={true} prefix="" /> {" "} 
                      {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="successsubtext" /></Paragraph>
                     <Translate content="return_to_sell" component={Button} onClick={() => this.onSellCancel()}  size="large"className="cust-cancel-btn"/>
                 </div>
