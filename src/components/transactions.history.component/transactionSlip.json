@@ -15,8 +15,9 @@
     "Sell":{
         "date":"Date and Time",
         "type":"Transaction Type",
-        "amount":"Amount",
         "wallet":"Pairing",
+        "amount":"Amount",
+
         "sbFee":"Effective Fees",
         "fees":"Fees",
         "tierDiscount":"Tier Discount",
