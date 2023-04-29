@@ -17,7 +17,7 @@
         "type":"Transaction Type",
         "wallet":"Pairing",
         "amount":"Amount",
-
+        "asset":"Asset",
         "sbFee":"Effective Fees",
         "fees":"Fees",
         "tierDiscount":"Tier Discount",
