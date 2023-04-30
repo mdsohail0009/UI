@@ -259,7 +259,6 @@ const Auth0 = (props) => {
                     placeholder="Select Country"
                     optionFilterProp="children"
                     showSearch
-                    value={phoneCode}
                     filterOption={(input, option) =>
                       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                     }

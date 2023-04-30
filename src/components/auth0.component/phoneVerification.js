@@ -112,7 +112,7 @@ const PhoneVerification = (props) => {
 
                     <div className='text-center my-24'>
                         <div className='text-style mb-8'>Having issues with the mobile verification? Please contact us at</div>
-                        <div className='text-personal text-spacedec width-inc'>support@suissebase.io</div>
+                        <div className='text-personal text-spacedec width-inc'><a href="mailto:support@suissebase.io">support@suissebase.io</a></div>
                     </div>
 
                     {/* <Button htmlType="submit" size="large" block className="pop-btn">Verify </Button> */}
