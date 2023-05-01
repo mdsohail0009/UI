@@ -10,7 +10,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
 <div className='swap-entryvalue'><NumberFormat
             id="amtInput"
             className="swap-custinputfield swap-text-sub"
-            maxLength={25}
+            maxLength={9}
             customInput={Input}
             thousandSeparator={true}
             decimalScale={isSwaped ? 8 : 2}
