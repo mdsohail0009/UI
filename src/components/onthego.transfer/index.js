@@ -167,9 +167,9 @@ class OnthegoFundTransfer extends Component {
         }
         let res = await saveCommissions(obj);
         if(res.ok){
-          this.setState({...this.state,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
+          this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
         }else {
-          this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
+          this.setState({ ...this.state, isLoading: false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
           this.amountScrool.current.scrollIntoView();
       }
         }
@@ -304,7 +304,7 @@ saveWithdrawdata = async () => {
         obj["beneficiaryAccountName"] = obj.beneficiaryAccountName ? apicalls.encryptValue(obj.beneficiaryAccountName, this.props.userProfile?.sk) : null;
         obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
         obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
-        obj["bankId"]=this.state.selectedbankobj[0].bankId
+        obj["bankId"]=this.state.selectedbankobj[0].bankId;
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
@@ -849,7 +849,7 @@ selectsCurrency=(item)=>{
                   <span  className="btn-space">{this.state.selectedCurrency} ({this.state.selectedCurrencyAmount.toLocaleString()})</span>
                     }
                 onValueChange={() => {
-                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' },()=>this.saveCommissionsDetails())
+                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage:null,getBanckDetails:null },(e)=>this.saveCommissionsDetails(e))
               }}
               />
 
@@ -883,7 +883,7 @@ selectsCurrency=(item)=>{
               </Select>
             </Form.Item>
           </Col>
-      {this.state.detailstype &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+      {(this.state.detailstype || getBanckDetails ||this.enteramtForm.current?.getFieldsValue().amount!=="") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
      {this.state.isLoading ? <Loader/> :
       getBanckDetails &&  <div className="cust-summary-new">
      
