@@ -11,6 +11,7 @@ import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
+import { connect } from "react-redux";
 const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
@@ -170,6 +171,7 @@ class OthersBusiness extends Component {
         _obj.addressType = "otherbusiness";
         _obj.transferType = this.props.currency=='CHF'?'chftransfer':"sepa";
         _obj.amount = this.props.amount||0;
+        _obj.info =JSON.stringify(this.props?.trackAuditLogData);
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -732,4 +734,11 @@ class OthersBusiness extends Component {
 
     }
 }
-export default ConnectStateProps(OthersBusiness);
+const connectStateToProps = ({userConfig,
+}) => {
+  return {
+    userConfig: userConfig.userProfileInfo,
+    trackAuditLogData: userConfig.trackAuditLogData,
+  };
+};
+export default connect(connectStateToProps)(OthersBusiness);
