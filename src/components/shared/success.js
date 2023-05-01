@@ -27,7 +27,7 @@ class SuccessMsg extends Component {
                 <div className="success-pop text-center declaration-content">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="success-title" />
-                    <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> 
+                    <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> {""}
                     <NumberFormat value={bd.tovalue} displayType="text" thousandSeparator={true} prefix="" /> {" "} 
                     {bd.toWalletCode} <Translate content="sucessText2" className="successsubtext" component={Text} /></Paragraph>
                         <Translate content="return_to_buy" component={Button} onClick={() => this.onBuyCancel()}  size="large"className="cust-cancel-btn"/>

@@ -21,7 +21,7 @@ class SuccessMessage extends Component {
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="" />
-                    <Paragraph className=""><Translate content="sucessText1" component={Text} className="" /> {sd.tovalue} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
+                    <Paragraph className=""><Translate content="sucessText1" component={Text} className="" /> {" "}{sd.tovalue}{" "} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
                     <Space direction="vertical" size="large">
                         <Link onClick={() => {
                             this.props.dispatch(updateSwapdata({

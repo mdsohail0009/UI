@@ -22,7 +22,7 @@ class BeneficiarySuccess extends Component {
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="" />
-                    <Paragraph className=""><Translate content="sucessText1" component={Text} className="" /> {bd.tovalue} {bd.toWalletCode} <Translate content="sucessText2" className="fs-14 text-white-30 fw-200" component={Text} /></Paragraph>
+                    <Paragraph className=""><Translate content="sucessText1" component={Text} className="" />{" "} {bd.tovalue}{""} {bd.toWalletCode} <Translate content="sucessText2" className="fs-14 text-white-30 fw-200" component={Text} /></Paragraph>
                     <Space direction="vertical" size="large">
                         <Translate content="return_to_beneficairy" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
                     </Space>
