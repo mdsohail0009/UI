@@ -1074,10 +1074,15 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .icon.commission-toggle{background-position: -256px -555px;height: 24px;width: 24px;cursor: pointer;}
 .icon.commission-toggle:hover{background-position: -256px -589px;}
 .summarybal.total-amount{padding: 12px;border-radius: 12px;font-weight: 600;font-size: 18px;text-align: center;}
-.minmax-value{vertical-align: middle;}
+.minmax-value{vertical-align: middle;font-weight: 700;}
 .crypto-details.crypto-bal{align-items: start;}
 .display-items.moblie-order .radio-grp{flex: 170px 0 0;}
 .fee-volume{display: flex;align-items: center;gap: 6px;}
+.customised-input{margin-bottom: 0;}
+.swap-entryvalue.send-crypto-style .ant-form-item-explain.ant-form-item-explain-error{width: 100%;position: relative;}
+.swap-entryvalue.send-crypto-style .ant-form-item-explain.ant-form-item-explain-error div{position: absolute;left: -180px;bottom: 29px;}
+.swap-entryvalue.send-crypto-style .ant-form-item-control-input {min-height: 120px;}
+.swap-entryvalue.send-crypto-style .ant-form-item-control {display: flex;flex-direction: inherit;}
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){
