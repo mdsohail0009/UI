@@ -320,6 +320,7 @@ const Auth0 = (props) => {
                     maxLength={100}
                     placeholder="Referral Code"
                   />
+                  <span className='icon lg greencheck'></span>
                 </Form.Item>
                 <span style={{ color: "red" }}>{referalError}</span>
                 {/* {referralVerified === true ? (<span>right</span>) : ("")}

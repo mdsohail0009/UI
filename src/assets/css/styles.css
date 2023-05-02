@@ -67,6 +67,8 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.xxxl{width: 70px; height: 70px;}
 .icon.xl.closewhite{background-position: -2px -243px;}
 .icon.md.close{background-position: -42px -70px;}
+.icon.lg.greencheck{background-position: -68px -65px; position: absolute;top: 11px;right: 10px;transform: scale(0.8);}
+.icon.lg.close{background-position: -232px -481px; position: absolute;top: 11px;right: 10px;transform: scale(0.8);}
 .icon.lg{width: 26px; height: 26px;}
 .icon.lg.drawer-close{background-position: -1px -112px;}
 .icon.lg.check-ylw{background-position: -36px -111px;}
