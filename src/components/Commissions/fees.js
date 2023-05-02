@@ -141,21 +141,21 @@ const Fees = (props) => {
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label className='fee-volume'> <span>Min : </span><span className="minmax-value"><>{item.minFee?<NumberFormat value={item.minFee} className="drawer-list-font" displayType={'text'} thousandSeparator={true} renderText={(value, props) => <span {...props} >{value}</span>} />:"-"}</></span></label>
+                                    <label className='fee-volume'> <span>Min : </span><span className="minmax-value"><>{item.minFee !=null ?<NumberFormat value={item.minFee} className="drawer-list-font" displayType={'text'} thousandSeparator={true} renderText={(value, props) => <span {...props} >{value}</span>} />:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label className="fee-volume"><span>Max : </span><span className="minmax-value"><>{item.maxFee?<>{`${item.maxFee}%`}</>:"-"}</></span></label>
+                                    <label className="fee-volume"><span>Max : </span><span className="minmax-value"><>{item.maxFee !=null ?<>{`${item.maxFee}%`}</>:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
                                   <div className="d-flex align-center">
-                                    <label className='fee-volume'><span>Flat : </span><span className="minmax-value"><>{item.flatFee?<NumberFormat value={item.flatFee} className="drawer-list-font" displayType={'text'} thousandSeparator={true} renderText={(value, props) => <span {...props} >{value}</span>} />:"-"}</></span></label>
+                                    <label className='fee-volume'><span>Flat : </span><span className="minmax-value"><>{item.flatFee !=null ?<NumberFormat value={item.flatFee} className="drawer-list-font" displayType={'text'} thousandSeparator={true} renderText={(value, props) => <span {...props} >{value}</span>} />:"-"}</></span></label>
                                   </div>
                                 </Form.Item>
                               </td>
