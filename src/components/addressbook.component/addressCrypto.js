@@ -188,6 +188,7 @@ if (res.ok){
       isDocumentUpload:values.isDocumentUpload,
       docRepositories:values.isDocumentUpload===true? this.state.details.docRepositories :null,
       createdBy : this.props.userProfile?.userName,
+      info : JSON.stringify(this.props?.trackAuditLogData),
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
@@ -566,7 +567,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
 
 }
 const connectStateToProps = ({ sendReceive, userConfig, addressBookReducer }) => {
-  return { addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo }
+  return { addressBookReducer, sendReceive, userProfile: userConfig.userProfileInfo,trackAuditLogData: userConfig.trackAuditLogData, }
 }
 const connectDispatchToProps = dispatch => {
   return {

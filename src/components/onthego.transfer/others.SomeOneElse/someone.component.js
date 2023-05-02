@@ -9,6 +9,7 @@ import apiCalls from "../../../api/apiCalls";
 import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
+import { connect } from "react-redux";
 const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
@@ -79,10 +80,11 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
         obj.createdBy = props.userProfile?.userName;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
-        obj['customerId'] = props.userProfile.id;
-        if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount ||0; }
-        obj['transferType'] = props.currency == "USD" || props.currency == "GBP"  ? addressOptions.domesticType : props.currency == "CHF"?'chftransfer':'sepa';
+        obj['customerId'] = props.userProfile?.id;
+        if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount ||0; }      
+        obj['transferType'] = (props.currency == "USD" || props.currency == "GBP") && addressOptions.domesticType || props.currency == "CHF" && 'chftransfer' || props.currency =='SGD' && 'SWIFT/BIC' ||props.currency =='EUR' && 'sepa';
         obj['addressType'] = addressOptions.addressType;
+        obj['info'] =JSON.stringify(props?.trackAuditLogData);
         if (edit) {
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
@@ -478,4 +480,12 @@ const SomeoneComponent = (props) => {
         </>}
     </React.Fragment>)
 }
-export default ConnectStateProps(SomeoneComponent);
+
+const connectStateToProps = ({userConfig,
+}) => {
+  return {
+    userConfig: userConfig.userProfileInfo,
+    trackAuditLogData: userConfig.trackAuditLogData,
+  };
+};
+export default connect(connectStateToProps)(SomeoneComponent);

@@ -59,6 +59,7 @@ class ProfileInfo extends Component {
   };
   componentDidMount() {
     this.profileTrack();
+    this.props.trackauditlogs();
     this.props.getmemeberInfoa(this.props.userConfig.userId, this.props.userConfig.id);
   }
   profileTrack = () => {

@@ -103,6 +103,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount || 0;
         saveObj.createdBy = props.userConfig?.userName;
+        saveObj.info =JSON.stringify(props?.trackAuditLogData);
         if(isEdit){
             saveObj.id = isSelectedId ? isSelectedId: saveObj.payeeId;
         }
@@ -695,7 +696,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
 const connectStateToProps = ({userConfig,
   }) => {
     return {
-      userConfig: userConfig.userProfileInfo
+      userConfig: userConfig.userProfileInfo,
+      trackAuditLogData: userConfig.trackAuditLogData,
     };
   };
 export default connect(connectStateToProps)(MyselfNewTransfer);

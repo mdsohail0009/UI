@@ -12,6 +12,7 @@ import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
+import { connect } from "react-redux";
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
@@ -114,6 +115,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form2.current?.getFieldValue('iban');
         _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
         _obj.createdBy = this.props.userProfile?.userName;
+        _obj.info =JSON.stringify(this.props?.trackAuditLogData);
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -941,5 +943,11 @@ class BusinessTransfer extends Component {
         </Tabs></div>
     }
 }
-
-export default ConnectStateProps(BusinessTransfer);
+const connectStateToProps = ({userConfig,
+}) => {
+  return {
+    userConfig: userConfig.userProfileInfo,
+    trackAuditLogData: userConfig.trackAuditLogData,
+  };
+};
+export default connect(connectStateToProps)(BusinessTransfer);

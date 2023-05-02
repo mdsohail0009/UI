@@ -305,6 +305,7 @@ saveWithdrawdata = async () => {
         obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
         obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
         obj["bankId"]=this.state.selectedbankobj[0].bankId;
+        obj["info"] = JSON.stringify(this.props?.trackAuditLogData);
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
