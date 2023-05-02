@@ -1078,6 +1078,10 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .crypto-details.crypto-bal{align-items: start;}
 .display-items.moblie-order .radio-grp{flex: 170px 0 0;}
 .fee-volume{display: flex;align-items: center;gap: 6px;}
+.swap-entryvalue.send-crypto-style .ant-form-item-explain.ant-form-item-explain-error{width: 100%;position: relative;}
+.swap-entryvalue.send-crypto-style .ant-form-item-explain.ant-form-item-explain-error div{position: absolute;left: -180px;bottom: 29px;}
+.swap-entryvalue.send-crypto-style .ant-form-item-control-input {min-height: 120px;}
+.swap-entryvalue.send-crypto-style .ant-form-item-control {display: flex;flex-direction: inherit;}
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){
