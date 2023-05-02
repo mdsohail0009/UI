@@ -90,15 +90,25 @@ const Auth0 = (props) => {
   };
 
   const handleSubmmit = async (values) => {
+    let isUpdate = false;
     if (values.referralCode && referralVerified == false) {
-            return Promise.resolve(true);
+      if (businessIsChecked === true || isChecked === true) {
+        isUpdate = true;
+      } else {
+        setError("Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding")
+      }
+      return Promise.resolve(true);
+
+    }else if (businessIsChecked === true || isChecked === true) {
+      isUpdate = true;
+    } else {
+      setError("Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding")
     }
 
-    if ( businessIsChecked === true || isChecked === true ) {
-     
-     setLoading(true);
-     setSaveError(null);
-     setError(null)
+    if (isUpdate) {
+      setLoading(true);
+      setSaveError(null);
+      setError(null)
       let obj = {
         "userName": null,
         "firstName": null,
@@ -120,14 +130,12 @@ const Auth0 = (props) => {
         setSaveError(apicalls.isErrorDispaly(response));
       }
       setLoading(false);
-    } else {
-       setError("Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding")
     }
 
   }
 
-    const handleReferralValidation = async (_, referralCode) => {
-    if(!referralCode){
+  const handleReferralValidation = async (_, referralCode) => {
+    if (!referralCode) {
       return Promise.resolve(true);
     }
     if (referralCode?.length > 2) {
@@ -135,19 +143,19 @@ const Auth0 = (props) => {
       if (!res.ok) {
         setReferalError(null)
         setReferralRes(res)
-        return Promise.reject(apicalls.isErrorDispaly(res));
+        return Promise.reject("Invalid referral code"); //apicalls.isErrorDispaly(res);         
       }
       return Promise.resolve(true);
     } else {
-      return Promise.reject("Invalid referral code")       
+      return Promise.reject("Invalid referral code")
     }
   }
 
   const getIpStockLocation = async () => {
-     let res =await apicalls.getIpStock()
+    let res = await apicalls.getIpStock()
     if (res.ok) {
-      form.setFieldsValue({country:res.data.country_name})  
-      setPhoneCode(res.data.country_name + `(${res.data.location.calling_code})` )   
+      form.setFieldsValue({ country: res.data.country_name })
+      setPhoneCode(res.data.country_name + `(${res.data.location.calling_code})`)
     }
   }
   return (
@@ -159,22 +167,22 @@ const Auth0 = (props) => {
             <Radio.Button value="bussiness" className=""><span className="lg icon" />Bussiness Account</Radio.Button>
             <Radio.Button value="personal" className=""><span className="lg icon" />Personal Account</Radio.Button>
           </Radio.Group>
-        </div>       
+        </div>
         {saveError !== null && (
-                <Alert
-                  type="error"
-                  description={saveError}
-                  onClose={() => setSaveError(null)}
-                  showIcon
-                />
-              )}
+          <Alert
+            type="error"
+            description={saveError}
+            onClose={() => setSaveError(null)}
+            showIcon
+          />
+        )}
         {isBusinessAccount && <div>
-          <h2 class="heading mob-center">Sign up for business account</h2>
-          <Form name='busssinessForm' 
-          ref={busssinessForm}
-           onFinish={handleSubmmit} 
-           form={form}
-        >
+          <h2 class="heading mob-center">Sign up for Business Account</h2>
+          <Form name='busssinessForm'
+            ref={busssinessForm}
+            onFinish={handleSubmmit}
+            form={form}
+          >
             <Row className='formfields-block' gutter={24}>
 
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
@@ -188,7 +196,7 @@ const Auth0 = (props) => {
                       validator(_, value) {
                         if (!value) {
                           return Promise.reject('Please enter business name');
-                        } else if (value.length < 2 || value.length > 20) {
+                        } else if (value.length < 2 || value.length > 80) {
                           return Promise.reject('Invalid business name')
                         } else if (!(/^[A-Za-z ]*$/.test(value))) {
                           return Promise.reject('Invalid business name')
@@ -264,7 +272,7 @@ const Auth0 = (props) => {
                     }
                     options={filteredCountries}
                   >
-                    
+
                   </Select>
 
                 </Form.Item>
@@ -280,7 +288,7 @@ const Auth0 = (props) => {
                       validator(_, value) {
                         if (!value) {
                           return Promise.reject('Please enter user name');
-                        } else if (value.length < 2 || value.length > 20) {
+                        } else if (value.length < 2 || value.length > 80) {
                           return Promise.reject('Invalid user name')
                         } else if (!(/^[A-Za-z ]*$/.test(value))) {
                           return Promise.reject('Invalid user name')
@@ -303,8 +311,8 @@ const Auth0 = (props) => {
                   name="referralCode"
                   label="Referral Code"
                   rules={[
-                     { validator: handleReferralValidation }
-                    
+                    { validator: handleReferralValidation }
+
                   ]}
                 >
                   <Input
@@ -314,7 +322,7 @@ const Auth0 = (props) => {
                   />
                 </Form.Item>
                 <span style={{ color: "red" }}>{referalError}</span>
-                  {/* {referralVerified === true ? (<span>right</span>) : ("")}
+                {/* {referralVerified === true ? (<span>right</span>) : ("")}
                   {referralWrong === true ? (<span>wrong</span>) : ("")} */}
               </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
@@ -331,7 +339,7 @@ const Auth0 = (props) => {
                       <span></span>{" "}
                     </label>
                   </div>
-                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
+                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
                 </div>
                 {error != null && <Alert type='error' closable={false} showIcon message={error} />}
               </Col>
@@ -351,8 +359,8 @@ const Auth0 = (props) => {
         </div>}
 
         {!isBusinessAccount && <div>
-          <h2 class="heading mob-center">Sign up for personal account</h2>
-          <Form name='persionalAccount' ref={personalForm} onFinish={handleSubmmit}  form={form}>
+          <h2 class="heading mob-center">Sign up for Business Account</h2>
+          <Form name='persionalAccount' ref={personalForm} onFinish={handleSubmmit} form={form}>
             <Row className='formfields-block' gutter={24}>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
@@ -365,7 +373,7 @@ const Auth0 = (props) => {
                       validator(_, value) {
                         if (!value) {
                           return Promise.reject('Please enter first name');
-                        } else if (value.length < 2 || value.length > 20) {
+                        } else if (value.length < 2 || value.length > 80) {
                           return Promise.reject('Invalid first name')
                         } else if (!(/^[A-Za-z ]*$/.test(value))) {
                           return Promise.reject('Invalid first name')
@@ -393,7 +401,7 @@ const Auth0 = (props) => {
                       validator(_, value) {
                         if (!value) {
                           return Promise.reject('Please enter last name');
-                        } else if (value.length < 2 || value.length > 20) {
+                        } else if (value.length < 2 || value.length > 80) {
                           return Promise.reject('Invalid last name')
                         } else if (!(/^[A-Za-z ]*$/.test(value))) {
                           return Promise.reject('Invalid last name')
@@ -471,7 +479,7 @@ const Auth0 = (props) => {
                     }
                     options={filteredCountries}
                   >
-                   
+
                   </Select>
                 </Form.Item>
               </Col>
@@ -479,14 +487,14 @@ const Auth0 = (props) => {
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
                   name="userName"
-                  label="User Name"
+                  label="Username"
                   required
                   rules={[
                     {
                       validator(_, value) {
                         if (!value) {
                           return Promise.reject('Please enter user name');
-                        } else if (value.length < 2 || value.length > 20) {
+                        } else if (value.length < 2 || value.length > 80) {
                           return Promise.reject('Invalid user name')
                         } else if (!(/^[A-Za-z ]*$/.test(value))) {
                           return Promise.reject('Invalid user name')
@@ -499,7 +507,7 @@ const Auth0 = (props) => {
                   <Input
                     className="cust-input "
                     maxLength={100}
-                    placeholder="User Name"
+                    placeholder="Username"
                   />
                 </Form.Item>
               </Col>
@@ -510,8 +518,8 @@ const Auth0 = (props) => {
                   label="Referral Code"
                   rules={[
                     { validator: handleReferralValidation }
-                   
-                 ]}
+
+                  ]}
                 >
                   <Input
                     className="cust-input "
@@ -537,7 +545,7 @@ const Auth0 = (props) => {
                       <span></span>{" "}
                     </label>
                   </div>
-                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to suissebase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And I've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
+                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And I've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
                 </div>
                 {error != null && <Alert type='error' closable={false} showIcon message={error} />}
               </Col>
