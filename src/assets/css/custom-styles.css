@@ -1077,6 +1077,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .minmax-value{vertical-align: middle;}
 .crypto-details.crypto-bal{align-items: start;}
 .display-items.moblie-order .radio-grp{flex: 170px 0 0;}
+.fee-volume{display: flex;align-items: center;gap: 6px;}
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){
