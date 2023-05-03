@@ -73,6 +73,9 @@ class OnthegoFundTransfer extends Component {
     selectCurrencyLabelShow:false,
     typeOntheGoObj:null,
     withdrawValidations:null,
+    isToggel:false,
+    statingAmout:null,
+    showAmount:null
   }
   componentDidMount() {
     this.verificationCheck();
@@ -156,18 +159,20 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
-    if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank || e)){
+    if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
       {
-        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,})
+        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,})
         let obj ={
           CustomerId:this.props.userProfile.id,      
           amount:this.enteramtForm.current.getFieldsValue().amount,    
           WalletCode:this.state.selectedCurrency,
-          bankId:this.state.selectedbankobj[0]?.bankId,       
+          bankId:this.state.selectedbankobj[0]?.bankId, 
+          isToggle:this.state.isToggel,
+          showAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
         }
         let res = await saveCommissions(obj);
         if(res.ok){
-          this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false});
+          this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false,showAmount:res.data.showAmount});
         }else {
           this.setState({ ...this.state, isLoading: false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
           this.amountScrool.current.scrollIntoView();
@@ -569,10 +574,14 @@ selectsCurrency=(item)=>{
   handleToggle=()=>{
       let getAmt=this.enteramtForm.current.getFieldsValue()?.amount
       let _formAmt =typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
-      let updateAmount=parseFloat(_formAmt) + parseFloat(this.state.getBanckDetails?.effectiveFee || 0);
+      let updateAmount= !this.state.isToggel ? (parseFloat(_formAmt) + parseFloat(this.state.getBanckDetails?.effectiveFee || 0)) : this.state.showAmount ;
       this.enteramtForm.current.setFieldsValue({amount:updateAmount});
-      this.setState({ ...this.state, amount: updateAmount, errorMessage: '' },()=>this.saveCommissionsDetails())
-  }
+      if(this.state.isToggel){
+        this.setState({...this.state,isToggel:false, amount: updateAmount, errorMessage: '',},()=>this.saveCommissionsDetails())
+      }else {
+        this.setState({...this.state,isToggel:true, amount: updateAmount, errorMessage: '',},()=>this.saveCommissionsDetails())
+      }
+    }
   renderStep = () => {
     const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails,withdrawValidations,selectedCurrencyAmount } = this.state;
     const steps = {
@@ -812,11 +821,12 @@ selectsCurrency=(item)=>{
                       {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
         
           <Row gutter={[16, 16]}>
-          <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="p-relative">
+          <Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip>
             <Form.Item
               className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
               name="amount"
-              label={"Enter Amount"}
+              label={!this.state.isToggel ? "Withdrawal Amount" : "How Much Benficiary You will Receive"}
               required
               rules={[
                 {
@@ -844,13 +854,13 @@ selectsCurrency=(item)=>{
                 allowNegative={false}
                 thousandSeparator={","}
                 onKeyDown={this.keyDownHandler}
-                addonAfter={<Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip>}
                 addonBefore={
                   <span  className="btn-space">{this.state.selectedCurrency} ({this.state.selectedCurrencyAmount.toLocaleString()})</span>
                     }
                 onValueChange={() => {
-                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage:null,getBanckDetails:null },(e)=>this.saveCommissionsDetails(e))
+                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage:null,getBanckDetails:null },)
               }}
+              onBlur={(e)=>this.saveCommissionsDetails(e)}
               />
 
             </Form.Item>
