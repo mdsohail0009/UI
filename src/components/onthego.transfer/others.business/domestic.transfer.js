@@ -133,13 +133,13 @@ class DomesticTransfer extends Component {
                         validator: this.validateNumber
                     }
                 ]}>
-                <NumberFormat
+                <Input
+                    type="text"
                     className="cust-input value-field cust-addon mt-0"
-                    customInput={Input}
                     prefix={""}
                     placeholder="Uk Sort Code"
                     allowNegative={false}
-                    maxlength={6}
+                    maxLength={6}
                 />
             </Form.Item>
         </Col>}
