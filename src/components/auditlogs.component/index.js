@@ -66,7 +66,7 @@ class AuditLogs extends Component {
   }
   fetchAuditLoginfo = async (id, e) => {
     this.setState({
-      ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature,errorMessage:null
+      ...this.state, isLoading: true, moreAuditLogs: true, featureName: e.dataItem.feature,errorMessage:null
     })
     let res = await getAuditLogInfo(id);
     if (res.ok) {
