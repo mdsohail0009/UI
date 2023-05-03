@@ -3,7 +3,6 @@ import { Row, Col, Form, Input, Typography, Button, Spin,Alert,Select } from 'an
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import NumberFormat from "react-number-format";
 import { getReasonforTransferDetails } from "../api";
 const {  Text } = Typography;
 const { TextArea } = Input;

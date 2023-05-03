@@ -2,7 +2,6 @@ import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { Form, Row, Col, Input,Select,Alert } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
-import NumberFormat from "react-number-format";
 import { getReasonforTransferDetails } from "../api";
 const { TextArea } = Input;
 const {Option}=Select;

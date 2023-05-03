@@ -6,9 +6,7 @@ import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
-import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
-import NumberFormat from "react-number-format";
 const { Paragraph,Title } = Typography;
 const { Text } = Typography;
 const { TextArea } = Input;
