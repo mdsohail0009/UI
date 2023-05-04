@@ -360,7 +360,7 @@ const Auth0 = (props) => {
         </div>}
 
         {!isBusinessAccount && <div>
-          <h2 class="heading mob-center">Sign up for Business Account</h2>
+          <h2 class="heading mob-center">Sign up for  Personal  Account</h2>
           <Form name='persionalAccount' ref={personalForm} onFinish={handleSubmmit} form={form}>
             <Row className='formfields-block' gutter={24}>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
