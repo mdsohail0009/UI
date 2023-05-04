@@ -173,7 +173,7 @@ export function withState(WrappedGrid) {
                                         <th style={{ width:"90px"}}>Wallet</th>
                                         <th style={{ width:"90px"}}>Value</th>
                                         <th style={{ width:"140px"}}>Sender/Recipient Full Name</th>
-                                        <th style={{ width:"150px"}}>Bank Account Number /IBAN</th>                                        
+                                        <th style={{ width:"150px"}}>Bank Account Number /IBAN</th>
                                         <th style={{ width:"100px"}}>Hash</th>
                                         <th style={{ width:"70px"}}>Status</th>
                                         <th style={{ width:"90px"}}>Reason For Rejection</th>
@@ -297,7 +297,7 @@ export function withState(WrappedGrid) {
                 })
             }
             this.setState({ ...this.state, isLoading: true })
-            const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+            const { oidc: { deviceToken }, userConfig: { userProfileInfo }, currentAction: { action },
                 menuItems } = store.getState();
             let queryStr = `${toDataSourceRequestString(dataState)}`; // Serialize the state.
             const hasGroups = dataState.group && dataState.group.length;
@@ -313,7 +313,7 @@ export function withState(WrappedGrid) {
             const base_url = this.props.url;
             const init = {
                 method: 'GET', accept: 'application/json', headers: {
-                    "Authorization": `Bearer ${user.access_token}`,
+                    "Authorization": `Bearer ${deviceToken}`,
                     "AuthInformation": userProfileInfo?.id ? this._encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
                         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
                 }
