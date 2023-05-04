@@ -298,7 +298,7 @@ input:-webkit-autofill:active{
 .footer-links a:hover{color: var(--textAqua) !important;}
 .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover, .cust-input:hover{border-color: #CCC3FF;}
 .custom-forminput .cust-input .ant-input{text-align: left;}
-.cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent;}
+.cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent !important;}
 .ant-form-item-has-error .ant-input:not(.ant-input-disabled), .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled), .ant-form-item-has-error .ant-input:not(.ant-input-disabled):hover, .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{background-color: transparent;}
 .crypto-card.select .ant-card-body .select-currency .cust-input .ant-select-selector{line-height: 44px !important;}
 .crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
@@ -860,6 +860,37 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .ant-input-group-addon .ant-select.currecny-drpdwn{margin: -5px -11px -11px 0px;}
 .currecny-drpdwn .ant-select-arrow{top: 22px;}
 /* coin detail view end */
+/*Auth0 start*/
+.pa-alert{background-color: transparent;border:none;margin-top: -40px;}
+.pa-alert .ant-alert-message{font-size: 12px !important;}
+.cust-input.Approved .ant-select-selector{cursor:pointer !important;}
+.ant-select-selection-search-input{color:#fff !important;}
+.width-inc{width:188px !important;}
+.text-spacedec{width: 62px;display: flex;margin: auto;cursor: pointer;}
+.form-block{width: 900px;position: relative;z-index: 25;padding: 54px 64px;border-radius: 20px;background: rgb(255 255 255 / 15%);margin: auto}
+.text-personal{font-weight: 700;font-size: 18px;color: #CCC3FF;}
+.form-block .heading {font-size: 25px;font-weight: 800;color: #ffffff;margin-bottom: 24px;line-height: 28px;}
+.form-block .new-custom-radiobtn .ant-radio-button-wrapper:first-child{padding-left: 0 !important;}
+.mb-24{margin-bottom: 24px;}
+.regulartext-color{font-size: 16px;color: rgb(255 255 255 / 80%);font-weight: 500;line-height: 180%;}
+.mobile-verification{width: 660px !important;margin: 0 auto;}
+.my-24{margin-top: 24px;margin-bottom: 24px;}
+.custom-forminput.form-arrowicon .cust-input .ant-select-arrow{background-position: -347px -5px;}
+.custom-forminput .cust-input  .ant-input-group-addon{border: 0;border-right:1px solid var(--labelBorder);}
+.custom-forminput .ant-select-selection-item{font-size: 16px;}
+#busssinessForm_phoneNumber, #persionalAccount_phoneNumber{border: 0;}
+.form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-placeholder{color: #bfbfbf !important;}
+.policy-content {margin-top: 54px;margin-bottom: 45px;}
+.terms-text{font-weight: 400;font-size: 14px;color: rgba(255, 255, 255, 0.9);margin-left: 12px;}
+.blue-color{color: #CCC3FF;text-decoration: none;font-weight: 700;}
+.form-arrowicon .ant-select-selector{width: 80px;}
+.phone-he{    height: 50px !important;
+    margin-top: 0;
+    margin-bottom: 0;}
+    .custom-forminput .ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector input{text-align: left !important;}    
+.px-0{padding-left: 0 !important;padding-right: 0 !important;}
+
+/*Auth0 End*/
 /* coin view start */
 .trade-graph .ant-radio-button-wrapper{background-color: var(--coinviewradio);border-color: var(--coinviewradio) !important;}
 .trade-graph .ant-radio-button-wrapper:first-child{border-radius: 8px 0 0 8px;}
@@ -1220,6 +1251,11 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .login-user{width: 100%;padding: 2px 0;}  
 }
 @media (max-width: 767.98px){
+    .form-block {
+        width: 100% !important;
+        padding: 60px 20px !important;
+        margin: 0 0 40px 0 !important;
+    }
     .new-viewpage .search-box{margin-left: 0;}
     .fait-wallets-style.new-viewpage{display: block !important;}
     .footer-links a{margin-right: 0px !important;}
@@ -1307,5 +1343,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .transaction-panel, .crypto-style{margin-top: 30px;}
     .table-border td { min-width: 150px;    }
 }
+.mb-8{margin-bottom: 8px !important;}
+.mt-0{margin-top: 0 !important;}
 
 /*@media end*/

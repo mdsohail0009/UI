@@ -170,7 +170,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         />
       )}
 
-      <div className="basicprofile-info">
+      {/* <div className="basicprofile-info">
         <div className="security-align">
           <div>
         <Translate
@@ -200,7 +200,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           </li>
         </ul>
         </div>
-      </div>
+      </div> */}
       <div className="basicprofile-info">
         <Translate
           content="change_pass_word"

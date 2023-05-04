@@ -48,13 +48,14 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       setBtnDisabled(true);
       passwordResponce(false, '', false);
       initialValues.info = JSON.stringify(trackAuditLogData)
+      
       let obj = Object.assign({}, initialValues);
       obj.ConfirmPassword = apiClient.encryptValue(obj.ConfirmPassword, userConfig.sk)
       obj.CurrentPassword = apiClient.encryptValue(obj.CurrentPassword, userConfig.sk)
       obj.Password = apiClient.encryptValue(obj.Password, userConfig.sk)
       obj.Email = apiClient.encryptValue(obj.Email, userConfig.sk)
       obj.info = apiClient.encryptValue(obj.info, userConfig.sk)
-      const result = await changePassword(obj);
+      const result = await changePassword({password:obj.Password});
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       if (result.ok) {
         setBtnDisabled(false);

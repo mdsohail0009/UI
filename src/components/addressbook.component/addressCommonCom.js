@@ -139,7 +139,7 @@ const AddressCommonCom = (props) => {
     getCountry();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const getName = () => {
-    return props?.userConfig.isBusiness
+    return props?.userConfig?.isBusiness
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
@@ -215,7 +215,7 @@ const AddressCommonCom = (props) => {
     if (e.target.value === "1stparty") {
       form.setFieldsValue({
         addressType: "1stparty",
-        beneficiaryAccountName: props?.userConfig.isBusiness
+        beneficiaryAccountName: props?.userConfig?.isBusiness
           ? props?.userConfig.businessName
           : props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
         bankType: "bank",
@@ -372,7 +372,7 @@ const AddressCommonCom = (props) => {
     const type = withdraeTab;
     values["customerId"] = props?.userConfig?.id;
     if (!selectParty) {
-      values["beneficiaryAccountName"] = props?.userConfig.isBusiness
+      values["beneficiaryAccountName"] = props?.userConfig?.isBusiness
         ? props?.userConfig.businessName
         : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
     }

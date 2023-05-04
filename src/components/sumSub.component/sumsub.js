@@ -17,7 +17,7 @@ const theme={LightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
 
         useEffect(() => {
             setState({ ...state, loading: true })
-            if (props.userConfig.isKYC && state.isAccountApproved) {
+            if (props.userConfig?.isKYC && state.isAccountApproved) {
                 props.history.push("/cockpit")
             } else {
                 if (!props.userConfig?.isKYC) {
@@ -28,7 +28,7 @@ const theme={LightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
             }
         }, [props.userConfig?.theme]);
         const getThemeName=()=>{
-            if(props.userConfig?.theme) {
+            if(props?.userConfig?.theme) {
                 if(typeof props.userConfig?.theme=="string"){
                     return props.userConfig?.theme?.replace(" ","")
                 }else{

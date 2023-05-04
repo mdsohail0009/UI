@@ -74,7 +74,7 @@ class MegaMenu extends Component {
         })
     }
     showBuyDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 buyDrawer: true
             })
@@ -83,7 +83,7 @@ class MegaMenu extends Component {
         }
     }
     showSendDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 sendDrawer: true
             })
@@ -92,7 +92,7 @@ class MegaMenu extends Component {
         }
     }
     showSwapDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 swapDrawer: true
             })
@@ -101,7 +101,7 @@ class MegaMenu extends Component {
         }
     }
     showBuyFiatDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 buyFiatDrawer: true
             })

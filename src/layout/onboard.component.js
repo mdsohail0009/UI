@@ -12,10 +12,9 @@ class OnBoarding extends Component {
     this.getCustomerDetails()
   }
   getCustomerDetails = async () => {
-    if (this.props.user && this.props.user.profile) {
+    if (this.props.user && this.props.user) {
       await this.props.trackauditlogs()
-      this.props.getmemeberInfoa(this.props.user.profile.sub);
-
+      this.props.getmemeberInfoa(this.props.user.sub.split('|')[1]);
     }
   }
   render() {
@@ -32,7 +31,7 @@ class OnBoarding extends Component {
   }
 }
 const connectStateToProps = ({ userConfig, oidc }) => {
-  return { userConfig: userConfig.userProfileInfo, user: oidc.user }
+  return { userConfig: userConfig.userProfileInfo, user: oidc.profile }
 }
 const connectDispatchToProps = dispatch => {
   return {
