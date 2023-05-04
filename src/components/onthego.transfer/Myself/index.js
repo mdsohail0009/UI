@@ -6,9 +6,7 @@ import apiCalls from "../../../api/apiCalls"
 import { validateContentRule } from "../../../utils/custom.validator";
 import { connect } from "react-redux";
 import Loader from "../../../Shared/loader";
-import {confirmTransaction} from '../api';
 import alertIcon from '../../../assets/images/pending.png';
-import NumberFormat from "react-number-format";
 const { Paragraph,Title } = Typography;
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -445,13 +443,13 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                         validator:validateNumber
                 }
                 ]}>
-                <NumberFormat
+                <Input
+                    type="text"
                     className="cust-input value-field cust-addon mt-0"
-                    customInput={Input}
                     prefix={""}
                     placeholder="Uk Sort Code"
                     allowNegative={false}
-                    maxlength={6}
+                    maxLength={6}
                 />
             </Form.Item>
         </Col>}
