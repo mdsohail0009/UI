@@ -38,7 +38,8 @@ const AuditLogs = React.lazy(() => import("../components/auditlogs.component"));
 const BatchpaymentView = React.lazy(() => import("../components/batchpayment.component/uploadGrid"));
 const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
 const Transactions = React.lazy(() => import("../components/transactions.history.component/index"))
-const SbCard = React.lazy(() => import("../components/dashboard.component/sbCard"))
+const SbCard= React.lazy(() => import("../components/dashboard.component/sbCard"))
+const Fees=React.lazy(()=>import("../components/Commissions/fees"))
 const Auth0 = React.lazy(() => import("../components/auth0.component/auth0"))
 const EmailVerification = React.lazy(() => import("../components/auth0.component/emailVerification"))
 const PhoneVerification = React.lazy(() => import("../components/auth0.component/phoneVerification"))
@@ -131,6 +132,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/cases" component={Cases} exact />
         <ReactRoute path="/relogin" component={SecurityLogin} exact />
         <ReactRoute path="/sbcard" component={InternalTransfer} exact />
+        <ReactRoute path="/fees" component={Fees} exact/>
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>
