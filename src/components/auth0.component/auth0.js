@@ -234,7 +234,7 @@ const Auth0 = (props) => {
                   <Input
                     addonBefore={<Select
                       style={{ width: '150px', border: "0" }}
-                      className="cust-input Approved"
+                      className="cust-input Approved "
                       showSearch
                       placeholder="Phone"
                       optionFilterProp="children"
@@ -247,7 +247,7 @@ const Auth0 = (props) => {
 
 
                     />}
-                    className="cust-input form-disable phone-he"
+                    className="cust-input form-disable phone-he c-pointer"
                     maxLength={100}
                   />
                 </Form.Item>
@@ -320,7 +320,7 @@ const Auth0 = (props) => {
                     maxLength={100}
                     placeholder="Referral Code"
                   />
-                  <span className='icon lg greencheck'></span>
+                  <span className='icon lg close'></span>
                 </Form.Item>
                 <span style={{ color: "red" }}>{referalError}</span>
                 {/* {referralVerified === true ? (<span>right</span>) : ("")}
@@ -342,7 +342,7 @@ const Auth0 = (props) => {
                   </div>
                   <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
                 </div>
-                {error != null && <Alert type='error' closable={false} showIcon message={error} />}
+                {error != null && <Alert className="pa-alert" type='error' closable={false} showIcon message={error} />}
               </Col>
             </Row>
             <div className="text-right view-level-btn">

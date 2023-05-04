@@ -298,7 +298,7 @@ input:-webkit-autofill:active{
 .footer-links a:hover{color: var(--textAqua) !important;}
 .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover, .cust-input:hover{border-color: #CCC3FF;}
 .custom-forminput .cust-input .ant-input{text-align: left;}
-.cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent;}
+.cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent !important;}
 .ant-form-item-has-error .ant-input:not(.ant-input-disabled), .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled), .ant-form-item-has-error .ant-input:not(.ant-input-disabled):hover, .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{background-color: transparent;}
 .crypto-card.select .ant-card-body .select-currency .cust-input .ant-select-selector{line-height: 44px !important;}
 .crypto-card.select .ant-card-body .select-currency .ant-select-single .ant-select-selector .ant-select-selection-item{line-height: 42px !important;}
@@ -860,6 +860,9 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .currecny-drpdwn .ant-select-arrow{top: 22px;}
 /* coin detail view end */
 /*Auth0 start*/
+.pa-alert{background-color: transparent;border:none;margin-top: -40px;}
+.pa-alert .ant-alert-message{font-size: 12px !important;}
+.cust-input.Approved .ant-select-selector{cursor:pointer !important;}
 .ant-select-selection-search-input{color:#fff !important;}
 .width-inc{width:188px !important;}
 .text-spacedec{width: 62px;display: flex;margin: auto;cursor: pointer;}
