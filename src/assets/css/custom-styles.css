@@ -1071,7 +1071,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .table-border thead{background-color: rgb(114 114 114 / 40%) !important;}
 table tr:last-child td:first-child{border-bottom-left-radius: 20px;}
 table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
-.icon.commission-toggle{background-position: -256px -555px;height: 24px;width: 24px;cursor: pointer;}
+.icon.commission-toggle{background-position: -256px -555px;height: 24px;width: 24px;cursor: pointer;position: absolute;
+    right: 10px;z-index: 1;}
 .icon.commission-toggle:hover{background-position: -256px -589px;}
 .summarybal.total-amount{padding: 12px;border-radius: 12px;font-weight: 600;font-size: 18px;text-align: center;}
 .minmax-value{vertical-align: middle;font-weight: 700;}
