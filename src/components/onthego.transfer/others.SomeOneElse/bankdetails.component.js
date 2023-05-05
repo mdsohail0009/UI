@@ -3,7 +3,6 @@ import { Row, Col, Form, Input, Typography, Button, Spin,Alert,Select } from 'an
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import NumberFormat from "react-number-format";
 import { getReasonforTransferDetails } from "../api";
 const {  Text } = Typography;
 const { TextArea } = Input;
@@ -468,13 +467,13 @@ class PayeeBankDetails extends Component {
                         validator: this.validateNumber
                     }
                 ]}>
-                <NumberFormat
+                <Input
+                    type="text"
                     className="cust-input value-field cust-addon mt-0"
-                    customInput={Input}
                     prefix={""}
                     placeholder="Uk Sort Code"
                     allowNegative={false}
-                    maxlength={6}
+                    maxLength={6}
                 />
             </Form.Item>
         </Col>}

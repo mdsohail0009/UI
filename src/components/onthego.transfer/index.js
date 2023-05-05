@@ -161,7 +161,7 @@ class OnthegoFundTransfer extends Component {
   saveCommissionsDetails=async(e)=>{
     if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
       {
-        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,})
+        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false})
         let obj ={
           CustomerId:this.props.userProfile.id,      
           amount:this.enteramtForm.current.getFieldsValue().amount,    
