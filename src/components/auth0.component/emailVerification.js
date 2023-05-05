@@ -54,7 +54,7 @@ const EmailVerification = (props) => {
           <div className='text-style mb-8'>We sent a verification email to:</div>
           <div className='text-style mb-8 mt-0'>{props?.userProfile?.email}. Please click the link in the email to continue.</div>
           <div className='text-style mb-8'>Email didn't arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend {loading&&<Spin size='small' />} </span>}{isEmailResent && <span>{formattedCount}</span>}</div>
-          <div className='text-personal c-pointer' onClick={signOutUser}>Sign In</div>
+          <span className='text-personal c-pointer' onClick={signOutUser}>Sign In</span>
         </div>
       </div>
     </>

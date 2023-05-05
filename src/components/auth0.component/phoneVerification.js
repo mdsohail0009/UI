@@ -79,7 +79,7 @@ const PhoneVerification = (props) => {
                         <div className='d-flex'>
                         <div><Image src={Mobile} style={{ paddingRight: "18px" }} preview={false} /></div>
                             <Form.Item
-                                className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                                className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error flex-1"
                                 name="otp"
                                 label="
                                 Please Enter The Code That Was Sent To Your Mobile Number"
