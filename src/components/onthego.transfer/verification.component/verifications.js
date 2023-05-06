@@ -19,7 +19,7 @@ const Verifications = (props) => {
     const [form] = Form.useForm();
     const useOtpRef = React.useRef(null);
     const { Text} = Typography;
-    const fullNumber = props.auth.phone_number;
+    const fullNumber = props?.auth?.phone_number;
     let last4Digits;
     if (fullNumber) {
         last4Digits = fullNumber.slice(-4);
@@ -552,8 +552,8 @@ const goToSecurity=()=>{
 
 const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
     return {
-        userConfig: userConfig.userProfileInfo,
-        auth: oidc.user.profile,
+        userConfig: userConfig?.userProfileInfo,
+        auth: oidc?.user?.profile,
         withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
 
     };

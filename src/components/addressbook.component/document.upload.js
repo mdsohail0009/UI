@@ -108,7 +108,7 @@ class AddressDocumnet extends Component {
                             showUploadList={false}
                             beforeUpload={(props) => {
                             }}
-                            headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                            headers={{Authorization : `Bearer ${this.props?.user?.access_token}`}}
                             onChange={(prop) => {this.handleUpload(prop,this.props?.type) }}
                           
                         >

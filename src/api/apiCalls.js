@@ -220,6 +220,9 @@ const getFileURL = (docId) => {
 		}
 	}
 }
+const getcustomersFees=(id)=>{
+	return apiClient.get(ApiControllers.commissions + `CustomerFee/Tier/${id}`);
+}
 let apicalls = {
 	getportfolio,
 	getCryptos,
@@ -254,6 +257,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay,getFileURL,getIpStock
+	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay,getFileURL,getIpStock,getcustomersFees
 };
 export default apicalls;

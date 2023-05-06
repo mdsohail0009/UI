@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@auth0/auth0-react": "^2.0.1",
+    "@auth0/auth0-react": "^2.1.0",
     "@microsoft/applicationinsights-react-js": "^3.2.0",
     "@microsoft/applicationinsights-web": "^2.7.0",
     "@microsoft/signalr": "^6.0.0",
