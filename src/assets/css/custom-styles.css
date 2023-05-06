@@ -956,6 +956,7 @@ select:-webkit-autofill:focus {
 .custom-radiobtn.coin-alldetail{margin-top: 16px;margin-bottom: 16px;}
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 12px;}
 .inputfont-style:hover, .inputfont-style:focus{border: 0;}
+.icon.danger-alert{background-position:-279px -246px;width:36px;height:36px;}
 /* coin view end */
 /* expand search */
 .search-box {position:relative;height: 46px;padding: 10px;flex:300px 0 0 ;display: flex;align-items: center;}

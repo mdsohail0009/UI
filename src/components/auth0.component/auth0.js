@@ -358,10 +358,10 @@ const Auth0 = (props) => {
                         // onChange1={(e) => this.handleInputChange(props, e)}
                         onChange={BusinessCheckBoxChecked}
                       />
-                      <span></span>{" "}
+                      <span className='icon danger-alert'></span>{" "}
                     </label>
                   </div>
-                  {checkBoxError === true ?(<span className='icon.danger-alert'></span>) : ("")}
+                  {checkBoxError === true ?(<span className='icon danger-alert'></span>) : ("")}
                   <div className='terms-text'>By clicking submit, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">privacy policy</a>.</div>
                 </div>
                 {error != null && <Alert className="pa-alert" type='error' closable={false} showIcon message={error} />}
@@ -376,6 +376,7 @@ const Auth0 = (props) => {
                   htmlType="submit">
                   Submit
                 </Button>
+                <span className='icon danger-alert'></span>
               </Form.Item>
             </div>
           </Form>
