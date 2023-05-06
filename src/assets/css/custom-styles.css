@@ -868,7 +868,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .width-inc{width:188px !important;}
 .text-spacedec{width: 62px;display: flex;margin: auto;cursor: pointer;}
 .form-block{width: 900px;position: relative;z-index: 25;padding: 54px 64px;border-radius: 20px;background: rgb(255 255 255 / 15%);margin: auto}
-.text-personal{font-weight: 700;font-size: 18px;color: #CCC3FF;}
+.text-personal{font-weight: 700;font-size: 18px;color:#1890ff}
 .form-block .heading {font-size: 25px;font-weight: 800;color: #ffffff;margin-bottom: 24px;line-height: 28px;}
 .form-block .new-custom-radiobtn .ant-radio-button-wrapper:first-child{padding-left: 0 !important;}
 .mb-24{margin-bottom: 24px;}
