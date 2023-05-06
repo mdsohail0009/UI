@@ -159,6 +159,7 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
+    debugger
     if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
       {
         this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false})
@@ -173,20 +174,26 @@ class OnthegoFundTransfer extends Component {
         let res = await saveCommissions(obj);
         if(res.ok){
           if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
-            this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
-              withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount?.replace(/^0+/,"") || this.enteramtForm.current.getFieldsValue().amount,
-              isLoading:false,showAmount:res.data.showAmount});
+            let newAmount=this.enteramtForm.current.getFieldsValue()?.amount?.includes(".");
+            if(newAmount){
+              this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
+                withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount || this.enteramtForm.current.getFieldsValue().amount,
+                isLoading:false,showAmount:res.data.showAmount});
+            }else {
+              this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
+                withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount.replace(/^0+/,"") || this.enteramtForm.current.getFieldsValue().amount,
+                isLoading:false,showAmount:res.data.showAmount});
+            }        
           }else{
             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
               withdrawAmount: this.enteramtForm.current.getFieldsValue().amount,
               isLoading:false,showAmount:res.data.showAmount});
           }
-                    
         }else {
           this.setState({ ...this.state, isLoading: false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
           this.amountScrool.current.scrollIntoView();
       }
-      if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
+      if(typeof this.enteramtForm.current.getFieldsValue().amount=="string" && !this.enteramtForm.current.getFieldsValue()?.amount?.includes(".")){
         this.enteramtForm.current.setFieldsValue({amount:this.enteramtForm.current.getFieldsValue()?.amount?.replace(/^0+/,``) || this.enteramtForm.current.getFieldsValue().amount})
       }     
         }
