@@ -39,9 +39,10 @@ const EmailVerification = (props) => {
       inititeCounter();
      
     }else{
-    setLoading(false);
-    setError(apicalls.isErrorDispaly(res))
+      setLoading(false);
+      setError(apicalls.isErrorDispaly(res))
     }
+    setLoading(false);    
   }
   const signOutUser = () => {
     props.dispatch(clearPermissions());

@@ -54,17 +54,17 @@ const LogoutApp = () => {
     window.$zoho?.salesiq?.reset();
     logout();
   }
-  return (<li onClick={() => {clearEvents()}}>
-  <Link className="text-left">
+  return (<li onClick={() => { clearEvents() }}>
+    <Link className="text-left">
       <span>
-          <Translate
-              content="logout"
-              className="text-white"
-              component={Text}
-          />
+        <Translate
+          content="logout"
+          className="text-white"
+          component={Text}
+        />
       </span>
-  </Link>
-</li>)
+    </Link>
+  </li>)
 }
 
 class Header extends Component {
@@ -111,7 +111,7 @@ class Header extends Component {
     }
     window.open(url);
   };
-  
+
   // clearEvents() {
   //   this.trackEvent();
   // }
@@ -126,10 +126,12 @@ class Header extends Component {
   };
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
-    if (!this.props.userConfig?.isKYC) {
-      this.props.history.push("/notkyc");
+    if (!this.props.userConfig?.isEmailVerified) {
+      this.props.history.push("/emailVerification");
     } else if (!this.props.userConfig?.isPhoneNumberVerified) {
       this.props.history.push("/phoneVerification");
+    } else if (!this.props.userConfig?.isKYC) {
+      this.props.history.push("/notkyc");
     } else if (!checkCustomerState(this.props.userConfig)) {
       this.props.history.push("/sumsub");
     } else {
@@ -243,8 +245,8 @@ class Header extends Component {
                 </span>
                 <span className="icon md rarrow-white" />
               </Link>
-            </li>           
-             <LogoutApp/>           
+            </li>
+            <LogoutApp />
           </ul>
         </div>
       </Menu>
