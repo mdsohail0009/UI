@@ -25,24 +25,27 @@ const Auth0 = (props) => {
   const [isChecked, setIsChecked] = useState(false)
   const [businessIsChecked, setBusinessIsChecked] = useState(false)
   const [referalError, setReferalError] = useState(null);
+  const [checkBoxError,setCheckBoxError] = useState(false)
   const [referralVerified, setReferralVerified] = useState(false)
   const [referralWrong, setReferralWrong] = useState(false)
   const [referralRes, setReferralRes] = useState(false)
 
   useEffect(() => {
     phonecodeOptions()
-    getIpStockLocation()
+    
   }, [])
 
   const checkBoxChecked = (e) => {
     console.log(e);
     setIsChecked(e.target.checked)
     setError(null)
+    setCheckBoxError(false)
   }
   const BusinessCheckBoxChecked = (e) => {
     console.log(e);
     setBusinessIsChecked(e.target.checked)
     setError(null)
+    setCheckBoxError(false)
   }
   const phonecodeOptions = () => {
     let optionsphone = [];
@@ -53,6 +56,7 @@ const Auth0 = (props) => {
     }
     setFilteredCountries([...optionscountry]);
     setFilteredCodeCountries([...optionsphone]);
+    getIpStockLocation()
   }
   const onChange1 = (e) => {
     console.log(`checked = ${e.target.checked}`);
@@ -67,6 +71,7 @@ const Auth0 = (props) => {
   }
 
   const handlePhoneCode = (value) => {
+    console.log(value)
     setPhoneCode(value);
   }
   const handleSearch = (value) => {
@@ -80,9 +85,12 @@ const Auth0 = (props) => {
 
   const onChange = (e) => {
     setError(null)
+    setCheckBoxError(false)
     setReferalError(null)
     setReferralWrong(false)
     setSaveError(null)
+    setReferralWrong(false)
+    setReferralVerified(false)  
     form.resetFields()
     getIpStockLocation()
     setValue(e.target.value);
@@ -95,6 +103,7 @@ const Auth0 = (props) => {
       if (businessIsChecked === true || isChecked === true) {
         isUpdate = true;
       } else {
+        setCheckBoxError(true)
         setError("Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding")
       }
       return Promise.resolve(true);
@@ -102,6 +111,7 @@ const Auth0 = (props) => {
     }else if (businessIsChecked === true || isChecked === true) {
       isUpdate = true;
     } else {
+      setCheckBoxError(true)
       setError("Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding")
     }
 
@@ -109,8 +119,9 @@ const Auth0 = (props) => {
       setLoading(true);
       setSaveError(null);
       setError(null)
+      setCheckBoxError(false)
       let obj = {
-        "userName": null,
+      //  "userName": null,
         "firstName": null,
         "lastName": null,
         "phoneNumber": null,
@@ -121,6 +132,7 @@ const Auth0 = (props) => {
       }
       obj = { ...obj, ...values };
       if (obj.phoneNumber)
+      console.log(phoneCode , obj.phoneNumber);
         obj.phoneNumber = phoneCode + obj.phoneNumber;
       obj.phoneNumber = apicalls.encryptValue(obj.phoneNumber, props?.userProfile?.sk);
       const response = await saveCustomer(obj);
@@ -135,18 +147,26 @@ const Auth0 = (props) => {
   }
 
   const handleReferralValidation = async (_, referralCode) => {
+    debugger
     if (!referralCode) {
+      setReferralWrong(false)
+      setReferralVerified(false)
       return Promise.resolve(true);
     }
     if (referralCode?.length > 2) {
       const res = await referalCode(referralCode);
       if (!res.ok) {
         setReferalError(null)
-        setReferralRes(res)
+        setReferralVerified(false)     
+        setReferralWrong(true)
         return Promise.reject("Invalid referral code"); //apicalls.isErrorDispaly(res);         
-      }
+      }else{
+        setReferralWrong(false)
+        setReferralVerified(true)        
       return Promise.resolve(true);
+      }
     } else {
+      setReferralWrong(true)
       return Promise.reject("Invalid referral code")
     }
   }
@@ -155,7 +175,7 @@ const Auth0 = (props) => {
     let res = await apicalls.getIpStock()
     if (res.ok) {
       form.setFieldsValue({ country: res.data.country_name })
-      setPhoneCode(res.data.country_name + `(${res.data.location.calling_code})`)
+      setPhoneCode('+'+res.data.location.calling_code)
     }
   }
   return (
@@ -164,7 +184,7 @@ const Auth0 = (props) => {
         <div>
           <h2 class="heading mob-center">Choose Account</h2>
           <Radio.Group onChange={onChange} value={value} className="new-custom-radiobtn mb-24">
-            <Radio.Button value="bussiness" className=""><span className="lg icon" />Bussiness Account</Radio.Button>
+            <Radio.Button value="bussiness" className=""><span className="lg icon" />Business Account</Radio.Button>
             <Radio.Button value="personal" className=""><span className="lg icon" />Personal Account</Radio.Button>
           </Radio.Group>
         </div>
@@ -254,7 +274,7 @@ const Auth0 = (props) => {
               </Col>
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error form-arrowicon"
-                  name="country" label="Country Of Residence"
+                  name="country" label="Country Of Business"
                   rules={[
                     {
                       required: true,
@@ -277,7 +297,7 @@ const Auth0 = (props) => {
 
                 </Form.Item>
               </Col>
-              <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
+              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
                   name="userName"
@@ -290,7 +310,7 @@ const Auth0 = (props) => {
                           return Promise.reject('Please enter user name');
                         } else if (value.length < 2 || value.length > 80) {
                           return Promise.reject('Invalid user name')
-                        } else if (!(/^[A-Za-z ]*$/.test(value))) {
+                        } else if (!(/^[A-Za-z0-9 ]*$/.test(value))) {
                           return Promise.reject('Invalid user name')
                         } else {
                           return Promise.resolve();
@@ -304,7 +324,7 @@ const Auth0 = (props) => {
                     placeholder="Username"
                   />
                 </Form.Item>
-              </Col>
+              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
@@ -319,12 +339,13 @@ const Auth0 = (props) => {
                     className="cust-input form-disable"
                     maxLength={100}
                     placeholder="Referral Code"
-                  />
-                  <span className='icon lg close'></span>
+                  /> 
+                 
                 </Form.Item>
+                {/* <span className='icon lg greencheck'></span>  */}
                 <span style={{ color: "red" }}>{referalError}</span>
-                {/* {referralVerified === true ? (<span>right</span>) : ("")}
-                  {referralWrong === true ? (<span>wrong</span>) : ("")} */}
+                {referralVerified === true ?(  <span className='icon lg greencheck'></span>) : ("")}
+                {referralWrong === true ? ( <span className='icon lg close'></span> ) : ("")} 
               </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
                 <div className='policy-content terms-text d-flex'>
@@ -340,7 +361,8 @@ const Auth0 = (props) => {
                       <span></span>{" "}
                     </label>
                   </div>
-                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
+                  {checkBoxError === true ?(<span className='icon.danger-alert'></span>) : ("")}
+                  <div className='terms-text'>By clicking submit, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">privacy policy</a>.</div>
                 </div>
                 {error != null && <Alert className="pa-alert" type='error' closable={false} showIcon message={error} />}
               </Col>
@@ -484,7 +506,7 @@ const Auth0 = (props) => {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
+              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
                   name="userName"
@@ -497,7 +519,7 @@ const Auth0 = (props) => {
                           return Promise.reject('Please enter user name');
                         } else if (value.length < 2 || value.length > 80) {
                           return Promise.reject('Invalid user name')
-                        } else if (!(/^[A-Za-z ]*$/.test(value))) {
+                        } else if (!(/^[A-Za-z0-9 ]*$/.test(value))) {
                           return Promise.reject('Invalid user name')
                         } else {
                           return Promise.resolve();
@@ -511,7 +533,7 @@ const Auth0 = (props) => {
                     placeholder="Username"
                   />
                 </Form.Item>
-              </Col>
+              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
@@ -528,9 +550,10 @@ const Auth0 = (props) => {
                     placeholder="Referral Code"
                   />
                 </Form.Item>
-                {/* <span style={{ color: "red" }}>{referalError}</span>
-                {referralVerified === true ? (<span>right</span>) : ("")}
-                {referralWrong === true ? (<span>wrong</span>) : ("")} */}
+                {checkBoxError === true ?(<span className='icon.danger-alert'></span>) : ("")}
+                <span style={{ color: "red" }}>{referalError}</span>
+                {referralVerified === true ?(  <span className='icon lg greencheck'></span>) : ("")}
+                {referralWrong === true ? ( <span className='icon lg close'></span> ) : ("")} 
               </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
                 <div className='policy-content terms-text d-flex'>
@@ -546,10 +569,10 @@ const Auth0 = (props) => {
                       <span></span>{" "}
                     </label>
                   </div>
-                  <div className='terms-text'>By clicking sign up, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And I've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">Privacy policy</a>.</div>
+                  <div className='terms-text'>By clicking submit, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And I've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">privacy policy</a>.</div>
                 </div>
-                {error != null && <Alert type='error' closable={false} showIcon message={error} />}
-              </Col>
+        {error != null && <Alert className="pa-alert" type='error' closable={false} showIcon message={error} />}
+        </Col>
             </Row>
             <div className="text-right view-level-btn">
               <Button

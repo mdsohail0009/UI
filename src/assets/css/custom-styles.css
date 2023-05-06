@@ -889,7 +889,21 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
     margin-bottom: 0;}
     .custom-forminput .ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector input{text-align: left !important;}    
 .px-0{padding-left: 0 !important;padding-right: 0 !important;}
-
+/* input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid green;
+  -webkit-text-fill-color: green;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+} */
+.flex-1{flex:1;}
 /*Auth0 End*/
 /* coin view start */
 .trade-graph .ant-radio-button-wrapper{background-color: var(--coinviewradio);border-color: var(--coinviewradio) !important;}
@@ -1251,6 +1265,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .login-user{width: 100%;padding: 2px 0;}  
 }
 @media (max-width: 767.98px){
+    .flex-1 .ant-form-item-label > label::after{top:10px;right:49px;}
     .form-block {
         width: 100% !important;
         padding: 60px 20px !important;
