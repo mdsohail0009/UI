@@ -172,11 +172,23 @@ class OnthegoFundTransfer extends Component {
         }
         let res = await saveCommissions(obj);
         if(res.ok){
-          this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,isLoading:false,showAmount:res.data.showAmount});
+          if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
+            this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
+              withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount?.replace(/^0+/,"") || this.enteramtForm.current.getFieldsValue().amount,
+              isLoading:false,showAmount:res.data.showAmount});
+          }else{
+            this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
+              withdrawAmount: this.enteramtForm.current.getFieldsValue().amount,
+              isLoading:false,showAmount:res.data.showAmount});
+          }
+                    
         }else {
           this.setState({ ...this.state, isLoading: false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
           this.amountScrool.current.scrollIntoView();
       }
+      if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
+        this.enteramtForm.current.setFieldsValue({amount:this.enteramtForm.current.getFieldsValue()?.amount?.replace(/^0+/,``) || this.enteramtForm.current.getFieldsValue().amount})
+      }     
         }
     }  
   }
@@ -573,7 +585,8 @@ selectsCurrency=(item)=>{
 
   }
   handleToggle=()=>{
-      let getAmt=this.enteramtForm.current.getFieldsValue()?.amount
+      let getAmt= this.enteramtForm?.current?.getFieldsValue()?.amount ;
+      getAmt = typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
       let _formAmt =typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
       let updateAmount= !this.state.isToggel ? (parseFloat(_formAmt) + parseFloat(this.state.getBanckDetails?.effectiveFee || 0)) : this.state.showAmount ;
       this.enteramtForm.current.setFieldsValue({amount:updateAmount});
@@ -859,7 +872,7 @@ selectsCurrency=(item)=>{
                   <span  className="btn-space">{this.state.selectedCurrency} ({this.state.selectedCurrencyAmount.toLocaleString()})</span>
                     }
                 onValueChange={() => {
-                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage:null,getBanckDetails:null },)
+                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage:null, },)//getBanckDetails:null
               }}
               onBlur={(e)=>this.saveCommissionsDetails(e)}
               />
