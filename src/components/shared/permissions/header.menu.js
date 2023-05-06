@@ -284,6 +284,7 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
+        debugger
         const perIgnoreLst = ["notifications", "auditLogs", "cases", "transactions"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {
@@ -300,8 +301,11 @@ class HeaderPermissionMenu extends Component {
                 }
 
             } else {
-                const isKyc = !this.props.userConfig.isKYC;
-                if (isKyc) {
+                const isVerification = !this.props.userConfig.isEmailVerified; 
+                const isKyc = !this.props.userConfig.isKYC;   
+                if(isVerification)   {
+                    this.props.history.push("/emailVerification");
+                }else if (isKyc) {
                     this.props.history.push("/notkyc");
                 } else {
                     this.showDocRequestError();
