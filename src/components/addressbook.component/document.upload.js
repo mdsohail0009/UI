@@ -4,7 +4,6 @@ import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
-import ConnectStateProps from "../../utils/state.connect";
 import {ApiControllers} from '../../api/config'
 import DocumentPreview from '../../Shared/docPreview'
 import { connect } from "react-redux";

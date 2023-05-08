@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Typography,Button,Modal,Upload,Tooltip,Alert,message } from 'antd';
 import { connect } from 'react-redux';
 import List from "../grid.component";
-import FilePreviewer from "react-file-previewer";
-import{uploadDocuments,getFileURL,deleteDocumentDetails} from './api';
+import{uploadDocuments,deleteDocumentDetails} from './api';
 import Loader from '../../Shared/loader';
 import {ApiControllers} from '../../api/config'
 import DocumentPreview from '../../Shared/docPreview'
@@ -320,18 +319,16 @@ const BatchpaymentView = (props) => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            //action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
                             action={
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
                                 ApiControllers.common +
                                `UploadFileNew?screenName=Addressbook Fiat&fieldName=uploadfile&tableName=TransactionDetail`
-                              //`UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts`
 
                               }
                             showUploadList={false}
                          beforeUpload={(prop) => { beforeUpload(prop) }}
-                         headers={{Authorization : `Bearer ${props.user.access_token}`}}
+                         headers={{Authorization : `Bearer ${props.user.deviceToken}`}}
                          onChange={(prop) => {handleUpload(prop,"IDENTITYPROOF") }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -347,7 +344,6 @@ const BatchpaymentView = (props) => {
                                                 <>{file ? <div className="docfile">
                                                     <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" 
-                                                    //onClick={() => docPreview(file)}
                                                     onClick={() => docPreviewOpen(file)}
                                                     >
                                                         <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
@@ -362,7 +358,6 @@ const BatchpaymentView = (props) => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            //action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
                             action={
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
@@ -372,7 +367,7 @@ const BatchpaymentView = (props) => {
                               }
                             showUploadList={false}
                          beforeUpload={(prop) => {beforeUpload(prop) }}
-                         headers={{Authorization : `Bearer ${props.user.access_token}`}}
+                         headers={{Authorization : `Bearer ${props.oidc.deviceToken}`}}
                          onChange={(prop) => {handleUpload(prop,"TransferProof") }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -439,8 +434,8 @@ const BatchpaymentView = (props) => {
     )
 
 }
-const connectStateToProps = ({ userConfig }) => {
-    return { userConfig: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig,oidc }) => {
+    return { userConfig: userConfig.userProfileInfo,oidc:oidc };
   };
   const connectDispatchToProps = dispatch => {
     return {
