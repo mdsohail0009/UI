@@ -566,6 +566,15 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .visible-flex{display: flex; justify-content: space-between;align-items: center;}
 .addressbook-grid .cust-list>div{position: unset !important;}
 .transaction-grid td .gridLink,.cases-grid-style td .gridLink,.address-clear td .gridLink{padding:5px 0 0 0 !important; line-height: normal;}
+.reffername{    
+    width: 180px;
+    top: 0;
+    right: 13px;
+    position: absolute;
+    color: #ffffff99;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 8px !important;}
     .header-dropdown{margin-right: 24px;}
