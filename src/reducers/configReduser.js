@@ -47,23 +47,23 @@ const getmemeberInfo = () => {
 
 const getIpRegisteryData = () => {
     return async (dispatch) => {
-        apiCalls.getIpRegistery().then((res) => {
+        await apiCalls.getIpRegistery().then((res) => {
             if (res.ok) {
                 let ipInfo = {
                     "Ip": res.data.ip,
                     "Location": {
-                        "countryName": res.data.location.country.name,
-                        "state": res.data.location.region.name.replace(/ā/g, 'a'),
-                        "city": res.data.location.city,
-                        "postal": res.data.location.postal,
-                        "latitude": res.data.location.latitude,
-                        "longitude": res.data.location.longitude
+                        "countryName": res.data?.country_name,
+                        "state": res.data.region_name,
+                        "city": res.data?.city,
+                        "postal": res.data?.zip,
+                        "latitude": res.data?.latitude,
+                        "longitude": res.data?.longitude
                     },
-                    "Browser": res.data.user_agent.name,
+                    "Browser": res.data?.user_agent?.name,
                     "DeviceType": {
-                        "name": res.data.user_agent.device.name,
-                        "type": res.data.user_agent.os.type,
-                        "version": res.data.user_agent.os.name + ' ' + res.data.user_agent.os.version
+                        "name": res.data.user_agent?.device?.name,
+                        "type": res.data?.user_agent?.os?.type,
+                        "version": res.data?.user_agent?.os?.name + ' ' + res.data?.user_agent?.os?.version
                     }
                 }
                 dispatch(fetchtrackauditlogs(ipInfo));
@@ -71,7 +71,6 @@ const getIpRegisteryData = () => {
         });
     }
 }
-
 let initialState = {
     userProfileInfo: null,
     trackAuditLogData: {},

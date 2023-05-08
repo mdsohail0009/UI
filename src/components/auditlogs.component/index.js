@@ -383,7 +383,12 @@ class AuditLogs extends Component {
           {isLoading && <Loader />  ||
          (<> {(isLoading && (logRowData?.browser == null) || (logRowData?.location == null) || (logRowData?.ip == null )|| 
             logRowData?.deviceType == null) ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />
-            : <><div className="coin-info">
+            : <>
+             <div className="coin-info">
+            <Text className="summarybal">IP Address</Text>
+            <Text className="summarybal">{logRowData?.ip}</Text>
+          </div>
+            <div className="coin-info">
             <Text className="summarybal">City</Text>
             <Text className="summarybal">{logRowData?.location?.city}</Text>
           </div>
@@ -407,22 +412,23 @@ class AuditLogs extends Component {
               <Text className="summarybal">Longitude</Text>
               <Text className="summarybal">{logRowData?.location?.longitude}</Text>
             </div>
-            <div className="coin-info">
+            {logRowData?.browser && <div className="coin-info">
               <Text className="summarybal">Browser</Text>
               <Text className="summarybal">{logRowData?.browser}</Text>
-            </div>
-            <div className="coin-info">
+            </div>}
+            {logRowData?.deviceType?.type && <div className="coin-info">
               <Text className="summarybal">Device Type</Text>
               <Text style={{ textTransform: 'capitalize' }} className="summarybal">{logRowData?.deviceType?.type}</Text>
-            </div>
-            <div className="coin-info">
+            </div>}
+            {logRowData?.deviceType?.name && <div className="coin-info">
               <Text className="summarybal">Device Name</Text>
               <Text className="summarybal">{logRowData?.deviceType?.name}</Text>
-            </div>
-            <div className="coin-info">
+            </div>}
+            {/* <div className="coin-info">
               <Text className="summarybal">Device Version</Text>
               <Text className="summarybal">{logRowData?.deviceType?.version?.replace("null","")}</Text>
-            </div></>}</>)}
+            </div> */}
+            </>}</>)}
 
         </Drawer>
       </>

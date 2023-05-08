@@ -33,7 +33,7 @@ const trackEvent = (obj) => {
 };
 
 const getIpRegistery = () => {
-	return ipRegistry.get("/?key=hb9lsmlhafyn1s1s");
+	return ipRegistry.get("check?access_key=" + "f16009057980d892d3b078963e5c51af");
 };
 const sellMemberCrypto = () => {
 	return apiClient.get(ApiControllers.wallets);

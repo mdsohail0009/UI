@@ -2,7 +2,7 @@ import { create, } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js';
 const ipRegistry = create({
-    baseURL: 'https://api4.ipregistry.co'
+    baseURL: process.env.REACT_APP_IPSTACK_API
 })
 const sumsub = create({
     baseURL: 'https://api.sumsub.com/'
