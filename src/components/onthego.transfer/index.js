@@ -159,7 +159,7 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
-    debugger
+
     if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
       {
         this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false})

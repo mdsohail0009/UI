@@ -32,6 +32,15 @@ class Cases extends Component {
 			isShowTime: true,
 			locked: false,
 			filterType: "date",
+            customCell: (props) => (
+                <td>
+                  <div className="gridLink" onClick={() => this.viewCase(props)}>
+                  <Moment format="DD/MM/YYYY hh:mm:ss A">
+                      {props.dataItem.createdDate}
+                  </Moment>
+                  </div>
+                </td>
+              )
           },
         {field: "caseNumber",title: apiCalls.convertLocalLang("Case_Number"),filter: true, width: 240,},
 		{field: "customerCaseTitle",title: apiCalls.convertLocalLang("title"),filter: true,width: 450},

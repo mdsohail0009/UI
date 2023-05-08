@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@auth0/auth0-react": "^2.1.0",
+    "@auth0/auth0-react": "^2.0.1",
     "@microsoft/applicationinsights-react-js": "^3.2.0",
     "@microsoft/applicationinsights-web": "^2.7.0",
     "@microsoft/signalr": "^6.0.0",
@@ -81,7 +81,7 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "set PORT=3000 && react-scripts start --openssl-legacy-provider",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "build:testing": "env-cmd -f .env.testing react-scripts build",
     "build:uat": "env-cmd -f .env.uat react-scripts build",

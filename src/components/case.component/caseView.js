@@ -516,7 +516,7 @@ beforeUpload = (file) => {
                                                   }
                                                  showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} 
                                                  onChange={(props) => { this.handleUpload(props, doc) }}
-                                                    headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}>
+                                                    headers={{ Authorization: `Bearer ${this.props.oidc.deviceToken}` }}>
                                                     <p className="ant-upload-drag-icon">
                                                         <span className="icon xxxl doc-upload" />
                                                     </p>
@@ -589,6 +589,6 @@ beforeUpload = (file) => {
     }
 }
 const mapStateToProps = ({ userConfig, oidc }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user }
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, oidc: oidc }
 }
 export default connect(mapStateToProps)(CaseView);

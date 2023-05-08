@@ -189,8 +189,8 @@ class HeaderPermissionMenu extends Component {
         }
         this.props.history.push("/userprofile");
 
-        if (this.props.oidc.user.profile?.sub) {
-            this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
+        if (this.props.oidc.user?.profile?.sub) {
+            this.props.getmemeberInfoa(this.props.oidc.user?.profile.sub);
         }
     }
     showDocRequestError() {
@@ -284,7 +284,6 @@ class HeaderPermissionMenu extends Component {
         }
     }
     onMenuItemClick = async (menuKey, menuItem) => {
-        debugger
         const perIgnoreLst = ["notifications", "auditLogs", "cases", "transactions"];
         if (perIgnoreLst.includes(menuKey)) { this.navigate(menuKey, menuItem) }
         else {

@@ -32,7 +32,7 @@ const KycDocuments = (props) => {
                     multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
                     beforeUpload={(e) => { this.beforeUpload(e) }}
-                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                headers={{Authorization : `Bearer ${this.props.user.deviceToken}`}}
                 >
                     <p className="ant-upload-drag-icon">
                         <span className="icon xxxl doc-upload" />
@@ -60,7 +60,7 @@ const KycDocuments = (props) => {
                     multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                     showUploadList={false}
                     beforeUpload={(uploadData) => { this.beforeUpload(uploadData) }}
-                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                headers={{Authorization : `Bearer ${this.props.user.deviceToken}`}}
                 >
                     <p className="ant-upload-drag-icon">
                         <span className="icon xxxl doc-upload" />
@@ -108,7 +108,7 @@ const KycDocuments = (props) => {
 
 const connectStateToProps = ({ useConfig, oidc }) => {
     return {
-        useConfig,  user: oidc.user
+        useConfig,  user: oidc
     }
 }
 

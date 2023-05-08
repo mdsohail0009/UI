@@ -7,6 +7,7 @@ import { bytesToSize } from "../../utils/service";
 import ConnectStateProps from "../../utils/state.connect";
 import {ApiControllers} from '../../api/config'
 import DocumentPreview from '../../Shared/docPreview'
+import { connect } from "react-redux";
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -96,6 +97,7 @@ class AddressDocumnet extends Component {
 
                     }
                     ]}>
+                        {console.log(this.props,"this.props")}
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
@@ -108,7 +110,8 @@ class AddressDocumnet extends Component {
                             showUploadList={false}
                             beforeUpload={(props) => {
                             }}
-                            headers={{Authorization : `Bearer ${this.props?.user?.access_token}`}}
+                            
+                            headers={{Authorization : `Bearer ${this.props?.oidc.deviceToken}`}}
                             onChange={(prop) => {this.handleUpload(prop,this.props?.type) }}
                           
                         >
@@ -140,7 +143,6 @@ class AddressDocumnet extends Component {
 
                             }} />
                         </div></>}
-                        {/* } */}
                     </div>)}
                     {this.state.isDocLoading && <Loader />}
                 </div>
@@ -203,4 +205,10 @@ class AddressDocumnet extends Component {
         </Row>
     }
 }
-export default ConnectStateProps(AddressDocumnet);
+const connectStateToProps = ({oidc
+}) => {
+  return {
+    oidc:oidc,
+  };
+};
+export default connect(connectStateToProps)(AddressDocumnet);

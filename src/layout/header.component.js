@@ -94,8 +94,8 @@ class Header extends Component {
   }
   userProfile() {
     this.props.history.push("/userprofile");
-    if (this.props.oidc.user.profile?.sub) {
-      this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
+    if (this.props.oidc.user?.profile?.sub) {
+      this.props.getmemeberInfoa(this.props.oidc.user?.profile.sub);
     }
   }
   enableDisable2fa = (status) => {
