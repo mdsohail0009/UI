@@ -254,7 +254,7 @@ const WithdrawalFiatSummary = ({
 			Obj.beneficiaryAccountName,
 			userConfig?.sk
 		);
-		Obj.createdby=userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
+		Obj.createdby=userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig?.lastName
 		Obj.info = JSON.stringify(trackAuditLogData);
 		let withdrawal = await withdrawSave(Obj);
 		setIsLoading(false);

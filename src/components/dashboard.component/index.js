@@ -106,7 +106,7 @@ class Home extends Component {
                     </div>)}
                 </Carousel> : ""}
             <div className='d-flex align-center'>
-                <span className="db-main-title"> {(!userProfileInfo?.isBusiness  && `${userProfileInfo?.firstName} ${userProfileInfo.lastName}`) ||  (userProfileInfo?.isBusiness && `${userProfileInfo.businessName}`)}
+                <span className="db-main-title"> {(!userProfileInfo?.isBusiness  && `${userProfileInfo?.firstName} ${userProfileInfo?.lastName}`) ||  (userProfileInfo?.isBusiness && `${userProfileInfo.businessName}`)}
                 </span>
                 <span className='acount-type'>{userProfileInfo?.isBusiness ? "Business":"Personal"}</span>
                 {/* <div className='acount-type'><Link to="/auth0">Auth0</Link> </div> */}

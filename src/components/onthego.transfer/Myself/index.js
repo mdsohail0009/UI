@@ -323,7 +323,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                     <div className="kpi-divstyle"> <label className="kpi-label">
                             Last Name
                         </label>
-                        <div><Text className="kpi-val">{recipientDetails.lastName}</Text></div></div>
+                        <div><Text className="kpi-val">{recipientDetails?.lastName}</Text></div></div>
 
                     </Col></>}
                 {isBusiness && <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
