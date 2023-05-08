@@ -271,7 +271,7 @@ class ProfileInfo extends Component {
                     />
                   </label>
                   <p className="profile-value" style={{ flexGrow: 12 }}>
-                    {this.props.userConfig.lastName || "--"}
+                    {this.props.userConfig?.lastName || "--"}
                   </p>
                   {/* <div></div> */}
                 </div>

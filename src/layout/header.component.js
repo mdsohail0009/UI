@@ -70,7 +70,7 @@ const LogoutApp = () => {
 class Header extends Component {
   componentDidMount() {
     counterpart.setLocale(
-      this.props.userConfig ? this.props.userConfig.language : "en"
+      this.props?.userConfig ? this.props?.userConfig?.language : "en"
     );
   }
   componentWillUnmount() {

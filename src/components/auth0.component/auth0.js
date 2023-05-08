@@ -88,6 +88,8 @@ const Auth0 = (props) => {
     setCheckBoxError(false)
     setReferalError(null)
     setReferralWrong(false)
+    setBusinessIsChecked(false)
+    setIsChecked(false)
     setSaveError(null)
     setReferralWrong(false)
     setReferralVerified(false)  
@@ -147,7 +149,6 @@ const Auth0 = (props) => {
   }
 
   const handleReferralValidation = async (_, referralCode) => {
-    debugger
     if (!referralCode) {
       setReferralWrong(false)
       setReferralVerified(false)
@@ -350,18 +351,20 @@ const Auth0 = (props) => {
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
                 <div className='policy-content terms-text d-flex'>
                   <div>
-                    <label className="text-center custom-checkbox c-pointer cust-check-outline">
+                    <label
+                    className={`${checkBoxError === true ? 'icon danger-alert' : "text-center custom-checkbox c-pointer cust-check-outline"}`}
+                    >
                       <input
                         className="c-pointer"
                         name="isCheck"
                         type="checkbox"
+                        checked={businessIsChecked}
                         // onChange1={(e) => this.handleInputChange(props, e)}
                         onChange={BusinessCheckBoxChecked}
                       />
-                      <span></span>{" "}
+                     <span ></span>
                     </label>
                   </div>
-                  {checkBoxError === true ?(<span className='icon.danger-alert'></span>) : ("")}
                   <div className='terms-text'>By clicking submit, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And 've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">privacy policy</a>.</div>
                 </div>
                 {error != null && <Alert className="pa-alert" type='error' closable={false} showIcon message={error} />}
@@ -550,7 +553,6 @@ const Auth0 = (props) => {
                     placeholder="Referral Code"
                   />
                 </Form.Item>
-                {checkBoxError === true ?(<span className='icon.danger-alert'></span>) : ("")}
                 <span style={{ color: "red" }}>{referalError}</span>
                 {referralVerified === true ?(  <span className='icon lg greencheck'></span>) : ("")}
                 {referralWrong === true ? ( <span className='icon lg close'></span> ) : ("")} 
@@ -558,17 +560,20 @@ const Auth0 = (props) => {
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className='px-0'>
                 <div className='policy-content terms-text d-flex'>
                   <div>
-                    <label className="text-center custom-checkbox c-pointer cust-check-outline">
+                    <label 
+                    className={`${checkBoxError === true ? 'icon danger-alert' : "text-center custom-checkbox c-pointer cust-check-outline"}`}
+                    >
                       <input
                         className="c-pointer"
                         name="isCheck"
                         type="checkbox"
+                        checked={isChecked}
                         // onChange1={(e) => this.handleInputChange(props, e)}
                         onChange={checkBoxChecked}
                       />
                       <span></span>{" "}
                     </label>
-                  </div>
+                  </div>                
                   <div className='terms-text'>By clicking submit, I here by acknowledge that i agree to SuisseBase's <a target="_blank" href="https://www.iubenda.com/terms-and-conditions/42856099" className="blue-color">Term of use agreement</a> And I've read the <a target="_blank" href="https://www.iubenda.com/privacy-policy/42856099" className="blue-color">privacy policy</a>.</div>
                 </div>
         {error != null && <Alert className="pa-alert" type='error' closable={false} showIcon message={error} />}
