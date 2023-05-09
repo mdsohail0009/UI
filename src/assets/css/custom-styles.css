@@ -861,15 +861,17 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .currecny-drpdwn .ant-select-arrow{top: 22px;}
 /* coin detail view end */
 /*Auth0 start*/
+.cust-phone input{height:45px;}
+.cust-phone{margin-bottom: 1px;border: none;}
 .pa-alert{background-color: transparent;border:none;margin-top: -40px;}
 .pa-alert .ant-alert-message{font-size: 12px !important;}
 .cust-input.Approved .ant-select-selector{cursor:pointer !important;}
 .ant-select-selection-search-input{color:#fff !important;}
 .width-inc{width:188px !important;}
 .text-spacedec{width: 62px;display: flex;margin: auto;cursor: pointer;}
-.form-block{width: 900px;position: relative;z-index: 25;padding: 54px 64px;border-radius: 20px;background: rgb(255 255 255 / 15%);margin: auto}
+.form-block{width: 900px;position: relative;z-index: 25;padding: 54px 64px;border-radius: 20px;background: var(--cardBG);margin: auto}
 .text-personal{font-weight: 700;font-size: 18px;color:#1890ff}
-.form-block .heading {font-size: 25px;font-weight: 800;color: #ffffff;margin-bottom: 24px;line-height: 28px;}
+.form-block .heading {font-size: 25px;font-weight: 800;color: var(--textWhite);margin-bottom: 24px;line-height: 28px;}
 .form-block .new-custom-radiobtn .ant-radio-button-wrapper:first-child{padding-left: 0 !important;}
 .mb-24{margin-bottom: 24px;}
 .regulartext-color{font-size: 16px;color: rgb(255 255 255 / 80%);font-weight: 500;line-height: 180%;}
@@ -881,7 +883,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 #busssinessForm_phoneNumber, #persionalAccount_phoneNumber{border: 0;}
 .form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-placeholder{color: #bfbfbf;}
 .policy-content {margin-top: 54px;margin-bottom: 45px;}
-.terms-text{font-weight: 400;font-size: 14px;color: rgba(255, 255, 255, 0.9);margin-left: 12px;}
+.terms-text{font-weight: 400;font-size: 14px;color: var(--checkText);margin-left: 12px;}
 .blue-color{color: #CCC3FF;text-decoration: none;font-weight: 700;}
 .form-arrowicon .ant-select-selector{width: 80px;}
 .phone-he{    height: 50px !important;
