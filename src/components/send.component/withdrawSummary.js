@@ -578,7 +578,7 @@ class WithdrawSummary extends Component {
 		 this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: 2 }));
 	}
 
-	fullNumber = this.props.oidc?.phone_number;
+	fullNumber = this.props.userProfile?.phoneNo;
 	last4Digits = this.fullNumber?.slice(-4);
 	maskedNumber = this.last4Digits?.padStart(this.fullNumber.length, "*");
 
@@ -811,24 +811,6 @@ Effective-Fees" onClick={(e)=>this.handleEffectiveFee(e)}><span>Effective Fees</
 											</div>
                   </div>}
 				  </>}
-						{/* <div className="pay-list">
-							<Translate
-								className="summary-liststyle"
-								content="WithdrawalFee"
-								component={Text}
-							/>
-							<Text
-								className="summarybal"
-								style={{
-									width: "250px",
-									textOverflow: "ellipsis",
-									overflow: "hidden",
-									whiteSpace: "nowrap",
-									textAlign: "end",
-								}}>
-								{this.state?.comission}
-							</Text>
-						</div> */}
 						<div className="pay-list">
 							<Translate
 								className="summary-liststyle"

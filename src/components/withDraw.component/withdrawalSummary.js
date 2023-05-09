@@ -272,7 +272,7 @@ const WithdrawalFiatSummary = ({
 		}
 	};
 
-	const fullNumber = oidc.phone_number;
+	const fullNumber = userConfig.phoneNo;
 	const last4Digits = fullNumber?.slice(-4);
 	const maskedNumber = last4Digits?.padStart(fullNumber.length, "*");
 

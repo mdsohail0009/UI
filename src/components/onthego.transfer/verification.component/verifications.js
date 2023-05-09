@@ -19,7 +19,7 @@ const Verifications = (props) => {
     const [form] = Form.useForm();
     const useOtpRef = React.useRef(null);
     const { Text} = Typography;
-    const fullNumber = props?.auth?.phone_number;
+    const fullNumber = props.userConfig.phoneNo;
     let last4Digits;
     if (fullNumber) {
         last4Digits = fullNumber.slice(-4);

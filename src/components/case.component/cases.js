@@ -23,6 +23,18 @@ class Cases extends Component {
         }
         this.gridRef = React.createRef();
     }
+    convertUTCToLocalTime = (dateString) => {
+        let date = new Date(dateString);
+        const milliseconds = Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds(),
+        );
+        return new Date(milliseconds)
+    };
     columnGrid = [
         {
             field: "createdDate",
@@ -36,8 +48,8 @@ class Cases extends Component {
                 <td>
                   <div className="gridLink" onClick={() => this.viewCase(props)}>
                   <Moment format="DD/MM/YYYY hh:mm:ss A">
-                      {props.dataItem.createdDate}
-                  </Moment>
+                    {props.dataItem?.createdDate && this.convertUTCToLocalTime(props.dataItem?.createdDate)}
+                    </Moment>
                   </div>
                 </td>
               )
