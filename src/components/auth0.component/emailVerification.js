@@ -14,7 +14,7 @@ const EmailVerification = (props) => {
   const [counter, setCounter] = useState(30);
   const [loading,setLoading] = useState(false)
   const [error,setError] = useState(null)
-  const inititeCounter = () => {
+   const inititeCounter = () => {
       let _count = 30;
       const interval = setInterval(() => {
           if (_count === 0) {
@@ -60,8 +60,8 @@ const EmailVerification = (props) => {
           <h2 class="db-main-title mb-8">Verify your email</h2>
           <div className='text-style mb-8'>We sent a verification email to:</div>
           <div className='text-style mb-8 mt-0'>{props?.userProfile?.email}. Please click the link in the email to continue.</div>
-          <div className='text-style mb-8'>Email didn't arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend {loading&&<Spin size='small' />} </span>}{isEmailResent && <span>{formattedCount}</span>}</div>
-          <span className='text-personal c-pointer' onClick={signOutUser}>Sign In</span>
+          <div className='text-style mb-8'>Email didn't arrive? {!isEmailResent && <span className="text-personal point-cursor c-pointer" onClick={reSendMail}>Resend {loading&&<Spin size='small' />} </span>}{isEmailResent && <strong>{formattedCount}</strong>}</div>
+          <span className='text-personal c-pointer' onClick={signOutUser}>Sign in</span>
         </div>
       </div>
     </>

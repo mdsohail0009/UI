@@ -879,7 +879,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .custom-forminput .cust-input  .ant-input-group-addon{border: 0;border-right:1px solid var(--labelBorder);}
 .custom-forminput .ant-select-selection-item{font-size: 16px;}
 #busssinessForm_phoneNumber, #persionalAccount_phoneNumber{border: 0;}
-.form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-placeholder{color: #bfbfbf !important;}
+.form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-item, .form-arrowicon .ant-select-selection-placeholder{color: #bfbfbf;}
 .policy-content {margin-top: 54px;margin-bottom: 45px;}
 .terms-text{font-weight: 400;font-size: 14px;color: rgba(255, 255, 255, 0.9);margin-left: 12px;}
 .blue-color{color: #CCC3FF;text-decoration: none;font-weight: 700;}
@@ -957,6 +957,7 @@ select:-webkit-autofill:focus {
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger){margin-left: 12px;}
 .inputfont-style:hover, .inputfont-style:focus{border: 0;}
 .icon.danger-alert{background-position:-279px -246px;width:36px;height:36px;}
+.icon.danger-alert input{display:none;}
 /* coin view end */
 /* expand search */
 .search-box {position:relative;height: 46px;padding: 10px;flex:300px 0 0 ;display: flex;align-items: center;}

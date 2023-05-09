@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Steps, Button, Checkbox, Row, Col, Form, Select, Input, Radio, Image, Alert,Spin } from 'antd';
+import { Steps, Button, Checkbox, Row, Col, Form, Select, Input, Radio, Image, Alert, Spin } from 'antd';
 import Mobile from '.././../assets/images/mobile.png';
 import { sendOtp, verifyOtp } from './api';
 const PhoneVerification = (props) => {
@@ -7,16 +7,17 @@ const PhoneVerification = (props) => {
     const [isOtpReSent, setReSendOTP] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [counter, setCounter] = useState(60);
+    const [counter, setCounter] = useState(30);
     const [enableResend, setEnableResend] = useState(true);
     const [resendLoader, setResendLoader] = useState(false);
 
 
-    useEffect(()=>{
-        handleOtp("send");
-    },[])
+    useEffect(() => {
+        handleOtp("send")
+        { isOtpSent && <strong >{formattedCount}</strong> }
+    }, [])
     const inititeCounter = () => {
-        let _count = 60;
+        let _count = 30;
         setEnableResend(false);
         const interval = setInterval(() => {
             if (_count === 0) {
@@ -30,16 +31,18 @@ const PhoneVerification = (props) => {
         }, 1000);
 
     }
-    const formattedCount = `${Math.floor(counter / 60)
-    .toString()
-    .padStart(2, '0')}:${(counter % 60).toString().padStart(2, '0')}`;
+    const formattedCount = `${Math.floor(counter / 30)
+        .toString()
+        .padStart(2, '0')}:${(counter % 30).toString().padStart(2, '0')}`;
 
     const handleOtp = async (type) => {
         if (type === "resend") {
-            setCounter(60);
+            setCounter(30);
+            setResendLoader(true);
+        } else if (type === "send") {
+            setCounter(30);
             setResendLoader(true);
         }
-       // setLoading(false);
         setError(null);
         const res = await sendOtp(type === "resend" ? "resend" : "send");
         if (res.ok) {
@@ -48,6 +51,9 @@ const PhoneVerification = (props) => {
                 setReSendOTP(true);
                 inititeCounter();
             } else {
+                setResendLoader(false);
+                setReSendOTP(true);
+                inititeCounter();
                 setSendOTP(true);
             }
         } else {
@@ -74,29 +80,29 @@ const PhoneVerification = (props) => {
                     <p className='text-style mt-0'>We take the security of our users’ data seriously. To protect our users from fraud and abuse, we require you to please verify your mobile number.</p>
                     {error !== null && <Alert type='error' message={error} closable={false} showIcon />}
                     <div className='d-flex align-center'>
-                        
+
                         <Form className='' style={{ width: '100%' }} initialValues={{ otp: "" }} onFinish={verifyOTP}>
-                        <div className='d-flex'>
-                        <div><Image src={Mobile} style={{ paddingRight: "18px" }} preview={false} /></div>
-                            <Form.Item
-                                className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error flex-1"
-                                name="otp"
-                                label="
-                                Please Enter The Code That Was Sent To Your Mobile Number"
-                                rules={[{
-                                    required: true,
-                                    message: "Please enter otp"
-                                }]}
-                            >
-                                <Input
-                                    className="cust-input form-disable"
-                                    maxLength={100}
-                                   // placeholder="Please Enter The Code That Was Sent To Your Mobile Number"
-                                />
-                            </Form.Item>
+                            <div className='d-flex'>
+                                <div><Image src={Mobile} style={{ paddingRight: "18px" }} preview={false} /></div>
+                                <Form.Item
+                                    className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error flex-1"
+                                    name="otp"
+                                    label="
+                                Please enter the code that was sent to your mobile number"
+                                    rules={[{
+                                        required: true,
+                                        message: "Please enter otp"
+                                    }]}
+                                >
+                                    <Input
+                                        className="cust-input form-disable"
+                                        maxLength={100}
+                                    // placeholder="Please Enter The Code That Was Sent To Your Mobile Number"
+                                    />
+                                </Form.Item>
                             </div>
                             {/* <Button loading={loading} htmlType={isOtpSent ? "submit" : "button"} onClick={isOtpSent ? "" : handleOtp} size="large" block className="pop-btn">{!isOtpSent ? 'Send OTP' : "Verify"} </Button> */}
-                            <Button loading={loading} htmlType="submit"  size="large" block className="pop-btn">Verify</Button>
+                            <Button loading={loading} htmlType="submit" size="large" block className="pop-btn">Verify</Button>
                         </Form>
                     </div>
 
@@ -104,11 +110,11 @@ const PhoneVerification = (props) => {
                         {/* <div className='text-style mb-8' >Didn't receive the code?</div>
                         {!isOtpReSent && <div className='text-personal text-spacedec' onClick={() => handleOtp("resend")}>Resend</div>}
                         {isOtpReSent && <div className='text-style mb-8'>You can resend otp again in {formattedCount}</div>} */}
-                    <div className='text-style mb-8'>Didn't receive the code? {!isOtpReSent && <span className="text-personal point-cursor c-pointer" onClick={() => handleOtp("resend")}>Resend 
-                    {resendLoader&&<Spin size='small' />}
-                     </span>}{isOtpReSent && <span>{formattedCount}</span>}</div>
+                        <div className='text-style mb-8'>Didn't receive the code? {!isOtpReSent && <span className="text-personal point-cursor c-pointer" onClick={() => handleOtp("resend")}>Resend
+                            {resendLoader && <Spin size='small' />}
+                        </span>}{isOtpReSent && <strong >{formattedCount}</strong>}</div>
                     </div>
-                    
+
 
                     <div className='text-center my-24'>
                         <div className='text-style mb-8'>Having issues with the mobile verification? Please contact us at</div>
