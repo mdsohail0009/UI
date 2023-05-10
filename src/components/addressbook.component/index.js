@@ -86,8 +86,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book grid view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book grid view",
 				Duration: 1,	
@@ -98,8 +98,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Fiat Address book add view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Fiat Address book add view",
 				Duration: 1,
@@ -371,7 +371,7 @@ class AddressBook extends Component {
 		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
 		let statusObj = this.state.obj;
 		statusObj.id.push(this.state.selectedObj.payeeAccountId);
-		statusObj.modifiedBy = this.props.userProfileInfo.userName
+		statusObj.modifiedBy = this.props.userConfig?.userName
 		if (this.state.selectedObj.status === "Active") {
 			statusObj.status.push("Active")
 		} else {
@@ -437,8 +437,8 @@ class AddressBook extends Component {
 				apiCalls.trackEvent({
 					Type: "User",
 					Action: "Withdraw Fiat Address book add view",
-					Username: this.props.userProfileInfo?.userName,
-					customerId: this.props.userProfileInfo?.id,
+					Username: this.props.userConfig?.userName,
+					customerId: this.props.userConfig?.id,
 					Feature: "Address Book",
 					Remarks: "Withdraw Fiat Address book add view",
 					Duration: 1,
@@ -456,8 +456,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book add view",
 				Duration: 1,
@@ -513,8 +513,8 @@ class AddressBook extends Component {
 					apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Fait  Address edit view",
-						Username: this.props.userProfileInfo?.userName,
-						customerId: this.props.userProfileInfo?.id,
+						Username: this.props.userConfig?.userName,
+						customerId: this.props.userConfig?.id,
 						Feature: "Address Book",
 						Remarks: "Withdraw Fiat Address edit view",
 						Duration: 1,
@@ -525,8 +525,8 @@ class AddressBook extends Component {
 					apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Crypto  Address edit view",
-						Username: this.props.userProfileInfo?.userName,
-						customerId: this.props.userProfileInfo?.id,
+						Username: this.props.userConfig?.userName,
+						customerId: this.props.userConfig?.id,
 						Feature: "Address Book",
 						Remarks: "Withdraw Crypto Address edit view",
 						Duration: 1,
@@ -597,8 +597,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book grid view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book grid view",
 				Duration: 1,
@@ -609,8 +609,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Fiat Address book grid view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Fiat Address book grid view",
 				Duration: 1,
