@@ -869,7 +869,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .pa-alert{background-color: transparent;border:none;margin-top: -40px;}
 .pa-alert .ant-alert-message,.mb-alert .ant-alert-message{font-size: 14px !important;}
 .field-width{width:150px;}
-.mb-alert{background-color: transparent;border:none;padding-left: 0;}
+/* .mb-alert{background-color: transparent;border:none;padding-left: 0;} */
 
 .cust-input.Approved .ant-select-selector{cursor:pointer !important;}
 .ant-select-selection-search-input{color:#fff !important;}
