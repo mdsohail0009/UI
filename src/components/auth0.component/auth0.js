@@ -258,8 +258,8 @@ const Auth0 = (props) => {
                   ]}>
                   <Input
                     addonBefore={<Select
-                      style={{ width: '150px', border: "0" }}
-                      className="cust-input Approved "
+                      style={{ width: '150px'}}
+                      className="cust-input Approved field-width"
                       showSearch
                        placeholder="Phone"
                       optionFilterProp="children"
@@ -272,7 +272,7 @@ const Auth0 = (props) => {
 
 
                     />}
-                    className="cust-input form-disable phone-he c-pointer"
+                    className="cust-input form-disable phone-he c-pointer cust-phone"
                     maxLength={12}
                   />
                 </Form.Item>
@@ -470,8 +470,8 @@ const Auth0 = (props) => {
                   ]}>
                   <Input
                     addonBefore={<Select
-                      style={{ width: '150px' }}
-                      className="cust-input Approved"
+                      style={{ width: '150px'}}
+                      className="cust-input Approved field-width"
                       showSearch
                       placeholder="Phone"
                       optionFilterProp="children"
@@ -485,7 +485,7 @@ const Auth0 = (props) => {
 
 
                     />}
-                    className="cust-input phone-he"
+                    className="cust-input phone-he cust-phone"
                     maxLength={12}
                   // placeholder="Phone"
                   />

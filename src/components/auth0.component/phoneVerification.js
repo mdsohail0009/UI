@@ -78,11 +78,11 @@ const PhoneVerification = (props) => {
                 <div className='register-blockwid form-block mobile-verification'>
                     <h2 class="db-main-title mb-8">Mobile number verification</h2>
                     <p className='text-style mt-0'>We take the security of our users’ data seriously. To protect our users from fraud and abuse, we require you to please verify your mobile number.</p>
-                    {error !== null && <Alert type='error' message={error} closable={false} showIcon />}
+                    {error !== null && <Alert type='error' message={error} closable={false}className='mb-alert' showIcon />}
                     <div className='d-flex align-center'>
 
                         <Form className='' style={{ width: '100%' }} initialValues={{ otp: "" }} onFinish={verifyOTP}>
-                            <div className='d-flex'>
+                            <div className='d-flex filter-content'>
                                 <div><Image src={Mobile} style={{ paddingRight: "18px" }} preview={false} /></div>
                                 <Form.Item
                                     className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error flex-1"
@@ -99,6 +99,7 @@ const PhoneVerification = (props) => {
                                         maxLength={100}
                                     // placeholder="Please Enter The Code That Was Sent To Your Mobile Number"
                                     />
+                                   
                                 </Form.Item>
                             </div>
                             {/* <Button loading={loading} htmlType={isOtpSent ? "submit" : "button"} onClick={isOtpSent ? "" : handleOtp} size="large" block className="pop-btn">{!isOtpSent ? 'Send OTP' : "Verify"} </Button> */}
@@ -110,7 +111,7 @@ const PhoneVerification = (props) => {
                         {/* <div className='text-style mb-8' >Didn't receive the code?</div>
                         {!isOtpReSent && <div className='text-personal text-spacedec' onClick={() => handleOtp("resend")}>Resend</div>}
                         {isOtpReSent && <div className='text-style mb-8'>You can resend otp again in {formattedCount}</div>} */}
-                        <div className='text-style mb-8'>Didn't receive the code? {!isOtpReSent && <span className="text-personal point-cursor c-pointer" onClick={() => handleOtp("resend")}>Resend
+                        <div className='text-style mb-8'>Didn't receive the code? {!isOtpReSent && <span className="text-personal point-cursor c-pointer text-hover" onClick={() => handleOtp("resend")}>Resend
                             {resendLoader && <Spin size='small' />}
                         </span>}{isOtpReSent && <strong >{formattedCount}</strong>}</div>
                     </div>
@@ -118,7 +119,7 @@ const PhoneVerification = (props) => {
 
                     <div className='text-center my-24'>
                         <div className='text-style mb-8'>Having issues with the mobile verification? Please contact us at</div>
-                        <div className='text-personal text-spacedec width-inc'><a href="mailto:support@suissebase.io">support@suissebase.io</a></div>
+                        <div className='text-spacedec width-inc'><a className='text-personal' href="mailto:support@suissebase.io">support@suissebase.io</a></div>
                     </div>
 
                     {/* <Button htmlType="submit" size="large" block className="pop-btn">Verify </Button> */}
