@@ -843,7 +843,7 @@ selectsCurrency=(item)=>{
         
           <Row gutter={[16, 16]}>
           <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="p-relative">
-          <Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip>
+          {/* <Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip> */}
             <Form.Item
               className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
               name="amount"
