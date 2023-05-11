@@ -22,6 +22,8 @@ const theme={LightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
             } else {
                 if (!props.userConfig?.isKYC) {
                     launchWebSdk();
+                }else if(!props.userConfig?.isPhoneNumberVerified){
+                    props.history.push("/phoneVerification");
                 } else {
                     setState({ ...state, loading: false })
                 }
