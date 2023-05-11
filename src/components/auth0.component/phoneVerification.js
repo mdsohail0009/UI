@@ -82,8 +82,8 @@ const PhoneVerification = (props) => {
                     <div className='d-flex align-center'>
 
                         <Form className='' style={{ width: '100%' }} initialValues={{ otp: "" }} onFinish={verifyOTP}>
-                            <div className='d-flex filter-content'>
-                                <div><Image src={Mobile} style={{ paddingRight: "18px" }} preview={false} /></div>
+                            <div className='d-flex '>
+                                <div style={{ marginTop: "4px" }}><Image src={Mobile} style={{ paddingRight: "18px" }} preview={false} /></div>
                                 <Form.Item
                                     className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error flex-1"
                                     name="otp"

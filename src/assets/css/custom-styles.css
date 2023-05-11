@@ -178,7 +178,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 .crypto-address.share-width-align{width: 510px;}
 .referral-patner-btn{margin-top: 26px;}
 /* .crypto-address .custom-display{position: absolute;top: 6px;right: 8px;} */
-.theme-txt{font-size: 16px; font-weight: 500; color: var(--coinPrice);margin-left: 4px;}
+.theme-txt{font-size: 16px; font-weight: 500; color: var(--coinPrice);margin-left: 4px;display: flex;align-items: center;}
 .switch-circle, .theme-txt{margin-bottom: 0 !important;}
 /* .theme-active .theme-txt{color: var(--textWhite);font-weight: 400;} */
 .info-details{font-weight: 700;font-size: 16px;color: var(--tablesub);}
@@ -891,6 +891,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .policy-content {margin-top: 54px;margin-bottom: 45px;}
 .terms-text{font-weight: 400;font-size: 14px;color: var(--checkText);margin-left: 12px;}
 .blue-color{color:var(--termsText);text-decoration: none;font-weight: 700;}
+.text-personal:hover{color: #1890ff !important;}
 .form-arrowicon .ant-select-selector{width: 80px;}
 .phone-he{    height: 50px !important;
     margin-top: 0;
@@ -1275,9 +1276,10 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .login-user{width: 100%;padding: 2px 0;}  
 }
 @media (max-width: 767.98px){
+    .newSpace{display: flex; padding-top: 14px;}
     .field-width{width:120px !important;}
     .new-custom-radiobtn.mb-24 label:first-child{margin-left:-3px; margin-right:10px;}
-    .flex-1 .ant-form-item-label > label::after{top:10px;right:49px;}
+    .flex-1 .ant-form-item-label > label::after{top:10px;right:85px;}
     .form-block {
         width: 100% !important;
         padding: 60px 20px !important;
