@@ -11,11 +11,11 @@ import apicalls from '../../api/apiCalls';
 const EmailVerification = (props) => {
   const [isEmailResent, setEmailResent] = useState(false);
   const { logout } = useAuth0();
-  const [counter, setCounter] = useState(30);
+  const [counter, setCounter] = useState(60);
   const [loading,setLoading] = useState(false)
   const [error,setError] = useState(null)
    const inititeCounter = () => {
-      let _count = 30;
+      let _count = 60;
       const interval = setInterval(() => {
           if (_count === 0) {
               clearInterval(interval);
@@ -25,11 +25,12 @@ const EmailVerification = (props) => {
               setCounter(_count);
           }
       }, 1000);
-
   }
-  const formattedCount = `${Math.floor(counter / 30)
+  const formattedCount = `${Math.floor(counter / 60)
     .toString()
-    .padStart(2, '0')}:${(counter % 30).toString().padStart(2, '0')}`;
+    .padStart(2, '0')}:${(counter % 60).toString().padStart(2, '0')}`;
+
+
 
   const reSendMail = async () => {
     setLoading(true);
