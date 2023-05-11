@@ -126,14 +126,16 @@ class Header extends Component {
   };
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
-    if (!this.props.userConfig?.isEmailVerified) {
+    if (!this.props.userConfig?.isEmailVerified) { 
       this.props.history.push("/emailVerification");
-    } else if (!this.props.userConfig?.isPhoneNumberVerified) {
+    } else if (!this.props.userConfig?.isCustomerUpdated) {
+      this.props.history.push("/auth0");
+    } else if (!checkCustomerState(this.props.userConfig)) {
+      this.props.history.push("/sumsub");
+    }else if (!this.props.userConfig?.isPhoneNumberVerified) {
       this.props.history.push("/phoneVerification");
     } else if (!this.props.userConfig?.isKYC) {
       this.props.history.push("/notkyc");
-    } else if (!checkCustomerState(this.props.userConfig)) {
-      this.props.history.push("/sumsub");
     } else {
       this.props.history.push("/cockpit");
     }

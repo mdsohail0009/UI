@@ -301,16 +301,23 @@ class HeaderPermissionMenu extends Component {
 
             } else {
                 const isVerification = !this.props.userConfig.isEmailVerified; 
-                const isMobileVerification = !this.props.userConfig.isPhoneNumberVerified
+                const isMobileVerification = !this.props.userConfig.isPhoneNumberVerified;
+                const isCustomerUpdate = !this.props.userConfig?.isCustomerUpdated;
+               // const isSumsub = !checkCustomerState(this.props.userConfig);
                 const isKyc = !this.props.userConfig.isKYC;   
                 if(isVerification)   {
                     this.props.history.push("/emailVerification");
+                }else if (isCustomerUpdate) {
+                    this.props.history.push("/auth0");
+                }else if (isKyc) {
+                    this.props.history.push("/notkyc");
                 }else if (isMobileVerification) {
                     this.props.history.push("/phoneVerification");
                 }
-                else if (isKyc) {
-                    this.props.history.push("/notkyc");
-                } else {
+                // else if (isKyc) {
+                //     this.props.history.push("/notkyc");
+                // }
+                 else {
                     this.showDocRequestError();
                 }
             }

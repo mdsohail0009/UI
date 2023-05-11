@@ -7,7 +7,7 @@ const PhoneVerification = (props) => {
     const [isOtpReSent, setReSendOTP] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [counter, setCounter] = useState(30);
+    const [counter, setCounter] = useState(60);
     const [enableResend, setEnableResend] = useState(true);
     const [resendLoader, setResendLoader] = useState(false);
 
@@ -17,7 +17,7 @@ const PhoneVerification = (props) => {
         { isOtpSent && <strong >{formattedCount}</strong> }
     }, [])
     const inititeCounter = () => {
-        let _count = 30;
+        let _count = 60;
         setEnableResend(false);
         const interval = setInterval(() => {
             if (_count === 0) {
@@ -31,16 +31,16 @@ const PhoneVerification = (props) => {
         }, 1000);
 
     }
-    const formattedCount = `${Math.floor(counter / 30)
+    const formattedCount = `${Math.floor(counter / 60)
         .toString()
-        .padStart(2, '0')}:${(counter % 30).toString().padStart(2, '0')}`;
+        .padStart(2, '0')}:${(counter % 60).toString().padStart(2, '0')}`;
 
     const handleOtp = async (type) => {
         if (type === "resend") {
-            setCounter(30);
+            setCounter(60);
             setResendLoader(true);
         } else if (type === "send") {
-            setCounter(30);
+            setCounter(60);
             setResendLoader(true);
         }
         setError(null);
@@ -87,8 +87,7 @@ const PhoneVerification = (props) => {
                                 <Form.Item
                                     className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error flex-1"
                                     name="otp"
-                                    label="
-                                Please enter the code that was sent to your mobile number"
+                                    label="Please enter the code that was sent to your mobile number"
                                     rules={[{
                                         required: true,
                                         message: "Please enter otp"
@@ -96,7 +95,7 @@ const PhoneVerification = (props) => {
                                 >
                                     <Input
                                         className="cust-input form-disable"
-                                        maxLength={100}
+                                        maxLength={6}
                                     // placeholder="Please Enter The Code That Was Sent To Your Mobile Number"
                                     />
                                    
