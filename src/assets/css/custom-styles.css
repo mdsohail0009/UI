@@ -1143,6 +1143,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 /* commissions  end */
 /*@media start*/
 @media (min-width: 768px){
+    .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
     .listitems-design{width: 340px;}
     .tlv-header{height: 90px !important;}
     .header-logo{padding-left: 0 !important;}
@@ -1372,8 +1373,18 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .transaction-panel, .crypto-style{margin-top: 30px;}
     .table-border td { min-width: 150px;    }
 }
-@media (max-width: 375.98px){
-    .flex-1 .ant-form-item-label > label::after{right: 40px !important;}
+@media (min-width: 375px){
+    .flex-1 .ant-form-item-label > label::after{right: 78px !important;}
+}
+@media (min-width: 390px){
+    .flex-1 .ant-form-item-label > label::after{right: 108px !important;}
+}
+@media (min-width: 414px){
+    .flex-1 .ant-form-item-label > label::after{right: 130px !important;}
+}
+
+@media (min-width: 768.1px){
+    .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
 }
 .mb-8{margin-bottom: 8px !important;}
 .mt-0{margin-top: 0 !important;}
