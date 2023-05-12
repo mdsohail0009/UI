@@ -44,7 +44,7 @@ const theme={LightTheme:":root {--bgYellow: #FFDB1A;--textWhite: #FFFFFF;--textW
         }
   const launchWebSdk = async () => {
     setState({ ...state, loading: true })
-        apicalls.sumsubacesstoken(props.userConfig.userId,flow ||  (props.userConfig.isBusiness ? "SuisseBase_KYB_Flow" : "SuisseBase_KYC_Flow")).then((res) => {
+        apicalls.sumsubacesstoken(props?.userConfig?.userId,flow ||  (props?.userConfig?.isBusiness ? "SuisseBase_KYB_Flow" : "SuisseBase_KYC_Flow")).then((res) => {
             setState({...state, loading: false })
             let snsWebSdkInstance = snsWebSdk.init(
                 res.data.token,

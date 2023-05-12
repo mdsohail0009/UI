@@ -524,7 +524,7 @@ class WithdrawSummary extends Component {
 				});
 				this.useDivRef.current.scrollIntoView(0, 0);
 			}
-			if (this.props.userProfile.isBusiness || !this.state.verifyData?.isLiveVerification) {
+			if (this.props?.userProfile?.isBusiness || !this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
 				trackAuditLogData.Action = "Save";
