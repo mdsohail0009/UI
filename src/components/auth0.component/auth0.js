@@ -141,7 +141,7 @@ const Auth0 = (props) => {
       if (response.ok) {
       //  props.dispatch(userInfo(response.data))
       props?.getmemeberInfoa(props?.userProfile.userId)
-        props.history.push("/sumsub");
+        props.history.push(`/sumsub/${obj.isBusiness ? "SuisseBase_KYB_Flow" : "SuisseBase_KYC_Flow"}`);
       } else {
         setSaveError(apicalls.isErrorDispaly(response));
       }

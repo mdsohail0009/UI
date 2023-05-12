@@ -43,6 +43,7 @@ const Fees=React.lazy(()=>import("../components/Commissions/fees"))
 const Auth0 = React.lazy(() => import("../components/auth0.component/auth0"))
 const EmailVerification = React.lazy(() => import("../components/auth0.component/emailVerification"))
 const PhoneVerification = React.lazy(() => import("../components/auth0.component/phoneVerification"))
+const AccountStatus = React.lazy(()=>import("../../src/utils/account.status"))
 class RouteConfig extends Component {
   componentDidMount() {
     if (!this.props.userProfile?.isEmailVerified) {
@@ -84,7 +85,8 @@ class RouteConfig extends Component {
         <ReactRoute path="/login" component={Login} />
         <ReactRoute path="/changepassword" component={ChangePassword} />
         <ReactRoute path="/2fa" component={Twofa} />
-        <ReactRoute path="/sumsub" component={SumSub} />
+        <ReactRoute path="/accountstatus" component={AccountStatus} />
+        <ReactRoute path="/sumsub/:flow?" component={SumSub} />
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path="/userprofile/:key?/:type?" component={UserProfile} />

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Steps, Button, Checkbox, Row, Col, Form, Select, Input, Radio, Image, Alert, Spin } from 'antd';
 import Mobile from '.././../assets/images/mobile.png';
 import { sendOtp, verifyOtp } from './api';
+import { getmemeberInfo } from '../../reducers/configReduser';
+import { connect } from 'react-redux';
+
 const PhoneVerification = (props) => {
     const [isOtpSent, setSendOTP] = useState(false);
     const [isOtpReSent, setReSendOTP] = useState(false);
@@ -66,7 +69,8 @@ const PhoneVerification = (props) => {
         setLoading(true);
         const res = await verifyOtp(values.otp);
         if (res.ok) {
-            props.history.push("/sumsub")
+            props?.getmemeberInfoa(props?.userProfile.userId)
+            props.history.push("/accountstatus")
         } else {
             setError(res.data?.title || res.data?.message || res.data || res.originalError?.message)
         }
@@ -127,4 +131,13 @@ const PhoneVerification = (props) => {
         </>
     );
 }
-export default PhoneVerification;
+const connectStateToProps = ({ userConfig }) => {
+    return { userProfile: userConfig?.userProfileInfo }
+  }
+  const connectDispatchToProps = dispatch => {
+    return { dispatch,
+      getmemeberInfoa: (useremail) => {
+        dispatch(getmemeberInfo(useremail));
+      }, }
+  }
+ export default connect(connectStateToProps, connectDispatchToProps)(PhoneVerification);
