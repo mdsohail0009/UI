@@ -40,13 +40,13 @@ const Layout = (props) => {
         //userManager.removeUser()
         window.open(process.env.REACT_APP_ADMIN_URL, "_self")
     }
-    if (!isAuthenticated || !props.oidc.profile || !props.oidc.deviceToken) {
+    if (!isAuthenticated || !props?.oidc?.profile || !props?.oidc?.deviceToken) {
         return <div className="loader">Loading .....</div>
-    } else if (props.oidc.profile && !props.userProfile) {
+    } else if (props?.oidc?.profile && !props?.userProfile) {
         return <OnBoarding />
-    } else if (props.userProfile && props.userProfile?.role === 'Admin') {
+    } else if (props?.userProfile && props?.userProfile?.role === 'Admin') {
         return <>{redirect()}</>
-    } else if (props.twoFA?.loading) {
+    } else if (props?.twoFA?.loading) {
         return <div className="loader">Loading .....</div>
     }
 

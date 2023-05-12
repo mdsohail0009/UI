@@ -207,7 +207,7 @@ class ProfileInfo extends Component {
             />
           </Title>
           <ul className="profile-ul">
-            {this.props.userConfig.isBusiness && <li className="profileinfo">
+            {this.props?.userConfig?.isBusiness && <li className="profileinfo">
               <div className="profile-block">
                 <label className="profile-label">
                   <Translate
@@ -230,7 +230,7 @@ class ProfileInfo extends Component {
                 </p>
               </div>
             </li>
-            {this.props.userConfig.isBusiness !== true && <>
+            {this.props?.userConfig?.isBusiness !== true && <>
               <li className="profileinfo">
                 <div className="profile-block ">
                   <label className="profile-label">
