@@ -430,7 +430,7 @@ beforeUpload = (file) => {
                             accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} 
                             expandIcon={() => <span className="icon md downangle" />}>
-                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + ` ${(doc?.state==="Approved"&&"staus-lbl")||(doc?.state==="Rejected"&&"reject-lbl")||(doc?.state==="Submitted"&& "subm-lbl")||(doc?.state==="Requested"&&"Requet-lbl")}` : ""}`}>{doc?.state}</span>) : ""}>
+                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${doc?.state ? doc?.state.toLowerCase() + ` ${(doc?.state==="Approved"&&"staus-lbl")||(doc?.state==="Rejected"&&"reject-lbl")||(doc?.state==="Submitted"&& "subm-lbl")||(doc?.state==="Requested"&&"Requet-lbl")}` : ""}`}>{doc?.state}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
