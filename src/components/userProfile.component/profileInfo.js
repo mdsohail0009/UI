@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Upload, message, Alert } from "antd";
+import { Typography, Button, Upload, message, Tooltip, Spin, Alert } from "antd";
 import { connect } from "react-redux";
 import { uploadClient } from "../../api";
 import { ProfileImageSave } from "../../api/apiServer";
@@ -185,6 +185,17 @@ class ProfileInfo extends Component {
           )}
         </div>
         </div>
+        {process.env.REACT_APP_ACCOUNT_USER_DOWNLOAD==="true" &&
+        <div className="dwnl-content-style">
+         
+          {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <span>
+              <Tooltip title="Download">
+                <div onClick={this.fileDownload} className="c-pointer"><span className="icon lg download" /></div>
+              </Tooltip>
+            </span>}
+           
+          <Text className="download-content">Download reference confirmation letter</Text>
+        </div>}
         </div>
         <div className="basic-info basicprofile-info">
           <Title className="basicinfo">
