@@ -435,7 +435,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                 type="number"
                 rules={[
                     {
-                        whitespace:true,
                         required: true,
                         message: "Is required",
                     },

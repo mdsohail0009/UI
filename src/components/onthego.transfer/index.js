@@ -387,7 +387,7 @@ saveWithdrawdata = async () => {
         const response = await confirmTransaction({ 
             payeeId: this.state.typeOntheGoObj?.id,
             amount: amt,
-            reasonOfTransfer: null ,
+            reasonOfTransfer: this.state.typeOntheGoObj?.reasonOfTransfer,
             bankId:this.state.selectedbankobj[0]?.bankId
         });
         if(response.ok){
@@ -1236,7 +1236,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                            }
                            {this.state.reviewDetails?.ukShortCode &&
                                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">UkSortCode </div>
+                                    <div className="kpi-label">Uk Sort Code</div>
                                     <div>  <Text className="kpi-val">{this.state.reviewDetails?.ukShortCode || "-"}</Text></div>
                                 </div>
                            }
