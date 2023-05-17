@@ -100,6 +100,7 @@ class TransactionSlips extends Component {
             {downloadError && <Alert showIcon type="error" description={downloadError} closable={false} />}
              {loader && <Loader/>}
             {!loader&&transactionSlipData && Object?.keys(transactionSlipData)?.map((key) => <>
+              { ((transactionSlipData[key] !== "Tier Discount" ||transactionSlipData[key] !== "SuisseBase Credit Used") && viewData[key].indexOf('0 ')!=0) &&<> 
               <Col xs={24} sm={24} md={24} lg={24} xxl={24}>
                 <div className="pay-list modal-listbr" key={key}>
                   <div className="summary-liststyle">{typeof transactionSlipData[key] === "object" ? key : transactionSlipData[key]}</div>
@@ -107,7 +108,7 @@ class TransactionSlips extends Component {
                             {(viewData[key] === null || viewData[key] === "") ? '-' : (transactionSlipData[key] === 'Date') ? moment.utc(viewData[key]).local().format("DD/MM/YYYY hh:mm:ss A") : (typeof transactionSlipData[key] === "object") ? `${this.getCombinedValues(transactionSlipData[key])}` : (transactionSlipData[key] === "Hash") ? this.getHashLink(transactionSlipData[key]) : viewData[key]}
                   </div>
                 </div>
-              </Col></>)}
+              </Col></>}</>)}
           </>
         </Modal>
       </>
