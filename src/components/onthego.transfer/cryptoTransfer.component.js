@@ -363,7 +363,6 @@ class OnthegoCryptoTransfer extends Component {
                     thousandSeparator={true}
                     onKeyDown={this.keyDownHandler}
                     addonBefore={this.state.selectedCurrency}
-                    // suffix={this.props.selectedWallet?.coin}
                     onValueChange={() => {
                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                     }}
