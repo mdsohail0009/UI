@@ -388,7 +388,8 @@ saveWithdrawdata = async () => {
             payeeId: this.state.typeOntheGoObj?.id,
             amount: amt,
             reasonOfTransfer: null ,
-            bankId:this.state.selectedbankobj[0]?.bankId
+            bankId:this.state.selectedbankobj[0]?.bankId,
+            info:JSON.stringify(this.props?.trackAuditLogData),
         });
         if(response.ok){
           this.setState({ ...this.state, [loader]: false, 
@@ -562,6 +563,7 @@ handleReasonTrnsfer=(e)=>{
           reasonOfTransfer: '',
           amount: this.state.amount,
           bankId: this.state.selectedbankobj[0]?.bankId,
+          info:JSON.stringify(this.props?.trackAuditLogData),
         })
         if (res.ok) {
           this.setState({ ...this.state, reviewDetails: res.data, loading: false, errorMessage: null,addressLoader:false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
@@ -800,7 +802,7 @@ selectsCurrency=(item)=>{
                         } else {
                             this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
                             const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount ,
-                            bankId:this.state.selectedbankobj[0]?.bankId,
+                            bankId:this.state.selectedbankobj[0]?.bankId, info:JSON.stringify(this.props?.trackAuditLogData),
                           });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
@@ -1091,7 +1093,7 @@ selectsCurrency=(item)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId,});
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId, info:JSON.stringify(this.props?.trackAuditLogData),});
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
