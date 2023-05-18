@@ -135,7 +135,7 @@ class OnthegoCryptoTransfer extends Component {
             this.myRef.current.scrollIntoView();
         }
         else if (parseFloat(amt) < withdrawMinValue) {
-            this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
+            this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue  +" " + this.props?.selectedWallet?.coin });
             this.myRef.current.scrollIntoView();
         }
        
@@ -252,7 +252,7 @@ class OnthegoCryptoTransfer extends Component {
                     error:
                         apicalls.convertLocalLang('amount_min') +
                         ' ' +
-                        this.props.selectedWallet?.withdrawMinValue,
+                        this.props.selectedWallet?.withdrawMinValue +" " + this.props?.selectedWallet?.coin,
                 })
                 this.myRef.current.scrollIntoView()
             }
