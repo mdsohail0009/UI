@@ -387,8 +387,9 @@ saveWithdrawdata = async () => {
         const response = await confirmTransaction({ 
             payeeId: this.state.typeOntheGoObj?.id,
             amount: amt,
-            reasonOfTransfer: this.state.typeOntheGoObj?.reasonOfTransfer,
-            bankId:this.state.selectedbankobj[0]?.bankId
+            reasonOfTransfer: null ,
+            bankId:this.state.selectedbankobj[0]?.bankId,
+            info:JSON.stringify(this.props?.trackAuditLogData),
         });
         if(response.ok){
           this.setState({ ...this.state, [loader]: false, 
@@ -562,6 +563,7 @@ handleReasonTrnsfer=(e)=>{
           reasonOfTransfer: '',
           amount: this.state.amount,
           bankId: this.state.selectedbankobj[0]?.bankId,
+          info:JSON.stringify(this.props?.trackAuditLogData),
         })
         if (res.ok) {
           this.setState({ ...this.state, reviewDetails: res.data, loading: false, errorMessage: null,addressLoader:false }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
@@ -800,7 +802,7 @@ selectsCurrency=(item)=>{
                         } else {
                             this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
                             const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount ,
-                            bankId:this.state.selectedbankobj[0]?.bankId,
+                            bankId:this.state.selectedbankobj[0]?.bankId, info:JSON.stringify(this.props?.trackAuditLogData),
                           });
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
@@ -1091,7 +1093,7 @@ selectsCurrency=(item)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId,});
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId, info:JSON.stringify(this.props?.trackAuditLogData),});
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -1236,7 +1238,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                            }
                            {this.state.reviewDetails?.ukShortCode &&
                                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Uk Sort Code</div>
+                                    <div className="kpi-label">UkSortCode </div>
                                     <div>  <Text className="kpi-val">{this.state.reviewDetails?.ukShortCode || "-"}</Text></div>
                                 </div>
                            }
