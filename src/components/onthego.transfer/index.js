@@ -244,7 +244,7 @@ class OnthegoFundTransfer extends Component {
         this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
     }
 }
-amountnext = (values) => {
+amountNext = (values) => {
   let _amt = values.amount;
   _amt =typeof _amt=="string" ? _amt?.replace(/,/g, '') : _amt;
   if (_amt > 0) {
