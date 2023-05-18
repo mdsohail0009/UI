@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs, Tooltip } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -244,14 +244,16 @@ class OnthegoFundTransfer extends Component {
         this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
     }
 }
-amountnext = (values) => {
-    let _amt = values.amount;
+amountNext = (values) => {
+  this.setState({ ...this.state, errorMessage: null });
+  let _amt = this.enteramtForm.current.getFieldsValue().amount
+    // let _amt = values.amount;
     _amt =typeof _amt=="string" ? _amt?.replace(/,/g, '') : _amt;
     if (_amt > 0) {
         this.setState({ ...this.state, amount: _amt ,effectiveType:false}, () => this.validateAmt(_amt, "reviewdetails", values, "newtransferLoader"))
     } else {
         if (!_amt) {
-            this.setState({ ...this.state, errorMessage: '' });
+            this.setState({ ...this.state, errorMessage:null });
         } else {
             this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero' });
         }
@@ -387,7 +389,7 @@ saveWithdrawdata = async () => {
         const response = await confirmTransaction({ 
             payeeId: this.state.typeOntheGoObj?.id,
             amount: amt,
-            reasonOfTransfer: null ,
+            reasonOfTransfer: this.state.typeOntheGoObj?.reasonOfTransfer,
             bankId:this.state.selectedbankobj[0]?.bankId,
             info:JSON.stringify(this.props?.trackAuditLogData),
         });
@@ -779,38 +781,11 @@ selectsCurrency=(item)=>{
                 className="addCryptoList paste-recept-style mobile-scroll"
               >
                 {pastPayees.length > 0 &&
-                  pastPayees?.map((item, idx) => (
+                  pastPayees?.map((item) => (
                     <Row
                       className="fund-border"
-                      onClick={async () => {
-                        if (
-                          !['myself', '1stparty', 'ownbusiness'].includes(
-                            item.addressType?.toLowerCase(),
-                          )
-                        ) {
-                          this.setState(
-                            {
-                              ...this.state,
-                              addressOptions: {
-                                ...this.state.addressOptions,
-                                addressType: item.addressType,
-                              },
-                              selectedPayee: item,
-                            },
-                            () => this.chnageStep('reasonfortransfer'),
-                          )
-                        } else {
-                            this.setState({ ...this.state, loading: true, errorMessage: null, selectedPayee: item });
-                            const res = await confirmTransaction({ payeeId: item.id, reasonOfTransfer: "", amount: this.state.amount ,
-                            bankId:this.state.selectedbankobj[0]?.bankId, info:JSON.stringify(this.props?.trackAuditLogData),
-                          });
-                          if (res.ok) {
-                            this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
-                          } else {
-                            this.setState({ ...this.state, loading: false, errorMessage: apicalls.isErrorDispaly(res) });
-                          }
-                        }
-                      }}>
+                      onClick={()=>this.handleForm(item)}
+                          >
                       <Col xs={3} md={2} lg={2} xl={3} xxl={3} className=""><div class="fund-circle text-white">{item?.name.charAt(0).toUpperCase()}</div></Col>
                                 <Col xs={19} md={24} lg={24} xl={19} xxl={19} className=" small-text-align">
                                     <label className="address-name">{item.name}</label>
@@ -838,14 +813,13 @@ selectsCurrency=(item)=>{
               autoComplete="off"
               initialValues={{ amount: "" }}
               ref={this.enteramtForm}
-              onFinish={this.amountnext}
+              onFinish={this.amountNext}
               scrollToFirstError
             >
                       {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
         
-          <Row gutter={[16, 16]}>
-          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="p-relative">
-          {/* <Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip> */}
+          <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
+          <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
               className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
               name="amount"
@@ -966,16 +940,29 @@ selectsCurrency=(item)=>{
         <Row gutter={[16, 16]} className="send-drawerbtn">
             <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
               <Form.Item>
-              <Button
-               htmlType={this.state.newtransfer?"submit":"button"}
-               loading={this.state.addressLoader}
-               onClick={!this.state.newtransfer && this.goToAddressBook}
-               size="large"
-               block
-               className="pop-btn custom-send cust-disabled"
-             >
-              Continue
-             </Button>
+           {   this.state.newtransfer &&
+           <Button
+           htmlType={"submit"}
+           loading={this.state.addressLoader}
+           size="large"
+           block
+           className="pop-btn custom-send cust-disabled"
+         >
+          Continue
+         </Button>
+             }
+            { !this.state.newtransfer &&
+             <Button
+             htmlType={"button"}
+             loading={this.state.addressLoader}
+             onClick={this.goToAddressBook}
+             size="large"
+             block
+             className="pop-btn custom-send cust-disabled"
+           >
+            Continue
+           </Button>
+             }
               </Form.Item>
             </Col>
           </Row>
@@ -1093,7 +1080,8 @@ selectsCurrency=(item)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId, info:JSON.stringify(this.props?.trackAuditLogData),});
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId,
+                           info:JSON.stringify(this.props?.trackAuditLogData),});
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
@@ -1238,7 +1226,7 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                            }
                            {this.state.reviewDetails?.ukShortCode &&
                                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">UkSortCode </div>
+                                    <div className="kpi-label">Uk Sort Code</div>
                                     <div>  <Text className="kpi-val">{this.state.reviewDetails?.ukShortCode || "-"}</Text></div>
                                 </div>
                            }
