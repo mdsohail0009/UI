@@ -1139,4 +1139,4 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .subm-lbl{background-color: blue !important;}
 .Requet-lbl{background-color: #c7c70d !important;}
 .send-crypto-input.crypto-blc-inpt{position: relative;}
-.ant-form-item-explain{position: absolute;top:90px;}
+.cust-error-msg-align .ant-form-item-explain{position: absolute;top:90px;}

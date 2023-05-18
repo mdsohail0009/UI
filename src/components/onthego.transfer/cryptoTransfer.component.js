@@ -340,7 +340,7 @@ class OnthegoCryptoTransfer extends Component {
 
                 <div className="enter-val-container swap-com swap-text-sub new-swap-subtext  send-crypto-enrty send-crypto-mobile">
                   <div className='swap-entryvalue send-crypto-style'>    <Form.Item
-                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt " 
+                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt cust-error-msg-align" 
                   name="amount"
                   required
                   rules={[
