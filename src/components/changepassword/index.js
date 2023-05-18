@@ -55,7 +55,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       obj.Password = apiClient.encryptValue(obj.Password, userConfig.sk)
       obj.Email = apiClient.encryptValue(obj.Email, userConfig.sk)
       obj.info = apiClient.encryptValue(obj.info, userConfig.sk)
-      const result = await changePassword({password:obj.Password});
+      const result = await changePassword({password:obj.Password,info:obj.info});
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       if (result.ok) {
         setBtnDisabled(false);
