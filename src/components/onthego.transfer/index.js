@@ -244,20 +244,18 @@ class OnthegoFundTransfer extends Component {
         this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
     }
 }
-amountNext = (values) => {
-  this.setState({ ...this.state, errorMessage: null });
-  let _amt = this.enteramtForm.current.getFieldsValue().amount
-    // let _amt = values.amount;
-    _amt =typeof _amt=="string" ? _amt?.replace(/,/g, '') : _amt;
-    if (_amt > 0) {
-        this.setState({ ...this.state, amount: _amt ,effectiveType:false}, () => this.validateAmt(_amt, "reviewdetails", values, "newtransferLoader"))
-    } else {
-        if (!_amt) {
-            this.setState({ ...this.state, errorMessage:null });
-        } else {
-            this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero' });
-        }
-    }
+amountnext = (values) => {
+  let _amt = values.amount;
+  _amt =typeof _amt=="string" ? _amt?.replace(/,/g, '') : _amt;
+  if (_amt > 0) {
+      this.setState({ ...this.state, amount: _amt ,effectiveType:false}, () => this.validateAmt(_amt, "reviewdetails", values, "newtransferLoader"))
+  } else {
+      if (!_amt) {
+          this.setState({ ...this.state, errorMessage: '' });
+      } else {
+          this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero' });
+      }
+  }
 }
 handleSearch = ({ target: { value: val } }) => {
     if (val) {
