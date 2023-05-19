@@ -372,6 +372,15 @@ class HeaderPermissionMenu extends Component {
                         onClick={() => this.userProfile()}
                     />
                     <ul className="drpdwn-list">
+                    <li
+                           onClick={() => window.open('https://app.novahq.com/start/transaction?entity=innoceptsltd&template=2b9de6fb-bfbe-4380-bbe4-bba0eaa1ca86', '_blank')}
+                        >
+                            <Link>
+                           
+                            <div>OnBoarding</div>
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
                         <li
                             onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                         >
@@ -405,7 +414,6 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                             onClick={() => this.props.history.push("/auditlogs")}
 
                         >
