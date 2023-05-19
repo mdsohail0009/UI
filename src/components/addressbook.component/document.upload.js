@@ -96,7 +96,6 @@ class AddressDocumnet extends Component {
 
                     }
                     ]}>
-                        {console.log(this.props,"this.props")}
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
@@ -161,7 +160,6 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
-                                console.log(docs,"documents")
                                 let files = this.state.filesList || docs.details || docs || this.state.transferProof;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){

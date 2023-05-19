@@ -135,7 +135,7 @@ class OnthegoCryptoTransfer extends Component {
             this.myRef.current.scrollIntoView();
         }
         else if (parseFloat(amt) < withdrawMinValue) {
-            this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
+            this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue  +" " + this.props?.selectedWallet?.coin });
             this.myRef.current.scrollIntoView();
         }
        
@@ -252,7 +252,7 @@ class OnthegoCryptoTransfer extends Component {
                     error:
                         apicalls.convertLocalLang('amount_min') +
                         ' ' +
-                        this.props.selectedWallet?.withdrawMinValue,
+                        this.props.selectedWallet?.withdrawMinValue +" " + this.props?.selectedWallet?.coin,
                 })
                 this.myRef.current.scrollIntoView()
             }
@@ -340,7 +340,7 @@ class OnthegoCryptoTransfer extends Component {
 
                 <div className="enter-val-container swap-com swap-text-sub new-swap-subtext  send-crypto-enrty send-crypto-mobile">
                   <div className='swap-entryvalue send-crypto-style'>    <Form.Item
-                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt " 
+                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt cust-error-msg-align" 
                   name="amount"
                   required
                   rules={[
@@ -363,7 +363,6 @@ class OnthegoCryptoTransfer extends Component {
                     thousandSeparator={true}
                     onKeyDown={this.keyDownHandler}
                     addonBefore={this.state.selectedCurrency}
-                    // suffix={this.props.selectedWallet?.coin}
                     onValueChange={() => {
                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                     }}

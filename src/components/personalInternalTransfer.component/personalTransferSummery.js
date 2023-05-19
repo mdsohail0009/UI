@@ -268,7 +268,7 @@ saveWithdrawdata = async () => {
                            }
                            {this.state.reviewDetails?.ukShortCode &&
                                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">UkSortCode </div>
+                                    <div className="kpi-label">Uk Sort Code  </div>
                                     <div>  <Text className="kpi-val">{this.state.reviewDetails?.ukShortCode || "-"}</Text></div>
                                 </div>
                            }
