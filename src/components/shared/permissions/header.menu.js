@@ -377,7 +377,7 @@ class HeaderPermissionMenu extends Component {
                         >
                             <Link>
                            
-                            <div>OnBoarding</div>
+                            <div>Onboarding</div>
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
