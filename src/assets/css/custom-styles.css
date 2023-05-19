@@ -1044,6 +1044,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .grid-content{color: var(--gridcontent);}
 /*@media start*/
 @media (min-width: 768px){
+    .sumSub-confirm{display: flex;}
     .listitems-design{width: 340px;}
     .tlv-header{height: 90px !important;}
     .header-logo{padding-left: 0 !important;}
@@ -1177,6 +1178,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .login-user{width: 100%;padding: 2px 0;}  
 }
 @media (max-width: 767.98px){
+    .sumSub-confirm{width:auto;height: auto;}
+    .cust-sumsub-font{width: auto;}
     .new-viewpage .search-box{margin-left: 0;}
     .fait-wallets-style.new-viewpage{display: block !important;}
     .footer-links a{margin-right: 20px !important;}
