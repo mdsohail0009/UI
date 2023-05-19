@@ -382,6 +382,9 @@ class HeaderPermissionMenu extends Component {
             this.props.dispatch(getScreenName({ getScreen: items.content }))
         }
     }
+    handleAuditLogClick=()=>{
+        this.props.history.push("/auditLogs")
+      }
     render() {
         const userProfileMenu = (
             <Menu>
@@ -397,7 +400,7 @@ class HeaderPermissionMenu extends Component {
                     />
                     <ul className="drpdwn-list">
                         <li
-                            onClick={() => window.open('https://app.novahq.com/start/transaction?entity=innoceptsltd&template=2b9de6fb-bfbe-4380-bbe4-bba0eaa1ca86', '_blank')}
+                            onClick={() => window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')}
                         >
                             <Link>
 
@@ -438,7 +441,7 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            onClick={() => this.props.history.push("/auditlogs")}
+                            onClick={this.handleAuditLogClick}
                         >
                             <Link>
                                 <Translate
