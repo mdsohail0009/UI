@@ -303,7 +303,7 @@ class HeaderPermissionMenu extends Component {
                 const isVerification = !this.props.userConfig.isEmailVerified; 
                 const isMobileVerification = !this.props.userConfig.isPhoneNumberVerified;
                 const isCustomerUpdate = !this.props.userConfig?.isCustomerUpdated;
-               // const isSumsub = !checkCustomerState(this.props.userConfig);
+               
                 const isKyc = !this.props.userConfig.isKYC;   
                 if(isVerification)   {
                     this.props.history.push("/emailVerification");
@@ -314,9 +314,6 @@ class HeaderPermissionMenu extends Component {
                 }else if (isMobileVerification) {
                     this.props.history.push("/phoneVerification");
                 }
-                // else if (isKyc) {
-                //     this.props.history.push("/notkyc");
-                // }
                  else {
                     this.showDocRequestError();
                 }
@@ -366,26 +363,6 @@ class HeaderPermissionMenu extends Component {
         )
     }
     clearEvents = () => {
-        // this.props.dispatch(clearPermissions());
-        // this.props.dispatch(clearUserInfo());
-        // this.props.dispatch(userLogout());
-        // window.$zoho?.salesiq?.chat.complete();
-        // window.$zoho?.salesiq?.reset();
-        // //userManager.signoutRedirect();
-        // //logout();
-        // apicalls.trackEvent({
-        //     Type: "User",
-        //     Action: "User Logged out",
-        //     Username: null,
-        //     customerId: null,
-        //     Feature: "Logout",
-        //     Remarks: "User Logged out",
-        //     Duration: 1,
-        //     Url: window.location.href,
-        //     FullFeatureName: "Logout"
-        // });
-        // window.location.reload()
-        //this.props.logOutUser()
     }
 
     themeSwitch = () => {
@@ -419,6 +396,15 @@ class HeaderPermissionMenu extends Component {
                         onClick={() => this.userProfile()}
                     />
                     <ul className="drpdwn-list">
+                        {/* <li
+                            onClick={() => window.open('https://app.novahq.com/start/transaction?entity=innoceptsltd&template=2b9de6fb-bfbe-4380-bbe4-bba0eaa1ca86', '_blank')}
+                        >
+                            <Link>
+
+                                <div>Onboarding</div>
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li> */}
                         <li
                             onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                         >
@@ -452,7 +438,6 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                             onClick={() => this.props.history.push("/auditlogs")}
                         >
                             <Link>
@@ -521,17 +506,6 @@ class HeaderPermissionMenu extends Component {
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
-                        {/* <li onClick={() => {this.clearEvents()}}>
-                            <Link className="text-left">
-                                <span>
-                                    <Translate
-                                        content="logout"
-                                        className="text-white"
-                                        component={Text}
-                                    />
-                                </span>
-                            </Link>
-                        </li> */}
                         <LogoutApp clearEvents={()=>this.clearEvents()} />
 
                     </ul>
