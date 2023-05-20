@@ -131,6 +131,9 @@ class Header extends Component {
   onMenuItemClick = (menuitem, menuKey) => {
     handleHeaderProfileMenuClick(menuitem, menuKey);
   }
+  handleAuditLogClick=()=>{
+    this.props.history.push("/auditLogs")
+  }
   render() {
     const userProfileMenu = (
       <Menu>
@@ -145,6 +148,15 @@ class Header extends Component {
             onClick={() => this.userProfile()}
           />
           <ul className="drpdwn-list">
+            <li
+              onClick={() => window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')}
+            >
+              <Link>
+
+                <div>Onboarding</div>
+                <span className="icon md rarrow-white" />
+              </Link>
+            </li>
             <li
               onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
             >
@@ -178,7 +190,7 @@ class Header extends Component {
               </Popover>
             </li>
             <li
-            onClick={()=>this.props.history.push("/auditLogs")}
+            onClick={ this.handleAuditLogClick }
             >
               <Link>
                 <Translate

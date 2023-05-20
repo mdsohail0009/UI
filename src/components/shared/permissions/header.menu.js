@@ -372,6 +372,15 @@ class HeaderPermissionMenu extends Component {
                         onClick={() => this.userProfile()}
                     />
                     <ul className="drpdwn-list">
+                    <li
+                           onClick={() => window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')}
+                        >
+                            <Link>
+                           
+                            <div>Onboarding</div>
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
                         <li
                             onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                         >
@@ -405,7 +414,6 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                             onClick={() => this.props.history.push("/auditlogs")}
 
                         >
