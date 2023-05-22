@@ -39,6 +39,32 @@ const VideoTutorials = () => {
                         <thead><tr className="table-header-row">
                             <th className="text-center" colSpan={6} >Video Tutorials</th>
                         </tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><Link to="https://suissebase.storylane.io/share/w4hd30rkwqdb">Open suisseBase Account</Link></td>
+                                <td><Link to="https://suissebase.storylane.io/share/sfdljrshshom">Manual Fiat Whitelist</Link></td>
+                                <td><Link to="https://suissebase.storylane.io/share/hnozvm5vumbx">Manual Crypto Whitelist</Link></td>
+                               
+                            </tr>
+                            <tr>
+                                <td><Link to=" https://suissebase.storylane.io/share/e9qe9m7z2fwg">Open EUR SEPA Personal Account</Link></td>
+                                <td><Link to=" https://suissebase.storylane.io/share/mink44eqbpav">Send Fiat</Link></td>
+                                <td><Link to=" https://suissebase.storylane.io/share/xqooxq1r0rnf">Send Crypto</Link></td>
+                               
+                            </tr>
+                            <tr>
+                                <td><Link to=" https://suissebase.storylane.io/share/bu5oh2agvwsy">Buy/Sell Crypto</Link></td>
+                                <td><Link to="https://suissebase.storylane.io/share/wyduztkt8usn">Customer ID</Link></td>
+                                <td><Link to="https://suissebase.storylane.io/share/dvjwm0s5unkb">Download SuisseBase Referral Letter</Link></td>
+                               
+                            </tr>
+                            <tr>
+                                <td><Link to="https://suissebase.storylane.io/share/dnhvkqrlklvs">Partner Referral System</Link></td>
+                                <td><Link to=" https://suissebase.storylane.io/share/1mflfx62bfm4">Upload Documents</Link></td>
+                                <td></td>
+                               
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
