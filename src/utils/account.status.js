@@ -1,5 +1,5 @@
 import { Component } from "react";
-import pending from '../assets/images/pending1.png';
+import spinner from '../assets/images/Spinner.gif';
 import Acsacnner from '../../src/assets/images/scannerac.jpg';
 import AcsacnnerIo from '../../src/assets/images/scannerIo.png'
 
@@ -9,7 +9,7 @@ class AccountStatus extends Component {
       {this.props.customerState?.customerState == "Under Review" ? (
         <div className='sumSub-confirm text-white align-center'>
           <div className='text-center cust-sumsub-font'>
-            <img src={pending} className="confirm-icon" alt={"success"} />
+            <img src={spinner} className="confirm-icon" alt={"success"} />
             <div className='sumSub-review'>
               {this.props.customerState?.customerState === "Under Review" ? "Your account is under review" : <>Your account approval is in progress.
                 <p className="approve-email">
@@ -41,7 +41,7 @@ class AccountStatus extends Component {
       ) : (
         <div className='sumSub-confirm text-white text-center'>
           <div className="text-center">
-          <img src={pending} className="confirm-icon" alt={"success"} /><br />
+          <img src={spinner} className="confirm-icon" alt={"success"} /><br />
           <span className='sumSub-review'>{this.props.customerState?.customerState === "Under Review" ? "Your account is under review state" : <>Your account approval is in progress.
             <p className="approve-email">
               Contact our Customer success at <a href={`mailto: ${process.env.REACT_APP_ONBOARDING}`}>{process.env.REACT_APP_ONBOARDING}</a> for more information.</p></>}</span></div>
