@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Alert } from 'antd';
+import { Table, Alert,Row,Col } from 'antd';
 import { Link } from "react-router-dom";
 import {getVideoTutorials} from './api';
 import apicalls from '../../api/apiCalls';
@@ -33,24 +33,24 @@ const VideoTutorials = () => {
     return (
         <>
         {console.log(tutorialData,"tutorialData")}
-            <h1> this is a video tutorials</h1>
+            
 
             <div className="main-container">
-
+            
                 <div className="backbtn-arrowmb"><Link to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
-
+                <h1 className='grid-title'>Video Tutorials</h1>
                 {/* {error && <Alert type="error" showIcon closable={false} description={error} />} */}
                 <div className="table-scroll responsive_table">
-                    <table className="commision-table table-border edit-commition-table view-commition-table" border="1">
-                        <thead><tr className="table-header-row">
-                            <th className="text-center" colSpan={6} >Video Tutorials</th>
-                        </tr></thead>
+                    <div className="video-section" >
+                        <div><div className="table-header-row">
+                            <p className="text-center text-white m-0 p-16" colSpan={6} >Video Tutorials</p>
+                        </div></div>
                         
-                        <tbody>
+                        <Row className='video-tutorials'>
                         {tutorialData.map((item) => 
                         
-                            <tr >
-                                <td className="text-center text-white">
+                            <Col sm={12} md={8} className='video-block'>
+                                <div className="text-white">
                                 <label >
                                     <a href={item.value}
                                         target="_blank">
@@ -59,59 +59,19 @@ const VideoTutorials = () => {
                                     
                                     <span></span>{" "}
                                 </label>
-                                </td>
-                            </tr>
+                                </div>
+                            </Col>
                             
                         )
                         }
-                            {/* <tr>
-                                <td><Link to="https://suissebase.storylane.io/share/w4hd30rkwqdb">Open suisseBase Account</Link></td>
-                                <td><Link to="https://suissebase.storylane.io/share/sfdljrshshom">Manual Fiat Whitelist</Link></td>
-                                <td><Link to="https://suissebase.storylane.io/share/hnozvm5vumbx">Manual Crypto Whitelist</Link></td>
-                               
-                            </tr>
-                            <tr>
-                                <td><Link to=" https://suissebase.storylane.io/share/e9qe9m7z2fwg">Open EUR SEPA Personal Account</Link></td>
-                                <td><Link to=" https://suissebase.storylane.io/share/mink44eqbpav">Send Fiat</Link></td>
-                                <td><Link to=" https://suissebase.storylane.io/share/xqooxq1r0rnf">Send Crypto</Link></td>
-                               
-                            </tr>
-                            <tr>
-                                <td><Link to=" https://suissebase.storylane.io/share/bu5oh2agvwsy">Buy/Sell Crypto</Link></td>
-                                <td><Link to="https://suissebase.storylane.io/share/wyduztkt8usn">Customer ID</Link></td>
-                                <td><Link to="https://suissebase.storylane.io/share/dvjwm0s5unkb">Download SuisseBase Referral Letter</Link></td>
-                               
-                            </tr>
-                            <tr>
-                                <td><Link to="https://suissebase.storylane.io/share/dnhvkqrlklvs">Partner Referral System</Link></td>
-                                <td><Link to=" https://suissebase.storylane.io/share/1mflfx62bfm4">Upload Documents</Link></td>
-                                <td></td>
-                               
-                            </tr> */}
-                        </tbody>
+                           
+                        </Row>
                         
-                    </table>
+                    </div>
                 </div>
             </div>
             {loader &&<Loader/>}
-            <Table className="video_tutorials">
-                <tbody>
-                    {/* <tr>
-                        {tutorialData.map((item) => 
-                            <td className="text-center text-white">
-                               <Link></Link>
-                                <label >
-                                     {item.name}
-                                    <span></span>{" "}
-                                </label>
-                            </td>
-                        )
-                        }
-                      
-
-                    </tr> */}
-                </tbody>
-            </Table>
+          
         </>
     )
 }
