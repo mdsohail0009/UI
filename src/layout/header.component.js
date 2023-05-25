@@ -147,6 +147,9 @@ class Header extends Component {
   onMenuItemClick = (menuitem, menuKey) => {
     handleHeaderProfileMenuClick(menuitem, menuKey);
   }
+  handleVideoClick=()=>{
+    this.props.history.push("/videoTutorials")
+  }
   render() {
     const userProfileMenu = (
       <Menu>
@@ -162,11 +165,11 @@ class Header extends Component {
           />
           <ul className="drpdwn-list">
             <li
-              onClick={() => window.open('https://app.novahq.com/start/transaction?entity=innoceptsltd&template=2b9de6fb-bfbe-4380-bbe4-bba0eaa1ca86', '_blank')}
+              onClick={() => window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')}
             >
               <Link>
 
-              <div>Upgrade Your Account</div>
+                <div>Upgrade Your Account</div>
                 <span className="icon md rarrow-white" />
               </Link>
             </li>
@@ -258,7 +261,7 @@ class Header extends Component {
               </Link>
             </li>
             <li
-              onClick={() => this.props.history.push("/videoTutorials")}
+              onClick={() => this.handleVideoClick()}
             >
               <Link className="text-left">
                 <span>
