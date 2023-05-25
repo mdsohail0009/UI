@@ -385,6 +385,9 @@ class HeaderPermissionMenu extends Component {
     handleAuditLogClick=()=>{
         this.props.history.push("/auditLogs")
       }
+      handleVideoClick=()=>{
+        this.props.history.push("/videoTutorials")
+      }
     render() {
         const userProfileMenu = (
             <Menu>
@@ -508,6 +511,18 @@ class HeaderPermissionMenu extends Component {
                                 </span>
                                 <span className="icon md rarrow-white" />
                             </Link>
+                        </li>
+                        <li
+                            onClick={() => this.handleVideoClick()}
+                        >
+                            <Link className="text-left">
+                                <span>
+                                    Video Tutorials
+                                </span>
+                                <span className="icon md rarrow-white" />
+
+                            </Link>
+
                         </li>
                         <LogoutApp clearEvents={()=>this.clearEvents()} />
 
