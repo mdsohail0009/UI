@@ -166,7 +166,7 @@ class Header extends Component {
             >
               <Link>
 
-                <div>Onboarding</div>
+                <div>Upgrade Your Account</div>
                 <span className="icon md rarrow-white" />
               </Link>
             </li>
