@@ -147,6 +147,9 @@ class Header extends Component {
   onMenuItemClick = (menuitem, menuKey) => {
     handleHeaderProfileMenuClick(menuitem, menuKey);
   }
+  handleVideoClick=()=>{
+    this.props.history.push("/videoTutorials")
+  }
   render() {
     const userProfileMenu = (
       <Menu>
@@ -256,6 +259,18 @@ class Header extends Component {
                 </span>
                 <span className="icon md rarrow-white" />
               </Link>
+            </li>
+            <li
+              onClick={() => this.handleVideoClick()}
+            >
+              <Link className="text-left">
+                <span>
+                  Video Tutorials
+                </span>
+                <span className="icon md rarrow-white" />
+
+              </Link>
+
             </li>
             <LogoutApp />
           </ul>
