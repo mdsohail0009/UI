@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs } from 'antd';
+import { Select, Input, Row, Col, Form, Button, Typography, List, Image, Alert, Spin, Empty,Radio,Tabs,Tooltip } from 'antd';
 import apicalls from "../../api/apiCalls";
 import AddressDocumnet from "../addressbook.component/document.upload";
 import oops from '../../assets/images/oops.png'
@@ -817,7 +817,8 @@ selectsCurrency=(item)=>{
                       {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
         
           <Row gutter={[16, 16]} className="align-center send-crypto-err mx-4">
-          <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="p-relative">
+          <Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip>
             <Form.Item
               className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
               name="amount"
