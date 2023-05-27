@@ -22,7 +22,6 @@ import {
 	clearCryptoValues,
 } from '../../reducers/addressBookReducer';
 import { getScreenName } from '../../reducers/feturesReducer';
-import AccountStatus from '../../utils/account.status';
 
 const { Title,Paragraph } = Typography;
 class Home extends Component {
@@ -146,7 +145,6 @@ class Home extends Component {
                        
                     </Col>
                 </Row>
-                <AccountStatus/>
                 <Drawer
           destroyOnClose={true}
           title={[<div className="side-drawer-header" key={""}>
