@@ -48,6 +48,16 @@ const getmemeberInfo = () => {
 const getIpRegisteryData = () => {
     return async (dispatch) => {
         await apiCalls.getIpRegistery().then((res) => {
+            var userAgent = window.navigator.userAgent;
+            var Browser = userAgent.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[1];
+            var version = userAgent.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[2];
+            var osRegex = /(Windows NT|Mac OS X|Linux|iPhone|iPad|iPod|Android)[^\s;)]*/i;
+            var osMatch = userAgent.match(osRegex);    
+            var operatingSystem = osMatch ? osMatch[0] : "Unknown";
+            const start = userAgent.indexOf('(') + 1;
+            const end = userAgent.indexOf(')');
+            const deviceInfo = userAgent.substring(start, end);
+            const deviceName = deviceInfo.split(';')[0].trim();
             if (res.ok) {
                 let ipInfo = {
                     "Ip": res.data.ip,
@@ -59,11 +69,11 @@ const getIpRegisteryData = () => {
                         "latitude": res.data?.latitude,
                         "longitude": res.data?.longitude
                     },
-                    "Browser": res.data?.user_agent?.name,
+                    "Browser": Browser,
                     "DeviceType": {
-                        "name": res.data.user_agent?.device?.name,
-                        "type": res.data?.user_agent?.os?.type,
-                        "version": res.data?.user_agent?.os?.name + ' ' + res.data?.user_agent?.os?.version
+                        "name": deviceName,
+                        "type": res.data?.type,
+                        "version":operatingSystem + " " + version
                     }
                 }
                 dispatch(fetchtrackauditlogs(ipInfo));

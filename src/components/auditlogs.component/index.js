@@ -424,10 +424,10 @@ class AuditLogs extends Component {
               <Text className="summarybal">Device Name</Text>
               <Text className="summarybal">{logRowData?.deviceType?.name}</Text>
             </div>}
-            {/* <div className="coin-info">
+            <div className="coin-info">
               <Text className="summarybal">Device Version</Text>
               <Text className="summarybal">{logRowData?.deviceType?.version?.replace("null","")}</Text>
-            </div> */}
+            </div>
             </>}</>)}
 
         </Drawer>
