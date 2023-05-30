@@ -113,7 +113,6 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           success("Send verification details saved successfully")
           setErrorMsg(null)
           setError(null)
-          // useDivRef.current.scrollIntoView();
           setIsLoading(false)
 
         } else if(email||phone||factor||live===false){
@@ -294,7 +293,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
        
         <Form>
           <Row gutter={[16, 16]}>
-            <Col xs={24} md={24} xl={24} xxl={24}>
+            {/* <Col xs={24} md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16 ">
                 <label className="custom-checkbox c-pointer cust-check-outline">
                   <Input
@@ -312,7 +311,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   className="security-label-style" style={{ flex: 1 }}
                 />
               </div>
-            </Col>
+            </Col> */}
             <Col xs={24} md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox c-pointer cust-check-outline">

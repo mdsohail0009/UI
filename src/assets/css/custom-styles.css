@@ -1042,6 +1042,9 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .align-declaration .declaration-content{margin-top: 50px;}
 .batch-upload .docnames{text-overflow: ellipsis; overflow: hidden;}
 .grid-content{color: var(--gridcontent);}
+.video-block{padding: 8px;border: 1px solid var(--gridborder);}
+.video-section{border: 1px solid var(--gridborder);border-radius: 6px;}
+.video-section p{padding: 8px;background-color: var(--gridheader);}
 /*@media start*/
 @media (min-width: 768px){
     .sumSub-confirm{display: flex;justify-content: center;}
