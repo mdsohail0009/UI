@@ -132,7 +132,7 @@ class ProfileInfo extends Component {
     const { Title, Text } = Typography;
     return (
       <>
-      <div className="">
+      <div className="main-container ">
         {this.state.errorMessage !== null && (
           <Alert
             className="mb-12  profile-alert-style"
@@ -186,6 +186,7 @@ class ProfileInfo extends Component {
           )}
         </div>
         </div>
+        {process.env.REACT_APP_ACCOUNT_USER_DOWNLOAD==="true" &&
         <div className="dwnl-content-style">
          
           {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <span>
@@ -195,7 +196,7 @@ class ProfileInfo extends Component {
             </span>}
            
           <Text className="download-content">Download reference confirmation letter</Text>
-        </div>
+        </div>}
         </div>
         <div className="basic-info basicprofile-info">
           <Title className="basicinfo">
@@ -243,24 +244,8 @@ class ProfileInfo extends Component {
                   <p className="profile-value" style={{ flexGrow: 12 }}>
                     {this.props.userConfig.firstName || "--"}
                   </p>
-                  {/* <div></div> */}
                 </div>
               </li>
-              {/* <li className="profileinfo">
-              <div className="profile-block ">
-                <label className="profile-label">
-                  <Translate
-                    content="MiddleName"
-                    component={Text}
-                    className="profile-label"
-                  />
-                </label>
-                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                  {this.props.userConfig.middleName || "--"}
-                </p>
-                <div></div>
-              </div>
-            </li> */}
               <li className="profileinfo">
                 <div className="profile-block ">
                   <label className="profile-label">
@@ -273,26 +258,8 @@ class ProfileInfo extends Component {
                   <p className="profile-value" style={{ flexGrow: 12 }}>
                     {this.props.userConfig?.lastName || "--"}
                   </p>
-                  {/* <div></div> */}
                 </div>
               </li></>}
-            {/* <li className="profileinfo">
-              <div className="profile-block">
-                <label className="profile-label">
-                  <Translate
-                    content="Birthday"
-                    component={Text}
-                    className="profile-label"
-                  />
-                </label>
-                <p className="profile-value" style={{ flexGrow: 12 }}>
-                  {this.props.userConfig.dob != null ? <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}
-                  </Moment> : "--"}
-                </p>
-                <div></div>
-              </div>
-            </li> */}
-
             <li className="profileinfo">
               <div className="profile-block">
                 <label className="profile-label">
@@ -305,7 +272,6 @@ class ProfileInfo extends Component {
                 <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.depositReference || "--"}
                 </p>
-                {/* <div></div> */}
               </div>
             </li>
           </ul>
@@ -331,7 +297,6 @@ class ProfileInfo extends Component {
                 <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.country || "--"}
                 </p>
-                {/* <div></div> */}
               </div>
             </li>
             <li className="profileinfo">
@@ -346,7 +311,6 @@ class ProfileInfo extends Component {
                 <p className="profile-value" style={{ flexGrow: 12 }}>
                   {this.props.userConfig.email || "--"}
                 </p>
-                {/* <div></div> */}
               </div>
             </li>
             <li className="profileinfo">
@@ -360,10 +324,9 @@ class ProfileInfo extends Component {
                 </label>
                 <div style={{ flexGrow: 12 }}>
                   <p className="profile-value">
-                    {this.props.userConfig.phoneNumber || "--"}
+                    {this.props.userConfig.phoneNo || "--"}
                   </p>
                 </div>
-                {/* <div></div> */}
               </div>
             </li>
           </ul>

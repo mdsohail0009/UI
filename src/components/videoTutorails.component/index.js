@@ -24,8 +24,9 @@ const VideoTutorials = () => {
             setError(apicalls.isErrorDispaly(response));
         }
     }
-    return (
-        <>
+    return <>
+        
+         {loader ?<Loader/>:
                    <div className="main-container">
                    <div className="backbtn-arrowmb"><Link to="/cockpit"><span className="icon md leftarrow c-pointer backarrow-mr"></span><span className="back-btnarrow c-pointer">Back</span></Link></div>
                 <h1 className='grid-title'>Video Tutorials</h1>
@@ -53,9 +54,9 @@ const VideoTutorials = () => {
                        </Row>
                     </div>
                 </div>
-            </div>
-            {loader &&<Loader/>}
+            </div>}
+         
         </>
-    )
+    
 }
 export default VideoTutorials;

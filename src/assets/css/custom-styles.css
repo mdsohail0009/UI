@@ -1141,9 +1141,9 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .swap-entryvalue.send-crypto-style .ant-form-item-control {display: flex;flex-direction: inherit;}
 /* commissions  end */
 /* .video-tutorials{display: flex;flex-wrap: wrap;} */
-.video-block{padding: 8px;border: 1px solid rgb(255 255 255 / 15%);}
-.video-section{border: 1px solid rgb(255 255 255 / 15%);border-radius: 6px;}
-.video-section p{padding: 8px;background: #242424;}
+.video-block{padding: 8px;border: 1px solid var(--gridborder);}
+.video-section{border: 1px solid var(--gridborder);border-radius: 6px;}
+.video-section p{padding: 8px;background-color: var(--gridheader);}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
@@ -1378,6 +1378,8 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .new-crypto-style .cytpo-list-style .crypto-card-design .price-valgreen{margin-left: 0px;padding: 4px;}
     .transaction-panel, .crypto-style{margin-top: 30px;}
     .table-border td { min-width: 150px;    }
+    .sumSub-confirm{width:auto;height: auto;}
+    .cust-sumsub-font{width: auto;}
 }
 @media (min-width: 375px){
     .flex-1 .ant-form-item-label > label::after{right: 78px !important;}
@@ -1391,6 +1393,8 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 
 @media (min-width: 768.1px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
+    .sumSub-confirm{display: flex;justify-content: center;}
+   
 }
 .mb-8{margin-bottom: 8px !important;}
 .mt-0{margin-top: 0 !important;}
