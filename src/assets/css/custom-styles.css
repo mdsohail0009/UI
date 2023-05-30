@@ -1141,9 +1141,9 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .swap-entryvalue.send-crypto-style .ant-form-item-control {display: flex;flex-direction: inherit;}
 /* commissions  end */
 /* .video-tutorials{display: flex;flex-wrap: wrap;} */
-.video-block{padding: 8px;border: 1px solid rgb(255 255 255 / 15%);}
-.video-section{border: 1px solid rgb(255 255 255 / 15%);border-radius: 6px;}
-.video-section p{padding: 8px;background: #242424;}
+.video-block{padding: 8px;border: 1px solid var(--gridborder);}
+.video-section{border: 1px solid var(--gridborder);border-radius: 6px;}
+.video-section p{padding: 8px;background-color: var(--gridheader);}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
