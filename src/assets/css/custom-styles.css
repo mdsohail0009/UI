@@ -1140,6 +1140,10 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .swap-entryvalue.send-crypto-style .ant-form-item-control-input {min-height: 120px;}
 .swap-entryvalue.send-crypto-style .ant-form-item-control {display: flex;flex-direction: inherit;}
 /* commissions  end */
+/* .video-tutorials{display: flex;flex-wrap: wrap;} */
+.video-block{padding: 8px;border: 1px solid var(--gridborder);}
+.video-section{border: 1px solid var(--gridborder);border-radius: 6px;}
+.video-section p{padding: 8px;background-color: var(--gridheader);}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
@@ -1235,6 +1239,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .gridLink.batch-filename{padding-left: 0;}
 }
 @media (min-width: 1400px){
+    .video-block{flex: 421.9px;}
     .transctns-grid.preview-grid .ant-drawer-header .side-drawer-header,.transctns-grid.preview-grid .sub-heading,.batch-btns{max-width: 1300px; margin: 0 auto;}
     .main-container{max-width: 1300px; margin: 0 auto;}
     .iban-list .ant-list-items{display: flex;}
@@ -1274,8 +1279,10 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .sideropen .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: transparent;}
     .sideropen .list-item.ant-menu-item-selected .ant-menu-title-content{min-width: 150px !important; padding: 8px 5px 8px 5px !important}
     .login-user{width: 100%;padding: 2px 0;}  
+    .video-block .text-white{text-align: center;}
 }
 @media (max-width: 767.98px){
+    .video-tutorials{display: block;}
     .newSpace{display: flex; padding-top: 14px;}
     .field-width{width:120px !important;}
     .new-custom-radiobtn.mb-24 label:first-child{margin-left:-3px; margin-right:10px;}
