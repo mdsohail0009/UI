@@ -1140,6 +1140,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .gridLink.batch-filename{padding-left: 0;}
 }
 @media (min-width: 1400px){
+    .video-block{flex: 421.9px;}
     .transctns-grid.preview-grid .ant-drawer-header .side-drawer-header,.transctns-grid.preview-grid .sub-heading,.batch-btns{max-width: 1300px; margin: 0 auto;}
     .main-container{max-width: 1300px; margin: 0 auto;}
     .iban-list .ant-list-items{display: flex;}
@@ -1179,8 +1180,10 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .sideropen .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: transparent;}
     .sideropen .list-item.ant-menu-item-selected .ant-menu-title-content{min-width: 150px !important; padding: 8px 5px 8px 5px !important}
     .login-user{width: 100%;padding: 2px 0;}  
+    .video-block .text-white{text-align: center;}
 }
 @media (max-width: 767.98px){
+    .video-tutorials{display: block;}
     .sumSub-confirm{width:auto;height: auto;}
     .cust-sumsub-font{width: auto;}
     .new-viewpage .search-box{margin-left: 0;}
