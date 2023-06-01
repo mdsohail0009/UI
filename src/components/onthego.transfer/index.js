@@ -77,6 +77,7 @@ class OnthegoFundTransfer extends Component {
     statingAmout:null,
     showAmount:null,
     withdrawalAmount:null,
+    isValidation:false,
   }
   componentDidMount() {
     this.verificationCheck();
@@ -161,7 +162,7 @@ class OnthegoFundTransfer extends Component {
   saveCommissionsDetails=async(e)=>{
     if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
       {
-        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false})
+        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false,isValidation:false})
         let obj ={
           CustomerId:this.props.userProfile.id,      
           amount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
@@ -193,7 +194,7 @@ class OnthegoFundTransfer extends Component {
               this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
             }
         }else {
-          this.setState({ ...this.state, isLoading: false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
+          this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
           this.amountScrool.current.scrollIntoView();
       }
       if(typeof this.enteramtForm.current.getFieldsValue().amount=="string" && !this.enteramtForm.current.getFieldsValue()?.amount?.includes(".")){
@@ -404,7 +405,7 @@ saveWithdrawdata = async () => {
           this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(response) })
         }
     } else {
-        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res) })
+        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res),addressLoader:false })
         this.amountScrool.current.scrollIntoView();
     }
 
@@ -537,7 +538,7 @@ handleReasonTrnsfer=(e)=>{
     if (
       !['myself', '1stparty', 'ownbusiness'].includes(
         this.state.selectedPayee.addressType?.toLowerCase(),
-      )
+      ) && !this.state.isValidation
     ) {
       this.setState(
         {
