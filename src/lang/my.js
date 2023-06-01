@@ -643,5 +643,5 @@ export default {
 	personal_iban_transafer:"Transferencia personal de IBAN",
 	fiat_transfer_success:"Volver a Transfer",
 	suissebase_credit:"SuisseBase Credits",
-	address_hint_text_2: "Make sure to choose the right cryptocurrency.",
+	address_hint_text_2: "Hindi maikredito ang deposito na mas mababa sa minimum.",
 };
