@@ -169,38 +169,6 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           showIcon
         />
       )}
-
-      {/* <div className="basicprofile-info">
-        <div className="security-align">
-          <div>
-        <Translate
-          content="TwoFactorAuthentication"
-          component={Title}
-          className="basicinfo"
-        />
-        <Translate
-          content="TwoFactorAuthentication_tag"
-          component={Paragraph}
-          className="basic-decs"
-        />
-        </div>
-        <ul className="profile-ul">
-          <li className="profileinfo">
-            <div className="profile-block">
-          
-              <div>
-                <Switch
-                  onChange={(status) => enableDisable2fa(status)}
-                  checked={twoFA?.isEnabled}
-                  size="medium"
-                  className="custom-toggle"
-                />
-              </div>
-            </div>
-          </li>
-        </ul>
-        </div>
-      </div> */}
       <div className="basicprofile-info">
         <Translate
           content="change_pass_word"
@@ -293,7 +261,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
        
         <Form>
           <Row gutter={[16, 16]}>
-            <Col xs={24} md={24} xl={24} xxl={24}>
+            {/* <Col xs={24} md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16 ">
                 <label className="custom-checkbox c-pointer cust-check-outline">
                   <Input
@@ -311,7 +279,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   className="security-label-style" style={{ flex: 1 }}
                 />
               </div>
-            </Col>
+            </Col> */}
             <Col xs={24} md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox c-pointer cust-check-outline">
