@@ -18,10 +18,10 @@ class SbCard extends Component {
                     <Button
                           type="primary"
                           className="custom-btn prime"
-                          style={{width:'118px'}}
+                          style={{width:'140px'}}
                           onClick={this.handleApplyCard}
                         >
-                          Apply Card
+                          Apply For A Card
                         </Button>
                     </div>
                   
