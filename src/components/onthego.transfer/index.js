@@ -75,7 +75,9 @@ class OnthegoFundTransfer extends Component {
     withdrawValidations:null,
     isToggel:false,
     statingAmout:null,
-    showAmount:null
+    showAmount:null,
+    withdrawalAmount:null,
+    isValidation:false,
   }
   componentDidMount() {
     this.verificationCheck();
@@ -145,7 +147,6 @@ class OnthegoFundTransfer extends Component {
     }
     else{
          this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
-    
     }
   }
   getBankDetails=async()=>{
@@ -159,38 +160,41 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
-
     if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
       {
-        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false})
+        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false,isValidation:false})
         let obj ={
           CustomerId:this.props.userProfile.id,      
-          amount:this.enteramtForm.current.getFieldsValue().amount,    
+          amount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
           WalletCode:this.state.selectedCurrency,
           bankId:this.state.selectedbankobj[0]?.bankId, 
           isToggle:this.state.isToggel,
           showAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
+          withdrawalAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.withdrawalAmount,
         }
         let res = await saveCommissions(obj);
         if(res.ok){
           if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
             let newAmount=this.enteramtForm.current.getFieldsValue()?.amount?.includes(".");
             if(newAmount){
-              this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
+              this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
                 withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount || this.enteramtForm.current.getFieldsValue().amount,
-                isLoading:false,showAmount:res.data.showAmount});
+                isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount});
+                this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
             }else {
               this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
                 withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount.replace(/^0+/,"") || this.enteramtForm.current.getFieldsValue().amount,
-                isLoading:false,showAmount:res.data.showAmount});
-            }        
+                isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
+                this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
+            }      
           }else{
             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
               withdrawAmount: this.enteramtForm.current.getFieldsValue().amount,
-              isLoading:false,showAmount:res.data.showAmount});
-          }
+              isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
+              this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
+            }
         }else {
-          this.setState({ ...this.state, isLoading: false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false})
+          this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
           this.amountScrool.current.scrollIntoView();
       }
       if(typeof this.enteramtForm.current.getFieldsValue().amount=="string" && !this.enteramtForm.current.getFieldsValue()?.amount?.includes(".")){
@@ -330,6 +334,7 @@ saveWithdrawdata = async () => {
         obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
         obj["bankId"]=this.state.selectedbankobj[0].bankId;
         obj["info"] = JSON.stringify(this.props?.trackAuditLogData);
+        obj["isToggel"] = this.state?.isToggel;
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
@@ -400,7 +405,7 @@ saveWithdrawdata = async () => {
           this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(response) })
         }
     } else {
-        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res) })
+        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res),addressLoader:false })
         this.amountScrool.current.scrollIntoView();
     }
 
@@ -533,7 +538,7 @@ handleReasonTrnsfer=(e)=>{
     if (
       !['myself', '1stparty', 'ownbusiness'].includes(
         this.state.selectedPayee.addressType?.toLowerCase(),
-      )
+      ) && !this.state.isValidation
     ) {
       this.setState(
         {
@@ -597,12 +602,14 @@ selectsCurrency=(item)=>{
       let getAmt= this.enteramtForm?.current?.getFieldsValue()?.amount ;
       getAmt = typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
       let _formAmt =typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
-      let updateAmount= !this.state.isToggel ? (parseFloat(_formAmt) + parseFloat(this.state.getBanckDetails?.effectiveFee || 0)) : this.state.showAmount ;
+      let updateAmount= !this.state.isToggel ? this.state.showAmount : this.state.withdrawalAmount ;
       this.enteramtForm.current.setFieldsValue({amount:updateAmount});
       if(this.state.isToggel){
-        this.setState({...this.state,isToggel:false, amount: updateAmount, errorMessage: '',},()=>this.saveCommissionsDetails())
+        this.setState({...this.state,isToggel:false, 
+           errorMessage: '',},()=>this.saveCommissionsDetails())
       }else {
-        this.setState({...this.state,isToggel:true, amount: updateAmount, errorMessage: '',},()=>this.saveCommissionsDetails())
+        this.setState({...this.state,isToggel:true,
+           errorMessage: '',},()=>this.saveCommissionsDetails())
       }
     }
   renderStep = () => {
@@ -898,7 +905,7 @@ selectsCurrency=(item)=>{
                           <div className="summary-liststyle">Withdrawal Amount</div>
                           <div className="summarybal"><NumberFormat
                               decimalScale={2}
-                              value={`${this.state?.withdrawAmount}`}
+                              value={`${getBanckDetails?.showAmount}`}
                               thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
         </div>
        <div className="pay-list" style={{ alignItems: 'baseline' }}>
@@ -929,7 +936,7 @@ selectsCurrency=(item)=>{
         <div className="pay-list" style={{ alignItems: 'baseline' }}>
                           <div className="summary-liststyle">How Much Beneficiary Will Receive</div>
                           <div className="summarybal"><NumberFormat
-                              value={`${getBanckDetails?.amount}`}
+                              value={`${getBanckDetails?.amount}`}//amount
                               thousandSeparator={true} displayType={"text"} /> {`${this.state?.selectedCurrency}`}</div>
         </div></>
         </div>        
