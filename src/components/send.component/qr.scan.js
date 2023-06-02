@@ -160,7 +160,7 @@ class QRScan extends Component {
                 <div className='recive-share'>Share</div>
                 <div>
                 <WhatsappShareButton  url={`${process.env.REACT_APP_WEB_URL} \nThank you.`} 
-                title={ `Hello, I would like to share my ` + `${this.walletCode} ` + ` address for receiving: `+`\n${this.walletAddress}`+`\nPlease make sure you are using the correct protocol otherwise you are risking losing the funds.\nI am using Suissebase:`} >
+                title={ `Hello, I would like to share my ` + `${this.walletCode} ` + `address for receiving: `+`\n${this.walletAddress}`+`\nPlease make sure you are using the correct protocol otherwise you are risking losing the funds.\nI am using Suissebase:`} >
                 <span className='icon lg whats-app c-pointer'/>
                 </WhatsappShareButton>
                 <EmailShareButton url={`${process.env.REACT_APP_WEB_URL} \nThank you.`} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving: `+`  \n${this.walletAddress} \nPlease make sure you are using the correct protocol otherwise you are risking losing the funds. \nI am using Suissebase:`}  >
