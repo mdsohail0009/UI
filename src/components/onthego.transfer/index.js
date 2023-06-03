@@ -78,6 +78,7 @@ class OnthegoFundTransfer extends Component {
     showAmount:null,
     withdrawalAmount:null,
     isValidation:false,
+    previousAmountValue:null,
   }
   componentDidMount() {
     this.verificationCheck();
@@ -160,49 +161,85 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
-    if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
+    if((this.enteramtForm.current.getFieldsValue().amount && this.state.selectedBank)){
       {
         this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false,isValidation:false})
         let obj ={
           CustomerId:this.props.userProfile.id,      
-          amount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
+          amount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount ||this.state.withdrawAmount && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
           WalletCode:this.state.selectedCurrency,
           bankId:this.state.selectedbankobj[0]?.bankId, 
           isToggle:this.state.isToggel,
           showAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
           withdrawalAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.withdrawalAmount,
         }
-        let res = await saveCommissions(obj);
-        if(res.ok){
-          if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
-            let newAmount=this.enteramtForm.current.getFieldsValue()?.amount?.includes(".");
-            if(newAmount){
-              this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
-                withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount || this.enteramtForm.current.getFieldsValue().amount,
-                isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount});
-                this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
-            }else {
-              this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
-                withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount.replace(/^0+/,"") || this.enteramtForm.current.getFieldsValue().amount,
-                isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
-                this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
-            }      
-          }else{
-            this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
-              withdrawAmount: this.enteramtForm.current.getFieldsValue().amount,
-              isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
+        // if(this.state.previousAmountValue)
+        if(/^\d*\.?\d*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^\./.test(this.enteramtForm.current.getFieldsValue()?.amount)){
+          let res = await saveCommissions(obj);
+          if(res.ok){
+            this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
+              withdrawAmount:this.enteramtForm.current.getFieldsValue().amount,
+              isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,previousAmountValue:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount});
               this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
-            }
-        }else {
-          this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
+          }  else {
+                    this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
+                    this.amountScrool.current.scrollIntoView();
+                } 
+        }else{
+          this.setState({ ...this.state, isLoading: false,addressLoader:false, 
+           // errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly("amount"),
+            getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
           this.amountScrool.current.scrollIntoView();
-      }
-      if(typeof this.enteramtForm.current.getFieldsValue().amount=="string" && !this.enteramtForm.current.getFieldsValue()?.amount?.includes(".")){
-        this.enteramtForm.current.setFieldsValue({amount:this.enteramtForm.current.getFieldsValue()?.amount?.replace(/^0+/,``) || this.enteramtForm.current.getFieldsValue().amount})
-      }     
+        }
+      
         }
     }  
   }
+  // saveCommissionsDetails=async(e)=>{
+  //   debugger
+  //   if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
+  //     {
+  //       this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false,isValidation:false})
+  //       let obj ={
+  //         CustomerId:this.props.userProfile.id,      
+  //         amount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
+  //         WalletCode:this.state.selectedCurrency,
+  //         bankId:this.state.selectedbankobj[0]?.bankId, 
+  //         isToggle:this.state.isToggel,
+  //         showAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
+  //         withdrawalAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.withdrawalAmount,
+  //       }
+  //       let res = await saveCommissions(obj);
+  //       if(res.ok){
+  //         if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
+  //           let newAmount=this.enteramtForm.current.getFieldsValue()?.amount?.includes(".");
+  //           if(newAmount){
+  //             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
+  //               withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount || this.enteramtForm.current.getFieldsValue().amount,
+  //               isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount});
+  //               this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
+  //           }else {
+  //             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
+  //               withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount.replace(/^0+/,"") || this.enteramtForm.current.getFieldsValue().amount,
+  //               isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
+  //               this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
+  //           }      
+  //         }else{
+  //           this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
+  //             withdrawAmount: this.enteramtForm.current.getFieldsValue().amount,
+  //             isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
+  //             this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
+  //           }
+  //       }else {
+  //         this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
+  //         this.amountScrool.current.scrollIntoView();
+  //     }
+  //     if(typeof this.enteramtForm.current.getFieldsValue().amount=="string" && !this.enteramtForm.current.getFieldsValue()?.amount?.includes(".")){
+  //       this.enteramtForm.current.setFieldsValue({amount:this.enteramtForm.current.getFieldsValue()?.amount?.replace(/^0+/,``) || this.enteramtForm.current.getFieldsValue().amount})
+  //     }     
+  //       }
+  //   }  
+  // }
   handleBankChange=(e)=>{
     const newRecords = this.state.fiatBanks.filter(record => record.bankName === e);
   this.setState({...this.state,selectedBank:e,effectiveType:false,selectedbankobj:newRecords},()=> this.saveCommissionsDetails(e))
@@ -603,7 +640,7 @@ selectsCurrency=(item)=>{
       getAmt = typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
       let _formAmt =typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
       let updateAmount= !this.state.isToggel ? this.state.showAmount : this.state.withdrawalAmount ;
-      this.enteramtForm.current.setFieldsValue({amount:updateAmount});
+      this.enteramtForm.current.setFieldsValue({amount: getAmt && updateAmount});
       if(this.state.isToggel){
         this.setState({...this.state,isToggel:false, 
            errorMessage: '',},()=>this.saveCommissionsDetails())
@@ -861,7 +898,7 @@ selectsCurrency=(item)=>{
                   <span  className="btn-space">{this.state.selectedCurrency} ({this.state.selectedCurrencyAmount.toLocaleString()})</span>
                     }
                 onValueChange={() => {
-                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage:null, },)//getBanckDetails:null
+                  this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage:null,withdrawAmount:this.enteramtForm.current?.getFieldsValue().amount, },)//getBanckDetails:null
               }}
               onBlur={(e)=>this.saveCommissionsDetails(e)}
               />
