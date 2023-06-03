@@ -173,8 +173,7 @@ class OnthegoFundTransfer extends Component {
           showAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
           withdrawalAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.withdrawalAmount,
         }
-        // if(this.state.previousAmountValue)
-        if(/^\d*\.?\d*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^\./.test(this.enteramtForm.current.getFieldsValue()?.amount)){
+          if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
           let res = await saveCommissions(obj);
           if(res.ok){
             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
@@ -187,7 +186,6 @@ class OnthegoFundTransfer extends Component {
                 } 
         }else{
           this.setState({ ...this.state, isLoading: false,addressLoader:false, 
-           // errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly("amount"),
             getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
           this.amountScrool.current.scrollIntoView();
         }
@@ -195,51 +193,7 @@ class OnthegoFundTransfer extends Component {
         }
     }  
   }
-  // saveCommissionsDetails=async(e)=>{
-  //   debugger
-  //   if((this.enteramtForm.current.getFieldsValue().amount) && (this.state.selectedBank)){
-  //     {
-  //       this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false,isValidation:false})
-  //       let obj ={
-  //         CustomerId:this.props.userProfile.id,      
-  //         amount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
-  //         WalletCode:this.state.selectedCurrency,
-  //         bankId:this.state.selectedbankobj[0]?.bankId, 
-  //         isToggle:this.state.isToggel,
-  //         showAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.showAmount,
-  //         withdrawalAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount || this.state.withdrawalAmount,
-  //       }
-  //       let res = await saveCommissions(obj);
-  //       if(res.ok){
-  //         if(typeof this.enteramtForm.current.getFieldsValue().amount=="string"){
-  //           let newAmount=this.enteramtForm.current.getFieldsValue()?.amount?.includes(".");
-  //           if(newAmount){
-  //             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
-  //               withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount || this.enteramtForm.current.getFieldsValue().amount,
-  //               isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount});
-  //               this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
-  //           }else {
-  //             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
-  //               withdrawAmount:!this.state.isToggel && this.enteramtForm.current.getFieldsValue()?.amount.replace(/^0+/,"") || this.enteramtForm.current.getFieldsValue().amount,
-  //               isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
-  //               this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
-  //           }      
-  //         }else{
-  //           this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,
-  //             withdrawAmount: this.enteramtForm.current.getFieldsValue().amount,
-  //             isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,amount: res.data.showAmount,});
-  //             this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
-  //           }
-  //       }else {
-  //         this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm.current.getFieldsValue().amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
-  //         this.amountScrool.current.scrollIntoView();
-  //     }
-  //     if(typeof this.enteramtForm.current.getFieldsValue().amount=="string" && !this.enteramtForm.current.getFieldsValue()?.amount?.includes(".")){
-  //       this.enteramtForm.current.setFieldsValue({amount:this.enteramtForm.current.getFieldsValue()?.amount?.replace(/^0+/,``) || this.enteramtForm.current.getFieldsValue().amount})
-  //     }     
-  //       }
-  //   }  
-  // }
+
   handleBankChange=(e)=>{
     const newRecords = this.state.fiatBanks.filter(record => record.bankName === e);
   this.setState({...this.state,selectedBank:e,effectiveType:false,selectedbankobj:newRecords},()=> this.saveCommissionsDetails(e))
@@ -636,6 +590,7 @@ selectsCurrency=(item)=>{
 
   }
   handleToggle=()=>{
+    if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
       let getAmt= this.enteramtForm?.current?.getFieldsValue()?.amount ;
       getAmt = typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
       let _formAmt =typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
@@ -648,6 +603,7 @@ selectsCurrency=(item)=>{
         this.setState({...this.state,isToggel:true,
            errorMessage: '',},()=>this.saveCommissionsDetails())
       }
+    }
     }
   renderStep = () => {
     const { filterObj, pastPayees, isVarificationLoader, isVerificationEnable, isShowGreyButton,getBanckDetails,withdrawValidations,selectedCurrencyAmount } = this.state;
@@ -866,7 +822,7 @@ selectsCurrency=(item)=>{
             <Form.Item
               className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
               name="amount"
-              label={!this.state.isToggel ? "Withdrawal Amount" : "How Much Benficiary You will Receive"}
+              label={!this.state.isToggel ? "Withdrawal Amount" : "How Much Beneficiary You will Receive"}
               required
               rules={[
                 {
