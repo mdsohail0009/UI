@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 const {Title } = Typography;
 class SbCard extends Component {
     handleApplyCard=()=>{
-        window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')
+        window.open(process.env.REACT_APP_ACCOUNT_APPLY_CARD, '_blank')
     }
     render() {
         return (<>
