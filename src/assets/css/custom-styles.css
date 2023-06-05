@@ -413,7 +413,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .icon-space{margin-left: 12px;margin-bottom: 12px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
 .sb-card{border-radius: 20px;}
-.sb-innercard{padding:24px;}
+.sb-innercard{padding:24px;min-height: 255px;display: flex;justify-content: center;align-items: center;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
 .cardlogo-height{margin-bottom: 109px;}
