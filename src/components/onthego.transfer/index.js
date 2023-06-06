@@ -376,6 +376,9 @@ saveWithdrawdata = async () => {
       amount: amt,
       WalletCode: this.state.selectedCurrency,
       bankId:this.state.selectedbankobj[0]?.bankId,
+      isToggle:this.state.isToggel,
+      showAmount:this.state.showAmount,
+      withdrawalAmount:this.state.withdrawalAmount,
     }
     this.setState({ ...this.state, [loader]: true, errorMessage: null,addressLoader:true });
     const res = await validateAmount(obj);
