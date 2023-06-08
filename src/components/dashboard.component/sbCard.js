@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Typography,Button } from 'antd';
 import Translate from 'react-translate-component';
 import { withRouter } from 'react-router-dom';
-// import pending1 from '../../assets/images/pending1.png';
 import masterCard from '../../assets/images/mastercard.png';
 
 const {Title, Text } = Typography;
