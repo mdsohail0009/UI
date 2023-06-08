@@ -30,8 +30,11 @@ class SbCard extends Component {
                     </div>
                   
                 </div>
-                <div className="card-bottom-style d-flex align-center justify-content"><Text>World Elite</Text>
+                <div className="card-bottom-style d-flex  justify-content"><Text>World Elite</Text>
+                <div>
                 <img src={masterCard} alt={"masterCard"} />
+                <p className='text-center lg-fontsize text-white master-text fw-600'>mastercard</p>
+                </div>
                 </div>
                 </div>
         </>);

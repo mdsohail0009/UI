@@ -413,7 +413,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .icon-space{margin-left: 12px;margin-bottom: 12px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
 .sb-card{border-radius: 20px;min-height: 255px;}
-.sb-innercard{padding:24px;display: flex;justify-content: center;align-items: center;min-height: 190px;}
+.sb-innercard{padding:24px;display: flex;justify-content: center;align-items: center;min-height: 146px;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
 .cardlogo-height{margin-bottom: 109px;}
@@ -458,9 +458,10 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .db-titles.internal-titles{font-size: 36px !important;margin-top: 16px;}
 .ant-carousel .notices-content .slick-dots-bottom{bottom: -25px !important;}
 .card-text-style{text-align: right;padding: 10px 16px 0;}
-.card-text-style span, .card-bottom-style span{color: #fff !important;}
-.card-bottom-style{padding: 0px 16px 16px;}
-.card-bottom-style img{width: 60px;}
+.card-text-style span, .card-bottom-style span{color: var(--textWhite) !important;font-weight: 700;font-size: 16px;}
+.card-bottom-style{padding: 0px 16px 16px;align-items: flex-end;}
+.card-bottom-style img{width:80px;}
+.master-text{margin-bottom: 0 ;}
 /* Dashboard end */
 
 /*Buy/sell drawer start*/
