@@ -678,7 +678,7 @@ export default {
 	suissebase_title_crypto:"Suissebase Crypto Wallet",
 	Whitelisting_Status:"Whitelisting Status",
 	fait_walets:"SuisseBase Fiat Wallets",
-	sb_card_title:"Your card",
+	sb_card_title:"Your Card",
 	Dashboard:"Dashboard",
 	notices:"Notices",
 	personal_iban_transafer:"Personal IBAN Transfer",
