@@ -14,10 +14,11 @@ class SbCard extends Component {
         return (<>
              <Translate content="sb_card_title" component={Title} className="db-titles your-card" />
                 <div className='sb-card'>
+                   
                 <div className="card-text-style"><Text>Debit</Text></div>
                     <div className="sb-innercard">
                        
-                    <div> 
+                    <div className='cust-card-btn'> 
                     
                     <Button
                           type="primary"
@@ -37,6 +38,7 @@ class SbCard extends Component {
                 </div>
                 </div>
                 </div>
+                
         </>);
     }
 
