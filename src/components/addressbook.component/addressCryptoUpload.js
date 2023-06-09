@@ -228,7 +228,6 @@ class AddressCryptoDocument extends Component {
                                     "video/quicktime": true,
                                     "video/x-ms-wmv": true }
                                     if (fileType[file.type]) {
-                                        //this.setState({...this.state,documents:file.response})
                                         let { filesList: files } = this.state;
                                         files?.push(this.docDetail(file));
                                         this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
