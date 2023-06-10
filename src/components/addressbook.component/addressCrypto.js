@@ -165,14 +165,12 @@ if (res.ok){
 			this.useDivRef.current?.scrollIntoView(0, 0);
     }
     else if((values.isDocumentUpload===true && (this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| (data===true && values.isDocumentUpload===true)|| data===undefined)){
-     
       this.setState({
         ...this.state,
         errorMessage:"At least one document is required",
-        
       });
       this.useDivRef.current?.scrollIntoView(0, 0); 
-    }else if(this.state.details.docRepositories >25000000 ||(values.files?.file?.size>25000000) ){
+    }else if(this.state.details.docRepositories >25000000||this.state.details.backupWalletDocuments>25000000||(values.files?.file?.size>25000000) ){
       this.setState({
         ...this.state,
         errorMessage:"File size should not be greaterthan 25 MB.",
@@ -202,7 +200,6 @@ if (res.ok){
       backupWalletAddress:values.backupWalletAddress,
       backupWalletSource:values.backupWalletSource,
       backupOtherWallet:values.backupOtherWallet,
-      isDocumentUpload:values.isDocumentUpload,
       docRepositories: this.state.details.docRepositories,
       backupWalletDocuments:this.state.details.backupWalletDocuments,
       createdBy : this.props.userProfile?.userName,
@@ -216,12 +213,9 @@ if (res.ok){
     if (response.ok) {
       this.setState({ ...this.state, isBtnLoading: false,errorMessage:null })
       if ((window?.location?.pathname.includes('addressbook') || this.props.isSave)&& this.props.type === "manual") {
-        if(!(this.state.cryptoData.adressstate ==="Approved" 
-        && (this.state.cryptoData.isDocumentUpload===false ||values.isDocumentUpload===null))
-         ||(this.state.cryptoData.walletSource===null && (this.state.cryptoData.isOwnerOfWalletAddress ||this.state.cryptoData.isOwnerOfWalletAddress===null))){
+        if(this.state.cryptoData.adressstate !=="Approved" ||(this.state.cryptoData.walletSource===null && (this.state.cryptoData.isOwnerOfWalletAddress ||this.state.cryptoData.isOwnerOfWalletAddress===null))){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true,showDeclartionApproved: false,approvedAddress:false });
         }else if((obj.docRepositories?.length===0||obj.docRepositories?.length===undefined || this.state.cryptoData?.documents===undefined) && this.state.cryptoData.adressstate ==="Approved" 
-        && (this.state.cryptoData.isDocumentUpload===false ||values.isDocumentUpload===null||values.isDocumentUpload===false)
         ){
           this.setState({ ...this.state, errorMessage: null, isBtnLoading: false,showDeclartion:false, showDeclartionApproved: false,approvedAddress:true });
         }
