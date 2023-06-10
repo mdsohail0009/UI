@@ -160,7 +160,7 @@ const AddressCryptoView = (props) => {
 											</Col>)}
 
 										</Row>
-												<p className='mb-0 mt-20'>
+												<p className=' doc-label'>
 													<b>Documents</b></p>
         
 										{process.env.REACT_APP_ISTR == "true" &&<Row>
@@ -205,7 +205,7 @@ const AddressCryptoView = (props) => {
 													</Col>
 												))}
 							</Row>}
-												<p className='mb-0 mt-20'>
+												<p className=' doc-label'>
 													<b>BackUp Documents</b></p>
 							{process.env.REACT_APP_ISTR == "true" &&<Row>
 										{cryptoAddress?.backupWalletDocuments?.map((file) => (
