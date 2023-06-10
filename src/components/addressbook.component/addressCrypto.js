@@ -45,6 +45,7 @@ class AddressCrypto extends Component {
       isDocCheck:false,
       isDocDeleteCheck:false,
       netWorkData:[],
+      backUpAdderss:null,
     };
   }
 
@@ -67,7 +68,7 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource})
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource,isBackUpCheck:response.data.isOwnerOfWalletAddress})
     }
     else {
       this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(response) })
@@ -146,7 +147,6 @@ if (res.ok){
     this.setState({...this.state,isBackUpCheck:e.target.checked})
   }
   submit = async (values) => {
-    debugger
     let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
@@ -199,10 +199,12 @@ if (res.ok){
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
       isOwnerOfBackupAddress:values.isOwnerOfBackupAddress,
+      backupWalletAddress:values.backupWalletAddress,
       backupWalletSource:values.backupWalletSource,
-      backupotherWallet:values.backupotherWallet,
+      backupOtherWallet:values.backupOtherWallet,
       isDocumentUpload:values.isDocumentUpload,
-      docRepositories:values.isDocumentUpload===true? this.state.details.docRepositories :null,
+      docRepositories: this.state.details.docRepositories,
+      backupWalletDocuments:this.state.details.backupWalletDocuments,
       createdBy : this.props.userProfile?.userName,
       info : JSON.stringify(this.props?.trackAuditLogData),
     }
@@ -243,19 +245,16 @@ if (res.ok){
     }
   }
   }
-  editDocuments=(docs)=>{
-      let { docRepositories } = this.state.details;
-      if(this.state.isEdit){
+  editDocuments=(docs,type)=>{
+      let { docRepositories,backupWalletDocuments } = this.state.details;
+      if(type==="address"){
         docRepositories = docs;
       } else{
-        docRepositories = docs;
+        backupWalletDocuments = docs;
       }
-      this.setState({ ...this.state, details: { ...this.state.details, docRepositories } })
+      this.setState({ ...this.state, details: { ...this.state.details, docRepositories,backupWalletDocuments } })
   
   }
-//   handleDocCheck=(e)=>{
-// this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
-//   }
   validateAddressType = (_, value) => {
     if (value) {
       let address = value.trim();
@@ -490,26 +489,25 @@ if (res.ok){
 								
 							</Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl ">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
-                            
-                                            <Tooltip title="We require the screenshot to provide us with the wallet address you have input. This can be in the form of the interface after you login to an exchange or, for an unhosted wallet, the interface that shows the wallet address.">
-                                          <span
-                                            className="icon md info c-pointer ml-4"
-                                          />
-                                            </Tooltip>
-                                      
-                                        </Paragraph>
-                            <AddressCryptoDocument 
+              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                <Paragraph className="sub-abovesearch code-lbl ">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
 
-                            documents={this.state.cryptoData?.docRepositories|| null}
-                            editDocument={this.state.isEdit}
-                             onDocumentsChange={(docs) =>this.editDocuments(docs) } 
-                             docCheck={this.state.isDocCheck}
-                             type={"address"}
-                            />
-                        </ Col>
-           {/* } */}
+                  <Tooltip title="We require the screenshot to provide us with the wallet address you have input. This can be in the form of the interface after you login to an exchange or, for an unhosted wallet, the interface that shows the wallet address.">
+                    <span
+                      className="icon md info c-pointer ml-4"
+                    />
+                  </Tooltip>
+
+                </Paragraph>
+                <AddressCryptoDocument
+
+                  documents={this.state.cryptoData?.docRepositories || null}
+                  editDocument={this.state.isEdit}
+                  onDocumentsChange={(docs) => this.editDocuments(docs,"address")}
+                  docCheck={this.state.isDocCheck}
+                  type={"address"}
+                />
+              </ Col>
            <div className="">
             <Title className="adbook-head adb-mb-0">Backup Address</Title>
             <span className="addressbook-backup"> As part of regulatory requirements, you are required to provide an additional backup address for the network that you have selected. Additionally, a screenshot that shows your proof of ownership of the address is required.</span>
@@ -546,7 +544,7 @@ if (res.ok){
                 className="cust-input"
                 maxLength={100}
                 placeholder="Wallet Address"
-                disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
+                // disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               />
             </Form.Item>
             </Col>
@@ -635,25 +633,25 @@ if (res.ok){
 								
 							</Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl ">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
-                            
-                                            <Tooltip title="We require the screenshot to provide us with the wallet address you have input. This can be in the form of the interface after you login to an exchange or, for an unhosted wallet, the interface that shows the wallet address.">
-                                          <span
-                                            className="icon md info c-pointer ml-4"
-                                          />
-                                            </Tooltip>
-                                      
-                                        </Paragraph>
-                            <AddressCryptoDocument 
-                            documents={this.state.cryptoData?.docRepositories|| null}
-                            editDocument={this.state.isEdit}
-                             onDocumentsChange={(docs) =>this.editDocuments(docs) } 
-                             docCheck={this.state.isBackUpCheck}
-                             type={"backUpAddress"}
-                            />
-                        </ Col>
-                        </>}
+              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                <Paragraph className="sub-abovesearch code-lbl ">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
+
+                  <Tooltip title="We require the screenshot to provide us with the wallet address you have input. This can be in the form of the interface after you login to an exchange or, for an unhosted wallet, the interface that shows the wallet address.">
+                    <span
+                      className="icon md info c-pointer ml-4"
+                    />
+                  </Tooltip>
+
+                </Paragraph>
+                <AddressCryptoDocument
+                  documents={this.state.cryptoData?.backupWalletDocuments || null}
+                  editDocument={this.state.isEdit}
+                  onDocumentsChange={(docs) => this.editDocuments(docs,"backUpAddress")}
+                  docCheck={this.state.isBackUpCheck}
+                  type={"backUpAddress"}
+                />
+              </ Col>
+            </>}
           
             </Row>
             <Form.Item className="">
