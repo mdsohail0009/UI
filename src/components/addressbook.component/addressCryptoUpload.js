@@ -135,30 +135,23 @@ class AddressCryptoDocument extends Component {
   filePreviewPath() {
     return this.state.previewPath;
   }
+   allowedFileTypes = new Set(["image/png","image/jpg", "image/jpeg", "application/pdf",
+    "video/mp4", "video/avi","video/quicktime","video/x-ms-wmv", "image/PNG", "image/JPG",
+     "image/JPEG", "application/pdf", "application/PDF", "video/mp4", "application/mp4",
+     "audio/mp4", "application/x-troff-msvideo", "video/avi", "video/msvideo", "video/x-msvideo", "video/quicktime", "video/x-ms-wmv" 
+  ]);
+  
+  isFileTypeAllowed(fileType) {
+    return this.allowedFileTypes.has(fileType.toLowerCase());
+  }
   handleUpload=({ file },type) => {
     this.setState({ ...this.state, isDocLoading: true });
     let address=Object.assign([],this.state.docAddress);
     let backUpAddress=Object.assign([],this.state.docBackUpAddress);
     if (file.status === "done") {
-        let fileType = 
-        {  "image/png": true,
-        "image/jpg": true,
-        "image/jpeg": true,
-        "image/PNG": true,
-        "image/JPG": true,
-        "image/JPEG": true,
-        "application/pdf": true,
-        "application/PDF": true,
-        "video/mp4": true,
-        "application/mp4": true,
-        "audio/mp4": true,
-        "application/x-troff-msvideo": true,
-        "video/avi": true,
-        "video/msvideo": true,
-        "video/x-msvideo": true,
-        "video/quicktime": true,
-        "video/x-ms-wmv": true }
-        if (fileType[file.type]) {
+     const fileType = file.type.toLowerCase();
+  const isAllowed = this.isFileTypeAllowed(fileType);
+        if (isAllowed) {
             let { filesList: files } = this.state;
             if(type==="address"){
               files?.push(this.docDetail(file));
@@ -194,6 +187,19 @@ class AddressCryptoDocument extends Component {
         refreshData: this.props.refreshData
       });
     }
+    const getFileTypeClass=(fileName)=> {
+      const extension = fileName.slice(-3).toLowerCase();
+      
+      if (extension === "zip") {
+        return "file";
+      } else if (["mp4", "wmv", "avi", "mov"].includes(extension)) {
+        return "video";
+      } else if (["pdf"].includes(extension)) {
+        return "file";
+      } else {
+        return "image";
+      }
+      }
     return (
         
       <Row>
@@ -274,21 +280,7 @@ class AddressCryptoDocument extends Component {
                       {" "}
                       <div className="docfile custom-upload cust-upload-sy">
                         <span
-                          className={`icon xl ${
-                            (file.name?.slice(-3) === "zip" && "file") ||
-                            (file.name?.slice(-3) !== "zip" && "") ||
-                            ((file.fileName?.slice(-3) === "mp4" ||
-                              file.name?.slice(-3) === "mp4" ||
-                              file.fileName?.slice(-3) === "mov" ||
-                              file.name?.slice(-3) === "mov" ||
-                              file.name?.slice(-3) === "avi" ||
-                              file.fileName?.slice(-3) === "avi" ||
-                              file.name?.slice(-3) === "wmv" ||
-                              file.fileName?.slice(-3) === "wmv") &&
-                              "video") ||
-                             (file.name ? (file.name.slice(-3) === "pdf" ? "file" : "image") :
-                          (file.fileName?.slice(-3) === "pdf" ? "file" : "image"))
-                        } mr-16`}
+                          className={`icon xl ${getFileTypeClass(file.name ||file.fileName)} mr-16`}
                       />
                       <div
                         className="docdetails c-pointer"
