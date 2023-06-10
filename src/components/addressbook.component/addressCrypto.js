@@ -26,7 +26,6 @@ class AddressCrypto extends Component {
       isLoading: true,
       details: {},
       ibanDetails: {},
-      docDetails: {},
       isBtnLoading: false,
       showDeclartion: false,
       iBanValid: false,
@@ -68,7 +67,10 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource,isBackUpCheck:response.data.isOwnerOfWalletAddress})
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource,isBackUpCheck:response.data.isOwnerOfBackupAddress,details: { ...this.state.details, 
+        docRepositories:response.data.docRepositories,backupWalletDocuments:response.data.backupWalletDocuments
+       }})
+      
     }
     else {
       this.setState({ ...this.state, isLoading: false, errorMessage: apicalls.isErrorDispaly(response) })
@@ -148,7 +150,8 @@ if (res.ok){
   }
   submit = async (values) => {
     let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
-    if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
+    let backUpData=this.state.details?.backupWalletDocuments?.filter((item)=>item.state!=="Deleted")?.length===0 ;
+    if (!(values.isOwnerOfWalletAddress && values.isOwnerOfBackupAddress) && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
 				...this.state,
         errorMessage:"Please select owner check box",
@@ -156,18 +159,18 @@ if (res.ok){
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
-    else if(!values.files && process.env.REACT_APP_ISTR == "true"){
+    else if(!(this.state.details?.docRepositories && this.state.details?.backupWalletDocuments)&& process.env.REACT_APP_ISTR == "true"){
       this.setState({
 				...this.state,
-        errorMessage:"At least one document is required",
+        errorMessage:"Documents is required",
 				agreeRed: false,
 			});
 			this.useDivRef.current?.scrollIntoView(0, 0);
     }
-    else if((values.isDocumentUpload===true && (this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| (data===true && values.isDocumentUpload===true)|| data===undefined)){
+    else if((this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| data===true|| data===undefined ||backUpData==true ||backUpData===undefined){
       this.setState({
         ...this.state,
-        errorMessage:"At least one document is required",
+        errorMessage:"Documents is required",
       });
       this.useDivRef.current?.scrollIntoView(0, 0); 
     }else if(this.state.details.docRepositories >25000000||this.state.details.backupWalletDocuments>25000000||(values.files?.file?.size>25000000) ){
@@ -243,7 +246,10 @@ if (res.ok){
       let { docRepositories,backupWalletDocuments } = this.state.details;
       if(type==="address"){
         docRepositories = docs;
-      } else{
+      } else if(type==="backUpAddress"){
+        backupWalletDocuments = docs;
+      }else if(this.state.isEdit){
+        docRepositories = docs;
         backupWalletDocuments = docs;
       }
       this.setState({ ...this.state, details: { ...this.state.details, docRepositories,backupWalletDocuments } })
@@ -271,7 +277,7 @@ if (res.ok){
   };
 
   render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData,showDeclartionApproved ,approvedAddress,isDocCheck} = this.state;
+    const { isLoading, errorMessage, showDeclartion, cryptoData,showDeclartionApproved ,approvedAddress} = this.state;
     if (isLoading) {
       return <Loader />
     }

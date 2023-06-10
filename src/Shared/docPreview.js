@@ -36,7 +36,7 @@ const DocumentPreview = (props) => {
          extensions = props?.upLoadResponse?.name.split(".");
       }
       let isFileName = extensions[extensions.length - 1];
-      setMimeTypeFiles(mimeType[isFileName].toLowerCase());
+      setMimeTypeFiles(mimeType[isFileName]?.toLowerCase());
       setPreviewPath(res.data);
     } else {
       setIsLoading(false);
