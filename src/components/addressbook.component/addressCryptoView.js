@@ -26,7 +26,6 @@ const AddressCryptoView = (props) => {
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [docPreviewDetails, setDocPreviewDetails] = useState(null)
 	const [docPreviewModal, setDocPreviewModal] = useState(false)
-	const [backUpAddressFileDetails,setBackUpAddressFileDetails]=useState([]);
 
 	useEffect(() => {
 		loadDataAddress();

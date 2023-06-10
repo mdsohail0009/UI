@@ -544,7 +544,6 @@ if (res.ok){
                 className="cust-input"
                 maxLength={100}
                 placeholder="Wallet Address"
-                // disabled={this.state.cryptoData.adressstate ==="Approved"  ? true : false }
               />
             </Form.Item>
             </Col>
