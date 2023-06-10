@@ -55,7 +55,19 @@ const AddressCryptoView = (props) => {
 		setDocPreviewDetails(null)
 	  }
 	
-	
+	  const getFileTypeClass=(fileName)=> {
+		const extension = fileName.slice(-3).toLowerCase();
+	  
+		if (extension === "zip") {
+		  return "file";
+		} else if (["mp4", "wmv", "avi", "mov"].includes(extension)) {
+		  return "video";
+		} else if (["pdf"].includes(extension)) {
+		  return "file";
+		} else {
+		  return "image";
+		}
+	  }
 
 	return (
 		<>
@@ -127,14 +139,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Proof Of Ownership</label>
-													<div className=" kpi-val adview-name">
-													{cryptoAddress?.isDocumentUpload===true?"Yes": "No" || "-"}
-													</div>
-												</div>
-											</Col></>}
+											</>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>
@@ -169,19 +174,7 @@ const AddressCryptoView = (props) => {
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
-																className={`icon xl ${(file.fileName?.slice(-3) === "zip" &&
-																		"file") ||
-																	(file.fileName?.slice(-3) !== "zip" &&
-																		"") ||
-																		((file.fileName?.slice(-3) === "mp4"||																file.fileName?.slice(-3) === "wmv"||file.fileName?.slice(-3) === "avi"||file.fileName?.slice(-3) === "mov") &&
-																		"video")||
-																	((file.fileName?.slice(-3) === "pdf" ||
-																		file.fileName?.slice(-3) === "PDF") &&
-																		"file") ||
-																	(file.fileName?.slice(-3) !== "pdf" &&
-																		file.fileName?.slice(-3) !== "PDF" &&
-																		"image")
-																	} mr-16`}
+																className={`icon xl ${getFileTypeClass(file.fileName)} mr-16`}
 															/>
 															<div
 																className="docdetails c-pointer"
@@ -213,19 +206,7 @@ const AddressCryptoView = (props) => {
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
-																className={`icon xl ${(file.fileName?.slice(-3) === "zip" &&
-																		"file") ||
-																	(file.fileName?.slice(-3) !== "zip" &&
-																		"") ||
-																		((file.fileName?.slice(-3) === "mp4"||				file.fileName?.slice(-3) === "wmv"||file.fileName?.slice(-3) === "avi"||file.fileName?.slice(-3) === "mov") &&
-																		"video")||
-																	((file.fileName?.slice(-3) === "pdf" ||
-																		file.fileName?.slice(-3) === "PDF") &&
-																		"file") ||
-																	(file.fileName?.slice(-3) !== "pdf" &&
-																		file.fileName?.slice(-3) !== "PDF" &&
-																		"image")
-																	} mr-16`}
+																className={`icon xl ${getFileTypeClass(file.fileName)} mr-16`}
 															/>
 															<div
 																className="docdetails c-pointer"
