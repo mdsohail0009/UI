@@ -390,6 +390,7 @@ saveWithdrawdata = async () => {
             reasonOfTransfer: this.state.typeOntheGoObj?.reasonOfTransfer,
             bankId:this.state.selectedbankobj[0]?.bankId,
             originalAmount:this.state.getBanckDetails.originalAmount,
+            transferOthers:this.state.typeOntheGoObj?.transferOthers,
             info:JSON.stringify(this.props?.trackAuditLogData),
         });
         if(response.ok){
@@ -567,7 +568,6 @@ handleReasonTrnsfer=(e)=>{
           },
           addressLoader:true,
         })
-        debugger
         const res = await confirmTransaction({
           payeeId: this.state.selectedPayee.id,
           reasonOfTransfer: '',
