@@ -1150,6 +1150,9 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .video-block{padding: 8px;border: 1px solid var(--gridborder);}
 .video-section{border: 1px solid var(--gridborder);border-radius: 6px;}
 .video-section p{padding: 8px;background-color: var(--gridheader);}
+.addressbook-backup{color: var(--gridcontent);font-weight: 400;font-size: 14px;margin-bottom:16px;display: inline-block;line-height: 20px;}
+.adb-mb-0{margin-bottom: 10px !important;}
+.doc-label{margin-top: 20px;margin-bottom: 0;}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}

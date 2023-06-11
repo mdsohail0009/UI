@@ -34,6 +34,7 @@ const AddressCryptoView = (props) => {
 		setIsLoading(true)
 		let response = await getCryptoData(props?.match?.params?.id);
 		if (response.ok) {
+			console.log(response.data)
 			setCryptoAddress(response.data);
 		}
 		setIsLoading(false)
@@ -54,7 +55,19 @@ const AddressCryptoView = (props) => {
 		setDocPreviewDetails(null)
 	  }
 	
-	
+	  const getFileTypeClass=(fileName)=> {
+		const extension = fileName.slice(-3).toLowerCase();
+	  
+		if (extension === "zip") {
+		  return "file";
+		} else if (["mp4", "wmv", "avi", "mov"].includes(extension)) {
+		  return "video";
+		} else if (["pdf"].includes(extension)) {
+		  return "file";
+		} else {
+		  return "image";
+		}
+	  }
 
 	return (
 		<>
@@ -109,7 +122,16 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{process.env.REACT_APP_ISTR == "true" &&<><Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{process.env.REACT_APP_ISTR == "true" &&<>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">BackUp Wallet Address</label>
+													<div className=" kpi-val adview-name">
+														{!cryptoAddress?.backupWalletAddress && "-"||cryptoAddress?.backupWalletAddress
+															}
+													</div>
+												</div>
+											</Col>											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Source</label>
 													<div className=" kpi-val adview-name">
@@ -117,14 +139,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Proof Of Ownership</label>
-													<div className=" kpi-val adview-name">
-													{cryptoAddress?.isDocumentUpload===true?"Yes": "No" || "-"}
-													</div>
-												</div>
-											</Col></>}
+											</>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>
@@ -149,6 +164,9 @@ const AddressCryptoView = (props) => {
 											</Col>)}
 
 										</Row>
+												<p className=' doc-label'>
+													<b>Documents</b></p>
+        
 										{process.env.REACT_APP_ISTR == "true" &&<Row>
 										{cryptoAddress?.docRepositories?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.id}>
@@ -156,19 +174,39 @@ const AddressCryptoView = (props) => {
 															className="docfile mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
-																className={`icon xl ${(file.fileName?.slice(-3) === "zip" &&
-																		"file") ||
-																	(file.fileName?.slice(-3) !== "zip" &&
-																		"") ||
-																		((file.fileName?.slice(-3) === "mp4"||																file.fileName?.slice(-3) === "wmv"||file.fileName?.slice(-3) === "avi"||file.fileName?.slice(-3) === "mov") &&
-																		"video")||
-																	((file.fileName?.slice(-3) === "pdf" ||
-																		file.fileName?.slice(-3) === "PDF") &&
-																		"file") ||
-																	(file.fileName?.slice(-3) !== "pdf" &&
-																		file.fileName?.slice(-3) !== "PDF" &&
-																		"image")
-																	} mr-16`}
+																className={`icon xl ${getFileTypeClass(file.fileName)} mr-16`}
+															/>
+															<div
+																className="docdetails c-pointer"
+																onClick={() => docPreviewOpen(file)}
+																>
+																{file.name !== null ? (
+																	<EllipsisMiddle suffixCount={4}>
+																		{file.fileName}
+																	</EllipsisMiddle>
+																) : (
+																	<EllipsisMiddle suffixCount={4}>
+																		Name
+																	</EllipsisMiddle>
+																)}
+																<span className="fs-12 text-secondary">
+																	{bytesToSize(file.fileSize)}
+																</span>
+															</div>
+														</div>
+													</Col>
+												))}
+							</Row>}
+												<p className=' doc-label'>
+													<b>BackUp Documents</b></p>
+							{process.env.REACT_APP_ISTR == "true" &&<Row>
+										{cryptoAddress?.backupWalletDocuments?.map((file) => (
+													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.id}>
+														<div
+															className="docfile mr-0 d-flex ml-8"
+															key={file.id}>
+															<span
+																className={`icon xl ${getFileTypeClass(file.fileName)} mr-16`}
 															/>
 															<div
 																className="docdetails c-pointer"
