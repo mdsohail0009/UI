@@ -326,6 +326,7 @@ saveWithdrawdata = async () => {
         obj["bankId"]=this.state.selectedbankobj[0].bankId;
         obj["info"] = JSON.stringify(this.props?.trackAuditLogData);
         obj["isToggel"] = this.state?.isToggel;
+        obj["originalAmount"]=this.state.reviewDetails.originalAmount;
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
@@ -388,6 +389,8 @@ saveWithdrawdata = async () => {
             amount: amt,
             reasonOfTransfer: this.state.typeOntheGoObj?.reasonOfTransfer,
             bankId:this.state.selectedbankobj[0]?.bankId,
+            originalAmount:this.state.getBanckDetails.originalAmount,
+            transferOthers:this.state.typeOntheGoObj?.transferOthers,
             info:JSON.stringify(this.props?.trackAuditLogData),
         });
         if(response.ok){
@@ -570,6 +573,7 @@ handleReasonTrnsfer=(e)=>{
           reasonOfTransfer: '',
           amount: this.state.amount,
           bankId: this.state.selectedbankobj[0]?.bankId,
+          originalAmount:this.state.getBanckDetails.originalAmount,
           info:JSON.stringify(this.props?.trackAuditLogData),
         })
         if (res.ok) {
@@ -1090,7 +1094,8 @@ selectsCurrency=(item)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,bankId:this.state.selectedbankobj[0]?.bankId,
+                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,
+                            originalAmount:this.state.getBanckDetails.originalAmount,bankId:this.state.selectedbankobj[0]?.bankId,
                            info:JSON.stringify(this.props?.trackAuditLogData),});
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
