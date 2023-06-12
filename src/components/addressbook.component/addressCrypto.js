@@ -36,7 +36,6 @@ class AddressCrypto extends Component {
       isEdit:false,
       documents:null,
       walletSource:null,
-      walletSourse:null,
       check:false,
       isBackUpCheck:false,
       showDeclartionApproved:false,
@@ -45,6 +44,7 @@ class AddressCrypto extends Component {
       isDocDeleteCheck:false,
       netWorkData:[],
       backUpAdderss:null,
+      backupWalletSource:null,
     };
   }
 
@@ -67,7 +67,7 @@ class AddressCrypto extends Component {
     this.setState({ ...this.state, isLoading: true })
     let response = await getCryptoData(id);
     if (response.ok) {
-      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource,isBackUpCheck:response.data.isOwnerOfBackupAddress,details: { ...this.state.details, 
+      this.setState({ ...this.state, cryptoData: response.data, isLoading: false,isEdit:true,check:response.data.isOwnerOfWalletAddress,isDocCheck:response.data.isDocumentUpload ,walletSourse: response.data?.walletSource,isBackUpCheck:response.data.isOwnerOfBackupAddress,backupWalletSource:response.data?.backupWalletSource,details: { ...this.state.details, 
         docRepositories:response.data.docRepositories,backupWalletDocuments:response.data.backupWalletDocuments
        }})
       
@@ -134,7 +134,15 @@ class AddressCrypto extends Component {
     }
     this.setState({...this.state,walletSourse:value})
   }
-
+  handleBackupOtherWallet = (value) => {
+    if(this.state.cryptoData?.id === "00000000-0000-0000-0000-000000000000"){
+      this.form?.current?.setFieldsValue({backupOtherWallet:null});
+    }
+    else if(this.state.cryptoData?.id != "00000000-0000-0000-0000-000000000000" && this.state.cryptoData.backupWalletSource != "Others"){
+      this.form?.current?.setFieldsValue({backupOtherWallet:null});
+    }
+    this.setState({...this.state,backupWalletSource:value})
+  }
   handleWallet=async()=>{
 let res= await getWalletSource();
 if (res.ok){
@@ -490,9 +498,9 @@ if (res.ok){
 							</Form.Item>
             </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Paragraph className="sub-abovesearch code-lbl ">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
+                <Paragraph className="code-lbl text-upper-remove">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
 
-                  <Tooltip title="We require the screenshot to provide us with the wallet address you have input. This can be in the form of the interface after you login to an exchange or, for an unhosted wallet, the interface that shows the wallet address.">
+                  <Tooltip title="We require the screenshot to provide us the wallet address you have input. This can be in the form of the interface after you login to an exchange or for Unhosted wallet, its interface that shows the wallet address.">
                     <span
                       className="icon md info c-pointer ml-4"
                     />
@@ -509,8 +517,8 @@ if (res.ok){
                 />
               </ Col>
            <div className="">
-            <Title className="adbook-head adb-mb-0">Backup Address</Title>
-            <span className="addressbook-backup"> As part of regulatory requirements, you are required to provide an additional backup address for the network that you have selected. Additionally, a screenshot that shows your proof of ownership of the address is required.</span>
+            <Title className="adbook-head adb-mb-0">BackUp Address</Title>
+            <span className="addressbook-backup">As part of regulatory requirements, you are required to provide an additional backup address for the network that you have selected. Additionally, a screenshot that shows your Proof of Ownership of the address is required.</span>
             </div>
            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
@@ -559,12 +567,12 @@ if (res.ok){
               ]}
             >
               <Select
-                className={`cust-input ${(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.walletSource !==null)  ? "input-disabled-style" :"" }`}
+                className={`cust-input ${(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.backupWalletSource !==null)  ? "input-disabled-style" :"" }`}
                 maxLength={100}
                 placeholder="Select Wallet Source"
                 optionFilterProp="children"
-                onChange={this.handleWalletSource}
-                disabled={(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.walletSource !==null) ? true : false }
+                onChange={this.handleBackupOtherWallet}
+                disabled={(this.state.cryptoData.adressstate ==="Approved" && this.state.cryptoData.backupWalletSource !==null) ? true : false }
               >
                 {this.state.wallet?.map((item, idx) => (
                   <Option key={idx} value={item.name}>
@@ -575,7 +583,7 @@ if (res.ok){
             </Form.Item>
             </Col>
 
-           {this.state.walletSourse === "Others"  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           {this.state.backupWalletSource === "Others"  && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
              className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="backupOtherWallet"
@@ -633,9 +641,9 @@ if (res.ok){
 							</Form.Item>
             </Col>
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Paragraph className="sub-abovesearch code-lbl ">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
+                <Paragraph className="code-lbl text-upper-remove">Please upload a screenshot or video to prove you are the owner of the address (MP4, MOV, WMV, AVI files size maximum allow 25MB)<span className="cust-start-style">*</span>
 
-                  <Tooltip title="We require the screenshot to provide us with the wallet address you have input. This can be in the form of the interface after you login to an exchange or, for an unhosted wallet, the interface that shows the wallet address.">
+                  <Tooltip title="We require the screenshot to provide us the wallet address you have input. This can be in the form of the interface after you login to an exchange or for Unhosted wallet, its interface that shows the wallet address.">
                     <span
                       className="icon md info c-pointer ml-4"
                     />
