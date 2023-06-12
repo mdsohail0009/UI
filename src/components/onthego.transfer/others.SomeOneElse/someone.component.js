@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert,Select } from 'antd';
-import { createPayee, payeeAccountObj, savePayee,getRelationDetails,getReasonforTransferDetails } from "../api";
+import { createPayee, payeeAccountObj, savePayee,getRelationDetails } from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls";
-import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
 import { connect } from "react-redux";
@@ -148,7 +147,7 @@ const SomeoneComponent = (props) => {
             {showDeclartion && <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
                 <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                <Text className="successsubtext">{`Declaration form has been sent to ${props.userConfig?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
             </div></div>}
 
