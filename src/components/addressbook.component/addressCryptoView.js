@@ -80,7 +80,7 @@ const AddressCryptoView = (props) => {
 					) : (
 						<>
 							
-							{cryptoAddress && (
+							{cryptoAddress && (<>
 								<div className="custom-alert-width">
 									<Title className="basicinfo">
 										Beneficiary Details
@@ -122,16 +122,8 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{process.env.REACT_APP_ISTR == "true" &&<>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">BackUp Wallet Address</label>
-													<div className=" kpi-val adview-name">
-														{!cryptoAddress?.backupWalletAddress && "-"||cryptoAddress?.backupWalletAddress
-															}
-													</div>
-												</div>
-											</Col>											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+													{process.env.REACT_APP_ISTR == "true" && <>
+														<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Source</label>
 													<div className=" kpi-val adview-name">
@@ -164,9 +156,6 @@ const AddressCryptoView = (props) => {
 											</Col>)}
 
 										</Row>
-												<p className=' doc-label'>
-													<b>Documents</b></p>
-        
 										{process.env.REACT_APP_ISTR == "true" &&<Row>
 										{cryptoAddress?.docRepositories?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.id}>
@@ -197,9 +186,35 @@ const AddressCryptoView = (props) => {
 													</Col>
 												))}
 							</Row>}
-												<p className=' doc-label'>
-													<b>BackUp Documents</b></p>
-							{process.env.REACT_APP_ISTR == "true" &&<Row>
+									</Col>
+								</Row>
+								{process.env.REACT_APP_ISTR == "true" &&
+								<div className="doc-label">
+									<Title className="basicinfo">
+										Backup Details
+									</Title>
+								<Row gutter={8}>
+									<Col xl={24} xxl={24} className="bank-view">
+										<Row className="kpi-List">
+											
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Wallet Address</label>
+													<div className=" kpi-val adview-name">
+														{!cryptoAddress?.backupWalletAddress && "-"||cryptoAddress?.backupWalletAddress
+															}
+													</div>
+												</div>
+											</Col>											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Wallet Source</label>
+													<div className=" kpi-val adview-name">
+													{cryptoAddress?.backupWalletSource==="Others"? `${cryptoAddress?.backupWalletSource } (${cryptoAddress?.backupWalletSource})` :cryptoAddress?.backupWalletSource|| "-"}
+													</div>
+												</div>
+											</Col>
+										</Row>
+												<Row>
 										{cryptoAddress?.backupWalletDocuments?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.id}>
 														<div
@@ -228,7 +243,7 @@ const AddressCryptoView = (props) => {
 														</div>
 													</Col>
 												))}
-							</Row>}
+							</Row>
 									</Col>
 								</Row>
 								<div className="text-right view-level-btn">
@@ -239,7 +254,10 @@ const AddressCryptoView = (props) => {
 									Cancel
 								</Button>
 							</div>
+								</div>}
 								</div>
+								
+								</>
 							)}
 							
 						</>
