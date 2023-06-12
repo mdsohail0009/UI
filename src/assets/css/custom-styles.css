@@ -569,6 +569,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .sub-abovesearch{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;text-transform: capitalize;}
+.code-lbl.text-upper-remove{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;}
 .uplaod-inner{color: var(--white) !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--white) !important;font-size: 16px;}
 .imprt-bg{
