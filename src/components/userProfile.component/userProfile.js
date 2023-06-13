@@ -10,6 +10,7 @@ import { setHeaderTab } from "../../reducers/buysellReducer"
 import { getScreenName } from "../../reducers/feturesReducer";
 import { withRouter } from 'react-router-dom';
 import SuisseBaseCreditCom from './suissebaseCredit';
+import BackUpAddress from './backUpAddress.component/index';
 const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
@@ -74,19 +75,20 @@ class UserProfile extends Component {
                         </div>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    {/* <TabPane tab={<div><span className="icon lg settings-icon" />
-                        <Translate content="settings" className="tabtitle" />
-                        </div>} key="3">
-                        {this.state.activeTab == 3 && <Settings />}
-                    </TabPane> */}
                     <TabPane tab={<div><span className="icon lg referral-icon" />
                         <Translate content="referr" className="tabtitle" /></div>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                    <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center back-up-tab'><span className="icon lg settings-icon" />
+                       <span className="tabtitle backup-admb-0">Backup Address</span>
+                        </div>} key="3">
+                        {this.state.activeTab == 3 && <BackUpAddress />}
                     </TabPane>
                     <TabPane tab={<div><span className="icon lg suissebase-credit" />
                         <Translate content="suissebase_credit" className="tabtitle" /></div>} key="8" >
                         {this.state.activeTab == 8 && <SuisseBaseCreditCom/>}
                     </TabPane>
+                   
                 </Tabs>
             </div>
             <div className="main-container visible-mobile">
@@ -105,19 +107,20 @@ class UserProfile extends Component {
                     </span>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg settings-icon " />
-                        <Translate content="settings" className="tabtitle" />
-                    </span>} key="3">
-                        {this.state.activeTab == 3 && <Settings />}
-                    </TabPane> */}
                     <TabPane tab={<span><span className="icon lg referral-icon " />
                         <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                    <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center back-up-tab'><span className="icon lg settings-icon" />
+                       <span className="tabtitle backup-admb-0">Backup Address</span>
+                        </div>} key="3">
+                        {this.state.activeTab == 3 && <BackUpAddress />}
                     </TabPane>
                     <TabPane tab={<div><span className="icon lg suissebase-credit" />
                         <Translate content="suissebase_credit" className="tabtitle" /></div>} key="8" >
                         {this.state.activeTab == 8 && <SuisseBaseCreditCom/>}
                     </TabPane>
+                  
                 </Tabs>
             </div>
         </>);
