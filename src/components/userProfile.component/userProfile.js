@@ -79,7 +79,7 @@ class UserProfile extends Component {
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
                     <TabPane tab={<div className='d-flex align-item-center'><span className="icon lg settings-icon" />
-                       <Title className="tabtitle">Backup Address</Title>
+                    <Title className="tabtitle backup-admb-0">Backup Address</Title>
                         </div>} key="3">
                         {this.state.activeTab == 3 && <BackUpAddress />}
                     </TabPane>
@@ -106,7 +106,7 @@ class UserProfile extends Component {
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
                     <TabPane tab={<div className='d-flex align-item-center'><span className="icon lg settings-icon" />
-                       <Title className="tabtitle">Backup Address</Title>
+                    <Title className="tabtitle backup-admb-0">Backup Address</Title>
                         </div>} key="3">
                         {this.state.activeTab == 3 && <BackUpAddress />}
                     </TabPane>
