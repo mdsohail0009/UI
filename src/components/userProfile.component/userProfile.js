@@ -3,13 +3,13 @@ import { Tabs,Typography, } from 'antd'
 import ProfileInfo from './profileInfo';
 import Security from './security'
 import QueryString from 'query-string'
-import Settings from './settings';
 import Referral from './referral.component/referral';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { setHeaderTab } from "../../reducers/buysellReducer"
 import { getScreenName } from "../../reducers/feturesReducer";
 import { withRouter } from 'react-router-dom';
+import BackUpAddress from './backUpAddress.component/index';
 const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
@@ -74,14 +74,14 @@ class UserProfile extends Component {
                         </div>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    {/* <TabPane tab={<div><span className="icon lg settings-icon" />
-                        <Translate content="settings" className="tabtitle" />
-                        </div>} key="3">
-                        {this.state.activeTab == 3 && <Settings />}
-                    </TabPane> */}
                     <TabPane tab={<div><span className="icon lg referral-icon" />
                         <Translate content="referr" className="tabtitle" /></div>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                    <TabPane tab={<div className='d-flex align-item-center'><span className="icon lg settings-icon" />
+                    <Title className="tabtitle backup-admb-0">Backup Address</Title>
+                        </div>} key="3">
+                        {this.state.activeTab == 3 && <BackUpAddress />}
                     </TabPane>
                 </Tabs>
             </div>
@@ -101,14 +101,14 @@ class UserProfile extends Component {
                     </span>} key="2">
                         {this.state.activeTab == 2 && <Security />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg settings-icon " />
-                        <Translate content="settings" className="tabtitle" />
-                    </span>} key="3">
-                        {this.state.activeTab == 3 && <Settings />}
-                    </TabPane> */}
                     <TabPane tab={<span><span className="icon lg referral-icon " />
                         <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                    <TabPane tab={<div className='d-flex align-item-center'><span className="icon lg settings-icon" />
+                    <Title className="tabtitle backup-admb-0">Backup Address</Title>
+                        </div>} key="3">
+                        {this.state.activeTab == 3 && <BackUpAddress />}
                     </TabPane>
                 </Tabs>
             </div>

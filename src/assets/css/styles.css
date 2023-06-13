@@ -448,7 +448,11 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .user-labels.active, .user-labels:hover{background: var(--bgDarkYellow);font-weight: 700; border-radius: 30px; padding:12px; color: var(--textDark);}
 .cust-select {min-width: 250px;}
 .cust-select .ant-select-selection-placeholder{color:#ED4B9E !important;}
+.cust-placeholder-select.cust-select .ant-select-selection-placeholder{color:var(--white) !important;}
 .border-bottom{border-bottom: 1px solid var(--borderGrey);}
+.backup-admb-0{margin-bottom: 0 !important;}
+.custom-label.audit-label{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;}
+.basicinfo.crypto-text-mb{margin-bottom: 16px !important;display: inline-block;}
 .addressbook_tabs .ant-tabs-nav{width:auto !important}
 .addressbook_tabs .ant-tabs-tab.ant-tabs-tab-active,.addressbook_tabs .ant-tabs-tab:hover {background: transparent !important;font-weight: 600;  padding: 12px 15px 12px 12px !important; color: var(--textDark);}
 .wdr-summary{display: flex; justify-content: space-around; align-items: center;}
