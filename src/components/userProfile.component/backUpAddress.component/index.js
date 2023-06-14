@@ -165,7 +165,7 @@ const BackUpAddress = () => {
                             <div>
                                 {cryptoObj?.map((item, idx) => (
                                     <text className='custom-label audit-label' key={idx}>
-                                        {item.code.toUpperCase()}
+                                        {item.code.toUpperCase()}{" "}{" "}{item.code!=="BTC"&& "[ERC-20]"}
                                         <Select
                                             placeholder={
                                                 (!(backupAllAddresses?.length == 0 || backupAllAddresses == null) && defaultCryptoValue(item?.network) || `Select ${item.network.toUpperCase()} Network Address`)
