@@ -17,9 +17,8 @@ const BackUpAddress = () => {
     const fiatData = [{ code: "USD" }, { code: "EUR" }, { code: "GBP" }, { code: "CHF" }];
     const [fiatAddressLu, setFiatAddressLu] = useState(null)
     const [btnLoading, setBtnLoading] = useState(false);
-    const [selectCryptoLu, setSelectCryptoLu] = useState(null);
+    const [selectCryptoLu, setSelectCryptoLu] = useState([]);
     const [backupAllAddresses, setBackupAllAddresses] = useState([]);
-    const [isSaveDisable, setIssaveEnable] = useState(true);
     useEffect(() => {
         handleCrypto(cryptoObj[0]);
         handleFiat(fiatData[0]);
@@ -79,20 +78,17 @@ const BackUpAddress = () => {
         getBackupCryptoAddress(value.network);
     }
     const handleCryptoChange = (val) => {
-        setIssaveEnable(false);
         let selectCrypto = Object.assign([], selectCryptoLu);
         let obj = {};
         let cryptoFilter = cryptoAddressLu?.filter(item => item.walletAddress === val);
         let backupAllAddress = backupAllAddresses?.filter(item => item.network === cryptoFilter[0]?.network);
         selectCrypto = selectCrypto.filter(item => item.network !== cryptoFilter[0]?.network);
         if (backupAllAddresses?.length > 0) {
-            setIssaveEnable(false);
             obj["Id"] = backupAllAddress[0]?.id;
             obj["PayeeId"] = cryptoFilter[0]?.id;
             obj["network"] = cryptoFilter[0]?.network;
             selectCrypto.push(obj);
         } else {
-            setIssaveEnable(false);
             obj["Id"] = "00000000-0000-0000-0000-000000000000";
             obj["PayeeId"] = cryptoFilter[0]?.id;
             obj["network"] = cryptoFilter[0]?.network;
@@ -104,21 +100,18 @@ const BackUpAddress = () => {
         getBackupFiatAddress(value?.code);
     }
     const handleFiatChange = (val) => {
-        setIssaveEnable(false);
         let selectFiat = Object.assign([], selectCryptoLu);
         let obj = {};
         let fiatFilter = fiatAddressLu?.filter(item => item.accountNumber === val);
         let backupAllAddress = backupAllAddresses?.filter(item => item?.walletCode === fiatFilter[0]?.walletCode);
         selectFiat = selectFiat.filter(item => item.walletCode !== fiatFilter[0]?.walletCode);
         if (backupAllAddress.length > 0) {
-            setIssaveEnable(false);
             const id = backupAllAddress[0]?.id
             obj["Id"] = id;
             obj["PayeeId"] = fiatFilter[0]?.id;
             obj["walletCode"] = fiatFilter[0]?.walletCode;
             selectFiat.push(obj);
         } else {
-            setIssaveEnable(false);
             obj["Id"] = "00000000-0000-0000-0000-000000000000"
             obj["PayeeId"] = fiatFilter[0]?.id;
             obj["walletCode"] = fiatFilter[0]?.walletCode;
@@ -231,7 +224,6 @@ const BackUpAddress = () => {
                         size="large"
                         className="pop-btn setting-btn"
                         loading={btnLoading}
-                        disabled={isSaveDisable}
                         block
                     >
                         <Translate content="Save_btn_text" />
