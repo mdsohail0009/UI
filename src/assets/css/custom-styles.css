@@ -1105,6 +1105,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .Effective-Fees{color: var(--termsText);cursor: pointer;}
 .icon.lg.down-arrow{background-position: -389px -486px;margin-left: 4px;}
 .icon.lg.up-arrow{background-position: -411px -486px;margin-left: 4px;}
+.icon.lg.backup-icon{background-position:-288px -552px;}
+.user-labels.active .icon.lg.backup-icon, .user-labels:hover .icon.lg.backup-icon, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.backup-icon, .ant-tabs-tab:hover .icon.lg.backup-icon{background-position: -288px -585px;}
 /* commissions  start   */
 .first-header th{text-align: center !important;}
 .fee-withdraw{padding: 0 !important;border-right: 1px solid var(--gridborder) !important;}
