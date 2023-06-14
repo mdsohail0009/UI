@@ -445,6 +445,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .markets-popup .custom-table .ant-table-body{padding: 0 0 0 24px !important;}
 .user-labels{padding:12px; font-size: 16px; font-weight: 600; color: var(--textWhite); margin-bottom: 0; margin-left:8px}
 .user-list{list-style: none;}
+.back-up-tab{align-items: center;}
 .user-labels.active, .user-labels:hover{background: var(--bgDarkYellow);font-weight: 700; border-radius: 30px; padding:12px; color: var(--textDark);}
 .cust-select {min-width: 250px;}
 .cust-select .ant-select-selection-placeholder{color:#ED4B9E !important;}

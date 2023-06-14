@@ -1051,6 +1051,8 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .video-block{padding: 8px;border: 1px solid var(--gridborder);}
 .video-section{border: 1px solid var(--gridborder);border-radius: 6px;}
 .video-section p{padding: 8px;background-color: var(--gridheader);}
+.icon.lg.backup-icon{background-position:-288px -552px;}
+.user-labels.active .icon.lg.backup-icon, .user-labels:hover .icon.lg.backup-icon, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.backup-icon, .ant-tabs-tab:hover .icon.lg.backup-icon{background-position: -288px -585px;}
 /*@media start*/
 @media (min-width: 768px){
     .sumSub-confirm{display: flex;justify-content: center;}
