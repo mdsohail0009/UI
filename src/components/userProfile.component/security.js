@@ -24,11 +24,22 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   const useDivRef = React.useRef(null);
   const [isLoading,setIsLoading]=useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [isResetPassword,setIsResetPassowrd]=useState(false);
   const [error,setError]=useState(null);
 
-  const showDrawer = () => {
-    setisChangepassword(true);
-    store.dispatch(updatechange());
+  const showDrawer = async() => {
+    setIsResetPassowrd(true);
+    const res=await apiCalls.resetPassword(userConfig?.id);
+    if(res.ok){
+      setisChangepassword(true);
+      setIsResetPassowrd(false);
+      setError(null);
+    }
+    else{
+      setisChangepassword(false);
+      setIsResetPassowrd(false);
+      return setError(apicalls.isErrorDispaly(res));
+    }
   };
   useEffect(() => {
     securityTrack()
@@ -182,39 +193,25 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         />
         <ul className="profile-ul">
           <li className="profileinfo ">
-            <div className="profile-block">
-              <label className="profile-label">
-                <Translate
-                  content="Password"
-                  component={Paragraph.label}
-                  className="profile-label"
-                />
-              </label>
-              <div style={{ flexGrow: 12 }}>
-                <p className="profile-value"> ************</p>
-                {userConfig?.pwdModifiedDate != null && (
-                  <p className="mobile-ml-8 profile-label">
-                    <Translate
-                      content="Modifiedon"
-                      component={Paragraph.p}
-                      className="mobile-ml-8 profile-label"
-                    />{" "}
-                    <Moment format="DD-MM-YYYY">
-                      {userConfig?.pwdModifiedDate}
-                    </Moment>
-                  </p>
-                )}
-              </div>
               <div className="passwrd-chang-btn">
               <div className="text-left passwrd-chang-btn">
               <Button
                         className="profile-sm-btn"
+                        loading={isResetPassword}
                         onClick={() => showDrawer()}
                         >
-                       change
+                       Reset Password
                     </Button>
               </div>
-              </div>
+              {isChangepassword && <div style={{ flexGrow: 30 }} className="mt-12">
+                    <Text
+                      className="basicinfo mb-0"
+                    > Check Your Email</Text>
+                    <Paragraph className="basic-decs">
+                      Email send successfully to : {userConfig?.email} please check and reset your password.</Paragraph>
+                  </div>
+                }
+              
             </div>
           </li>
         </ul>
@@ -243,7 +240,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         ]}
         placement="right"
         closable={true}
-        visible={isChangepassword}
+        // visible={isChangepassword}
         closeIcon={null}
         className="side-drawer"
         destroyOnClose={true}
@@ -261,25 +258,6 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
        
         <Form>
           <Row gutter={[16, 16]}>
-            {/* <Col xs={24} md={24} xl={24} xxl={24}>
-              <div className="d-flex align-center mt-16 ">
-                <label className="custom-checkbox c-pointer cust-check-outline">
-                  <Input
-                    name="check"
-                    type="checkbox"
-                    className="c-pointer"
-                    checked={factor}
-                    onChange={(e) => handleInputChange(e, "factor")}
-                  />
-                  <span></span>
-                </label>
-                <Translate
-                  content="FA_tag"
-                  component={Paragraph.label}
-                  className="security-label-style" style={{ flex: 1 }}
-                />
-              </div>
-            </Col> */}
             <Col xs={24} md={24} xl={24} xxl={24}>
               <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox c-pointer cust-check-outline">
