@@ -172,6 +172,7 @@ class OnthegoFundTransfer extends Component {
           isToggle:this.state.isToggel,
           showAmount:!this.state.isToggel && this.enteramtForm?.current?.getFieldsValue()?.amount || this.state.showAmount,
           withdrawalAmount:!this.state.isToggel && this.enteramtForm?.current?.getFieldsValue()?.amount || this.state.withdrawalAmount,
+          payeeId:this.state.selectedPayee.id
         }
           if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
           let res = await saveCommissions(obj);
