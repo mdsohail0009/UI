@@ -34,7 +34,6 @@ const AddressCryptoView = (props) => {
 		setIsLoading(true)
 		let response = await getCryptoData(props?.match?.params?.id);
 		if (response.ok) {
-			console.log(response.data)
 			setCryptoAddress(response.data);
 		}
 		setIsLoading(false)
@@ -80,7 +79,7 @@ const AddressCryptoView = (props) => {
 					) : (
 						<>
 							
-							{cryptoAddress && (<>
+							{cryptoAddress && (
 								<div className="custom-alert-width">
 									<Title className="basicinfo">
 										Beneficiary Details
@@ -122,8 +121,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-													{process.env.REACT_APP_ISTR == "true" && <>
-														<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{process.env.REACT_APP_ISTR == "true" &&<><Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Wallet Source</label>
 													<div className=" kpi-val adview-name">
@@ -131,7 +129,14 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											</>}
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div className="kpi-divstyle ad-rec-detyails">
+													<label className="kpi-label">Proof Of Ownership</label>
+													<div className=" kpi-val adview-name">
+													{cryptoAddress?.isDocumentUpload===true?"Yes": "No" || "-"}
+													</div>
+												</div>
+											</Col></>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>
@@ -188,64 +193,6 @@ const AddressCryptoView = (props) => {
 							</Row>}
 									</Col>
 								</Row>
-								{process.env.REACT_APP_ISTR == "true" &&
-								<div className="doc-label">
-									<Title className="basicinfo">
-										Backup Details
-									</Title>
-								<Row gutter={8}>
-									<Col xl={24} xxl={24} className="bank-view">
-										<Row className="kpi-List">
-											
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Wallet Address</label>
-													<div className=" kpi-val adview-name">
-														{!cryptoAddress?.backupWalletAddress && "-"||cryptoAddress?.backupWalletAddress
-															}
-													</div>
-												</div>
-											</Col>											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Wallet Source</label>
-													<div className=" kpi-val adview-name">
-													{cryptoAddress?.backupWalletSource==="Others"? `${cryptoAddress?.backupWalletSource } (${cryptoAddress?.backupWalletSource})` :cryptoAddress?.backupWalletSource|| "-"}
-													</div>
-												</div>
-											</Col>
-										</Row>
-												<Row>
-										{cryptoAddress?.backupWalletDocuments?.map((file) => (
-													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.id}>
-														<div
-															className="docfile mr-0 d-flex ml-8"
-															key={file.id}>
-															<span
-																className={`icon xl ${getFileTypeClass(file.fileName)} mr-16`}
-															/>
-															<div
-																className="docdetails c-pointer"
-																onClick={() => docPreviewOpen(file)}
-																>
-																{file.name !== null ? (
-																	<EllipsisMiddle suffixCount={4}>
-																		{file.fileName}
-																	</EllipsisMiddle>
-																) : (
-																	<EllipsisMiddle suffixCount={4}>
-																		Name
-																	</EllipsisMiddle>
-																)}
-																<span className="fs-12 text-secondary">
-																	{bytesToSize(file.fileSize)}
-																</span>
-															</div>
-														</div>
-													</Col>
-												))}
-							</Row>
-									</Col>
-								</Row>
 								<div className="text-right view-level-btn">
 								<Button
 									className="cust-cancel-btn"
@@ -254,10 +201,7 @@ const AddressCryptoView = (props) => {
 									Cancel
 								</Button>
 							</div>
-								</div>}
 								</div>
-								
-								</>
 							)}
 							
 						</>

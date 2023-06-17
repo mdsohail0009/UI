@@ -38,8 +38,6 @@ class AddressCryptoDocument extends Component {
   state = {
     filesList: [],
     documents: [],
-    docBackUpAddress:[],
-    docAddress:[],
     showDeleteModal: false,
     isDocLoading: false,
     selectedObj: {},
@@ -135,42 +133,14 @@ class AddressCryptoDocument extends Component {
   filePreviewPath() {
     return this.state.previewPath;
   }
-   allowedFileTypes = new Set(["image/png","image/jpg", "image/jpeg", "application/pdf",
-    "video/mp4", "video/avi","video/quicktime","video/x-ms-wmv", "image/PNG", "image/JPG",
-     "image/JPEG", "application/pdf", "application/PDF", "video/mp4", "application/mp4",
-     "audio/mp4", "application/x-troff-msvideo", "video/avi", "video/msvideo", "video/x-msvideo", "video/quicktime", "video/x-ms-wmv" 
-  ]);
-  
-  isFileTypeAllowed(fileType) {
-    return this.allowedFileTypes.has(fileType.toLowerCase());
-  }
-  handleUpload=({ file },type) => {
-    this.setState({ ...this.state, isDocLoading: true });
-    let address=Object.assign([],this.state.docAddress);
-    let backUpAddress=Object.assign([],this.state.docBackUpAddress);
-    if (file.status === "done") {
-     const fileType = file.type.toLowerCase();
-  const isAllowed = this.isFileTypeAllowed(fileType);
-        if (isAllowed) {
-            let { filesList: files } = this.state;
-            if(type==="address"){
-              files?.push(this.docDetail(file));
-              address?.push(this.docDetail(file));
-              this.setState({...this.state,docAddress:address,filesList: address,isDocLoading: false, errorMessage: null});
-              this.props?.onDocumentsChange(files);
-          }else{
-              files?.push(this.docDetail(file));
-              backUpAddress?.push(this.docDetail(file));
-              this.setState({...this.state,docBackUpAddress:backUpAddress,filesList: backUpAddress,isDocLoading: false, errorMessage: null});
-              this.props?.onDocumentsChange(backUpAddress);
-          }
-        }else{
-            this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
-        }
-    }else if(file.status ==='error' || file?.size >25000000){
-      this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response ||file)
-       });
-    }
+  allowedFileTypes = new Set(["image/png","image/jpg", "image/jpeg", "application/pdf",
+  "video/mp4", "video/avi","video/quicktime","video/x-ms-wmv", "image/PNG", "image/JPG",
+   "image/JPEG", "application/pdf", "application/PDF", "video/mp4", "application/mp4",
+   "audio/mp4", "application/x-troff-msvideo", "video/avi", "video/msvideo", "video/x-msvideo", "video/quicktime", "video/x-ms-wmv" 
+]);
+
+isFileTypeAllowed(fileType) {
+  return this.allowedFileTypes.has(fileType.toLowerCase());
 }
   render() {
     if (this.props.refreshData !== this.state.refreshData) {
@@ -258,8 +228,23 @@ class AddressCryptoDocument extends Component {
                 showUploadList={false}
                 beforeUpload={(props) => {}}
                 headers={{Authorization : `Bearer ${this.props.oidc.deviceToken}`}}
-
-                            onChange={(file)=>this.handleUpload(file,this.props?.type)}
+                            onChange={({ file }) => {
+                                this.setState({ ...this.state, isDocLoading: true });
+                                if (file.status === "done") {
+                                    const isAllowed = this.isFileTypeAllowed
+                                    if (isAllowed) {
+                                        let { filesList: files } = this.state;
+                                        files?.push(this.docDetail(file));
+                                        this.setState({ ...this.state, filesList: files, isDocLoading: false, errorMessage: null });
+                                        this.props?.onDocumentsChange(files);
+                                    }else{
+                                        this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg, pdf, mp4, mov, wmv, avi files" }) 
+                                    }
+                                }else if(file.status ==='error' || file?.size >25000000){
+                                  this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response ||file)
+                                   });
+                                }
+                            }}
               >
                 <p className="ant-upload-drag-icon">
                   <span className="icon xxxl doc-upload" />
