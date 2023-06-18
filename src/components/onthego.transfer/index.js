@@ -328,6 +328,7 @@ saveWithdrawdata = async () => {
         obj["info"] = JSON.stringify(this.props?.trackAuditLogData);
         obj["isToggel"] = this.state?.isToggel;
         obj["originalAmount"]=this.state.reviewDetails.originalAmount;
+        obj["createdBy"]=this.props.userProfile?.userName;
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));

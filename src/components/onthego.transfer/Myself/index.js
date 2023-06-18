@@ -62,7 +62,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
              setLoader(false)
         }
     }
-    const saveTransfer = async(values) => {       
+    const saveTransfer = async(values) => {     
+        debugger  
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
@@ -89,6 +90,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
         saveObj.payeeAccountModels[0].city=bankDetails.city?bankDetails.city:null;
         saveObj.payeeAccountModels[0].postalCode=bankDetails.zipCode?bankDetails.zipCode:null;
+        saveObj.payeeAccountModels[0].modifiedBy=isEdit ? props?.userConfig?.userName : null;
         saveObj.firstName=recipientDetails.firstName;
         saveObj.lastName=recipientDetails.lastName;
         saveObj.beneficiaryName=recipientDetails.beneficiaryName;
@@ -101,6 +103,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount || 0;
         saveObj.createdBy = props.userConfig?.userName;
+        saveObj.modifiedBy = isEdit ? props?.userConfig?.userName : null;
         saveObj.info =JSON.stringify(props?.trackAuditLogData);
         if(isEdit){
             saveObj.id = isSelectedId ? isSelectedId: saveObj.payeeId;
