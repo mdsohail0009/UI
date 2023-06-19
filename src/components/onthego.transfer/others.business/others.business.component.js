@@ -164,9 +164,9 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
-        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
-        _obj.payeeAccountModels[0].modifiedBy = isEdit ? this.props.userProfile?.userName : null;
-        _obj.createdBy = this.props.userProfile?.userName;
+        _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
+        _obj.payeeAccountModels[0].modifiedBy = isEdit ? this.props.userConfig?.userName : null;
+        _obj.createdBy = this.props.userConfig?.userName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         
         _obj.addressType = "otherbusiness";
