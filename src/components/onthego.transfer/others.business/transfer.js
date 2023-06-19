@@ -114,8 +114,8 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form2.current?.getFieldValue('iban');
         _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
-        _obj.payeeAccountModels[0].modifiedBy = isEdit ? this.props.userProfile?.userName : null;
-        _obj.createdBy = this.props.userProfile?.userName;
+        _obj.payeeAccountModels[0].modifiedBy = isEdit ? this.props.userConfig?.userName : null;
+        _obj.createdBy = this.props.userConfig?.userName;
         _obj.info =JSON.stringify(this.props?.trackAuditLogData);
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
@@ -270,7 +270,7 @@ class BusinessTransfer extends Component {
             return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
                 <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userConfig?.email}. 
                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
             </div>
             </div>
