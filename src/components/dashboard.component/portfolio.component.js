@@ -62,8 +62,8 @@ class Portfolio extends Component {
         })
     }
     getNumberVal(item){
-        if (item.value.indexOf("/") > -1) {
-          let list = item.value.split("/");
+        if (item?.value?.indexOf("/") > -1) {
+          let list = item?.value?.split("/");
           return (
             <>
               <NumberFormat
@@ -83,7 +83,7 @@ class Portfolio extends Component {
         } else {
           return (
             <NumberFormat
-              value={item.value}
+              value={item?.value}
               decimalSeparator="."
               displayType={"text"}
               thousandSeparator={true}
