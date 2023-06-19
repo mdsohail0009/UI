@@ -173,7 +173,7 @@ class OnthegoFundTransfer extends Component {
           bankId:this.state.selectedbankobj[0]?.bankId, 
           isToggle:this.state.isToggel,
           showAmount:!this.state.isToggel && this.enteramtForm?.current?.getFieldsValue()?.amount || this.state.showAmount,
-          withdrawalAmount:!this.state.isToggel && this.enteramtForm?.current?.getFieldsValue()?.amount || this.state.withdrawalAmount,
+          withdrawalAmount: this.enteramtForm?.current?.getFieldsValue()?.amount ,
           payeeId:this.state.selectedPayee.id
         }
           if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
@@ -182,7 +182,7 @@ class OnthegoFundTransfer extends Component {
             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
               withdrawAmount:this.enteramtForm.current?.getFieldsValue()?.amount,
               isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,previousAmountValue:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,isLoadingToggel:false});
-              this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
+              this.enteramtForm.current.setFieldsValue({amount:res.data.withdrawalAmount});
           }  else {
                     this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm?.current?.getFieldsValue()?.amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
                     this.amountScrool.current.scrollIntoView();
@@ -871,7 +871,6 @@ selectsCurrency=(item)=>{
                 allowNegative={false}
                 thousandSeparator={","}
                 onKeyDown={this.keyDownHandler}
-                disabled={this.state.isToggel ? true : false}
                 addonBefore={
                   <span  className="btn-space">{this.state.selectedCurrency} ({this.state.selectedCurrencyAmount.toLocaleString()})</span>
                     }
