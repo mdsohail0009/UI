@@ -270,7 +270,7 @@ class BusinessTransfer extends Component {
             return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
                 <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userConfig?.email}. 
                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
             </div>
             </div>
