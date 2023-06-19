@@ -79,6 +79,7 @@ class OnthegoFundTransfer extends Component {
     withdrawalAmount:null,
     isValidation:false,
     previousAmountValue:null,
+    isLoadingToggel:false,
   }
   componentDidMount() {
     this.verificationCheck();
@@ -163,7 +164,8 @@ class OnthegoFundTransfer extends Component {
   saveCommissionsDetails=async(e)=>{
     if((this.enteramtForm.current.getFieldsValue().amount && this.state.selectedBank)){
       {
-        this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,effectiveType:false,isValidation:false})
+    this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,
+      effectiveType:false,isValidation:false,isLoadingToggel:true,})
         let obj ={
           CustomerId:this.props.userProfile.id,  
           amount: this.enteramtForm.current.getFieldsValue().amount,
@@ -179,7 +181,7 @@ class OnthegoFundTransfer extends Component {
           if(res.ok){
             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
               withdrawAmount:this.enteramtForm.current?.getFieldsValue()?.amount,
-              isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,previousAmountValue:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount});
+              isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,previousAmountValue:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,isLoadingToggel:false});
               this.enteramtForm.current.setFieldsValue({amount:res.data.showAmount});
           }  else {
                     this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm?.current?.getFieldsValue()?.amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
@@ -187,7 +189,7 @@ class OnthegoFundTransfer extends Component {
                 } 
         }else{
           this.setState({ ...this.state, isLoading: false,addressLoader:false, 
-            getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
+            getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true,isLoadingToggel:false})
           this.amountScrool.current.scrollIntoView();
         }
       
@@ -575,7 +577,7 @@ handleReasonTrnsfer=(e)=>{
           reasonOfTransfer: '',
           amount: this.state.amount,
           bankId: this.state.selectedbankobj[0]?.bankId,
-          originalAmount:this.state.getBanckDetails.originalAmount,
+          originalAmount:this.state?.getBanckDetails?.originalAmount,
           info:JSON.stringify(this.props?.trackAuditLogData),
         })
         if (res.ok) {
@@ -607,18 +609,20 @@ selectsCurrency=(item)=>{
 
   }
   handleToggle=()=>{
-    if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
-      let getAmt= this.enteramtForm?.current?.getFieldsValue()?.amount ;
-      getAmt = typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
-      let updateAmount= !this.state.isToggel ? this.state.showAmount !=null && this.state.showAmount || getAmt: this.state.withdrawalAmount !=null && this.state.withdrawalAmount || this.enteramtForm?.current?.getFieldsValue()?.amount ;
-      this.enteramtForm.current.setFieldsValue({amount: getAmt && updateAmount});//getAmt && 
-      this.setState({...this.state,showAmount:getAmt,withdrawalAmount:getAmt})
-      if(this.state.isToggel){
-        this.setState({...this.state,isToggel:false, 
-           errorMessage: '',},()=>this.saveCommissionsDetails())
-      }else {
-        this.setState({...this.state,isToggel:true,
-           errorMessage: '',},()=>this.saveCommissionsDetails())
+    if(!this.state.errorMessage && !this.state.isLoadingToggel){
+      if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
+        let getAmt= this.enteramtForm?.current?.getFieldsValue()?.amount ;
+        getAmt = typeof getAmt=="string" ? getAmt?.replace(/,/g, '') : getAmt;
+        let updateAmount= !this.state.isToggel ? this.state.showAmount !=null && this.state.showAmount || getAmt: this.state.withdrawalAmount !=null && this.state.withdrawalAmount || this.enteramtForm?.current?.getFieldsValue()?.amount ;
+        this.enteramtForm.current.setFieldsValue({amount: getAmt && updateAmount});
+        this.setState({...this.state,showAmount:getAmt,withdrawalAmount:getAmt})
+        if(this.state.isToggel){
+          this.setState({...this.state,isToggel:false, 
+             errorMessage: '',},()=>this.saveCommissionsDetails())
+        }else {
+          this.setState({...this.state,isToggel:true,
+             errorMessage: '',},()=>this.saveCommissionsDetails())
+        }
       }
     }
     }
@@ -867,6 +871,7 @@ selectsCurrency=(item)=>{
                 allowNegative={false}
                 thousandSeparator={","}
                 onKeyDown={this.keyDownHandler}
+                disabled={this.state.isToggel ? true : false}
                 addonBefore={
                   <span  className="btn-space">{this.state.selectedCurrency} ({this.state.selectedCurrencyAmount.toLocaleString()})</span>
                     }
