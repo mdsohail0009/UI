@@ -71,14 +71,7 @@ class SelectSellCrypto extends Component {
     previewSellData() {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        let { sellMinValue, gbpInUsd, eurInUsd,coin } = this.props.sellData.coinDetailData;
-        const maxUSDT = 250000;
-        const purchaseCurrencyMaxAmt = {
-            GBP: this.state.USDAmnt * gbpInUsd,
-            EUR: this.state.USDAmnt * eurInUsd,
-            USD: this.state.USDAmnt
-        }
-        const maxAmtMesage = "$250k";
+        let { sellMinValue,coin } = this.props.sellData.coinDetailData;
         if ((this.state.CryptoAmnt === "")) {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('enter_amount')
@@ -107,9 +100,9 @@ class SelectSellCrypto extends Component {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue + " " + coin  })
             return;
         }
-        else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
+        else if (parseFloat(this.state.CryptoAmnt) > this.props.sellData.coinDetailData.sellMaxValue) {
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage +" Please contact support for higher amounts." })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') +  this.props.sellData.coinDetailData.sellMaxValue+" "+coin +". Please contact support for higher amounts." })
             return;
         }
         else {
@@ -227,8 +220,8 @@ class SelectSellCrypto extends Component {
 
                                 <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} defaultCurrency="USD"/>
                             </div>
-
-                            {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                            {<div className='buy-paragraph'><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />{this.props.sellData.coinDetailData.buyMax} {this.props.sellData.coinDetailData.coin}
+                            
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" /><div className="sell-btn-style">
                                     <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
                                 </div></div>}
