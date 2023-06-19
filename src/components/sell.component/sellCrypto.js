@@ -36,9 +36,6 @@ class SellToggle extends Component {
         if (this.props.sellData?.memberCoins?.loading||this.state.loading) { return <Loader /> }
         return (
             <>
-
-                {/* <div className='text-center selctcoin-style'><div className='drawer-maintitle'>Sell Crypto</div>
-                      <Translate content="buy_your_crypto_for_cash_text" component={Paragraph} className="label-style drawer-subtextstyle" /></div> */}
                 <div className="sellcrypto-container">
                 <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="label-style" />
 

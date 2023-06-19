@@ -22,8 +22,8 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         message: null,
         valid: true
     };
-    const maxPurchaseAmt = 100000;
-    const maxAmtMessage = "$100k"
+    const maxPurchaseAmt = 250000;
+    const maxAmtMessage = "$250k"
     if (localValue === ""|| cryptValue === "") {
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
