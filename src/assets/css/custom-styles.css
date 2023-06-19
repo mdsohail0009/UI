@@ -1391,3 +1391,4 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .mt-0{margin-top: 0 !important;}
 
 /*@media end*/
+.Effective-Fees-fs .ant-form-item-label>label{color: var(--termsText);}

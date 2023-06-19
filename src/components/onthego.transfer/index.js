@@ -841,7 +841,7 @@ selectsCurrency=(item)=>{
           <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="p-relative">
           <Tooltip title={"Use this option to withdraw exact amount"}><span className="icon commission-toggle" onClick={this.handleToggle}></span></Tooltip>
             <Form.Item
-              className="custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input"
+              className={`custom-forminput custom-label fund-transfer-input cust-send-amountfield send-fiat-input  ${this.state.isToggel && "Effective-Fees-fs"}`}
               name="amount"
               label={!this.state.isToggel ? "Withdrawal Amount" : "How Much Beneficiary Will Receive"}
               required
