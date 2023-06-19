@@ -89,7 +89,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
         saveObj.payeeAccountModels[0].city=bankDetails.city?bankDetails.city:null;
         saveObj.payeeAccountModels[0].postalCode=bankDetails.zipCode?bankDetails.zipCode:null;
-        saveObj.payeeAccountModels[0].modifiedBy = isEdit ? props.userConfig?.userName : null;
+        saveObj.payeeAccountModels[0].modifiedBy=isEdit ? props?.userConfig?.userName : null;
         saveObj.firstName=recipientDetails.firstName;
         saveObj.lastName=recipientDetails.lastName;
         saveObj.beneficiaryName=recipientDetails.beneficiaryName;
@@ -231,7 +231,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         {showDeclartion &&  <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
                 <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                <Text className="successsubtext">{`Declaration form has been sent to ${props.userConfig?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
                 <div className="my-25">
                     </div>
