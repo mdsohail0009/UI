@@ -242,7 +242,7 @@ class Header extends Component {
               </Link>
             </li>
             <li
-              onClick={() => uploadDoc()}
+              onClick={() => this.uploadDoc()}
             >
               <Link>
                 <span className="text-left">
