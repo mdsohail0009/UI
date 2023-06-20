@@ -163,6 +163,7 @@ body, h1, h2, h3, h4, h5, h6, a, p, div, input{font-family: 'Lato', sans-serif !
 /* .small-btn{min-width: 90px;font-weight: 700;font-size: 15px;color: var(--white);border: 1px solid var(--pfsmbtn);border-radius: 5px;padding: 12px 28px;display: inline-block;} */
 .profile-sm-btn{text-transform: capitalize;height: 46px;min-width: 120px;font-weight: 700;font-size: 15px;color: var(--white);border: 1px solid var(--pfsmbtn);border-radius: 5px;padding: 4px 28px;}
 .passwrd-chang-btn{margin-top: 26px;}
+.reset-paswrd-mt{margin-top: 36px;}
 .custom-msg .ant-message-notice-content{background:var(--black); color: var(--textPureWhite); padding: 20px 40px; min-width: 200px;}
 .security-label-style{font-weight: 400;font-size: 14px;color: var(--checkText);margin-left: 12px;}
 .user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tabtitle, .user-list  .ant-tabs-tab-btn:hover .tabtitle{color: #ffffff;}

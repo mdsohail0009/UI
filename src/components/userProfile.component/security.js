@@ -193,8 +193,8 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         />
         <ul className="profile-ul">
           <li className="profileinfo ">
-              <div className="passwrd-chang-btn">
-              <div className="text-left passwrd-chang-btn">
+              {/* <div className="passwrd-chang-btn"> */}
+              <div className="text-left">
               <Button
                         className="profile-sm-btn"
                         loading={isResetPassword}
@@ -203,16 +203,16 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                        Reset Password
                     </Button>
               </div>
-              {isChangepassword && <div style={{ flexGrow: 30 }} className="mt-12">
+              {isChangepassword && <div className="reset-paswrd-mt">
                     <Text
                       className="basicinfo mb-0"
                     > Check Your Email</Text>
-                    <Paragraph className="basic-decs">
-                      Email send successfully to : {userConfig?.email} please check and reset your password.</Paragraph>
+                    <Paragraph className="basic-decs mt-0">
+                      Email send successfully to : <b>{userConfig?.email}</b> please check and reset your password.</Paragraph>
                   </div>
                 }
               
-            </div>
+            {/* </div> */}
           </li>
         </ul>
       </div>
