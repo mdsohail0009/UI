@@ -220,7 +220,7 @@ class SelectSellCrypto extends Component {
 
                                 <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} defaultCurrency="USD"/>
                             </div>
-                            {<div className='buy-paragraph'><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />{this.props.sellData.coinDetailData.buyMax} {this.props.sellData.coinDetailData.coin}
+                            {<div className='buy-paragraph'><span className="buy-paragraph">The maximum amount is</span>{" "} <span>{this.props.sellData.coinDetailData.buyMax} {this.props.sellData.coinDetailData.coin}</span>
                             
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" /><div className="sell-btn-style">
                                     <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
