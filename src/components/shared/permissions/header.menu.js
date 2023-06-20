@@ -340,7 +340,9 @@ class HeaderPermissionMenu extends Component {
             FullFeatureName: "Logout"
         });
     }
-
+    uploadDoc=()=>{
+        window.open(process.env.REACT_APP_UPLOAD_DOC , '_blank')
+    }
     themeSwitch = () => {
         if (this.props.userConfig?.theme == "Light Theme") {
             this.setState({ ...this.state, theamFalge: "darkTheam" })
@@ -451,7 +453,7 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li
-                            onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
+                            onClick={() => this.uploadDoc()}
                         >
                             <Link>
                                 <span className="text-left">
