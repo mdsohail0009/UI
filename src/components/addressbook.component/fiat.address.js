@@ -59,7 +59,7 @@ const FiatAddress = ({ onSubmit, onAddressOptionsChange, selectedAddress, onCont
                 setIsEdit(val);
             }} isHideTabs={(value)=>setHideTabs(value)} selectedbankobj={props.selectedbankobj}></MyselfNewTransfer>}
         {addressOptions.addressType === "otherbusiness" && <OthersBusiness ontheGoType={props.typeOntheGo} currency={props.currency}
-         headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={(props.currency === "USD" ||props.currency=== "GBP" || props.currency==="SGD")? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
+         headingUpdate={headingChange} selectedAddress={selectedAddress} type={props.type} isUSDTransfer={(props.currency === "USD" ||props.currency=== "GBP" || props.currency==="SGD"||props.currency=== "EUR")? true : false} onContinue={(obj) => onContinue(obj)} amount={props.amount} onEdit={(val) => {
             setIsEdit(val);
         }} isHideTabs={(value)=>setHideTabs(value)} selectedbankobj={props.selectedbankobj}/>}
         {addressOptions.addressType === "individuals" && <SomeoneComponent ontheGoType={props.typeOntheGo}
