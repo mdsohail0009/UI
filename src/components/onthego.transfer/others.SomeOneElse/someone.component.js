@@ -194,7 +194,21 @@ const SomeoneComponent = (props) => {
                         </Col>
                     </Row>
                 </>}
-                {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
+                {!showDeclartion && <>
+                {props.currency === "EUR" && <>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                            }}>
+                                <Tabs.TabPane tab="SEPA Transfer" className="text-white text-captz" key={"SWIFT/BIC"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="SWIFT Transfer" className="text-white text-captz" key={"SWIFTTransfer"} disabled={edit}></Tabs.TabPane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </>}
+                {/* {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>} */}
                 {props.currency == 'CHF' && <h2 className="adbook-head">CHF Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
@@ -474,6 +488,7 @@ const SomeoneComponent = (props) => {
                     </Button>
                 </div>
             </Form>
+        </>}
         </>}
         </>}
         </>}
