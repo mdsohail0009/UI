@@ -211,8 +211,6 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                       Email send successfully to : <b>{userConfig?.email}</b> please check and reset your password.</Paragraph>
                   </div>
                 }
-              
-            {/* </div> */}
           </li>
         </ul>
       </div>
