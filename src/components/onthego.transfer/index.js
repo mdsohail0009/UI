@@ -80,6 +80,7 @@ class OnthegoFundTransfer extends Component {
     isValidation:false,
     previousAmountValue:null,
     isLoadingToggel:false,
+    isSaveCommissions:false,
   }
   componentDidMount() {
     this.verificationCheck();
@@ -165,7 +166,7 @@ class OnthegoFundTransfer extends Component {
     if((this.enteramtForm.current.getFieldsValue().amount && this.state.selectedBank)){
       {
     this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,
-      effectiveType:false,isValidation:false,isLoadingToggel:true,})
+      effectiveType:false,isValidation:false,isLoadingToggel:true,isSaveCommissions:false})
         let obj ={
           CustomerId:this.props.userProfile.id,  
           amount: this.enteramtForm.current.getFieldsValue().amount,
@@ -179,17 +180,17 @@ class OnthegoFundTransfer extends Component {
           if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
           let res = await saveCommissions(obj);
           if(res.ok){
-            this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,
+            this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,isSaveCommissions:true,
               withdrawAmount:this.enteramtForm.current?.getFieldsValue()?.amount,
               isLoading:false,showAmount:res.data.showAmount,withdrawalAmount:res.data.withdrawalAmount,previousAmountValue:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,isLoadingToggel:false});
               this.enteramtForm.current.setFieldsValue({amount:res.data.withdrawalAmount});
           }  else {
-                    this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm?.current?.getFieldsValue()?.amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true})
+                    this.setState({ ...this.state, isLoading: false,addressLoader:false, errorMessage:this.enteramtForm?.current?.getFieldsValue()?.amount!=="" && apicalls.isErrorDispaly(res),getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true,isSaveCommissions:false})
                     this.amountScrool.current.scrollIntoView();
                 } 
         }else{
           this.setState({ ...this.state, isLoading: false,addressLoader:false, 
-            getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true,isLoadingToggel:false})
+            getBanckDetails:null ,effectiveType:false,detailstype:false,isValidation:true,isLoadingToggel:false,isSaveCommissions:false})
           this.amountScrool.current.scrollIntoView();
         }
       
@@ -403,7 +404,7 @@ saveWithdrawdata = async () => {
          this.chnageStep(step, values);
           this.props.dispatch(setSendFiatHead(true));
         }else{
-          this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(response) })
+          this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(response),addressLoader:false })
         }
     } else {
         this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res),addressLoader:false })
@@ -562,7 +563,7 @@ handleReasonTrnsfer=(e)=>{
         },
         () => this.chnageStep('reasonfortransfer'),
       )
-    } else {
+    } else if(this.state.isSaveCommissions){ {
         this.setState({
           ...this.state,
           loading: true,
@@ -587,7 +588,7 @@ handleReasonTrnsfer=(e)=>{
           this.amountScrool.current.scrollIntoView();
 
         }
-    }
+    }}
   
 }
 selectsCurrency=(item)=>{
@@ -966,6 +967,7 @@ selectsCurrency=(item)=>{
            loading={this.state.addressLoader}
            size="large"
            block
+           disabled={!this.state.isSaveCommissions}
            className="pop-btn custom-send cust-disabled"
          >
           Continue
@@ -976,6 +978,7 @@ selectsCurrency=(item)=>{
              htmlType={"button"}
              loading={this.state.addressLoader}
              onClick={this.goToAddressBook}
+             disabled={!this.state.isSaveCommissions}
              size="large"
              block
              className="pop-btn custom-send cust-disabled"
@@ -1100,14 +1103,14 @@ selectsCurrency=(item)=>{
                                                     "isInternational": null,
                                                     "docRepositories": this.state.codeDetails?.documents
                           }
-                          const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,
+                         if(this.state.isSaveCommissions) {const res = await confirmTransaction({ payeeId: this.state.selectedPayee.id, reasonOfTransfer: fieldValues.reasonOfTransfer, amount: this.state.amount, docRepositories: this.state.codeDetails?.documents,transferOthers:fieldValues?.transferOthers,
                             originalAmount:this.state.getBanckDetails.originalAmount,bankId:this.state.selectedbankobj[0]?.bankId,
                            info:JSON.stringify(this.props?.trackAuditLogData),});
                           if (res.ok) {
                             this.setState({ ...this.state, reviewDetails: res.data, loading: false,errorMessage:null }, () => { this.props.dispatch(setSendFiatHead(true)); this.chnageStep("reviewdetails") });
                           } else {
                             this.setState({ ...this.state, codeDetails: { ...this.state.codeDetails, ...fieldValues }, loading: false, errorMessage: apicalls.isErrorDispaly(res) });
-                          }
+                          }}
 
                         }).catch(() => { });
                     }}
