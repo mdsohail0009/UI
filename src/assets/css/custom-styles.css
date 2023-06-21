@@ -478,7 +478,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .buy-para-bg{border-radius: 10px;background-color: var(--cardBG);padding: 8px 28px;margin: auto;margin-top: 20px;}
 /* .auto-scroll{overflow-y: auto;} */
 .enter-val-container.swap-com{display: flex;align-items: center;justify-content: center;}
-.inputfont-style{font-weight: 500;font-size: 26px;color: var(--white);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.inputfont-style{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-size: 36px !important;}
 /* .inputbg-fonts{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;}
 .inputbg-fonts:hover, .inputbg-fonts:focus, .inputbg-fonts.ant-input-borderless:focus{background: var( --inputBg);height: 50px;margin-bottom: 6px;border: 1px solid var(--subText);border-radius: 5px;} */
 .buy-paragraph{color: var( --paraBg);font-weight: 500;font-size: 16px;text-align: center;margin-bottom: 0 !important;margin-top:4px;}
@@ -763,7 +763,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .hy-align, .code-tooltip-align{margin:auto 0; display: flex;align-items: center;}
 .send-crypto-enrty{border-radius:5px;margin-bottom: 12px;}
 .transfer-designstyle{margin-top: 60px;}
-.inputfont-style::placeholder{font-size: 20px;}
+/* .inputfont-style::placeholder{font-size: 20px;} */
 .new-swap-subtext.send-crypto-enrty{width:97%;margin:0 auto;}
 /* send crypto end */
 
@@ -1175,6 +1175,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .side-drawer .ant-drawer-header{padding:12px 30px 0px 30px !important}
     .inputfont-style{font-size:36px;}
     .buy-paragraph{width: 300px;margin: auto;}
+    .buy-paragraph.buy-para-wd{width: auto !important;}
     .crypto-card .ant-card-body{padding: 16px 14px;height: 94px;}
     .custom-radiobtn .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{padding:10px 36px;}
     .custom-radiobtn .ant-radio-button-wrapper{padding: 0 15px;}
