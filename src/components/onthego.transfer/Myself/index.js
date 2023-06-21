@@ -83,7 +83,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         saveObj.payeeAccountModels[0].line1=currency != 'EUR'?values.line1:null;
         saveObj.payeeAccountModels[0].line2=currency !='EUR'?values.line2:null;
         saveObj.payeeAccountModels[0].state=bankDetails.state?bankDetails.state:null;
-        saveObj.payeeAccountModels[0].bankName=(currency==='CHF'||currency==='EUR' || addressOptions?.tabType === "internationalIBAN")?bankDetails.bankName:values.bankName;
+        saveObj.payeeAccountModels[0].bankName=(currency==='CHF'||(currency==='EUR'&&addressOptions.tabType!=="swifttransfer" &&'sepa'||currency==='EUR'&&addressOptions.tabType==="swifttransfer"&&'swifttransfer') || addressOptions?.tabType === "internationalIBAN")?bankDetails.bankName:values.bankName;
         saveObj.payeeAccountModels[0].bic=bankDetails.routingNumber?bankDetails.routingNumber:null;
         saveObj.payeeAccountModels[0].branch=bankDetails.branch?bankDetails.branch:null;
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
@@ -97,7 +97,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         saveObj.line2=recipientDetails.line2;
         saveObj.line3=recipientDetails.line3;
         saveObj.addressType=isBusiness?'ownbusiness':'myself';
-        saveObj.transferType=currency==='EUR'&&'sepa'||currency==='CHF'&&'chftransfer' || currency==='SGD'&& 'SWIFT/BIC' ||addressOptions.tabType;
+        saveObj.transferType=(currency==='EUR'&&addressOptions.tabType!=="swifttransfer" &&'sepa'||currency==='EUR'&&addressOptions.tabType==="swifttransfer"&&'swifttransfer')||currency==='CHF'&&'chftransfer' || currency==='SGD'&& 'SWIFT/BIC' ||addressOptions.tabType;
         saveObj.payeeAccountModels[0].currencyType='fiat';
         saveObj.payeeAccountModels[0].walletCode=currency;
         saveObj.amount=onTheGoObj?.amount || 0;
