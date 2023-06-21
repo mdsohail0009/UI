@@ -352,7 +352,7 @@ class OnthegoCryptoTransfer extends Component {
                 >
                  <NumberFormat
                     customInput={Input}
-                    className="inputfont-style  inputbg-fonts swap-text-sub"
+                    className="inputfont-style inputbg-fonts swap-text-sub"
                     placeholder={"Enter Amount"}
                     maxLength="20"
                     bordered={false}

@@ -175,7 +175,7 @@ class SelectCrypto extends Component {
                     <div className="select-currency">
                         <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
-                    {<div className='buy-paragraph'><span className="buy-paragraph" >The maximum amount is</span>{" "}<span >{this.props.buyInfo?.selectedCoin?.data.buyMax} {this.props.buyInfo?.selectedCoin?.data.coin}</span>
+                    {<div className='buy-paragraph buy-para-wd'><span className="" >The maximum amount is</span>{" "}<span >{this.props.buyInfo?.selectedCoin?.data.buyMax} {this.props.buyInfo?.selectedCoin?.data.coin}</span>
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                      <div className="buy-usdt-btn">
                      <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
