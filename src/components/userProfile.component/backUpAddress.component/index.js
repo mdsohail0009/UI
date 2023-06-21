@@ -60,7 +60,6 @@ const BackUpAddress = () => {
     }
     const saveAddresses = async () => {
         setBtnLoading(true);
-        console.log(selectCryptoLu);
         let res = await saveBackupAddresses(selectCryptoLu);
         if (res.ok) {
             success("Backup Address saved successfully")
@@ -165,7 +164,7 @@ const BackUpAddress = () => {
                             <div>
                                 {cryptoObj?.map((item, idx) => (
                                     <text className='custom-label audit-label' key={idx}>
-                                        {item.code.toUpperCase()}{" "}{" "}{item.code!=="BTC"&& "[ERC-20]"}
+                                         {item.code.toUpperCase()}{" "}{" "}{item.code!=="BTC"&& "[ERC-20]"}
                                         <Select
                                             placeholder={
                                                 (!(backupAllAddresses?.length == 0 || backupAllAddresses == null) && defaultCryptoValue(item?.network) || `Select ${item.network.toUpperCase()} Network Address`)

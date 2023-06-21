@@ -143,9 +143,10 @@ class OnthegoFundTransfer extends Component {
   }
 
   getAccountWallet=()=>{
+    this.setState({...this.state,errorMessage:null})
     let walletObj=getAccountWallet()
     if(walletObj.ok){
-      this.setState({ ...this.state, fiatWallets: walletObj.data });
+      this.setState({ ...this.state, fiatWallets: walletObj.data ,errorMessage:null});
     }
     else{
          this.setState({ ...this.state,   errorMessage: apicalls.isErrorDispaly(walletObj) });
@@ -216,7 +217,7 @@ class OnthegoFundTransfer extends Component {
     });
   }
   verificationCheck = async () => {
-    this.setState({ ...this.state, isVarificationLoader: true })
+    this.setState({ ...this.state, isVarificationLoader: true,errorMessage:null })
     const verfResponse = await getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
@@ -229,7 +230,7 @@ class OnthegoFundTransfer extends Component {
         this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
         this.getWithdrawValidations();
             } else {
-                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false ,errorMessage:null})
       }
     } else {
         this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
