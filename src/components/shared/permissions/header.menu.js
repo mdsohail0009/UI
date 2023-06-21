@@ -362,6 +362,9 @@ class HeaderPermissionMenu extends Component {
             "_blank"
         )
     }
+    uploadDoc=()=>{
+        window.open(process.env.REACT_APP_UPLOAD_DOC , '_blank')
+    }
     clearEvents = () => {
     }
 
@@ -474,7 +477,7 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li
-                            onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
+                            onClick={() => this.uploadDoc()}
                         >
                             <Link>
                                 <span className="text-left">

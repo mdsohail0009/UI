@@ -147,6 +147,9 @@ class Header extends Component {
   onMenuItemClick = (menuitem, menuKey) => {
     handleHeaderProfileMenuClick(menuitem, menuKey);
   }
+  uploadDoc=()=>{
+    window.open(process.env.REACT_APP_UPLOAD_DOC , '_blank')
+}
   render() {
     const userProfileMenu = (
       <Menu>
@@ -239,7 +242,7 @@ class Header extends Component {
               </Link>
             </li>
             <li
-              onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
+              onClick={() => this.uploadDoc()}
             >
               <Link>
                 <span className="text-left">
