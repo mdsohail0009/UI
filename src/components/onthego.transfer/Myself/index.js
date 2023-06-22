@@ -62,8 +62,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
              setLoader(false)
         }
     }
-    const saveTransfer = async(values) => {  
-        console.log(addressOptions?.tabType,"addressOptions?.tabType")     
+    const saveTransfer = async(values) => {    
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
