@@ -41,7 +41,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
     else {
         if (cryptValue < minPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + ". " + coin
+            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + " " + coin
         } 
         else if (cryptValue > maxPurchase) {
             validate.valid = false;
