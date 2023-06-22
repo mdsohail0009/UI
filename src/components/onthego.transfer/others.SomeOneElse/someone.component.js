@@ -13,7 +13,7 @@ const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || 'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR" && !"swift") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || 'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -202,8 +202,8 @@ const SomeoneComponent = (props) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
                                 form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
                             }}>
-                                <Tabs.TabPane tab="SEPA Transfer" className="text-white text-captz" key={"SWIFT/BIC"} disabled={edit}></Tabs.TabPane>
-                                <Tabs.TabPane tab="SWIFT Transfer" className="text-white text-captz" key={"SWIFTTransfer"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="SEPA Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="SWIFT Transfer" className="text-white text-captz" key={"swift"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>
@@ -463,7 +463,11 @@ const SomeoneComponent = (props) => {
                 </>
                 <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) &&
-                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
+                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} 
+                        createPayeeObj={createPayeeObj} form={form} 
+                        domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType}
+                         transferType={(props.currency === "EUR" && addressOptions?.domesticType=="swift") ? "swift" : addressOptions?.transferType}
+                          getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
 
                     {props.type !== "manual" &&
                         (<React.Fragment>

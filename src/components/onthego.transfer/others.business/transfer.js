@@ -24,7 +24,7 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: this.props.transferData?.transferType ||this.props.currency=='SGD' && "SWIFT/BIC" || "domestic", 
+        selectedTab: this.props.transferData?.transferType ||this.props.currency=='SGD' && "SWIFT/BIC" || "domestic" || this.props.currency=='EUR' && "SEFA Transfer" || "domestic", 
         isBtnLoading: false,
         showDeclaration: false,isEdit:false,
         isSelectedId: null,
@@ -277,7 +277,7 @@ class BusinessTransfer extends Component {
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
 
-            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={this.props.currency=="SGD" && "SWIFT/BIC"||"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer`|| this.props.currency=="EUR" && `SEPA Transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={this.props.currency=="SGD" && "SWIFT/BIC"||"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
               
                 <Form initialValues={details}
@@ -420,7 +420,106 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}  refreshData ={selectedTab}/>
+                    {this.props.currency =="EUR" && <> <Row className="validateiban-content">
+                   <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                       <div className=" custom-btn-error">
+                            <Form.Item
+                                className="custom-forminput custom-label"
+                                name="iban"
+                                label={"IBAN"}
+                                required
+                                rules={[
+                                    {
+                                        validator: this.validateIbanType,
+                                      },
+                                ]}
+                            >
+                                <Input
+                                    className="cust-input ibanborder-field"
+                                    placeholder={"IBAN"}
+                                    onChange={this.handleIbanChange}
+                                    maxLength={50}
+                                    addonAfter={ <Button className={``}
+                                    type="primary"
+                                       loading={this.state.isValidateLoading}
+                                       onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
+                                   <Translate content="validate" />
+                           </Button>  }
+                                    />
+
+                            </Form.Item>
+                            </div>
+                       </Col>                     
+                    </Row>
+                      <div className="box basic-info alert-info-custom mt-16 kpi-List">
+                      <Spin spinning={this.state.ibanDetailsLoading}>
+                      {this.state.iBanValid && <Row>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label">
+                                  Bank Name
+                              </label>
+                              <div className=""><Text className="kpi-val">{this.state.ibanDetails?.bankName || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                              BIC
+                              </label>
+                              <div className=""><Text className="kpi-val">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  Branch
+                              </label>
+                              <div className=""><Text className="kpi-val">{this.state?.ibanDetails?.branch || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  Country
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.country || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  State
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.state || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  City
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.city || "-"}</Text></div>
+                          </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                              <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  Zip
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
+                          </div>
+                          </Col>
+                      </Row>}
+                      {!this.state.iBanValid && !this.state.ibanDetailsLoading &&
+                              <div><Text className="info-details">No bank details available</Text></div>
+
+                         }
+                      </Spin>
+                     
+                  </div></>}
+
+                    {this.props.currency !="EUR" && <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}  refreshData ={selectedTab}/>}
                 
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
@@ -447,7 +546,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
+            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab={`${this.props.currency=="EUR" ? "SWIFT transfer" : "International USD Swift"}`} key={"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
            
                 <Form initialValues={details}
