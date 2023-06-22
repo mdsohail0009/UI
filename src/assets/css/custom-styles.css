@@ -1375,6 +1375,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .new-crypto-style .cytpo-list-style .crypto-card-design .price-valgreen{margin-left: 0px;padding: 4px;}
     .transaction-panel, .crypto-style{margin-top: 30px;}
     .table-border td { min-width: 150px;    }
+    .inputfont-style{font-size: 26px !important;}
 }
 @media (min-width: 375px){
     .flex-1 .ant-form-item-label > label::after{right: 78px !important;}
