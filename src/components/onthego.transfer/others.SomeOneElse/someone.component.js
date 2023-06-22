@@ -13,7 +13,7 @@ const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR" && !"swift") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || 'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR" &&"swift") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || 'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -466,7 +466,7 @@ const SomeoneComponent = (props) => {
                         <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} 
                         createPayeeObj={createPayeeObj} form={form} 
                         domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType}
-                         transferType={(props.currency === "EUR" && addressOptions?.domesticType=="swift") ? "swift" : addressOptions?.transferType}
+                         transferType={(props.currency === "EUR" && addressOptions?.domesticType!=="swift") ? "sepa":(props.currency === "EUR" && addressOptions?.domesticType==="swift")?"swift": addressOptions?.transferType}
                           getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
 
                     {props.type !== "manual" &&
