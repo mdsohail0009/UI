@@ -12,7 +12,7 @@ const { Text } = Typography;
 const { TextArea } = Input;
 const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ...props }) => {
     const [form] = Form.useForm();
-    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: currency =='SGD' &&'SWIFT/BIC' || 'domestic', tabType: currency =='SGD' &&'SWIFT/BIC' ||'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "myself", transferType: currency === "EUR" ? "sepa" : "swift", domesticType: currency =='SGD' &&'SWIFT/BIC' || 'domestic', tabType: currency =='SGD' &&'SWIFT/BIC' || currency=="EUR"&&'sepa'|| 'domestic' });
     const [bankDetails, setbankDetails] = useState({})
     const [saveTransferObj,setsaveObj]= useState({"id":"00000000-0000-0000-0000-000000000000","customerId":props.userConfig.id,"favouriteName":"","firstName":"","lastName":"","beneficiaryName":"","line1":"","line2":"","line3":"","transferType":"","addressType":"","isAgree":true,"info":"","isBankContact":true,"relation":"","reasonOfTransfer":"","amount":0,"payeeAccountModels":[{"id":"00000000-0000-0000-0000-000000000000","line1":"","line2":"","city":"","state":"","country":"","postalCode":"","currencyType":"","walletCode":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","userCreated":props?.userConfig?.userName,"iban":"","bic":"","bankBranch":"","abaRoutingCode":"","documents":null}]})
     const [createTransfer,setcreateTransfer]=useState({"favouriteName":"","accountNumber":"","swiftRouteBICNumber":"","bankName":"","iban":"","abaRoutingCode":"","line1":"","line2":""})
@@ -62,7 +62,8 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
              setLoader(false)
         }
     }
-    const saveTransfer = async(values) => {       
+    const saveTransfer = async(values) => {  
+        console.log(addressOptions?.tabType,"addressOptions?.tabType")     
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
@@ -76,14 +77,14 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
         saveObj.payeeAccountModels[0].ukSortCode=values?.ukSortCode;
-        saveObj.payeeAccountModels[0].iban= (currency==='CHF'||currency==='EUR' || (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
-        saveObj.payeeAccountModels[0].accountNumber=currency !='EUR'?values.accountNumber:null;
+        saveObj.payeeAccountModels[0].iban= (currency==='CHF'||(currency==='EUR'&& addressOptions.tabType!=="swifttransfer")|| (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
+        saveObj.payeeAccountModels[0].accountNumber=(currency !=='EUR' ||(currency =='EUR' && addressOptions.tabType!=="sepa"))?values.accountNumber:null;
         saveObj.payeeAccountModels[0].abaRoutingCode=values.abaRoutingCode?values.abaRoutingCode:null;
         saveObj.payeeAccountModels[0].swiftRouteBICNumber=values.swiftRouteBICNumber?values.swiftRouteBICNumber:null;
-        saveObj.payeeAccountModels[0].line1=currency != 'EUR'?values.line1:null;
-        saveObj.payeeAccountModels[0].line2=currency !='EUR'?values.line2:null;
+        saveObj.payeeAccountModels[0].line1=( addressOptions.tabType!=="sepa")?values.line1:null;
+        saveObj.payeeAccountModels[0].line2=(addressOptions.tabType!=="sepa")?values.line2:null;
         saveObj.payeeAccountModels[0].state=bankDetails.state?bankDetails.state:null;
-        saveObj.payeeAccountModels[0].bankName=(currency==='CHF'||(currency==='EUR'&&addressOptions.tabType!=="swifttransfer" &&'sepa'||currency==='EUR'&&addressOptions.tabType==="swifttransfer"&&'swifttransfer') || addressOptions?.tabType === "internationalIBAN")?bankDetails.bankName:values.bankName;
+        saveObj.payeeAccountModels[0].bankName=((currency==='CHF')||(currency==='EUR'&&addressOptions.tabType!=="swifttransfer") ||( addressOptions?.tabType === "internationalIBAN"))?bankDetails.bankName:values.bankName;
         saveObj.payeeAccountModels[0].bic=bankDetails.routingNumber?bankDetails.routingNumber:null;
         saveObj.payeeAccountModels[0].branch=bankDetails.branch?bankDetails.branch:null;
         saveObj.payeeAccountModels[0].country=bankDetails.country?bankDetails.country:null;
@@ -240,7 +241,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
-                        <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab="Domestic USD Transfer......." className="text-white text-captz"  key={"sepa"} disabled={isEdit}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={isEdit}></Tabs.TabPane>
                         <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
@@ -267,12 +268,11 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                 </Col>
             </Row>
         </>}
-        {/* {currency == 'EUR' && <h2 className="adbook-head" >SEPA Transfer</h2>} */}
         {!showDeclartion &&<> {(currency === "EUR") && <>
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                     <Tabs style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => { setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });form.resetFields();seterrorMessage(null);setbankDetails({});setValidIban(false); setEnteredIbanData(null) }} activeKey={addressOptions.tabType}>
-                        <Tabs.TabPane tab={`SEPA Transfer`} className="text-white text-captz"  key={"domestic"} disabled={isEdit}></Tabs.TabPane>
+                        <Tabs.TabPane tab={`SEPA Transfer`} className="text-white text-captz"  key={"sepa"} disabled={isEdit}></Tabs.TabPane>
                         <Tabs.TabPane tab={ `SWIFT Transfer` } className="text-white text-captz" key={"swifttransfer"} disabled={isEdit}></Tabs.TabPane>
                     </Tabs>
                 </Col>
