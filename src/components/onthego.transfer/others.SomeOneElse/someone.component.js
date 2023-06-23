@@ -13,7 +13,7 @@ const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR" &&"swifttransfer") ? "sepa" : props.currency === "CHF"?'chftransfer':"swifttransfer", domesticType:props.currency=="SGD" && "SWIFT/BIC" || props.currency=="EUR"&&'sepa'||'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || (props.currency=="EUR"&&'sepa')||'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -465,9 +465,8 @@ const SomeoneComponent = (props) => {
                         <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} 
                         createPayeeObj={createPayeeObj} form={form} 
                         domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType}
-                         transferType={(props.currency === "EUR" && addressOptions?.domesticType!=="swift") ? "sepa":(props.currency === "EUR" && addressOptions?.domesticType==="swift")?"swift": addressOptions?.transferType}
+                         transferType={(props.currency === "EUR" && addressOptions?.domesticType!=="swifttransfer") ? "sepa":(props.currency === "EUR" && addressOptions?.domesticType==="swifttransfer")?"swift": addressOptions?.transferType}
                           getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
-
                     {props.type !== "manual" &&
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>

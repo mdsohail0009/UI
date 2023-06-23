@@ -501,7 +501,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="abaRoutingCode"
-                        label={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                        label={(currency === 'USD'||currency==="EUR") && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer" ) ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
                         rules={[
                             {
@@ -514,7 +514,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                                         !/^[A-Za-z0-9]+$/.test(value)
                                     ) {
                                         return Promise.reject(
-                                            addressOptions.tabType === 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                           ( addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer") ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
                                         );
                                     }else {
                                         return Promise.resolve();
@@ -525,7 +525,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                         <Input
                             className="cust-input"
                             
-                            placeholder={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                            placeholder={(currency === 'USD'||currency==="EUR") && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer" ) ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         maxLength={50}/>
                     </Form.Item>
                 </Col>}
