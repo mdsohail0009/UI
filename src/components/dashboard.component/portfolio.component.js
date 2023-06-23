@@ -62,8 +62,8 @@ class Portfolio extends Component {
         })
     }
     getNumberVal(item){
-        if (item.value.indexOf("/") > -1) {
-          let list = item.value.split("/");
+        if (item?.value?.indexOf("/") > -1) {
+          let list = item?.value?.split("/");
           return (
             <>
               <NumberFormat
