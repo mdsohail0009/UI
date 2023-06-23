@@ -163,8 +163,7 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
-    if((this.enteramtForm.current.getFieldsValue().amount && this.state.selectedBank)){
-      {
+     if(this.state.selectedBank){
     this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,
       effectiveType:false,isValidation:false,isLoadingToggel:true,isSaveCommissions:false})
         let obj ={
@@ -194,7 +193,6 @@ class OnthegoFundTransfer extends Component {
           this.amountScrool.current.scrollIntoView();
         }
       
-        }
     }  
   }
 
