@@ -36,7 +36,7 @@ class Iban extends Component {
     }
     async fetchWallets() {
         this.props.dispatch(fetchMemberWalletsData(this.props.userProfile.id))
-        this.props.dispatch(fetchPortfolioData(this.props.userProfile.id))
+        // this.props.dispatch(fetchPortfolioData(this.props.userProfile.id))
     }
     showDocsError() {
         this.props.history.push("/docnotices");
