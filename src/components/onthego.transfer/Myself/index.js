@@ -63,6 +63,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         }
     }
     const saveTransfer = async(values) => {    
+        debugger
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
@@ -466,10 +467,41 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
             </Form.Item>
         </Col>}
 
-                {(currency === 'USD' || currency === 'SGD') && addressOptions.tabType === 'international'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {(currency === 'USD' || currency === 'SGD'||currency==="EUR") && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer")&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="swiftRouteBICNumber"
+                        label={(currency === 'USD'||currency==="EUR") && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer" ) ? 'Swift / BIC Code' : 'ABA Routing Code' }
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang("is_required"),
+                            },{
+                                validator: (_, value) => {
+                                    if (
+                                        value &&
+                                        !/^[A-Za-z0-9]+$/.test(value)
+                                    ) {
+                                        return Promise.reject(
+                                            (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer") ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                        );
+                                    }else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            }
+                        ]}>
+                        <Input
+                            className="cust-input"
+                            placeholder={(currency === 'USD'||currency==="EUR") && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer" ) ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                            maxLength={50}/>
+                    </Form.Item>
+                </Col>}
+                {!((currency === 'USD' || currency==="EUR")  && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer")) && currency != 'GBP' &&   currency != "CHF" && currency != "SGD" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item
+                        className="custom-forminput custom-label"
+                        name="abaRoutingCode"
                         label={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         required
                         rules={[
@@ -483,38 +515,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                                         !/^[A-Za-z0-9]+$/.test(value)
                                     ) {
                                         return Promise.reject(
-                                            addressOptions.tabType === 'international' ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
-                                        );
-                                    }else {
-                                        return Promise.resolve();
-                                    }
-                                },
-                            }
-                        ]}>
-                        <Input
-                            className="cust-input"
-                            placeholder={currency === 'USD' && addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                            maxLength={50}/>
-                    </Form.Item>
-                </Col>}
-                {!(currency === 'USD'  && addressOptions.tabType === 'international') && currency != 'GBP' &&   currency != "CHF" && currency != "SGD" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item
-                        className="custom-forminput custom-label"
-                        name="abaRoutingCode"
-                        label={(currency === 'USD'||currency==="EUR") && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer" ) ? 'Swift / BIC Code' : 'ABA Routing Code'}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang("is_required"),
-                            },{
-                                validator: (_, value) => {
-                                    if (
-                                        value &&
-                                        !/^[A-Za-z0-9]+$/.test(value)
-                                    ) {
-                                        return Promise.reject(
-                                           ( addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer") ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
+                                           ( addressOptions.tabType === 'international') ?"Invalid Swift / BIC Code":"Invalid ABA Routing Code"
                                         );
                                     }else {
                                         return Promise.resolve();
@@ -525,7 +526,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
                         <Input
                             className="cust-input"
                             
-                            placeholder={(currency === 'USD'||currency==="EUR") && (addressOptions.tabType === 'international'||addressOptions.tabType==="swifttransfer" ) ? 'Swift / BIC Code' : 'ABA Routing Code'}
+                            placeholder={currency === 'USD'&& addressOptions.tabType === 'international' ? 'Swift / BIC Code' : 'ABA Routing Code'}
                         maxLength={50}/>
                     </Form.Item>
                 </Col>}
