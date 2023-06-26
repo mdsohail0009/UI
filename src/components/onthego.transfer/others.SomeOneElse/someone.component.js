@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert,Select } from 'antd';
-import { createPayee, payeeAccountObj, savePayee,getRelationDetails,getReasonforTransferDetails } from "../api";
+import { createPayee, payeeAccountObj, savePayee,getRelationDetails } from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls";
-import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
 import { connect } from "react-redux";
@@ -14,7 +13,7 @@ const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || 'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || (props.currency=="EUR"&&'sepa')||'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -78,11 +77,13 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].walletCode = props.currency;
         obj.payeeAccountModels[0].ukSortCode = values?.payeeAccountModels?.ukSortCode;
         obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
-        obj.createdBy = props.userProfile?.userName;
+        obj.payeeAccountModels[0].modifiedBy = edit ? props.userConfig?.userName : null;
+        obj.createdBy = props.userConfig?.userName;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile?.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount ||0; }      
-        obj['transferType'] = (props.currency == "USD" || props.currency == "GBP") && addressOptions.domesticType || props.currency == "CHF" && 'chftransfer' || props.currency =='SGD' && 'SWIFT/BIC' ||props.currency =='EUR' && 'sepa';
+        obj['transferType'] = (props.currency == "USD" || props.currency == "GBP") && addressOptions.domesticType || props.currency == "CHF" && 'chftransfer' || props.currency =='SGD' && 'SWIFT/BIC' ||(props.currency==='EUR'&&addressOptions.tabType!=="swifttransfer") &&'sepa'||(props.currency==='EUR'&&addressOptions.tabType==="swifttransfer" &&"swifttransfer");
+        
         obj['addressType'] = addressOptions.addressType;
         obj['info'] =JSON.stringify(props?.trackAuditLogData);
         if (edit) {
@@ -194,7 +195,20 @@ const SomeoneComponent = (props) => {
                         </Col>
                     </Row>
                 </>}
-                {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
+                {!showDeclartion && <>
+                {props.currency === "EUR" && <>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                            }}>
+                                <Tabs.TabPane tab="SEPA Transfer" className="text-white text-captz" key={"sepa"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="SWIFT Transfer" className="text-white text-captz" key={"swifttransfer"} disabled={edit}></Tabs.TabPane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </>}
                 {props.currency == 'CHF' && <h2 className="adbook-head">CHF Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
@@ -449,8 +463,16 @@ const SomeoneComponent = (props) => {
                 </>
                 <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) &&
-                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
-
+                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} 
+                        createPayeeObj={createPayeeObj} form={form} 
+                        domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType}
+                         transferType =
+                         {props.currency === "EUR"
+                           ? addressOptions?.domesticType === "swifttransfer"
+                             ? "swift"
+                             : "sepa"
+                           : addressOptions?.transferType}
+                          getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
                     {props.type !== "manual" &&
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
@@ -474,6 +496,7 @@ const SomeoneComponent = (props) => {
                     </Button>
                 </div>
             </Form>
+        </>}
         </>}
         </>}
         </>}

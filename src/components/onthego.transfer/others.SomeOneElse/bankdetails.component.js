@@ -339,7 +339,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>              
-                {(this.props.domesticType === "international" && this.props.currency != 'GBP') && (this.props.currency === 'USD' && this.props.domesticType === "international") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {(this.props.domesticType === "international" && this.props.currency != 'GBP') && (this.props.currency === 'USD' && this.props.domesticType === "international" || this.props.currency =="EUR") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
@@ -378,7 +378,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-          { ( this.props.currency ==='CHF'||this.props.currency ==='SGD') &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          { ( this.props.currency ==='CHF'||this.props.currency ==='SGD' || this.props.currency === 'EUR') &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
