@@ -328,7 +328,7 @@ const BatchpaymentView = (props) => {
                               }
                             showUploadList={false}
                          beforeUpload={(prop) => { beforeUpload(prop) }}
-                         headers={{Authorization : `Bearer ${props.user.deviceToken}`}}
+                         headers={{Authorization : `Bearer ${props.oidc.deviceToken}`}}
                          onChange={(prop) => {handleUpload(prop,"IDENTITYPROOF") }}
                         >
                             <p className="ant-upload-drag-icon">
