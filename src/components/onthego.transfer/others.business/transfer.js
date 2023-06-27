@@ -24,7 +24,7 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: this.props.transferData?.transferType ||this.props.currency=='SGD' && "SWIFT/BIC" || "domestic" || this.props.currency=='EUR' && "SEFA Transfer" || "domestic", 
+        selectedTab: this.props.transferData?.transferType ||(this.props.currency=='SGD' && "SWIFT/BIC")|| (this.props.currency=='EUR' && "sepa") || "domestic", 
         isBtnLoading: false,
         showDeclaration: false,isEdit:false,
         isSelectedId: null,
@@ -65,7 +65,7 @@ class BusinessTransfer extends Component {
             if(data.transferType=== "international"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
             }
-            else if(data.transferType=== "internationalIBAN"){
+            else if(data.transferType=== "internationalIBAN"||data.transferType==='sepa'){
                 this.setState({ ...this.state, selectedTab:data.transferType })
                  this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
             }else if(data.transferType=== "SWIFT/BIC"||this.props.currency=="SGD"){
@@ -149,7 +149,7 @@ class BusinessTransfer extends Component {
            this.form2.current?.resetFields();
        }
         let _obj = { ...this.state.details}
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null,selectedReasonforTransfer:null});this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null,selectedReasonforTransfer:null});this.form?.current?.resetFields();
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
@@ -277,7 +277,7 @@ class BusinessTransfer extends Component {
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
 
-            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer`|| this.props.currency=="EUR" && `SEPA Transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={this.props.currency=="SGD" && "SWIFT/BIC"||"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer`|| this.props.currency=="EUR" && `SEPA Transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={(this.props.currency=="SGD" && "SWIFT/BIC")||(this.props.currency==="EUR" && 'sepa') ||"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
               
                 <Form initialValues={details}
