@@ -44,6 +44,7 @@ const Auth0 = React.lazy(() => import("../components/auth0.component/auth0"))
 const EmailVerification = React.lazy(() => import("../components/auth0.component/emailVerification"))
 const PhoneVerification = React.lazy(() => import("../components/auth0.component/phoneVerification"))
 const AccountStatus = React.lazy(()=>import("../../src/utils/account.status"))
+const VideoTutorials =React.lazy(()=>import("../components/videoTutorails.component"));
 class RouteConfig extends Component {
   componentDidMount() {
     if (!this.props.userProfile?.isEmailVerified) {
@@ -106,6 +107,7 @@ class RouteConfig extends Component {
         <Route path="/auth0" component={Auth0} />
         <Route path="/emailVerification" component={EmailVerification} />
         <Route path="/phoneVerification" component={PhoneVerification} />
+        <Route path="/videoTutorials" component={VideoTutorials}/>
 
         <ReactRoute
           path="/batchpayment"

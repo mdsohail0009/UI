@@ -413,8 +413,8 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .market-panel-newstyle{clear: both;}
 .icon-space{margin-left: 12px;margin-bottom: 12px;}
 .pipeline{color: var(--tableText);margin-right: 10px;}
-.sb-card{border-radius: 20px;}
-.sb-innercard{padding:24px;}
+.sb-card{border-radius: 20px;min-height: 255px;}
+.sb-innercard{padding:24px;display: flex;justify-content: center;align-items: center;min-height: 146px;}
 .sb-text{color: var(--sbCardText);letter-spacing: 5px;font-weight: 700;font-size: 24px;}
 .sb-accounts{padding: 2px;}
 .cardlogo-height{margin-bottom: 109px;}
@@ -458,6 +458,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* .ant-table-thead th.ant-table-column-sort{background: var(--iconBg);} */
 .db-titles.internal-titles{font-size: 36px !important;margin-top: 16px;}
 .ant-carousel .notices-content .slick-dots-bottom{bottom: -25px !important;}
+.card-text-style{text-align: right;padding: 10px 16px 0;}
+.card-text-style span, .card-bottom-style span{color: var(--textWhite) !important;font-weight: 700;font-size: 16px;}
+.card-bottom-style{padding: 0px 16px 16px;align-items: flex-end;}
+.card-bottom-style img{width: 80px;}
+.master-text{margin-bottom: 0 ;}
+.cust-card-btn{margin-top: 52px;}
 /* Dashboard end */
 
 /*Buy/sell drawer start*/
@@ -1143,6 +1149,11 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .swap-entryvalue.send-crypto-style .ant-form-item-control-input {min-height: 120px;}
 .swap-entryvalue.send-crypto-style .ant-form-item-control {display: flex;flex-direction: inherit;}
 /* commissions  end */
+.video-block{padding: 8px;border: 1px solid var(--gridborder);}
+.video-section{border: 1px solid var(--gridborder);border-radius: 6px;}
+.video-section p{padding: 8px;background-color: var(--gridheader);}
+.icon.lg.backup-icon{background-position:-288px -552px;}
+.user-labels.active .icon.lg.backup-icon, .user-labels:hover .icon.lg.backup-icon, .ant-tabs-tab.ant-tabs-tab-active .icon.lg.backup-icon, .ant-tabs-tab:hover .icon.lg.backup-icon{background-position: -288px -585px;}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
@@ -1239,6 +1250,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .gridLink.batch-filename{padding-left: 0;}
 }
 @media (min-width: 1400px){
+    .video-block{flex: 421.9px;}
     .transctns-grid.preview-grid .ant-drawer-header .side-drawer-header,.transctns-grid.preview-grid .sub-heading,.batch-btns{max-width: 1300px; margin: 0 auto;}
     .main-container{max-width: 1300px; margin: 0 auto;}
     .iban-list .ant-list-items{display: flex;}
@@ -1278,6 +1290,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .sideropen .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: transparent;}
     .sideropen .list-item.ant-menu-item-selected .ant-menu-title-content{min-width: 150px !important; padding: 8px 5px 8px 5px !important}
     .login-user{width: 100%;padding: 2px 0;}  
+    .video-block .text-white{text-align: center;}
 }
 @media (max-width: 767.98px){
     .newSpace{display: flex; padding-top: 14px;}
@@ -1289,6 +1302,9 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
         padding: 60px 20px !important;
         margin: 0 0 40px 0 !important;
     }
+    .video-tutorials{display: block;}
+    .sumSub-confirm{width:auto;height: auto;}
+    .cust-sumsub-font{width: auto;}
     .new-viewpage .search-box{margin-left: 0;}
     .fait-wallets-style.new-viewpage{display: block !important;}
     .footer-links a{margin-right: 0px !important;}
