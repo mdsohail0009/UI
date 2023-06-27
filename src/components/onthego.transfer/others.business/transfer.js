@@ -546,7 +546,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab={`${this.props.currency=="EUR" ? "SWIFT transfer" : "International USD Swift"}`} key={ (this.props.currency=="EUR"&&'swifttransfer')||"international"} disabled={this.state.isEdit}>
+            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab={`${this.props.currency=="EUR" ? "SWIFT Transfer" : "International USD Swift"}`} key={ (this.props.currency=="EUR"&&'swifttransfer')||"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
            
                 <Form initialValues={details}
