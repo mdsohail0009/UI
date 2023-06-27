@@ -164,8 +164,8 @@ class OnthegoFundTransfer extends Component {
   }
   
   saveCommissionsDetails=async(e)=>{
-    if((this.enteramtForm.current.getFieldsValue().amount && this.state.selectedBank)){
-      {
+    let newAmt=this.enteramtForm.current.getFieldsValue()?.amount;
+     if(this.state.selectedBank){
     this.setState({...this.state,isLoading:true,errorMessage:null,detailstype:true,statingAmout:!this.state.isToggel && this.enteramtForm.current.getFieldsValue().amount,
       effectiveType:false,isValidation:false,isLoadingToggel:true,isSaveCommissions:false})
         let obj ={
@@ -178,7 +178,7 @@ class OnthegoFundTransfer extends Component {
           withdrawalAmount: this.enteramtForm?.current?.getFieldsValue()?.amount ,
           payeeId:this.state.selectedPayee.id
         }
-          if (/^[0-9.,]*$/.test(this.enteramtForm.current.getFieldsValue()?.amount) && !/^[.,]/.test(this.enteramtForm.current.getFieldsValue()?.amount)) {
+            if ((newAmt!=='.') ) {
           let res = await saveCommissions(obj);
           if(res.ok){
             this.setState({...this.state,errorMessage:null,getBanckDetails:res.data,amount: res.data.showAmount,isSaveCommissions:true,
@@ -195,7 +195,6 @@ class OnthegoFundTransfer extends Component {
           this.amountScrool.current.scrollIntoView();
         }
       
-        }
     }  
   }
 

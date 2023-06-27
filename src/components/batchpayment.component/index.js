@@ -95,7 +95,13 @@ const Batchpayments = (props) => {
  const getInvalidTransaction=async (data)=>{
   const res=await getInvalidTransactionData(data?.id)
   if(res.ok){
-  window.open(res?.data,"_blank")
+  // window.open(res?.data,"_blank")
+    const pdfUrl = res.data;
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.target = '_blank';
+    link.download = 'file.xlsx';
+    link.click();
   }
  }
    const handleInputChange = (prop) => {
