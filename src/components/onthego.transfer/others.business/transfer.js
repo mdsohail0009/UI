@@ -96,7 +96,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;
-        _obj.payeeAccountModels[0].bankName = selectedTab === "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
+        _obj.payeeAccountModels[0].bankName = (selectedTab === "internationalIBAN" ||selectedTab === "sepa" )? ibanDetails?.bankName :  values?.bankName;
         _obj.payeeAccountModels[0].abaRoutingCode = values?.abaRoutingCode;
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab === "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
@@ -546,7 +546,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab={`${this.props.currency=="EUR" ? "SWIFT transfer" : "International USD Swift"}`} key={"international"} disabled={this.state.isEdit}>
+            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab={`${this.props.currency=="EUR" ? "SWIFT transfer" : "International USD Swift"}`} key={ (this.props.currency=="EUR"&&'swifttransfer')||"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
            
                 <Form initialValues={details}
