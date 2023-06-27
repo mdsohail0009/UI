@@ -63,7 +63,6 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         }
     }
     const saveTransfer = async(values) => {    
-        debugger
         seterrorMessage(null);
         if (Object.hasOwn(values, 'iban')) {
             if ((!bankDetails || Object.keys(bankDetails).length === 0)) {
