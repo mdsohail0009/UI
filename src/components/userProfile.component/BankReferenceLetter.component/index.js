@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
+import { Row } from 'antd';
 const BankDeclarationForm = () => {
   useEffect(() => {
-    const script1 = document.createElement('script');
+    const script1 = document?.createElement('script');
     script1.src = 'https://form.jotform.com/static/feedback2.js';
     script1.type = 'text/javascript';
-    document.body.appendChild(script1);
+    document?.body?.appendChild(script1);
+  }, []);
 
-    const script2 = document.createElement('script');
+  const handleButtonClick = () => {
+    const script2 = document?.createElement('script');
     script2.innerHTML = `
       var JFL_231763449585064 = new JotformFeedback({
         formId: '231763449585064',
         base: 'https://form.jotform.com/',
-        windowTitle: 'Bank Declaration form',
+        windowTitle: 'Bank Reference Letter',
         backgroundColor: '#FFA500',
         fontColor: '#FFFFFF',
         type: 'false',
@@ -113,20 +114,14 @@ const BankDeclarationForm = () => {
         window.attachEvent("onmessage", handleIFrameMessage);
       }
     `;
-    document.body.appendChild(script2);
-  }, []);
-
-  const handleButtonClick = () => {
-    // Handle button click event
+    document?.body?.appendChild(script2);
   };
 
   return (
     <div>
-      <Helmet>
-        <script src="https://form.jotform.com/static/feedback2.js" type="text/javascript" />
-      </Helmet>
-
-      <a
+                <div className="basicprofile-info">
+                      <Row className="order-bottom add-custom">
+                     <a
         className="btn lightbox-231763449585064"
         style={{
           marginTop: '16px',
@@ -146,8 +141,9 @@ const BankDeclarationForm = () => {
         }}
         onClick={handleButtonClick}
       >
-        Bank Declaration form
+        Bank Reference Letter
       </a>
+      </Row></div>
     </div>
   );
 };
