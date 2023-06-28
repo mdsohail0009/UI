@@ -11,6 +11,7 @@ import { getScreenName } from "../../reducers/feturesReducer";
 import { withRouter } from 'react-router-dom';
 import SuisseBaseCreditCom from './suissebaseCredit';
 import BackUpAddress from './backUpAddress.component/index';
+import BankReferenceLatter from './BankReferenceLetter.component/index';
 const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
@@ -79,6 +80,11 @@ class UserProfile extends Component {
                         <Translate content="referr" className="tabtitle" /></div>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
+                    <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center'><span className="icon lg backup-icon" />
+                       <span className="tabtitle backup-admb-0">Bank Reference Letter</span>
+                        </div>} key="4">
+                        {this.state.activeTab == 4 && <BankReferenceLatter />}
+                    </TabPane>
                     <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center back-up-tab'><span className="icon lg backup-icon" />
                        <span className="tabtitle backup-admb-0">Backup Address</span>
                         </div>} key="3">
@@ -110,6 +116,11 @@ class UserProfile extends Component {
                     <TabPane tab={<span><span className="icon lg referral-icon " />
                         <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
+                    </TabPane>
+                    <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center'><span className="icon lg backup-icon" />
+                       <span className="tabtitle backup-admb-0">Bank Reference Letter</span>
+                        </div>} key="4">
+                        {this.state.activeTab == 4 && <BankReferenceLatter />}
                     </TabPane>
                     <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center'><span className="icon lg backup-icon" />
                        <span className="tabtitle backup-admb-0">Backup Address</span>
