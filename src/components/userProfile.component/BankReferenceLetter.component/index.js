@@ -124,7 +124,7 @@ const BankDeclarationForm = () => {
                      <a
         className="btn lightbox-231763449585064"
         style={{
-          marginTop: '16px',
+          // marginTop: '16px',
           textTransform: 'uppercase',
           fontSize: '14px',
           textDecoration: 'none',
@@ -135,8 +135,7 @@ const BankDeclarationForm = () => {
           textShadow: 'none',
           userSelect: 'none',
           transition: 'all .1s ease-in',
-          backgroundColor: '#FFA500',
-          border: '1px solid #FFA500',
+        
           color: '#FFFFFF',
         }}
         onClick={handleButtonClick}
