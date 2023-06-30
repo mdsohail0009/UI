@@ -188,6 +188,7 @@ if (res.ok){
       isDocumentUpload:true,
       docRepositories:this.state.details.docRepositories,
       createdBy : this.props.userProfile?.userName,
+      info : JSON.stringify(this.props?.trackAuditLogData),
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
