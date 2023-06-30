@@ -70,13 +70,7 @@ class AddressBook extends Component {
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if (process.env.REACT_APP_ISTR=="true") {
-			const obj=[{field: "walletSource", title: "Wallet Source", width: 180, filter:true},
-			{ field: "isProofofOwnership", title: "Proof Of Ownership", width: 200, 
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isProofofOwnership===true?"Yes":"No"}
-				</td>
-			)}]
+			const obj=[{field: "walletSource", title: "Wallet Source", width: 180, filter:true}]
 			this.columnsCrypto.splice(4,0,...obj)     
 		 }
 		if(!this.state.cryptoFiat){
