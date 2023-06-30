@@ -141,7 +141,6 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    debugger
     let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
