@@ -104,7 +104,6 @@ const AddressFiatView = (props) => {
 											{fiatAddress?.transferType && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Transfer Type</label>
-													{fiatAddress?.transferType==="swifttransfer"}
 													{<div className=" kpi-val">
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
