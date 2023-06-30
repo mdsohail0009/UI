@@ -530,7 +530,7 @@ class WithdrawSummary extends Component {
 				trackAuditLogData.Action = "Save";
 				trackAuditLogData.Remarks = "Withdraw Crypto save";
 				saveObj.info = JSON.stringify(trackAuditLogData);
-				saveObj.createdBy=this.props.userProfile.userName;
+				saveObj.Createdby=this.props.userProfile.userName;
 				let withdrawal = await withDrawCrypto(saveObj);
 				if (withdrawal.ok) {
 					if(saveObj?.isShowDeclaration) {

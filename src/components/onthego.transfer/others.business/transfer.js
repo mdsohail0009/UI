@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
 import { validateContentRule } from "../../../utils/custom.validator";
+import ConnectStateProps from "../../../utils/state.connect";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import {payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
+import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
@@ -140,9 +141,9 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
-        if(key=='domestic'||key=='sepa'){
+        if(key=='domestic'){
             this.form.current?.resetFields();
-       }else if(key=='international'||key=='swifttransfer'){
+       }else if(key=='international'){
            this.form1.current?.resetFields();
        }else {
            this.form2.current?.resetFields();
@@ -252,9 +253,9 @@ class BusinessTransfer extends Component {
 
     handleReasonTrnsfer=(e)=>{
         this.setState({...this.state,selectedReasonforTransfer:e})
-        if(this.state.selectedTab=='domestic'||this.state.selectedTab=='sepa'){
+        if(this.state.selectedTab=='domestic'){
             this.form.current.setFieldsValue({transferOthers:null})
-       }else if(this.state.selectedTab=='international'||this.state.selectedTab=='swifttransfer'){
+       }else if(this.state.selectedTab=='international'){
         this.form1.current.setFieldsValue({transferOthers:null})
        }else {
         this.form2.current.setFieldsValue({transferOthers:null})
@@ -516,73 +517,9 @@ class BusinessTransfer extends Component {
                          }
                       </Spin>
                      
-                  </div>
-                  {this.props?.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                className="custom-forminput custom-label"
-                                name="reasonOfTransfer"
-                                required
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        whitespace: true,
-                                        message: apiCalls.convertLocalLang("is_required"),
-                                    },
-                                    {
-                                        validator: validateContentRule,
-                                    },
-                                ]}
-                                label={
-                                    "Reason For Transfer"
-                                }
-                            >
-                                 <Select
-                                    className="cust-input"
-                                    maxLength={100}
-                                    placeholder={apicalls.convertLocalLang(
-                                        "reasiontotransfor"
-                                    )}
-                                    optionFilterProp="children"
-                                    onChange={(e)=>this.handleReasonTrnsfer(e)}
-                                >
-                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
-                                    <Option key={idx} value={item.name}>
-                                        {item.name}
-                                    </Option>
-                                    ))}
-                                </Select> 
-                            </Form.Item>
-                        </Col>}
-                        {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                            name="transferOthers"
-                            required
-                            rules={[
-                                {whitespace: true,
-                                message: "Is required",
-                                },
-                                {
-                                required: true,
-                                message: "Is required",
-                                },
-                                {
-                                validator: validateContentRule,
-                            },
-                            ]}
-                            >
-                            <Input
-                                className="cust-input"
-                                maxLength={100}
-                                placeholder="Please specify:"
-                            />
-                            </Form.Item>
-                      </Col>}
-                  </>}
-                    {this.props?.currency !="EUR" && <DomesticTransfer type={this.props?.type} currency={this.props?.currency} form={this.form}  refreshData ={selectedTab}/>}
+                  </div></>}
+
+                    {this.props.currency !="EUR" && <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}  refreshData ={selectedTab}/>}
                 
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
