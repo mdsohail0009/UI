@@ -129,14 +129,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div className="kpi-divstyle ad-rec-detyails">
-													<label className="kpi-label">Proof Of Ownership</label>
-													<div className=" kpi-val adview-name">
-													{cryptoAddress?.isDocumentUpload===true?"Yes": "No" || "-"}
-													</div>
-												</div>
-											</Col></>}
+											</>}
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Whitelisting Status</label>

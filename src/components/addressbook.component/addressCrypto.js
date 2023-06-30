@@ -141,7 +141,6 @@ if (res.ok){
 
   }
   submit = async (values) => {
-    debugger
     let data=this.state.details?.docRepositories?.filter((item)=>item.state!=="Deleted")?.length===0 ;
     if (!values.isOwnerOfWalletAddress && process.env.REACT_APP_ISTR == "true") {
 			this.setState({
@@ -186,7 +185,7 @@ if (res.ok){
       isOwnerOfWalletAddress:values.isOwnerOfWalletAddress,
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
-      isDocumentUpload:values.isDocumentUpload,
+      isDocumentUpload:true,
       docRepositories:this.state.details.docRepositories,
       createdBy : this.props.userProfile?.userName,
       info : JSON.stringify(this.props?.trackAuditLogData),
@@ -473,33 +472,6 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
 								
 							</Form.Item>
             </Col>
-            {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Form.Item
-								className="custom-forminput mb-36 agree send-crypto-sumry"
-								name="isDocumentUpload"
-								valuePropName="checked"
-								required
-							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
-						<label>
-							<input
-								type="checkbox"
-								id="agree-check1"
-								checked={this.state.isDocCheck}
-                onClick={(e)=>this.handleDocCheck(e)}
-							/>
-							<span for="agree-check"  className="c-pointer"
-              />
-						</label>
-						<div
-							className="cust-agreecheck d-flex align-center travel-custcheck"
-							>
-               I may perform transactions greater than 1,000 CHF with this address
-						</div>
-					</div>
-								
-							</Form.Item>
-            </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address <span className="cust-start-style">*</span>
                             
