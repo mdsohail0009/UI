@@ -167,15 +167,6 @@ class Header extends Component {
             onClick={() => this.userProfile()}
           />
           <ul className="drpdwn-list">
-            {/* <li
-              onClick={() => window.open('https://app.novahq.com/start/transaction?entity=innoceptsltd&template=2b9de6fb-bfbe-4380-bbe4-bba0eaa1ca86', '_blank')}
-            >
-              <Link>
-
-                <div>Onboarding</div>
-                <span className="icon md rarrow-white" />
-              </Link>
-            </li> */}
             <li
               onClick={() => window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')}
             >
