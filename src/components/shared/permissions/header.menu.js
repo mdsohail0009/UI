@@ -15,7 +15,7 @@ import ch from "../../../lang/ch";
 import my from "../../../lang/my";
 import DefaultUser from "../../../assets/images/defaultuser.jpg";
 import counterpart from "counterpart";
-import { connect } from "react-redux";
+import { connect,useDispatch } from "react-redux";
 import BuySell from "../../buy.component";
 import SendReceive from "../../send.component";
 import SwapCrypto from "../../swap.component";
@@ -43,7 +43,7 @@ import {
     setSendCrypto,
     hideSendCrypto
 } from "../../../reducers/sendreceiveReducer";
-import { getmemeberInfo } from "../../../reducers/configReduser";
+import { clearUserInfo, getmemeberInfo } from "../../../reducers/configReduser";
 import { clearPermissions, fetchFeatures, getScreenName, setSelectedFeatureMenu } from "../../../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
@@ -54,12 +54,40 @@ import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { userLogout } from "../../../reducers/authReducer";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
 const { Paragraph, Text } = Typography;
 const { Sider } = Layout;
+
+const LogoutApp = (props)=>{
+    const {logout} = useAuth0()
+    const dispatch = useDispatch()
+    const clearEvents = () => {
+        dispatch(clearPermissions());
+        dispatch(clearUserInfo());
+        dispatch(userLogout());
+        window.$zoho?.salesiq?.chat.complete();
+        window.$zoho?.salesiq?.reset();
+        //userManager.signoutRedirect();
+        logout();
+        //window.location.reload()
+    }
+return(<li onClick={() => {clearEvents()}}>
+                            <Link className="text-left">
+                                <span>
+                                    <Translate
+                                        content="logout"
+                                        className="text-white"
+                                        component={Text}
+                                    />
+                                </span>
+                            </Link>
+                        </li>)
+}
+
 class MobileHeaderMenu extends Component {
     render() {
         const { onMenuItemClick, features: { features: { data },getScreen },dispatch } = this.props;
@@ -161,8 +189,8 @@ class HeaderPermissionMenu extends Component {
         }
         this.props.history.push("/userprofile");
 
-        if (this.props.oidc.user.profile?.sub) {
-            this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
+        if (this.props?.oidc?.profile?.sub) {
+            this.props.getmemeberInfoa(this.props?.oidc?.profile.sub);
         }
     }
     showDocRequestError() {
@@ -272,10 +300,21 @@ class HeaderPermissionMenu extends Component {
                 }
 
             } else {
-                const isKyc = !this.props.userConfig.isKYC;
-                if (isKyc) {
+                const isVerification = !this.props.userConfig.isEmailVerified; 
+                const isMobileVerification = !this.props.userConfig.isPhoneNumberVerified;
+                const isCustomerUpdate = !this.props.userConfig?.isCustomerUpdated;
+               
+                const isKyc = !this.props.userConfig.isKYC;   
+                if(isVerification)   {
+                    this.props.history.push("/emailVerification");
+                }else if (isCustomerUpdate) {
+                    this.props.history.push("/auth0");
+                }else if (isKyc) {
                     this.props.history.push("/notkyc");
-                } else {
+                }else if (isMobileVerification) {
+                    this.props.history.push("/phoneVerification");
+                }
+                 else {
                     this.showDocRequestError();
                 }
             }
@@ -323,22 +362,10 @@ class HeaderPermissionMenu extends Component {
             "_blank"
         )
     }
+    uploadDoc=()=>{
+        window.open(process.env.REACT_APP_UPLOAD_DOC , '_blank')
+    }
     clearEvents = () => {
-        this.props.dispatch(clearPermissions());
-        window.$zoho?.salesiq?.chat.complete();
-        window.$zoho?.salesiq?.reset();
-        userManager.signoutRedirect();
-        apicalls.trackEvent({
-            Type: "User",
-            Action: "User Logged out",
-            Username: null,
-            customerId: null,
-            Feature: "Logout",
-            Remarks: "User Logged out",
-            Duration: 1,
-            Url: window.location.href,
-            FullFeatureName: "Logout"
-        });
     }
     uploadDoc=()=>{
         window.open(process.env.REACT_APP_UPLOAD_DOC , '_blank')
@@ -417,7 +444,6 @@ class HeaderPermissionMenu extends Component {
                         </li>
                         <li
                             onClick={() => this.props.history.push("/auditlogs")}
-
                         >
                             <Link>
                                 <Translate
@@ -483,17 +509,22 @@ class HeaderPermissionMenu extends Component {
                             </Link>
 
                         </li>
-                        <li onClick={() => this.clearEvents()}>
-                            <Link className="text-left">
-                                <span>
+                        <li
+                         onClick={() => this.props.history.push("/fees")}
+                        >
+                            <Link>
+                                <span className="text-left">
                                     <Translate
-                                        content="logout"
-                                        className="text-white"
+                                        content="fees"
                                         component={Text}
+                                        className="d-block text-white"
                                     />
                                 </span>
+                                <span className="icon md rarrow-white" />
                             </Link>
                         </li>
+                        <LogoutApp clearEvents={()=>this.clearEvents()} />
+
                     </ul>
                 </div>
             </Menu>

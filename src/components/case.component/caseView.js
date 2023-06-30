@@ -430,7 +430,7 @@ beforeUpload = (file) => {
                             accordion className="accordian  mb-togglespace "
                             defaultActiveKey={['1']} 
                             expandIcon={() => <span className="icon md downangle" />}>
-                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${this.state.caseState ? this.state.caseState.toLowerCase() + " staus-lbl" : ""}`}>{doc?.state}</span>) : ""}>
+                            <Panel header={doc.documentName} key={idx + 1} extra={this.state.caseState ? (<span className={`${doc?.state ? doc?.state.toLowerCase() + ` ${(doc?.state==="Approved"&&"staus-lbl")||(doc?.state==="Rejected"&&"reject-lbl")||(doc?.state==="Submitted"&& "subm-lbl")||(doc?.state==="Requested"&&"Requet-lbl")}` : ""}`}>{doc?.state}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                     <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                     <div className="reply-body">
@@ -442,7 +442,6 @@ beforeUpload = (file) => {
                                         <Col lg={12} xl={12} xxl={12}> <div key={idx1} className="docfile uploaddoc-margin">
                                                 <span className={`icon xl ${(file.fileName.slice(-3) === "zip" ? "file" : "") || (file.fileName.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                 <div className="docdetails c-pointer" 
-                                                //onClick={() => this.docPreview(file)}
                                                 onClick={() => this.docPreviewOpen(file)}
                                                 >
                                                     <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
@@ -462,7 +461,9 @@ beforeUpload = (file) => {
                                         <Form
                                             onFinish={() => this.docReject(doc)}
                                         >
+                                             {doc?.state !=="Approved"&&<>
                                             <div>
+
                                                     <Form.Item
                                                      className="d-block error-mt"
                                                         name=""
@@ -515,7 +516,7 @@ beforeUpload = (file) => {
                                                   }
                                                  showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} 
                                                  onChange={(props) => { this.handleUpload(props, doc) }}
-                                                    headers={{ Authorization: `Bearer ${this.props.user.access_token}` }}>
+                                                    headers={{ Authorization: `Bearer ${this.props.oidc.deviceToken}` }}>
                                                     <p className="ant-upload-drag-icon">
                                                         <span className="icon xxxl doc-upload" />
                                                     </p>
@@ -557,6 +558,7 @@ beforeUpload = (file) => {
                                                     Submit
                                                 </Button>
                                             </Form.Item> 
+                                            </>}
                                         </Form>
                                     </>}
                                      {this.state.documentReplies[doc.id]?.loading ? <div className="text-center"><Spin size="large" /></div>:
@@ -587,6 +589,6 @@ beforeUpload = (file) => {
     }
 }
 const mapStateToProps = ({ userConfig, oidc }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, user: oidc.user }
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData, oidc: oidc }
 }
 export default connect(mapStateToProps)(CaseView);

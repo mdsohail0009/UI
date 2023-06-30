@@ -5,7 +5,7 @@ import Translate from 'react-translate-component';
 import { setStep, setSellHeaderHide, setSelectedSellCoin } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import apicalls from '../../api/apiCalls';
-
+import NumberFormat from "react-number-format";
 class SuccessMsg extends Component {
     componentDidMount() {
         this.EventTrack();
@@ -29,7 +29,9 @@ class SuccessMsg extends Component {
                 <div className="success-pop text-center declaration-content">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="success-title" />
-                    <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> {sd.tovalue} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="successsubtext" /></Paragraph>
+                    <Paragraph className="successsubtext"><Translate content="sucessText1" component={Text} className="successsubtext" /> {" "}
+                    <NumberFormat value={sd.tovalue} displayType="text" thousandSeparator={true} prefix="" /> {" "} 
+                     {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="successsubtext" /></Paragraph>
                     <Translate content="return_to_sell" component={Button} onClick={() => this.onSellCancel()}  size="large"className="cust-cancel-btn"/>
                 </div>
                 </div>

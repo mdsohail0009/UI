@@ -3,7 +3,6 @@ import { Row, Col, Form, Input, Typography, Button, Spin,Alert,Select } from 'an
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
-import NumberFormat from "react-number-format";
 import { getReasonforTransferDetails } from "../api";
 const {  Text } = Typography;
 const { TextArea } = Input;
@@ -340,7 +339,7 @@ class PayeeBankDetails extends Component {
                         />
                     </Form.Item>
                 </Col>              
-                {(this.props.domesticType === "international" && this.props.currency != 'GBP') && (this.props.currency === 'USD' && this.props.domesticType === "international") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {(this.props.domesticType === "international" && this.props.currency != 'GBP') && (this.props.currency === 'USD' && this.props.domesticType === "international" || this.props.currency =="EUR") &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
@@ -379,7 +378,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-          { this.props.currency ==='CHF' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+          { ( this.props.currency ==='CHF'||this.props.currency ==='SGD' || this.props.currency === 'EUR') &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","swiftRouteBICNumber"]}
@@ -418,7 +417,7 @@ class PayeeBankDetails extends Component {
                     </Form.Item>
                 </Col>}
 
-                {this.props.domesticType === "domestic"  && this.props.currency != 'GBP' && this.props.currency != 'CHF'&& <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                {this.props.domesticType === "domestic"  && this.props.currency != 'GBP' && this.props.currency != 'CHF'&&  this.props.currency !="SGD" &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name={["payeeAccountModels","abaRoutingCode"]}
@@ -455,7 +454,6 @@ class PayeeBankDetails extends Component {
 
               {this.props.currency == 'GBP' &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item
-               // name="ukSortCode"
                name={["payeeAccountModels","ukSortCode"]}
                 label="Uk Sort Code"
                 className="custom-label"
@@ -469,13 +467,13 @@ class PayeeBankDetails extends Component {
                         validator: this.validateNumber
                     }
                 ]}>
-                <NumberFormat
+                <Input
+                    type="text"
                     className="cust-input value-field cust-addon mt-0"
-                    customInput={Input}
                     prefix={""}
                     placeholder="Uk Sort Code"
                     allowNegative={false}
-                    maxlength={6}
+                    maxLength={6}
                 />
             </Form.Item>
         </Col>}

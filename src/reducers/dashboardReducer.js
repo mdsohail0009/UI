@@ -45,7 +45,7 @@ const fetchDashboardcalls = () => {
   publishTransactionRefresh()
     return async (dispatch) => {
         dispatch(fetchMemberWalletsData())
-        dispatch(fetchPortfolioData())
+        // dispatch(fetchPortfolioData())
         dispatch(fetchYourPortfoliodata())
 
     }
@@ -61,17 +61,17 @@ const fetchMemberWalletsData = () => {
         }
     }
 }
-const fetchPortfolioData = () => {
-    return async (dispatch) => {
-        dispatch(fetchDetailData({ key: "portFolio", loading: true, data: {} }));
-        const response = await fetchPortfolio();
-        if (response.ok) {
-            dispatch(setDetailData({ key: "portFolio", loading: false, data: response.data }));
-        } else {
-            dispatch(rejectDetailData({ key: "portFolio", loading: false, data: {}, error: response.originalError.message }));
-        }
-    }
-}
+// const fetchPortfolioData = () => {
+//     return async (dispatch) => {
+//         dispatch(fetchDetailData({ key: "portFolio", loading: true, data: {} }));
+//         const response = await fetchPortfolio();
+//         if (response.ok) {
+//             dispatch(setDetailData({ key: "portFolio", loading: false, data: response.data }));
+//         } else {
+//             dispatch(rejectDetailData({ key: "portFolio", loading: false, data: {}, error: response.originalError.message }));
+//         }
+//     }
+// }
 const fetchGraphInfo = (customer_id, type) => {
     return async (dispatch) => {
         dispatch(setDetailData({ key: "portFolioGraph", loading: true, data: [] }));
@@ -141,4 +141,4 @@ let dashboardReducer = (state = initialState, action) => {
     }
 }
 export default dashboardReducer;
-export { fetchMemberWalletsData, fetchPortfolioData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo, fetchNotices, setNotificationCount, setSelctedCoinDetail,fetchMarketCoinData }
+export { fetchMemberWalletsData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo, fetchNotices, setNotificationCount, setSelctedCoinDetail,fetchMarketCoinData }

@@ -66,7 +66,7 @@ class AddressBook extends Component {
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"), this.props.userConfig.id));
 	}
 	componentDidMount() {
-		this.setState({...this.state,cryptoFiat:false})
+		this.setState({...this.state,cryptoFiat:true})
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if (process.env.REACT_APP_ISTR=="true") {
@@ -80,11 +80,11 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book grid view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book grid view",
-				Duration: 1,
+				Duration: 1,	
 				Url: window.location.href,
 				FullFeatureName: "Address Book",
 			});
@@ -92,8 +92,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Fiat Address book add view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Fiat Address book add view",
 				Duration: 1,
@@ -365,7 +365,7 @@ class AddressBook extends Component {
 		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
 		let statusObj = this.state.obj;
 		statusObj.id.push(this.state.selectedObj.payeeAccountId);
-		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
+		statusObj.modifiedBy = this.props.userConfig?.userName
 		if (this.state.selectedObj.status === "Active") {
 			statusObj.status.push("Active")
 		} else {
@@ -431,8 +431,8 @@ class AddressBook extends Component {
 				apiCalls.trackEvent({
 					Type: "User",
 					Action: "Withdraw Fiat Address book add view",
-					Username: this.props.userProfileInfo?.userName,
-					customerId: this.props.userProfileInfo?.id,
+					Username: this.props.userConfig?.userName,
+					customerId: this.props.userConfig?.id,
 					Feature: "Address Book",
 					Remarks: "Withdraw Fiat Address book add view",
 					Duration: 1,
@@ -450,8 +450,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book add view",
 				Duration: 1,
@@ -507,8 +507,8 @@ class AddressBook extends Component {
 					apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Fait  Address edit view",
-						Username: this.props.userProfileInfo?.userName,
-						customerId: this.props.userProfileInfo?.id,
+						Username: this.props.userConfig?.userName,
+						customerId: this.props.userConfig?.id,
 						Feature: "Address Book",
 						Remarks: "Withdraw Fiat Address edit view",
 						Duration: 1,
@@ -519,8 +519,8 @@ class AddressBook extends Component {
 					apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Crypto  Address edit view",
-						Username: this.props.userProfileInfo?.userName,
-						customerId: this.props.userProfileInfo?.id,
+						Username: this.props.userConfig?.userName,
+						customerId: this.props.userConfig?.id,
 						Feature: "Address Book",
 						Remarks: "Withdraw Crypto Address edit view",
 						Duration: 1,
@@ -545,7 +545,7 @@ class AddressBook extends Component {
 				showCrypto = !obj?.close;
 			else
 				showFiat = !obj?.close;
-		};
+		}
 		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat, selectedObj: {}})
 		setTimeout(() => this.setState({ ...this.state,showHeading:false,hideFiatHeading:false}), 2000);
 		
@@ -566,7 +566,7 @@ class AddressBook extends Component {
 			if (obj.isCrypto)
 				showCrypto = !obj?.close;
 			
-		};
+		}
 		this.setState({ ...this.state, visible: showCrypto, selectedObj: {} })
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
@@ -591,8 +591,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book grid view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book grid view",
 				Duration: 1,
@@ -603,8 +603,8 @@ class AddressBook extends Component {
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Fiat Address book grid view",
-				Username: this.props.userProfileInfo?.userName,
-				customerId: this.props.userProfileInfo?.id,
+				Username: this.props.userConfig?.userName,
+				customerId: this.props.userConfig?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Fiat Address book grid view",
 				Duration: 1,
@@ -678,7 +678,7 @@ class AddressBook extends Component {
 	};
 
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled ,errorMessage} =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, btnDisabled 	} =
 			this.state;
 
 		return (
@@ -703,8 +703,9 @@ class AddressBook extends Component {
 					defaultValue={(this.props?.activeFiat||this.state.cryptoFiat) ? 2 : 1}
 							onChange={this.handleWithdrawToggle}
 							>					
-                                <Tabs.TabPane tab="Send Crypto" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
                                 <Tabs.TabPane tab="Send Fiat" content="withdrawFiat" key={2} className="" component={Radio.Button}/>
+								<Tabs.TabPane tab="Send Crypto" content="withdrawCrypto" key={1} className=""  component={Radio.Button}/>
+
 						    </Tabs>
 							</div>
 					</div>

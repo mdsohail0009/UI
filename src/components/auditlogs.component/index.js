@@ -66,7 +66,7 @@ class AuditLogs extends Component {
   }
   fetchAuditLoginfo = async (id, e) => {
     this.setState({
-      ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature,errorMessage:null
+      ...this.state, isLoading: true, moreAuditLogs: true, featureName: e.dataItem.feature,errorMessage:null
     })
     let res = await getAuditLogInfo(id);
     if (res.ok) {
@@ -380,48 +380,55 @@ class AuditLogs extends Component {
           className="side-drawer"
           destoryOnClose={true}
         >
-          {(isLoading && (logRowData?.browser == null) || (logRowData?.location == null) || (logRowData?.ip == null )|| 
+          {isLoading && <Loader />  ||
+         (<> {(isLoading && (logRowData?.browser == null) || (logRowData?.location == null) || (logRowData?.ip == null )|| 
             logRowData?.deviceType == null) ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />
-            : <><div className="coin-info">
-            <Text>City</Text>
-            <Text>{logRowData?.location?.city}</Text>
+            : <>
+             <div className="coin-info">
+            <Text className="summarybal">IP Address</Text>
+            <Text className="summarybal">{logRowData?.ip}</Text>
           </div>
             <div className="coin-info">
-              <Text>State</Text>
-              <Text>{logRowData?.location?.state}</Text>
+            <Text className="summarybal">City</Text>
+            <Text className="summarybal">{logRowData?.location?.city}</Text>
+          </div>
+            <div className="coin-info">
+              <Text className="summarybal">State</Text>
+              <Text className="summarybal">{logRowData?.location?.state}</Text>
             </div>
             <div className="coin-info">
-              <Text>Country</Text>
-              <Text>{logRowData?.location?.countryName}</Text>
+              <Text className="summarybal">Country</Text>
+              <Text className="summarybal">{logRowData?.location?.countryName}</Text>
             </div>
             <div className="coin-info">
-              <Text>Postal Code</Text>
-              <Text>{logRowData?.location?.postal}</Text>
+              <Text className="summarybal">Postal Code</Text>
+              <Text className="summarybal">{logRowData?.location?.postal}</Text>
             </div>
             <div className="coin-info">
-              <Text>Latitude</Text>
-              <Text>{logRowData?.location?.latitude}</Text>
+              <Text className="summarybal">Latitude</Text>
+              <Text className="summarybal">{logRowData?.location?.latitude}</Text>
             </div>
             <div className="coin-info">
-              <Text>Longitude</Text>
-              <Text>{logRowData?.location?.longitude}</Text>
+              <Text className="summarybal">Longitude</Text>
+              <Text className="summarybal">{logRowData?.location?.longitude}</Text>
             </div>
+            {logRowData?.browser && <div className="coin-info">
+              <Text className="summarybal">Browser</Text>
+              <Text className="summarybal">{logRowData?.browser}</Text>
+            </div>}
+            {logRowData?.deviceType?.type && <div className="coin-info">
+              <Text className="summarybal">Device Type</Text>
+              <Text style={{ textTransform: 'capitalize' }} className="summarybal">{logRowData?.deviceType?.type}</Text>
+            </div>}
+            {logRowData?.deviceType?.name && <div className="coin-info">
+              <Text className="summarybal">Device Name</Text>
+              <Text className="summarybal">{logRowData?.deviceType?.name}</Text>
+            </div>}
             <div className="coin-info">
-              <Text>Browser</Text>
-              <Text>{logRowData?.browser}</Text>
+              <Text className="summarybal">Device Version</Text>
+              <Text className="summarybal">{logRowData?.deviceType?.version?.replace("null","")}</Text>
             </div>
-            <div className="coin-info">
-              <Text>Device Type</Text>
-              <Text style={{ textTransform: 'capitalize' }}>{logRowData?.deviceType?.type}</Text>
-            </div>
-            <div className="coin-info">
-              <Text>Device Name</Text>
-              <Text>{logRowData?.deviceType?.name}</Text>
-            </div>
-            <div className="coin-info">
-              <Text>Device Version</Text>
-              <Text>{logRowData?.deviceType?.version?.replace("null","")}</Text>
-            </div></>}
+            </>}</>)}
 
         </Drawer>
       </>

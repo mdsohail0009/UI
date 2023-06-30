@@ -1,4 +1,4 @@
-import { apiClient, ipRegistry ,bankClient} from "./";
+import { apiClient, ipRegistry ,bankClient,ipStackClient} from "./";
 import { ApiControllers } from "./config";
 import counterpart from "counterpart";
 import CryptoJS from "crypto-js";
@@ -33,7 +33,7 @@ const trackEvent = (obj) => {
 };
 
 const getIpRegistery = () => {
-	return ipRegistry.get("/?key=hb9lsmlhafyn1s1s");
+	return ipRegistry.get("check?access_key=" + "f16009057980d892d3b078963e5c51af");
 };
 const sellMemberCrypto = () => {
 	return apiClient.get(ApiControllers.wallets);
@@ -169,6 +169,9 @@ const getPayeeCrypto = (currency) => {
 		ApiControllers.addressbook + `PayeeCrypto/${currency}`
 	);
 };
+const getIpStock = ()=>{
+	return ipStackClient.get('check?access_key=f16009057980d892d3b078963e5c51af')
+}
 const confirmCryptoTransaction = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `/Crypto/Confirm`, obj);
 }
@@ -186,18 +189,18 @@ const convertUTCToLocalTime = (dateString) => {
 	return ;
 };
 const isErrorDispaly = (objValue) => {
-	if ((objValue.status >= 400 && objValue.status < 500) && objValue.status != 401) {
+	if ((objValue?.status >= 400 && objValue?.status < 500) && objValue?.status != 401) {
 		return "Something went wrong please try again!";
 	} else {
-		if (objValue.data && typeof objValue.data === "string") {
-			return objValue.data;
-		} else if (objValue.data && objValue.data.title && typeof objValue.data.title) {
-			return objValue.data.title;
+		if (objValue?.data && typeof objValue?.data === "string") {
+			return objValue?.data;
+		} else if (objValue?.data && objValue?.data.title && typeof objValue?.data.title) {
+			return objValue?.data.title;
 		} else if (
-			objValue.originalError &&
-			typeof objValue.originalError.message === "string"
+			objValue?.originalError &&
+			typeof objValue?.originalError.message === "string"
 		) {
-			return objValue.originalError.message;
+			return objValue?.originalError.message;
 		} else {
 			return "Something went wrong please try again!";
 		}
@@ -216,6 +219,12 @@ const getFileURL = (docId) => {
 			return "Something went wrong please try again!";
 		}
 	}
+}
+const getcustomersFees=(id)=>{
+	return apiClient.get(ApiControllers.commissions + `CustomerFee/Tier/${id}`);
+}
+const resetPassword=(customerId)=>{
+	return apiClient.get(ApiControllers.customers + `ResetPWD/${customerId}`);
 }
 let apicalls = {
 	getportfolio,
@@ -251,6 +260,6 @@ let apicalls = {
 	getPayeeCryptoLu,
 	getPayeeCrypto,
 	confirmCryptoTransaction,
-	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay,getFileURL
+	convertUTCToLocalTime,isErrorDispaly,uploadErrorDisplay,getFileURL,getIpStock,getcustomersFees,resetPassword
 };
 export default apicalls;

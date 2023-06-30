@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Typography,Button,Modal,Upload,Tooltip,Alert,message } from 'antd';
 import { connect } from 'react-redux';
 import List from "../grid.component";
-import FilePreviewer from "react-file-previewer";
-import{uploadDocuments,getFileURL,deleteDocumentDetails} from './api';
+import{uploadDocuments,deleteDocumentDetails} from './api';
 import Loader from '../../Shared/loader';
 import {ApiControllers} from '../../api/config'
 import DocumentPreview from '../../Shared/docPreview'
@@ -19,7 +18,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     );
 };
 const { Dragger } = Upload;
-const { Title, Text, Paragraph } = Typography;
+const { Text, Paragraph } = Typography;
 const BatchpaymentView = (props) => {
     const [uplaodModal, setUploadModal] = useState(false);
     const [errorMessage,setErrorMessage]=useState(null)
@@ -29,8 +28,6 @@ const BatchpaymentView = (props) => {
     const [upLoader,setUploader]=useState(false);
     const [deleteModal,setDeleteModal]=useState(false);
     const [docUpload,setDocUpload]=useState(false)
-    const [previewPath, setPreviewPath] = useState(null);
-	const [previewModal, setPreviewModal] = useState(false);
     const [data,setData]=useState({});
     const [deleteGridDoc,setDeleteGridDoc]=useState(null);
     const [isLoad,setIsLoad]=useState(false);
@@ -104,13 +101,11 @@ const BatchpaymentView = (props) => {
             setUploader(false)
             setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
-            //return true;
             return Upload.LIST_IGNORE;
         }else{
             setUploader(false)
             setDocUpload(false)
             setErrorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF files");
-            //return true;
             return Upload.LIST_IGNORE;
            
         }
@@ -251,17 +246,7 @@ const BatchpaymentView = (props) => {
                     setIsLoad(false);
                 }
   }
-  const docPreview = async (file) => {
-    let res = await getFileURL({ url: file.path });
-    if (res.ok) {
-        setPreviewModal(true);
-        setPreviewPath(res.data);
-    }
-};
-const filePreviewPath = () => {
-    return previewPath;
 
-};
    const formatBytes=(bytes, decimals = 2)=>{
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -274,9 +259,9 @@ const filePreviewPath = () => {
         setDeleteModal(false)
       
       }
-      const docPreviewOpen = (data) => {
+      const docPreviewOpen = (docData) => {
 		setDocPreviewModal(true)
-		setDocPreviewDetails({ id: data.id, fileName: data.fileName })
+		setDocPreviewDetails({ id: docData.id, fileName: docData.fileName })
 	  }
 
 	const docPreviewClose = () => {
@@ -291,49 +276,7 @@ const filePreviewPath = () => {
         setUploader(false)
         setDocUpload(false)
       }
-      const filePreviewModal = (
-		<Modal
-			className="documentmodal-width"
-			destroyOnClose={true}
-			title="Preview"
-			width={1000}
-			visible={previewModal}
-			closeIcon={
-				<Tooltip title="Close">
-					<span
-						className="icon md close-white c-pointer"
-						onClick={() => setPreviewModal(false)}
-					/>
-				</Tooltip>
-			}
-			footer={
-				<>
-                <div className="cust-pop-up-btn crypto-pop">
-                
-					<Button
-						className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
-						
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="primary-btn pop-btn detail-popbtn"
-						
-						onClick={() => window.open(previewPath, "_blank")}>
-						Download
-					</Button>
-                    </div>
-				</>
-			}>
-			<FilePreviewer
-				hideControls={true}
-				file={{
-					url: previewPath ? filePreviewPath() : null,
-					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
-				}}
-			/>
-		</Modal>
-	);
+     
     return (
         <>
         < div className='main-container'>
@@ -376,18 +319,16 @@ const filePreviewPath = () => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            //action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
                             action={
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
                                 ApiControllers.common +
                                `UploadFileNew?screenName=Addressbook Fiat&fieldName=uploadfile&tableName=TransactionDetail`
-                              //`UploadFileNew?screenName=AddressBook&fieldName=uploadfile&tableName=Common.Payeeaccounts`
 
                               }
                             showUploadList={false}
                          beforeUpload={(prop) => { beforeUpload(prop) }}
-                         headers={{Authorization : `Bearer ${props.user.access_token}`}}
+                         headers={{Authorization : `Bearer ${props.oidc.deviceToken}`}}
                          onChange={(prop) => {handleUpload(prop,"IDENTITYPROOF") }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -403,7 +344,6 @@ const filePreviewPath = () => {
                                                 <>{file ? <div className="docfile">
                                                     <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                                     <div className="docdetails c-pointer" 
-                                                    //onClick={() => docPreview(file)}
                                                     onClick={() => docPreviewOpen(file)}
                                                     >
                                                         <EllipsisMiddle suffixCount={6}>{file.fileName}</EllipsisMiddle>
@@ -418,7 +358,6 @@ const filePreviewPath = () => {
                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
                             className="upload mt-4"
                             multiple={false}
-                            //action={process.env.REACT_APP_UPLOAD_API +"/UploadFile"}
                             action={
                                 process.env.REACT_APP_UPLOAD_API +
                                 "api/v1/" +
@@ -428,7 +367,7 @@ const filePreviewPath = () => {
                               }
                             showUploadList={false}
                          beforeUpload={(prop) => {beforeUpload(prop) }}
-                         headers={{Authorization : `Bearer ${props.user.access_token}`}}
+                         headers={{Authorization : `Bearer ${props.oidc.deviceToken}`}}
                          onChange={(prop) => {handleUpload(prop,"TransferProof") }}
                         >
                             <p className="ant-upload-drag-icon">
@@ -495,8 +434,8 @@ const filePreviewPath = () => {
     )
 
 }
-const connectStateToProps = ({ userConfig }) => {
-    return { userConfig: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig,oidc }) => {
+    return { userConfig: userConfig.userProfileInfo,oidc:oidc };
   };
   const connectDispatchToProps = dispatch => {
     return {
