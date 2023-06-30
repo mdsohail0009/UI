@@ -3,10 +3,9 @@ import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
 import { validateContentRule } from "../../../utils/custom.validator";
-import ConnectStateProps from "../../../utils/state.connect";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
+import {payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
@@ -141,9 +140,9 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
-        if(key=='domestic'){
+        if(key=='domestic'||key=='sepa'){
             this.form.current?.resetFields();
-       }else if(key=='international'){
+       }else if(key=='international'||key=='swifttransfer'){
            this.form1.current?.resetFields();
        }else {
            this.form2.current?.resetFields();
