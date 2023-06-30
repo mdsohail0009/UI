@@ -135,7 +135,7 @@ class OnthegoCryptoTransfer extends Component {
             this.myRef.current.scrollIntoView();
         }
         else if (parseFloat(amt) < withdrawMinValue) {
-            this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
+            this.setState({ ...this.state, errorMsg: null, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue  +" " + this.props?.selectedWallet?.coin });
             this.myRef.current.scrollIntoView();
         }
        
@@ -252,7 +252,7 @@ class OnthegoCryptoTransfer extends Component {
                     error:
                         apicalls.convertLocalLang('amount_min') +
                         ' ' +
-                        this.props.selectedWallet?.withdrawMinValue,
+                        this.props.selectedWallet?.withdrawMinValue +" " + this.props?.selectedWallet?.coin,
                 })
                 this.myRef.current.scrollIntoView()
             }
@@ -340,7 +340,7 @@ class OnthegoCryptoTransfer extends Component {
 
                 <div className="enter-val-container swap-com swap-text-sub new-swap-subtext  send-crypto-enrty send-crypto-mobile">
                   <div className='swap-entryvalue send-crypto-style'>    <Form.Item
-                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt " 
+                  className="custom-forminput custom-label fund-transfer-input send-crypto-input crypto-blc-inpt cust-error-msg-align" 
                   name="amount"
                   required
                   rules={[
@@ -352,7 +352,7 @@ class OnthegoCryptoTransfer extends Component {
                 >
                  <NumberFormat
                     customInput={Input}
-                    className="inputfont-style  inputbg-fonts swap-text-sub"
+                    className="inputfont-style inputbg-fonts swap-text-sub"
                     placeholder={"Enter Amount"}
                     maxLength="20"
                     bordered={false}
@@ -363,7 +363,6 @@ class OnthegoCryptoTransfer extends Component {
                     thousandSeparator={true}
                     onKeyDown={this.keyDownHandler}
                     addonBefore={this.state.selectedCurrency}
-                    // suffix={this.props.selectedWallet?.coin}
                     onValueChange={() => {
                         this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: null,error: null })
                     }}
@@ -376,7 +375,7 @@ class OnthegoCryptoTransfer extends Component {
 </div>
               </Row>
               <div className="display-items moblie-order">
-              <div class="text-center mr-16">
+              <div class="text-center mr-16 radio-grp">
                                 <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left send-minmax" onChange={({ target: { value } }) => {
                                     this.clickMinamnt(value)
                                 }}>
@@ -386,7 +385,7 @@ class OnthegoCryptoTransfer extends Component {
                                 </Radio.Group>
         </div>
                             
-                  <div className='crypto-details'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue={this.props?.selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={this.props?.selectedWallet?.coin} className="marginL sellbal-style" /></div>
+                  <div className='crypto-details crypto-bal'><div className='sellcrypto-style'>Balance:</div> <Currency defaultValue={this.props?.selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={this.props?.selectedWallet?.coin} className="marginL sellbal-style" /></div>
                   </div>
               <Row gutter={[16,0]} className="text-center transfer-designstyle">
               <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
@@ -461,7 +460,6 @@ class OnthegoCryptoTransfer extends Component {
                            <Col xs={19} md={22} lg={22} xl={19} xxl={19} className="small-text-align adbook-mobile">
                            <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                            {item.walletAddress && <div><Text className="address-subtext"> ({item.network})</Text></div>} 
-                           {/* {item.walletCode} */}
                             </Col>
                             </Row>}</>
                     )}
@@ -493,9 +491,7 @@ class OnthegoCryptoTransfer extends Component {
                         <Col xs={19} md={24} lg={24} xl={19} xxl={19} className=" small-text-align adbook-mobile past-respnt">
                         <label className="address-name">{item?.name} ({item.walletAddress?.length > 0 ? item.walletAddress.substring(0,4)+ `......`+ item.walletAddress.slice(-4):""})</label>
                         <div><Text className="address-subtext">({item.network})</Text></div>
-                        </Col>
-                        {/* {item?.walletCode}  */}
-                       
+                        </Col>                      
                       </Row>
 
                     )}

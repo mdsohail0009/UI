@@ -39,9 +39,26 @@ const BatchpaymentView = React.lazy(() => import("../components/batchpayment.com
 const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
 const Transactions = React.lazy(() => import("../components/transactions.history.component/index"))
 const SbCard= React.lazy(() => import("../components/dashboard.component/sbCard"))
+const Fees=React.lazy(()=>import("../components/Commissions/fees"))
+const Auth0 = React.lazy(() => import("../components/auth0.component/auth0"))
+const EmailVerification = React.lazy(() => import("../components/auth0.component/emailVerification"))
+const PhoneVerification = React.lazy(() => import("../components/auth0.component/phoneVerification"))
+const AccountStatus = React.lazy(()=>import("../../src/utils/account.status"))
 const VideoTutorials =React.lazy(()=>import("../components/videoTutorails.component"));
 class RouteConfig extends Component {
   componentDidMount() {
+    if (!this.props.userProfile?.isEmailVerified) {
+      this.props.history.push('/emailVerification');
+    }
+    else if (!this.props.userProfile?.isCustomerUpdated) {
+      this.props.history.push('/auth0');
+    }
+    else if (!this.props?.userProfile?.isKYC) {
+      this.props.history.push('/sumsub');
+    }
+    else if (!this.props.userProfile?.isPhoneNumberVerified) {
+      this.props.history.push('/phoneVerification');
+    }
     this.checkPermissions(window.location.pathname || "/cockpit");
     this.props.history.listen((location) => {
       this.checkPermissions(location.pathname)
@@ -69,7 +86,8 @@ class RouteConfig extends Component {
         <ReactRoute path="/login" component={Login} />
         <ReactRoute path="/changepassword" component={ChangePassword} />
         <ReactRoute path="/2fa" component={Twofa} />
-        <ReactRoute path="/sumsub" component={SumSub} />
+        <ReactRoute path="/accountstatus" component={AccountStatus} />
+        <ReactRoute path="/sumsub/:flow?" component={SumSub} />
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path="/userprofile/:key?/:type?" component={UserProfile} />
@@ -86,6 +104,9 @@ class RouteConfig extends Component {
         <ReactRoute path='/caseView/:id' component={CaseView} />
         <ReactRoute path='/cryptocoinsView' component={CryptocoinsView} />
         <Route path="/error" component={ErrorPage} />
+        <Route path="/auth0" component={Auth0} />
+        <Route path="/emailVerification" component={EmailVerification} />
+        <Route path="/phoneVerification" component={PhoneVerification} />
         <Route path="/videoTutorials" component={VideoTutorials}/>
 
         <ReactRoute
@@ -115,14 +136,15 @@ class RouteConfig extends Component {
         <ReactRoute path="/cases" component={Cases} exact />
         <ReactRoute path="/relogin" component={SecurityLogin} exact />
         <ReactRoute path="/sbcard" component={InternalTransfer} exact />
+        <ReactRoute path="/fees" component={Fees} exact/>
         <ReactRoute path="/" component={Dashboard} exact />
-       </React.Suspense>
+      </React.Suspense>
     </Switch>
   }
 
 }
-const connectStateToProps = ({ menuItems }) => {
-  return { menuItems }
+const connectStateToProps = ({ userConfig,menuItems }) => {
+  return {userProfile:userConfig.userProfileInfo,menuItems }
 }
 
 export default withRouter(connect(connectStateToProps)(RouteConfig));

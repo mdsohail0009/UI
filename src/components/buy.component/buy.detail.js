@@ -63,7 +63,6 @@ class SelectCrypto extends Component {
         });
     }
     handleConvertion = async () => {
-        
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
         this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isConvertionLoading: true } });
@@ -104,7 +103,7 @@ class SelectCrypto extends Component {
 
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { buyMin, buyMax, coin, gbpInUsd, eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
-        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
+        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd ,coin:coin})
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
             this.myRef.current.scrollIntoView(0,0);
@@ -166,7 +165,7 @@ class SelectCrypto extends Component {
                         }}
                         isConvertionLoad={isConvertionLoading} /></div>}
                             <div className="crypto-amount">
-                               <div className="crypto-details"><span className='buy-balance'>Balance: </span><Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /><span className='buycoin-style marginL'>{coin }</span> </div>
+                               <div className="crypto-details crypto-bal"><span className='buy-balance'>Balance: </span><Currency prefix={'' } defaultValue={coinBalance} suffixText={""} className='buycoin-style marginL' /><span className='buycoin-style marginL'>{coin }</span> </div>
 
                             </div>
 
@@ -176,7 +175,7 @@ class SelectCrypto extends Component {
                     <div className="select-currency">
                         <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     </div>
-                    {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
+                    {<div className='buy-paragraph buy-para-wd'><Translate content="thousandKText" component={Paragraph} className="buy-paragraph " />
                     <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" />
                      <div className="buy-usdt-btn">
                      <SuisseBtn title="PreviewBuy" loading={this.state.btnLoading} onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />

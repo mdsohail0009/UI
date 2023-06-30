@@ -151,7 +151,7 @@ if (res.ok){
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
     
-    else if((values.isDocumentUpload===true && (this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| (data===true && values.isDocumentUpload===true)|| data===undefined)){
+    else if((this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| data===true || data===undefined){
      
       this.setState({
         ...this.state,
@@ -185,9 +185,10 @@ if (res.ok){
       isOwnerOfWalletAddress:values.isOwnerOfWalletAddress,
       walletSource:values.walletSource,
       otherWallet:values.otherWallet,
-      isDocumentUpload:values.isDocumentUpload,
-      docRepositories:values.isDocumentUpload===true? this.state.details.docRepositories :null,
+      isDocumentUpload:true,
+      docRepositories:this.state.details.docRepositories,
       createdBy : this.props.userProfile?.userName,
+      info : JSON.stringify(this.props?.trackAuditLogData),
     }
     if (this.state.cryptoData.id !== "00000000-0000-0000-0000-000000000000") {
       obj.id = this.state.cryptoData.id;
@@ -261,7 +262,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
   };
 
   render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData, coinsList, networksList,showDeclartionApproved ,approvedAddress,isDocCheck} = this.state;
+    const { isLoading, errorMessage, showDeclartion, cryptoData,showDeclartionApproved ,approvedAddress} = this.state;
     if (isLoading) {
       return <Loader />
     }
@@ -269,9 +270,8 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
       return<div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
           <Image  preview={false} src={alertIcon} className="confirm-icon"/>
           <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
-                Please review and sign the document in your email to whitelist your address.
-                Please note that your withdrawal will only be processed once the address has been approved by compliance. `}</Text>
+        <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
       </div>
       </div>
     }else if(showDeclartionApproved){
@@ -325,31 +325,6 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
             <Title className="adbook-head">Beneficiary Details</Title>
             </div>
             <Row className="addcrypto-benficiary">
-            {/* <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-              name="token"
-              label="Token"
-              rules={[
-                {
-                  required: true,
-                  message: "Is required",
-                },
-              ]} >
-              <Select
-                className={`cust-input ${(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? "input-disabled-style" :""}`}
-                onChange={this.handleTokenChange}
-                placeholder="Select Token"
-                optionFilterProp="children"
-                maxLength={50}
-                disabled={(this.props?.sendReceive?.withdrawFiatObj?.walletCode ||this.props?.sendReceive?.cryptoWithdraw?.selectedWallet?.coin || this.state.cryptoData.adressstate ==="Approved") ? true:false}>
-                {coinsList?.map((item, idx) => (
-                  <Option key={idx} value={item.walletCode}>
-                    {item.walletCode}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            </Col> */}
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
             <Form.Item className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
               name="network"
@@ -498,35 +473,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
 							</Form.Item>
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-            <Form.Item
-								className="custom-forminput mb-36 agree send-crypto-sumry"
-								name="isDocumentUpload"
-								valuePropName="checked"
-								required
-							>				
-								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
-						<label>
-							<input
-								type="checkbox"
-								id="agree-check1"
-								checked={this.state.isDocCheck}
-                onClick={(e)=>this.handleDocCheck(e)}
-							/>
-							<span for="agree-check"  className="c-pointer"
-              />
-						</label>
-						<div
-							className="cust-agreecheck d-flex align-center travel-custcheck"
-							>
-               I may perform transactions greater than 1,000 CHF with this address
-						</div>
-					</div>
-								
-							</Form.Item>
-            </Col>
-            {isDocCheck===true && 
-            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address <span className="cust-start-style">*</span>
                             
                                             <Tooltip title="MP4, MOV, WMV, AVI files size maximum allow  25MB">
                                           <span
@@ -542,7 +489,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
                              onDocumentsChange={(docs) =>this.editDocuments(docs) } 
                              docCheck={this.state.isDocCheck}
                             />
-                        </ Col>}
+                        </ Col>
                         
                         </>}
           

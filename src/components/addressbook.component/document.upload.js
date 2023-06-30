@@ -4,8 +4,9 @@ import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
-import ConnectStateProps from "../../utils/state.connect";
 import {ApiControllers} from '../../api/config'
+import DocumentPreview from '../../Shared/docPreview'
+import { connect } from "react-redux";
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
@@ -24,7 +25,8 @@ class AddressDocumnet extends Component {
         filesList: [],
         docReasonPayee:[],
         docPayee:[],
-        documents: [], showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null
+        documents: [], showDeleteModal: false, isDocLoading: false,selectedObj:{},errorMessage:null,  previewModal: false,
+        previewPath: null, docPreviewDetails: null,
     }
     componentDidMount() {
         let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
@@ -65,6 +67,12 @@ class AddressDocumnet extends Component {
             this.setState({ ...this.state, isDocLoading: false,errorMessage:apiCalls.uploadErrorDisplay(file?.response) });
         }
     }
+    docPreviewClose = () => {
+        this.setState({ ...this.state, previewModal: false, docPreviewDetails: null });
+      };
+      docPreviewOpen = (data) => {
+        this.setState({ ...this.state, previewModal: true, docPreviewDetails: { id: data?.id, fileName: data?.fileName } });
+      };
     render() {
         if(this.props.refreshData !== this.state.refreshData){
             let propsDocument = JSON.stringify(this.props?.documents) == JSON.stringify({'transfer': '', 'payee': ''}) ? null : this.props?.documents
@@ -100,7 +108,8 @@ class AddressDocumnet extends Component {
                             showUploadList={false}
                             beforeUpload={(props) => {
                             }}
-                            headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                            
+                            headers={{Authorization : `Bearer ${this.props?.oidc.deviceToken}`}}
                             onChange={(prop) => {this.handleUpload(prop,this.props?.type) }}
                           
                         >
@@ -119,16 +128,19 @@ class AddressDocumnet extends Component {
                         <> 
                         <div className="docfile custom-upload cust-upload-sy">
                             <span className={`icon xl ${(file.name?file.name.slice(-3) === "zip" ? "file" : "":(file.fileName?.slice(-3) === "zip" ? "file" : "")) || file.name?(file.name.slice(-3) === "pdf" ? "file" : "image"):(file.fileName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                            <div className="docdetails">
+                            <div
+                        className="docdetails c-pointer"
+                        onClick={() => this.docPreviewOpen(file)}
+                      >
+                            <div className="docdetails c-pointer">
                                 <EllipsisMiddle suffixCount={6}>{file.name || file.fileName}</EllipsisMiddle>
-                                <span className="upload-filesize">{(file.fileSize || file?.remarks) ? bytesToSize(file.fileSize || file?.remarks) : ""}</span>
-                            </div>
+                                <span className="upload-filesize  c-pointer">{(file.fileSize || file?.remarks) ? bytesToSize(file.fileSize || file?.remarks) : ""}</span>
+                            </div></div>
                             <span className="icon md close c-pointer" onClick={() => {
                                 this.setState({ ...this.state, showDeleteModal: true, selectedFileIdx: indx,selectedObj:file })
 
                             }} />
                         </div></>}
-                        {/* } */}
                     </div>)}
                     {this.state.isDocLoading && <Loader />}
                 </div>
@@ -148,7 +160,6 @@ class AddressDocumnet extends Component {
                             className="primary-btn pop-btn detail-popbtn"
                             onClick={() => {
                                 let { documents: docs } = this.state;
-                                console.log(docs,"documents")
                                 let files = this.state.filesList || docs.details || docs || this.state.transferProof;
                                 for(var k in files){
                                     if(files[k].id===this.state.selectedObj?.id){
@@ -181,7 +192,20 @@ class AddressDocumnet extends Component {
 
                 <Paragraph className="text-white">Are you sure, do you really want to delete ?</Paragraph>
             </Modal>
+            {this.state.previewModal && (
+          <DocumentPreview
+            previewModal={this.state.previewModal}
+            handleCancle={this.docPreviewClose}
+            upLoadResponse={this.state.docPreviewDetails}
+          />
+        )}
         </Row>
     }
 }
-export default ConnectStateProps(AddressDocumnet);
+const connectStateToProps = ({oidc
+}) => {
+  return {
+    oidc:oidc,
+  };
+};
+export default connect(connectStateToProps)(AddressDocumnet);

@@ -11,6 +11,7 @@ import Loader from "../../../Shared/loader";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
+import { connect } from "react-redux";
 const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
@@ -80,11 +81,11 @@ class OthersBusiness extends Component {
     }
     handleIbanChange = async ({ target: { value,isNext } }) => {
         if (value?.length >= 10 && isNext) {
-            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true ,ibanDetails: {}, enteredIbanData: value, isShowValid: false,errorMessage: null,isValidateLoading:true});
+            this.setState({ ...this.state, errorMessage: null, ibanDetailsLoading: true,iBanValid:true ,ibanDetails: {}, enteredIbanData: value, isShowValid: false,isValidateLoading:true});
             const response = await fetchIBANDetails(value);
             if (response.ok) {
                 if(response.data && (response.data?.routingNumber || response.data?.bankName)){
-                    this.setState({ ...this.state, ibanDetails: response.data, enteredIbanData: value, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false,isValidateLoading:false });
+                    this.setState({ ...this.state, ibanDetails: response.data, enteredIbanData: value, ibanDetailsLoading: false, errorMessage: null, iBanValid:true, isValidateLoading: false });
                 }else{
                     if(this.state.ibanDetails && !this.state.ibanDetails?.routingNumber|| !this.state.ibanDetails?.bankName) {
                         this.setState({ ...this.state, ibanDetails: {}, ibanDetailsLoading: false, errorMessage: null, iBanValid:false, isValidateLoading: false });
@@ -164,12 +165,14 @@ class OthersBusiness extends Component {
         _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].bankName = ibanDetails?.bankName;
         _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents
-        _obj.createdBy = this.props.userProfile?.userName;
+        _obj.payeeAccountModels[0].modifiedBy = isEdit ? this.props.userConfig?.userName : null;
+        _obj.createdBy = this.props.userConfig?.userName;
         delete _obj.payeeAccountModels[0]["adminId"] // deleting admin id
         
         _obj.addressType = "otherbusiness";
         _obj.transferType = this.props.currency=='CHF'?'chftransfer':"sepa";
-        _obj.amount = this.props.amount;
+        _obj.amount = this.props.amount||0;
+        _obj.info =JSON.stringify(this.props?.trackAuditLogData);
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -183,16 +186,8 @@ class OthersBusiness extends Component {
 
        if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, 
-                    docRepositories:this.state.rasonDocuments ,transferOthers:_obj.transferOthers,
-                 })
-                if (confirmRes.ok) {
-                    this.props.onContinue(confirmRes.data);
+                    this.props.onContinue(response.data);
                     this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false });
-                } else {
-                    this.setState({ ...this.state, details: { ...this.state.details, ...values }, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
-                  window.scrollTo(0, 0);
-                }
             } else {
                 this.setState({ ...this.state, errorMessage: null, isBtnLoading: false, showDeclartion: true });
                 this.useDivRef.current?.scrollIntoView(0,0)
@@ -251,7 +246,7 @@ class OthersBusiness extends Component {
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType}/> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType} selectedbankobj={this.props.selectedbankobj}/> }
         else {
             return <><div ref={this.useDivRef}>
                 {this.props.currency !="CHF" && <h2 className="adbook-head">SEPA Transfer</h2>}
@@ -740,4 +735,11 @@ class OthersBusiness extends Component {
 
     }
 }
-export default ConnectStateProps(OthersBusiness);
+const connectStateToProps = ({userConfig,
+}) => {
+  return {
+    userConfig: userConfig.userProfileInfo,
+    trackAuditLogData: userConfig.trackAuditLogData,
+  };
+};
+export default connect(connectStateToProps)(OthersBusiness);

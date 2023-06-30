@@ -59,6 +59,7 @@ class ProfileInfo extends Component {
   };
   componentDidMount() {
     this.profileTrack();
+    this.props.trackauditlogs();
     this.props.getmemeberInfoa(this.props.userConfig.userId, this.props.userConfig.id);
   }
   profileTrack = () => {
@@ -131,7 +132,7 @@ class ProfileInfo extends Component {
     const { Title, Text } = Typography;
     return (
       <>
-      <div className="main-container ">
+      <div className="">
         {this.state.errorMessage !== null && (
           <Alert
             className="mb-12  profile-alert-style"
@@ -207,7 +208,7 @@ class ProfileInfo extends Component {
             />
           </Title>
           <ul className="profile-ul">
-            {this.props.userConfig.isBusiness && <li className="profileinfo">
+            {this.props?.userConfig?.isBusiness && <li className="profileinfo">
               <div className="profile-block">
                 <label className="profile-label">
                   <Translate
@@ -230,7 +231,7 @@ class ProfileInfo extends Component {
                 </p>
               </div>
             </li>
-            {this.props.userConfig.isBusiness !== true && <>
+            {this.props?.userConfig?.isBusiness !== true && <>
               <li className="profileinfo">
                 <div className="profile-block ">
                   <label className="profile-label">
@@ -255,7 +256,7 @@ class ProfileInfo extends Component {
                     />
                   </label>
                   <p className="profile-value" style={{ flexGrow: 12 }}>
-                    {this.props.userConfig.lastName || "--"}
+                    {this.props.userConfig?.lastName || "--"}
                   </p>
                 </div>
               </li></>}
@@ -323,7 +324,7 @@ class ProfileInfo extends Component {
                 </label>
                 <div style={{ flexGrow: 12 }}>
                   <p className="profile-value">
-                    {this.props.userConfig.phoneNo || "--"}
+                    {this.props.userConfig.phoneNumber || "--"}
                   </p>
                 </div>
               </div>

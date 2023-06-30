@@ -108,7 +108,7 @@ saveWithdrawdata = async () => {
         obj["beneficiaryAccountName"] = obj.beneficiaryAccountName ? apicalls.encryptValue(obj.beneficiaryAccountName, this.props.userProfile?.sk) : null;
         obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
         obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
-
+        obj["originalAmount"] = obj.requestedAmount ? obj.requestedAmount : 0;
       const saveRes = await saveWithdraw(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
@@ -268,7 +268,7 @@ saveWithdrawdata = async () => {
                            }
                            {this.state.reviewDetails?.ukShortCode &&
                                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">UkSortCode </div>
+                                    <div className="kpi-label">Uk Sort Code  </div>
                                     <div>  <Text className="kpi-val">{this.state.reviewDetails?.ukShortCode || "-"}</Text></div>
                                 </div>
                            }

@@ -216,7 +216,6 @@ class TransactionsHistory extends Component {
   backToDashboard=()=>{
     if (!this.props?.customer?.isKYC) {
         this.props.history.push("/notkyc");
-        return;
     }
       else{
         this.props.history.push("/");

@@ -5,12 +5,14 @@ import connectStateProps from "../../utils/state.connect";
 import { getNotices } from "./api";
 import Translate from 'react-translate-component';
 import apicalls from "../../api/apiCalls";
+import { connect } from "react-redux";
+import {getIpRegisteryData } from "../../reducers/configReduser";
 const {Title}=Typography;
-const Notices = () => {
+const Notices = (props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState({ hasError: false, message: null });
     const [notices, setNotices] = useState([]);
-    useEffect(() => { fetchNotices(); }, []);//eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => { fetchNotices(); props.trackauditlogs() }, []);//eslint-disable-line react-hooks/exhaustive-deps
     const fetchNotices = async () => {
         const response = await getNotices();
         if (response.ok) {
@@ -43,4 +45,21 @@ const Notices = () => {
     </>)
 }
 
-export default connectStateProps(Notices)
+const connectStateToProps = ({ userConfig }) => {
+    return {
+      userConfig: userConfig.userProfileInfo,
+      trackAuditLogData: userConfig.trackAuditLogData
+    };
+  };
+  const connectDispatchToProps = (dispatch) => {
+    return {
+      trackauditlogs: () => {
+        dispatch(getIpRegisteryData());
+      }
+    };
+  
+  };
+  export default connect(
+    connectStateToProps,
+    connectDispatchToProps
+  )(Notices);

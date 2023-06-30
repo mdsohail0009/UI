@@ -335,7 +335,7 @@ downLoadPreview=()=>{
                                               showUploadList={false}
                                               beforeUpload={(props) => this.beforeUpload(props)}
                                               onChange={(props) => this.handleUpload(props)}
-                                              headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                                              headers={{Authorization : `Bearer ${this.props.user.deviceToken}`}}
                                          
                                               >
                                               <Button className='pop-btn mt-24'>Upload Excel</Button>
@@ -463,7 +463,7 @@ downLoadPreview=()=>{
     }
 }
 const connectStateToProps = ({ sendReceive, userConfig,oidc }) => {
-    return {sendReceive, userProfile: userConfig.userProfileInfo ,user: oidc.user}
+    return {sendReceive, userProfile: userConfig.userProfileInfo ,user: oidc}
 }
 const connectDispatchToProps = dispatch => {
     return {

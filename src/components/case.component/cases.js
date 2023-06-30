@@ -23,22 +23,36 @@ class Cases extends Component {
         }
         this.gridRef = React.createRef();
     }
+    convertUTCToLocalTime = (dateString) => {
+        let date = new Date(dateString);
+        const milliseconds = Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds(),
+        );
+        return new Date(milliseconds)
+    };
     columnGrid = [
         {
             field: "createdDate",
             title: apiCalls.convertLocalLang("Date"),
-            width: 200,
-            filter: true,
-            filterType: "date",
+			filter: true,
+			width: 230,
+			isShowTime: true,
+			locked: false,
+			filterType: "date",
             customCell: (props) => (
-              <td>
-                <div className="gridLink" onClick={() => this.viewCase(props)}>
-                <Moment format="DD/MM/YYYY">
-                    {props.dataItem.createdDate}
-                </Moment>
-                </div>
-              </td>
-            )
+                <td>
+                  <div className="gridLink" onClick={() => this.viewCase(props)}>
+                  <Moment format="DD/MM/YYYY hh:mm:ss A">
+                    {props.dataItem?.createdDate && this.convertUTCToLocalTime(props.dataItem?.createdDate)}
+                    </Moment>
+                  </div>
+                </td>
+              )
           },
         {field: "caseNumber",title: apiCalls.convertLocalLang("Case_Number"),filter: true, width: 240,},
 		{field: "customerCaseTitle",title: apiCalls.convertLocalLang("title"),filter: true,width: 450},

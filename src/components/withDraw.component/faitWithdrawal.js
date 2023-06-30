@@ -241,11 +241,11 @@ const FaitWithdrawal = ({ props,
       form.setFieldsValue({
         ...objj,
         walletCode: objj.walletCode,
-        beneficiaryAccountName: userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
+        beneficiaryAccountName: userConfig?.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig?.lastName
       });
     } else {
       form.setFieldsValue({
-        beneficiaryAccountName: userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
+        beneficiaryAccountName: userConfig?.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig?.lastName
       });
     }
     let recName = await getCountryStateLu();
@@ -303,7 +303,7 @@ const FaitWithdrawal = ({ props,
       setErrorMsg(null);
       values["customerId"] = userConfig.id;
       values["memberWalletId"] = accountDetails[0].id;
-      values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
+      values["beneficiaryAccountName"] = userConfig?.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig?.lastName;
       values["favouriteName"] =
         values.favouriteName || addressDetails.favouriteName || bankDetails[0].favouriteName;
       values["comission"] = "0.0";
@@ -314,7 +314,7 @@ const FaitWithdrawal = ({ props,
       values["zipcode"] = bankDetails[0].zipcode;
       values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
       values["WalletCode"] = accountDetails[0].currencyCode;
-      values["createdby"]=userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
+      values["createdBy"]=userConfig?.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig?.lastName
       const response = await handleFiatConfirm(values);
       if (response.ok) {
         setBtnDisabled(false);

@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
 import { PDFExport } from '@progress/kendo-react-pdf';
 import logColor from '../../assets/images/logo-color.png';
-import {Button, Dropdown,Menu,} from 'antd';
+import {Button, Dropdown,Menu, Spin,} from 'antd';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -158,9 +158,9 @@ export function withState(WrappedGrid) {
                                 <div> <img src={logColor} className="logo" /></div>
                                 {
                                     <ul style={{ fontWeight: 500, margin: "0", padding: "0" }}>
-                                         <li> Name : {(!this.state.profile.isBusiness  && `${this.state.profile.firstName} ${this.state.profile.lastName}`) ||  (this.state.profile.isBusiness && `${this.state.profile.businessName}`)}</li>
-                                        <li> Email : {this.state.profile.email}</li>
-                                        <li> Phone : {this.state.profile.phoneNo || this.state.profile.phoneNumber}</li>
+                                        <li> Name : {(!this.state.profile?.isBusiness  && `${this.state.profile?.firstName} ${this.state.profile?.lastName}`) ||  (this.state.profile?.isBusiness && `${this.state.profile?.businessName}`)}</li>
+                                        <li> Email : {this.state.profile?.email}</li>
+                                        <li> Phone : {this.state.profile?.phoneNo || this.state.profile.phoneNumber}</li>
                                     </ul>
                                 }
                             </div>
@@ -214,8 +214,9 @@ export function withState(WrappedGrid) {
                         <Button>Download Transaction<span className='icon md excel-export'></span></Button>
                         </Dropdown>
                     </div>}
-                    {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
-
+                    {this.props.showExcelExport ? <>
+                     <Spin spinning={this.state.isLoading} >
+                    <ExcelExport data={this.state.data} ref={this.excelRef} fileName={this.props?.excelFileName}>
                         <WrappedGrid ref={this.gridref}
                             sortable={true}
                             resizable={true}
@@ -230,7 +231,10 @@ export function withState(WrappedGrid) {
                             sort={this.state.dataState.sort}
                             onDataStateChange={this.handleDataStateChange}
                         />
-                    </ExcelExport> : <WrappedGrid ref={this.gridref}
+                    </ExcelExport></Spin> </>:
+                    <>
+                     <Spin spinning={this.state.isLoading} >
+                    <WrappedGrid ref={this.gridref}
                         sortable={true}
                         resizable={true}
                         filterOperators={filterOperators}
@@ -243,7 +247,7 @@ export function withState(WrappedGrid) {
                         filter={this.state.dataState.filter}
                         sort={this.state.dataState.sort}
                         onDataStateChange={this.handleDataStateChange}
-                    />}
+                    /></Spin></>}
                 </div>
                 </div>
             );
@@ -293,7 +297,7 @@ export function withState(WrappedGrid) {
                 })
             }
             this.setState({ ...this.state, isLoading: true })
-            const { oidc: { user }, userConfig: { userProfileInfo }, currentAction: { action },
+            const { oidc: { deviceToken }, userConfig: { userProfileInfo }, currentAction: { action },
                 menuItems } = store.getState();
             let queryStr = `${toDataSourceRequestString(dataState)}`; // Serialize the state.
             const hasGroups = dataState.group && dataState.group.length;
@@ -309,7 +313,7 @@ export function withState(WrappedGrid) {
             const base_url = this.props.url;
             const init = {
                 method: 'GET', accept: 'application/json', headers: {
-                    "Authorization": `Bearer ${user.access_token}`,
+                    "Authorization": `Bearer ${deviceToken}`,
                     "AuthInformation": userProfileInfo?.id ? this._encrypt(`{CustomerId:"${userProfileInfo?.id}", Action:"${action || "view"
                         }", FeatureId:"${menuItems?.featurePermissions?.selectedScreenFeatureId}"}`, userProfileInfo.sk) : ''
                 }
