@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { Row, Col, Form, Input, Typography, Button, Spin,Alert } from 'antd';
+import { Row, Col, Form, Input, Typography, Button, Spin,Alert,Select } from 'antd';
 import apicalls from "../../../api/apiCalls";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 import NumberFormat from "react-number-format";
+import { getReasonforTransferDetails } from "../api";
 const {  Text } = Typography;
 const { TextArea } = Input;
-
+const {Option}=Select;
 class PayeeBankDetails extends Component {
     state = {
         emailExist: false,
@@ -22,9 +23,12 @@ class PayeeBankDetails extends Component {
         isValidateLoading: false,
         isValidCheck: false,
         ibannumber: null,
-        errorMessage:null
+        errorMessage:null,
+        reasonForTransferDataa:[],
+        selectedReasonforTransfer:null,
     }
     componentDidMount(){
+        this.getReasonForTransferData();
         if (this?.props?.selectedAddress?.id && this.props?.createPayeeObj) {
             if (this.props?.createPayeeObj?.payeeAccountModels[0]?.iban) {
                 this.handleIban(this.props?.createPayeeObj?.payeeAccountModels[0].iban,"true")
@@ -105,6 +109,24 @@ class PayeeBankDetails extends Component {
             return Promise.reject("Invalid Uk Sort Code");
         }
         return Promise.resolve();
+    }
+
+    getReasonForTransferData=async()=>{
+        this.setState({...this.state,selectedReasonforTransfer:null})
+        let res = await getReasonforTransferDetails();
+        if(res.ok){
+            this.setState({...this.state,reasonForTransferDataa:res.data,errorMessage:null})
+        }else{
+            this.setState({...this.state,errorMessage: apicalls.isErrorDispaly(res),})
+           
+        }
+    }
+
+    handleRelation=(e)=>{
+        this.setState({...this.state,selectedReasonforTransfer:e})
+        if(!this.props.editDocument){
+            this.props.form.current.setFieldsValue({transferOthers:null})
+        }       
     }
     renderAddress = (transferType) => {
         const _templates = {
@@ -238,16 +260,48 @@ class PayeeBankDetails extends Component {
                             />
                         }
                     >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
+                         <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={apicalls.convertLocalLang(
+                                        "reasiontotransfor"
+                                    )}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select> 
                     </Form.Item>
                 </Col>}
+                {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
             </>,
             swift: <>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -538,16 +592,48 @@ class PayeeBankDetails extends Component {
                             />
                         }
                     >
-                        <TextArea
-                            placeholder={apicalls.convertLocalLang(
-                                "reasiontotransfor"
-                            )}
-                            className="cust-input cust-text-area address-book-cust"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                            maxLength={100}
-                        ></TextArea>
+                        <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={apicalls.convertLocalLang(
+                                        "reasiontotransfor"
+                                    )}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleRelation(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select> 
                     </Form.Item>
                 </Col>}
+                {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
                 
             </>
         }
@@ -555,7 +641,9 @@ class PayeeBankDetails extends Component {
     }
     render() {
         const {  transferType,   domesticType } = this.props;
-   
+        if(domesticType != this.state.domesticTypeName){
+            this.setState({...this.state, domesticTypeName:domesticType, selectedReasonforTransfer:null});
+        }
         
         return <>
         {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}

@@ -131,6 +131,12 @@ class Header extends Component {
   onMenuItemClick = (menuitem, menuKey) => {
     handleHeaderProfileMenuClick(menuitem, menuKey);
   }
+  handleAuditLogClick=()=>{
+    this.props.history.push("/auditLogs")
+  }
+  uploadDoc=()=>{
+    window.open(process.env.REACT_APP_UPLOAD_DOC , '_blank')
+}
   render() {
     const userProfileMenu = (
       <Menu>
@@ -145,6 +151,15 @@ class Header extends Component {
             onClick={() => this.userProfile()}
           />
           <ul className="drpdwn-list">
+            <li
+              onClick={() => window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')}
+            >
+              <Link>
+
+                <div>Upgrade Your Account  </div>
+                <span className="icon md rarrow-white" />
+              </Link>
+            </li>
             <li
               onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
             >
@@ -178,7 +193,7 @@ class Header extends Component {
               </Popover>
             </li>
             <li
-            onClick={()=>this.props.history.push("/auditLogs")}
+            onClick={ this.handleAuditLogClick }
             >
               <Link>
                 <Translate
@@ -214,7 +229,7 @@ class Header extends Component {
               </Link>
             </li>
             <li
-              onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
+             onClick={() => this.uploadDoc()}
             >
               <Link>
                 <span className="text-left">
@@ -231,6 +246,18 @@ class Header extends Component {
                 </span>
                 <span className="icon md rarrow-white" />
               </Link>
+            </li>
+            <li
+              onClick={() => this.props.history.push("/videoTutorials")}
+            >
+              <Link className="text-left">
+                <span>
+                  Video Tutorials
+                </span>
+                <span className="icon md rarrow-white" />
+
+              </Link>
+
             </li>
             <li onClick={() => this.clearEvents()}>
               <Link className="text-left">

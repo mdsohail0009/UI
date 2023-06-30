@@ -82,4 +82,10 @@ const validateAmount = (obj) => {
 const validateCryptoAmount = (obj) => {
     return apiClient.post(ApiControllers.withdraw + `Crypto/commision`, obj)
 }
-export { fetchIBANDetails, getCoinwithBank,createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount, validateCryptoAmount };
+const getRelationDetails = () => {
+    return apiClient.get(ApiControllers.common + `controlcodes?codecategory=Relationship To Beneficiary`)
+}
+const getReasonforTransferDetails = () => {
+    return apiClient.get(ApiControllers.common + `controlcodes?codecategory=Reason For Transfer`)
+}
+export { fetchIBANDetails, getCoinwithBank,createPayee, payeeAccountObj, uploadFile, document, savePayee, confirmTransaction, fetchPayees, fetchPastPayees, updatePayee, saveWithdraw, validateAmount, validateCryptoAmount,getRelationDetails,getReasonforTransferDetails };

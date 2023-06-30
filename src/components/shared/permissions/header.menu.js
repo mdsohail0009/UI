@@ -340,7 +340,9 @@ class HeaderPermissionMenu extends Component {
             FullFeatureName: "Logout"
         });
     }
-
+    uploadDoc=()=>{
+        window.open(process.env.REACT_APP_UPLOAD_DOC , '_blank')
+    }
     themeSwitch = () => {
         if (this.props.userConfig?.theme == "Light Theme") {
             this.setState({ ...this.state, theamFalge: "darkTheam" })
@@ -372,6 +374,15 @@ class HeaderPermissionMenu extends Component {
                         onClick={() => this.userProfile()}
                     />
                     <ul className="drpdwn-list">
+                    <li
+                           onClick={() => window.open(process.env.REACT_APP_ACCOUNT_USER_ONBOARD, '_blank')}
+                        >
+                            <Link>
+                           
+                            <div>Upgrade Your Account  </div>
+                                <span className="icon md rarrow-white" />
+                            </Link>
+                        </li>
                         <li
                             onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                         >
@@ -405,7 +416,6 @@ class HeaderPermissionMenu extends Component {
                             </Popover>
                         </li>
                         <li
-                            // onClick={() => this.onMenuItemClick("transactions", { key: "transactions", path: "/transactions" })}
                             onClick={() => this.props.history.push("/auditlogs")}
 
                         >
@@ -443,7 +453,7 @@ class HeaderPermissionMenu extends Component {
                             </Link>
                         </li>
                         <li
-                            onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
+                            onClick={() => this.uploadDoc()}
                         >
                             <Link>
                                 <span className="text-left">
@@ -460,6 +470,18 @@ class HeaderPermissionMenu extends Component {
                                 </span>
                                 <span className="icon md rarrow-white" />
                             </Link>
+                        </li>
+                        <li
+                            onClick={() => this.props.history.push("/videoTutorials")}
+                        >
+                            <Link className="text-left">
+                                <span>
+                                    Video Tutorials
+                                </span>
+                                <span className="icon md rarrow-white" />
+
+                            </Link>
+
                         </li>
                         <li onClick={() => this.clearEvents()}>
                             <Link className="text-left">

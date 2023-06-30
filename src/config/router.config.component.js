@@ -39,6 +39,7 @@ const BatchpaymentView = React.lazy(() => import("../components/batchpayment.com
 const paymentPreview = React.lazy(() => import("../components/batchpayment.component/paymentPreview"));
 const Transactions = React.lazy(() => import("../components/transactions.history.component/index"))
 const SbCard= React.lazy(() => import("../components/dashboard.component/sbCard"))
+const VideoTutorials =React.lazy(()=>import("../components/videoTutorails.component"));
 class RouteConfig extends Component {
   componentDidMount() {
     this.checkPermissions(window.location.pathname || "/cockpit");
@@ -85,6 +86,7 @@ class RouteConfig extends Component {
         <ReactRoute path='/caseView/:id' component={CaseView} />
         <ReactRoute path='/cryptocoinsView' component={CryptocoinsView} />
         <Route path="/error" component={ErrorPage} />
+        <Route path="/videoTutorials" component={VideoTutorials}/>
 
         <ReactRoute
           path="/batchpayment"
