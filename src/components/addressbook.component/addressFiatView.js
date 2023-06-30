@@ -108,8 +108,7 @@ const AddressFiatView = (props) => {
 														{fiatAddress?.transferType === " " ||
 															fiatAddress?.transferType === null
 															? "-"
-															: (fiatAddress?.transferType=='chftransfer'&&"CHF Transfer")||
-															(fiatAddress?.transferType==="SWIFTTRANSFER" &&"Swift Transfer")||((fiatAddress?.transferType === "internationalIBAN") && `International ${bankDetailes[0].walletCode} IBAN`) ||
+															: (fiatAddress?.transferType=='chftransfer'&&"CHF Transfer")||(fiatAddress?.transferType==="swifttransfer"&&"SWIFT Transfer")||((fiatAddress?.transferType === "internationalIBAN") && `International ${bankDetailes[0].walletCode} IBAN`) ||
 															fiatAddress?.transferType.toUpperCase()}
 
 													</div>}
@@ -318,7 +317,7 @@ const AddressFiatView = (props) => {
 																	: item.bankType}
 															</div>
 															</div>
-														}{console.log(item.accountNumber)}
+														}
 														{((item?.accountNumber && fiatAddress?.transferType !== "internationalIBAN" && item?.walletCode !="EUR"&& item?.walletCode !="CHF")||fiatAddress?.transferType==="swifttransfer")&&
 														<div className="fait-box kpi-divstyle">
 															<Text className="kpi-label">
