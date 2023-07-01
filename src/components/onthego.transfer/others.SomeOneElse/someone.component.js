@@ -96,6 +96,7 @@ const SomeoneComponent = (props) => {
             if (props.type !== "manual") {
                     setBtnLoading(false);
                     props.onContinue(payeesave.data);
+                    props.reasonAddress(rasonDocuments);
             } else {
                 props.headingUpdate(true);
                 setShowDeclartion(true);

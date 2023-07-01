@@ -131,6 +131,7 @@ class BusinessTransfer extends Component {
             if (this.props.type !== "manual") {
                     this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(response.data);
+                    this.props.reasonAddress(this.state?.reasonDocuments);
             } else {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
                 this.props?.updatedHeading(true)
