@@ -151,7 +151,7 @@ if (res.ok){
 			this.useDivRef.current?.scrollIntoView(0, 0);
 		}
     
-    else if((this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| data===true || data===undefined){
+    else if(process.env.REACT_APP_ISTR == "true" && (this.state.cryptoData?.docRepositories?.length==0 || this.state.cryptoData?.docRepositories?.length==undefined) && this.state.isEdit===true  && (values?.files?.fileList?.length === 0 || values?.files?.fileList?.length == undefined ||values?.files===undefined)|| data===true || data===undefined){
      
       this.setState({
         ...this.state,
