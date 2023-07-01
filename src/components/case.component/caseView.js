@@ -456,7 +456,6 @@ beforeUpload = (file) => {
                                        
                                     </div>
                                 </div>)}
-                                {console.log(this.state.caseState,"this.state.caseState")}
                                 {(!this.state.documentReplies[doc.id]?.loading && this.state.caseState !== "Approved" &&  this.state.caseState !== 'Approved' &&  this.state.caseState !== 'Rejected')&&
                                     <>
                                         <Form
