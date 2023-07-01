@@ -722,6 +722,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .verify-btn-from, .crypto-summaryform{margin-top: 36px;margin-bottom: 18px;}
 .small-text-align{margin-left: 8px;}
 .docfile{background-color:var(--addressList) !important;border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 6px 4px 0;flex: 1 0 240px;}
+.docfilecrypto{background-color:var(--coinviewradio) !important;border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 6px 4px 0;flex: 1 0 240px;}
 .docdetails{flex: 1; margin-left: 12px;}
 .cust-upload-sy{margin-bottom: 20px !important;}
 .docdetails .docname{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
