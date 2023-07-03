@@ -278,7 +278,7 @@ class BusinessTransfer extends Component {
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
 
-            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer`|| this.props.currency=="EUR" && `SEPA Transfer..` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={(this.props.currency=="SGD" && "SWIFT/BIC")||(this.props.currency==="EUR" && 'sepa') ||"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer`|| this.props.currency=="EUR" && `SEPA Transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={(this.props.currency=="SGD" && "SWIFT/BIC")||(this.props.currency==="EUR" && 'sepa') ||"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
               
                 <Form initialValues={details}
