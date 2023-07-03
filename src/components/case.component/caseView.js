@@ -461,7 +461,7 @@ beforeUpload = (file) => {
                                         <Form
                                             onFinish={() => this.docReject(doc)}
                                         >
-                                             {!(doc?.state =="Approved"|| doc?.state== 'Rejected')&&<>
+                                             {doc?.state !=="Approved"&&<>
                                             <div>
 
                                                     <Form.Item
