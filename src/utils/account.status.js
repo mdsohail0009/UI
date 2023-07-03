@@ -7,7 +7,7 @@ class AccountStatus extends Component {
   render() {
     return <>
       {this.props.customerState?.customerState == "Under Review" ? (
-        <div className='sumSub-confirm text-white align-center batchpayment-summary'>
+        <div className='sumSub-confirm cust-cord text-white align-center batchpayment-summary'>
           <div className='text-center cust-sumsub-font'>
             <img src={pending} className="confirm-icon" alt={"success"} />
             <div className='sumSub-review sumsub-mb'>
@@ -39,7 +39,7 @@ class AccountStatus extends Component {
           
   
       ) : (
-        <div className='sumSub-confirm text-white text-center'>
+        <div className='sumSub-confirm cust-cord text-white text-center'>
           <div className="text-center">
           <img src={pending} className="confirm-icon" alt={"success"} /><br />
           <span className='sumSub-review '>{this.props.customerState?.customerState === "Under Review" ? "Your account is under review state" :<> <p className="sumsub-mb">Your account approval is in progress.</p>
