@@ -87,9 +87,15 @@ class Header extends Component {
   };
   trackEvent() {
     this.props.dispatch(clearPermissions());
-    window.$zoho?.salesiq?.chat.complete();
-    window.$zoho?.salesiq?.reset();
-    userManager.signoutRedirect();
+    try {
+      window.$zoho?.salesiq?.chat.complete();
+      window.$zoho?.salesiq?.reset();
+      userManager.signoutRedirect();
+    }
+    catch {
+      userManager.signoutRedirect();
+    }
+
     apiCalls.trackEvent({
       Type: "User",
       Action: "User Logged out",
