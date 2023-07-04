@@ -325,9 +325,14 @@ class HeaderPermissionMenu extends Component {
     }
     clearEvents = () => {
         this.props.dispatch(clearPermissions());
-        window.$zoho?.salesiq?.chat.complete();
-        window.$zoho?.salesiq?.reset();
-        userManager.signoutRedirect();
+        try {
+            window.$zoho?.salesiq?.chat.complete();
+            window.$zoho?.salesiq?.reset();
+            userManager.signoutRedirect();
+        }
+        catch{
+            userManager.signoutRedirect();
+        }
         apicalls.trackEvent({
             Type: "User",
             Action: "User Logged out",
