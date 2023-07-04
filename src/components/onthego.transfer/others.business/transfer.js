@@ -232,10 +232,10 @@ class BusinessTransfer extends Component {
            }else {
             this.form2.current?.setFieldsValue({others:null})
            }
-        }else if(this.state.isEdit && this.state.details.relation !='Others') {
-            if(this.state.selectedTab=='domestic'){
+        }else if(this.state.isEdit && this.state.details.relation ==='Others') {
+            if(this.state.selectedTab=='domestic'||this.state.selectedTab=='sepa'){
                 this.form.current?.setFieldsValue({others:null})
-           }else if(this.state.selectedTab=='international'){
+           }else if(this.state.selectedTab=='international'||this.state.selectedTab=='swifttransfer'){
             this.form1.current?.setFieldsValue({others:null})
            }else {
             this.form2.current?.setFieldsValue({others:null})
