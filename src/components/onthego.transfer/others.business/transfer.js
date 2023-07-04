@@ -92,6 +92,7 @@ class BusinessTransfer extends Component {
         }
         }
         let _obj = { ...details, ...values };
+        _obj.others =values?.relation==="Others"? values?.others:null;
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;

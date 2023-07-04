@@ -71,6 +71,7 @@ const SomeoneComponent = (props) => {
         }
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
+        obj.others =values?.relation==="Others"? values?.others:null;
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
         obj.payeeAccountModels[0].docrepoitory = documents?.payee || documents?.transfer || documents;
