@@ -17,12 +17,19 @@ class IdleCmp extends Component {
     }
     handleOnIdle = () => {
         this.setState({ ...this.state, showIdleModal: true });
-        this.timeInterval = setInterval(() => {
-            if (this._count === 0) { clearInterval(this.timeInterval); userManager.signoutRedirect(); } else {
-                this._count = this._count - 1;
-                this.setState({ ...this.state, counter: this._count });
-            }
-        }, 1000);
+        try {
+            this.timeInterval = setInterval(() => {
+                if (this._count === 0) {
+                    clearInterval(this.timeInterval);
+                    userManager.signoutRedirect();
+                } else {
+                    this._count = this._count - 1;
+                    this.setState({ ...this.state, counter: this._count });
+                }
+            }, 1000);
+        } catch {
+            userManager.signoutRedirect();
+        }
     }
 
 
@@ -58,7 +65,6 @@ class IdleCmp extends Component {
                                 className="cust-cancel-btn cust-cancel-btn pay-cust-btn detail-popbtn paynow-btn-ml"
                                 onClick={() => this.handleCancel()}>Cancel</Button>
                             <Button block className="primary-btn pop-btn detail-popbtn "
-                                // style={{ width: 100, height: 50 }}
                                 onClick={() => {userManager.signoutRedirect() }}>Ok</Button>
                         </div>
                         </>
@@ -73,7 +79,6 @@ class IdleCmp extends Component {
                         <>
                             
                             <Button className="primary-btn pop-btn"
-                                // style={{ width: 100, height: 50 }}
                                 onClick={() => {window.location.reload() }}>Refresh</Button>
                         </>
                     ]} >
