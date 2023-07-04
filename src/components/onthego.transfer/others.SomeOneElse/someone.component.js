@@ -140,6 +140,12 @@ const SomeoneComponent = (props) => {
         setSelectedRelation(e)
             form.current.setFieldsValue({others:null})      
     }
+    const handleTabChange=(activekey) => {
+        console.log(activekey)
+        setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+        form.current.resetFields();setDocuments(null); setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+        form?.current?.setFieldsValue({others:null});
+    }
     return (<React.Fragment>
         {mainLoader && <Loader />}
         {!mainLoader && <>
@@ -155,11 +161,8 @@ const SomeoneComponent = (props) => {
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
-                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null); setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
-                                form?.current?.setFieldsValue({others:null});
-                            }}>
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={handleTabChange}
+                            >
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
@@ -476,7 +479,6 @@ const SomeoneComponent = (props) => {
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
-                                console.log("1..")
                                 setReasonDocuments(docs)
                             }} refreshData={addressOptions?.domesticType} type={"reasonPayee"}/>
                         </React.Fragment>)

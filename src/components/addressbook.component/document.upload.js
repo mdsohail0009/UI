@@ -56,9 +56,9 @@ class AddressDocumnet extends Component {
                     this.props?.onDocumentsChange(files);
                 }else{
                     files?.push(this.docDetail(file));
-                    transferProof?.push(this.docDetail(file));
-                    this.setState({...this.state,docReasonPayee:transferProof,filesList: transferProof,isDocLoading: false, errorMessage: null});
-                    this.props?.onDocumentsChange(transferProof);
+                    // transferProof?.push(this.docDetail(file));
+                    this.setState({...this.state,docReasonPayee:files,filesList: files,isDocLoading: false, errorMessage: null});
+                    this.props?.onDocumentsChange(files);
                 }
             }else{
                 this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 
