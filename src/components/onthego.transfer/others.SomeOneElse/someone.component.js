@@ -159,7 +159,7 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                                form.current.resetFields();setDocuments(null); setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
                             }}>
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
@@ -188,7 +188,8 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                                form.current.resetFields();setDocuments(null);
+                                setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
                             }}>
                                 <Tabs.TabPane tab="SGD SWIFT/BIC" className="text-white text-captz" key={"SWIFT/BIC"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
@@ -201,7 +202,7 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
                             }}>
                                 <Tabs.TabPane tab="SEPA Transfer" className="text-white text-captz" key={"sepa"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="SWIFT Transfer" className="text-white text-captz" key={"swifttransfer"} disabled={edit}></Tabs.TabPane>
@@ -472,6 +473,7 @@ const SomeoneComponent = (props) => {
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                             <AddressDocumnet documents={documents || null} editDocument={edit} onDocumentsChange={(docs) => {
+                                console.log("1..")
                                 setReasonDocuments(docs)
                             }} refreshData={addressOptions?.domesticType} type={"reasonPayee"}/>
                         </React.Fragment>)
