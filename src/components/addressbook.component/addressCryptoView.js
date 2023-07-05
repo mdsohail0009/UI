@@ -158,7 +158,7 @@ const AddressCryptoView = (props) => {
 										{cryptoAddress?.docRepositories?.map((file) => (
 													<Col xs={12} sm={12} md={12} lg={8} xxl={8} key={file.id}>
 														<div
-															className="docfile mr-0 d-flex ml-8"
+															className="docfilecrypto mr-0 d-flex ml-8"
 															key={file.id}>
 															<span
 																className={`icon xl ${getFileTypeClass(file.fileName)} mr-16`}

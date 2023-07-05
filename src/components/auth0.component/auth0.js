@@ -36,13 +36,11 @@ const Auth0 = (props) => {
   }, [])
 
   const checkBoxChecked = (e) => {
-    console.log(e);
     setIsChecked(e.target.checked)
     setError(null)
     setCheckBoxError(false)
   }
   const BusinessCheckBoxChecked = (e) => {
-    console.log(e);
     setBusinessIsChecked(e.target.checked)
     setError(null)
     setCheckBoxError(false)
@@ -71,7 +69,6 @@ const Auth0 = (props) => {
   }
 
   const handlePhoneCode = (value) => {
-    console.log(value)
     setPhoneCode(value);
   }
   const handleSearch = (value) => {
@@ -134,12 +131,10 @@ const Auth0 = (props) => {
       }
       obj = { ...obj, ...values };
       if (obj.phoneNumber)
-        console.log(phoneCode, obj.phoneNumber);
       obj.phoneNumber = phoneCode + obj.phoneNumber;
       obj.phoneNumber = apicalls.encryptValue(obj.phoneNumber, props?.userProfile?.sk);
       const response = await saveCustomer(obj);
       if (response.ok) {
-      //  props.dispatch(userInfo(response.data))
       props?.getmemeberInfoa(props?.userProfile.userId)
         props.history.push(`/sumsub/${obj.isBusiness ? "SuisseBase_KYB_Flow" : "SuisseBase_KYC_Flow"}`);
       } else {
@@ -162,11 +157,10 @@ const Auth0 = (props) => {
         setReferalError(null)
         setReferralVerified(false)
         setReferralWrong(true)
-        return Promise.reject("Invalid referral code"); //apicalls.isErrorDispaly(res);         
+        return Promise.reject("Invalid referral code");         
       } else {
         setReferralWrong(false)
         setReferralVerified(true)
-        console.log(res.data.name);
         setReferralRes(res.data.name)
         return Promise.resolve(true);
       }
@@ -304,34 +298,6 @@ const Auth0 = (props) => {
 
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                  className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="userName"
-                  label="Username"
-                  required
-                  rules={[
-                    {
-                      validator(_, value) {
-                        if (!value) {
-                          return Promise.reject('Please enter user name');
-                        } else if (value.length < 2 || value.length > 80) {
-                          return Promise.reject('Invalid user name')
-                        } else if (!(/^[A-Za-z0-9 ]*$/.test(value))) {
-                          return Promise.reject('Invalid user name')
-                        } else {
-                          return Promise.resolve();
-                        }
-                      }
-                    },
-                  ]}>
-                  <Input
-                    className="cust-input form-disable"
-                    maxLength={100}
-                    placeholder="Username"
-                  />
-                </Form.Item>
-              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
@@ -516,34 +482,6 @@ const Auth0 = (props) => {
                   </Select>
                 </Form.Item>
               </Col>
-              {/* <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-                <Form.Item
-                  className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
-                  name="userName"
-                  label="Username"
-                  required
-                  rules={[
-                    {
-                      validator(_, value) {
-                        if (!value) {
-                          return Promise.reject('Please enter user name');
-                        } else if (value.length < 2 || value.length > 80) {
-                          return Promise.reject('Invalid user name')
-                        } else if (!(/^[A-Za-z0-9 ]*$/.test(value))) {
-                          return Promise.reject('Invalid user name')
-                        } else {
-                          return Promise.resolve();
-                        }
-                      }
-                    },
-                  ]}>
-                  <Input
-                    className="cust-input "
-                    maxLength={100}
-                    placeholder="Username"
-                  />
-                </Form.Item>
-              </Col> */}
               <Col xs={24} md={24} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"

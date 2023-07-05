@@ -92,6 +92,7 @@ class BusinessTransfer extends Component {
         }
         }
         let _obj = { ...details, ...values };
+        _obj.others =values?.relation==="Others"? values?.others:null;
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;
@@ -131,6 +132,7 @@ class BusinessTransfer extends Component {
             if (this.props.type !== "manual") {
                     this.useDivRef.current.scrollIntoView()
                     this.props.onContinue(response.data);
+                    this.props.reasonAddress(this.state?.reasonDocuments);
             } else {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
                 this.props?.updatedHeading(true)
@@ -223,17 +225,18 @@ class BusinessTransfer extends Component {
     handleRelation=(e)=>{
         this.setState({...this.state,selectedRelation:e})
         if(!this.state.isEdit){
-            if(this.state.selectedTab=='domestic' || this.props.currency=="SGD"){
+            if(this.state.selectedTab=='domestic' || this.props.currency=="SGD"
+            ||this.state.selectedTab=='sepa'){
                 this.form.current?.setFieldsValue({others:null})
-           }else if(this.state.selectedTab=='international'){
+           }else if(this.state.selectedTab=='international'||this.state.selectedTab=='swifttransfer'){
             this.form1.current?.setFieldsValue({others:null})
            }else {
             this.form2.current?.setFieldsValue({others:null})
            }
-        }else if(this.state.isEdit && this.state.details.relation !='Others') {
-            if(this.state.selectedTab=='domestic'){
+        }else if(this.state.isEdit && this.state.details.relation ==='Others') {
+            if(this.state.selectedTab=='domestic'||this.state.selectedTab=='sepa'){
                 this.form.current?.setFieldsValue({others:null})
-           }else if(this.state.selectedTab=='international'){
+           }else if(this.state.selectedTab=='international'||this.state.selectedTab=='swifttransfer'){
             this.form1.current?.setFieldsValue({others:null})
            }else {
             this.form2.current?.setFieldsValue({others:null})

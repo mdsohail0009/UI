@@ -456,7 +456,7 @@ beforeUpload = (file) => {
                                        
                                     </div>
                                 </div>)}
-                                {(!this.state.documentReplies[doc.id]?.loading && this.state.caseState !== "Approved" &&  this.state.caseState !== 'Approved' &&  this.state.caseState !== 'Cancelled')&&
+                                {(!this.state.documentReplies[doc.id]?.loading && this.state.caseState !== "Approved" &&  this.state.caseState !== 'Approved' &&  this.state.caseState !== 'Rejected')&&
                                     <>
                                         <Form
                                             onFinish={() => this.docReject(doc)}
@@ -565,7 +565,7 @@ beforeUpload = (file) => {
                                      <> 
                                    
                                     {((!this.state?.documentReplies[doc.id]?.data ||
-                                        this.state?.documentReplies[doc.id]?.data?.length === 0)&&((  this.state.caseState === "Approved" ||  this.state.caseState === 'Approved' ||  this.state.caseState=== 'Cancelled'))
+                                        this.state?.documentReplies[doc.id]?.data?.length === 0)&&((  this.state.caseState === "Approved" ||  this.state.caseState === 'Approved' ||  this.state.caseState=== 'Rejected'))
                                         ) && (
                                             <Empty
                                                  image={Empty.PRESENTED_IMAGE_SIMPLE}

@@ -153,6 +153,7 @@ class OthersBusiness extends Component {
             }
         }
         let _obj = { ...details, ...values };
+        _obj.others =values?.relation==="Others"? values?.others:null;
         _obj.payeeAccountModels[0].line1 = ibanDetails.bankAddress;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
         _obj.payeeAccountModels[0].state = ibanDetails?.state;
@@ -213,7 +214,7 @@ class OthersBusiness extends Component {
         this.setState({...this.state,selectedRelation:e})
         if(!this.state.isEdit){
             this.form.current.setFieldsValue({others:null})
-        } else if(this.state.isEdit && this.state.details.relation !="Others"){
+        } else if(this.state.isEdit && this.state.details.relation ==="Others"){
             this.form.current.setFieldsValue({others:null})  
         }     
     }
@@ -246,7 +247,7 @@ class OthersBusiness extends Component {
                     </div>
             </div></div>
         }
-        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType} selectedbankobj={this.props.selectedbankobj}/> }
+        if (isUSDTransfer) { return <BusinessTransfer type={this.props.type} transferData={this.state.objData} updatedHeading={this.props?.headingUpdate} amount={this.props?.amount} onContinue={(obj) => this.props.onContinue(obj)} selectedAddress={this.props.selectedAddress} currency={this.props.currency} types={this.props.ontheGoType} selectedbankobj={this.props.selectedbankobj} reasonAddress={this.props.reasonAddress}/> }
         else {
             return <><div ref={this.useDivRef}>
                 {this.props.currency !="CHF" && <h2 className="adbook-head">SEPA Transfer</h2>}

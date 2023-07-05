@@ -75,6 +75,7 @@ const MyselfNewTransfer = ({ currency, isBusiness,onTheGoObj,selectedbankobj, ..
         setBtnLoading(true);
         let saveObj=Object.assign({},saveTransferObj)
         saveObj.favouriteName=values.favouriteName;
+        saveObj.others =values?.relation==="Others"? values?.others:null;
         saveObj.payeeAccountModels[0].ukSortCode=values?.ukSortCode;
         saveObj.payeeAccountModels[0].iban= (currency==='CHF'||(currency==='EUR'&& addressOptions.tabType!=="swifttransfer")|| (addressOptions?.transferType === "internationalIBAN"||addressOptions?.tabType === "internationalIBAN")) ? values.iban : null;
         saveObj.payeeAccountModels[0].accountNumber=(currency !=='EUR' ||(currency =='EUR' && addressOptions.tabType!=="sepa"))?values.accountNumber:null;

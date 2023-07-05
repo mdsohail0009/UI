@@ -81,6 +81,7 @@ class OnthegoFundTransfer extends Component {
     previousAmountValue:null,
     isLoadingToggel:false,
     isSaveCommissions:false,
+    reasonForPayeeAddressDoc:null,
   }
   componentDidMount() {
     this.verificationCheck();
@@ -396,6 +397,7 @@ saveWithdrawdata = async () => {
             bankId:this.state.selectedbankobj[0]?.bankId,
             originalAmount:this.state.getBanckDetails.originalAmount,
             transferOthers:this.state.typeOntheGoObj?.transferOthers,
+            docRepositories: this.state.reasonForPayeeAddressDoc,
             info:JSON.stringify(this.props?.trackAuditLogData),
         });
         if(response.ok){
@@ -426,7 +428,9 @@ saveWithdrawdata = async () => {
     this.enteramtForm.current.setFieldsValue({fiatBank:null,selectedBank:null})
  this.setState({ ...this.state, selectedCurrency: e,effectiveType:false,detailstype:false,getBanckDetails:null,selectedBank:null},(e)=>this.getBankDetails(e));
   }
-
+  addressDoc=(data)=>{
+    this.setState({...this.state,reasonForPayeeAddressDoc:data});
+  }
   keyDownHandler = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -1297,7 +1301,8 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                 }
                 }
                     fiatHeadingUpdate={this.fiatHeading}
-                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} selectedbankobj={this.state.selectedbankobj} />
+                    onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} selectedbankobj={this.state.selectedbankobj} 
+                    reasonAddress={this.addressDoc}/>
             </>,
       declaration: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
       <Image preview={false} src={alertIcon} className="confirm-icon"  />

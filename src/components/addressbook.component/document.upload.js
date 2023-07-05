@@ -42,7 +42,6 @@ class AddressDocumnet extends Component {
     }
     handleUpload=({file},type) => {
         let identityProofObj=Object.assign([],this.state.docPayee);
-        let transferProof=Object.assign([],this.state.docReasonPayee);
         this.setState({ ...this.state, isDocLoading: true });
         if (file.status === "done") {
             let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
@@ -56,9 +55,8 @@ class AddressDocumnet extends Component {
                     this.props?.onDocumentsChange(files);
                 }else{
                     files?.push(this.docDetail(file));
-                    transferProof?.push(this.docDetail(file));
-                    this.setState({...this.state,docReasonPayee:transferProof,filesList: transferProof,isDocLoading: false, errorMessage: null});
-                    this.props?.onDocumentsChange(transferProof);
+                    this.setState({...this.state,docReasonPayee:files,filesList: files,isDocLoading: false, errorMessage: null});
+                    this.props?.onDocumentsChange(files);
                 }
             }else{
                 this.setState({ ...this.state, isDocLoading: false, errorMessage: "File is not allowed. You can upload jpg, png, jpeg and PDF  files" }) 

@@ -71,6 +71,7 @@ const SomeoneComponent = (props) => {
         }
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
+        obj.others =values?.relation==="Others"? values?.others:null;
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
         obj.payeeAccountModels[0].docrepoitory = documents?.payee || documents?.transfer || documents;
@@ -96,6 +97,7 @@ const SomeoneComponent = (props) => {
             if (props.type !== "manual") {
                     setBtnLoading(false);
                     props.onContinue(payeesave.data);
+                    props.reasonAddress(rasonDocuments);
             } else {
                 props.headingUpdate(true);
                 setShowDeclartion(true);
@@ -137,9 +139,13 @@ const SomeoneComponent = (props) => {
     }
     const handleRelation=(e)=>{
         setSelectedRelation(e)
-        if(!edit){
-            form.current.setFieldsValue({others:null})
-        }        
+            form.current.setFieldsValue({others:null})      
+    }
+    const handleTabChange=(activekey) => {
+        console.log(activekey)
+        setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+        form.current.resetFields();setDocuments(null); setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+        form?.current?.setFieldsValue({others:null});
     }
     return (<React.Fragment>
         {mainLoader && <Loader />}
@@ -156,10 +162,8 @@ const SomeoneComponent = (props) => {
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
-                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
-                            }}>
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={handleTabChange}
+                            >
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
@@ -173,7 +177,9 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+                                form?.current?.setFieldsValue({others:null});
+                                
                             }}>
                                 <Tabs.TabPane tab={ props.currency === "GBP" ? `Local ${props.currency} Transfer` : `Swift ${props.currency} Transfer`} className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab={ props.currency === "GBP" ? `International ${props.currency} Transfer` : `IBAN ${props.currency} Transfer`} className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
@@ -187,7 +193,9 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                                form.current.resetFields();setDocuments(null);
+                                setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+                                form?.current?.setFieldsValue({others:null});
                             }}>
                                 <Tabs.TabPane tab="SGD SWIFT/BIC" className="text-white text-captz" key={"SWIFT/BIC"} disabled={edit}></Tabs.TabPane>
                             </Tabs>
@@ -200,7 +208,8 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+                                form?.current?.setFieldsValue({others:null});
                             }}>
                                 <Tabs.TabPane tab="SEPA Transfer" className="text-white text-captz" key={"sepa"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="SWIFT Transfer" className="text-white text-captz" key={"swifttransfer"} disabled={edit}></Tabs.TabPane>
