@@ -1058,6 +1058,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .icon.lg.bank-letter{background-position: -321px -552px;}
 .jt-title{background-color: rgb(191 17 49) !important;}
 .submit-button{background-color: #1890ff !important;}
+.justify-content-center{justify-content: center;}
 /*@media start*/
 @media (min-width: 768px){
     .sumSub-confirm{display: flex;justify-content: center;}
