@@ -36,34 +36,34 @@ function App(props) {
 
   useEffect(() => {
     localStorage.setItem("__url", window.location.pathname);
-    loadUser(store, userManager).then(user => {
-      setLoading(false);
-      store.dispatch(updatetwofactor({ loading: true, isEnabled: false }));
-      window.$zoho = window.$zoho || {};
-      window.$zoho.salesiq?.reset();
-      window.$zoho.salesiq = window.$zoho.salesiq || {
-        widgetcode: process.env.REACT_APP_ZOHO_WIDGET_CODE,
-        values: {},
-        ready: function () {
-          window.$zoho.salesiq.chatbutton.click(function () {
-            // insert your code 
-            window.$zoho.salesiq.visitor.email(user.profile.email);
-            window.$zoho.salesiq.visitor.name(user.profile.preferred_username);
-          })
-          window.$zoho.salesiq.floatbutton.coin.hidetooltip();
-        },
-      }
-      const d = document;
-      let s;
-      s = d.createElement('script');
-      s.type = 'text/javascript';
-      s.id = 'zsiqscript';
-      s.defer = true;
-      s.src = process.env.REACT_APP_ZOHO_WIDGET_URL;
-      let t;
-      t = d.getElementsByTagName('script')[0];
-      t.parentNode.insertBefore(s, t);
-    });
+    // loadUser(store, userManager).then(user => {
+    //   setLoading(false);
+    //   store.dispatch(updatetwofactor({ loading: true, isEnabled: false }));
+    //   window.$zoho = window.$zoho || {};
+    //   window.$zoho.salesiq?.reset();
+    //   window.$zoho.salesiq = window.$zoho.salesiq || {
+    //     widgetcode: process.env.REACT_APP_ZOHO_WIDGET_CODE,
+    //     values: {},
+    //     ready: function () {
+    //       window.$zoho.salesiq.chatbutton.click(function () {
+    //         // insert your code 
+    //         window.$zoho.salesiq.visitor.email(user.profile.email);
+    //         window.$zoho.salesiq.visitor.name(user.profile.preferred_username);
+    //       })
+    //       window.$zoho.salesiq.floatbutton.coin.hidetooltip();
+    //     },
+    //   }
+    //   const d = document;
+    //   let s;
+    //   s = d.createElement('script');
+    //   s.type = 'text/javascript';
+    //   s.id = 'zsiqscript';
+    //   s.defer = true;
+    //   s.src = process.env.REACT_APP_ZOHO_WIDGET_URL;
+    //   let t;
+    //   t = d.getElementsByTagName('script')[0];
+    //   t.parentNode.insertBefore(s, t);
+    // });
 
     //this should be unComment to STG and LIVE Only connectToHub
     connectToHub(); 
