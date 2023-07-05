@@ -110,12 +110,10 @@ const BankDeclarationForm = () => {
     return (
         <div>
             <div className="basicprofile-info">
-                <Row className="order-bottom add-custom">
+                <Row className="order-bottom add-custom justify-content-center">
                     <a
                         className="btn lightbox-231763449585064"
                         style={{
-                            marginTop: '16px',
-                            textTransform: 'uppercase',
                             fontSize: '14px',
                             textDecoration: 'none',
                             cursor: 'pointer',

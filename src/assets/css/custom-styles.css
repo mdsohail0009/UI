@@ -1160,6 +1160,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .icon.lg.bank-letter{background-position: -321px -552px;}
 .jt-title{background-color: rgb(191 17 49) !important;}
 .submit-button{background-color: #1890ff !important;}
+.justify-content-center{justify-content: center;}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
