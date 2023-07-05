@@ -10,6 +10,7 @@ import { setHeaderTab } from "../../reducers/buysellReducer"
 import { getScreenName } from "../../reducers/feturesReducer";
 import { withRouter } from 'react-router-dom';
 import BackUpAddress from './backUpAddress.component/index';
+import BankReferenceLatter from './BankReferenceLetter.component/index';
 const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
