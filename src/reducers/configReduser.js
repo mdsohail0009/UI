@@ -48,11 +48,11 @@ const getmemeberInfo = () => {
 const getIpRegisteryData = () => {
     return async (dispatch) => {
         await apiCalls.getIpRegistery().then((res) => {
-            var userAgent = window.navigator.userAgent;
-            var Browser = userAgent.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[1];
-            var version = userAgent.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[2];
+            var userAgent = window?.navigator?.userAgent;
+            var Browser = userAgent?.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[1];
+            var version = userAgent?.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[2];
             var osRegex = /(Windows NT|Mac OS X|Linux|iPhone|iPad|iPod|Android)[^\s;)]*/i;
-            var osMatch = userAgent.match(osRegex);    
+            var osMatch = userAgent?.match(osRegex);    
             var operatingSystem = osMatch ? osMatch[0] : "Unknown";
             const start = userAgent.indexOf('(') + 1;
             const end = userAgent.indexOf(')');
