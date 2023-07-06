@@ -12,6 +12,7 @@ import { withRouter } from 'react-router-dom';
 import SuisseBaseCreditCom from './suissebaseCredit';
 import BackUpAddress from './backUpAddress.component/index';
 import BankReferenceLatter from './BankReferenceLetter.component/index';
+import { BrowserView, MobileView} from 'react-device-detect';
 const {  Title } = Typography; 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
@@ -83,7 +84,8 @@ class UserProfile extends Component {
                     <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center'><span className="icon lg bank-letter" />
                        <span className="tabtitle backup-admb-0">Bank Reference Letter</span>
                         </div>} key="4">
-                        {this.state.activeTab == 4 && <BankReferenceLatter />}
+                            <BrowserView> {this.state.activeTab == 4 && <BankReferenceLatter />}</BrowserView>
+               
                     </TabPane>
                     <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center back-up-tab'><span className="icon lg backup-icon" />
                        <span className="tabtitle backup-admb-0">Backup Address</span>
@@ -117,11 +119,12 @@ class UserProfile extends Component {
                         <Translate content="referr" className="tabtitle" /></span>} key="7" >
                         {this.state.activeTab == 7 && <Referral />}
                     </TabPane>
-                {/* <TabPane className='back-up-tab mobile-show' tab={<div className='d-flex align-item-center'><span className="icon lg bank-letter" />
+                <TabPane className='back-up-tab mobile-show' tab={<div className='d-flex align-item-center'><span className="icon lg bank-letter" />
                     <span className="tabtitle backup-admb-0">Bank Reference Letter</span>
                     </div>} key="4">
-                    {this.state.activeTab == 4 && <BankReferenceLatter />}
-                </TabPane> */}
+                        <MobileView>{this.state.activeTab == 4 && <BankReferenceLatter />}</MobileView>
+                    
+                </TabPane>
                     <TabPane className='back-up-tab' tab={<div className='d-flex align-item-center'><span className="icon lg backup-icon" />
                        <span className="tabtitle backup-admb-0">Backup Address</span>
                         </div>} key="3">

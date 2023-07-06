@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Row } from 'antd';
+import {isMobile } from 'react-device-detect';
 const BankDeclarationForm = () => {
     useEffect(() => {
         const JFL_231763449585064 = new window.JotformFeedback({
@@ -111,7 +112,7 @@ const BankDeclarationForm = () => {
         <div>
             <div className="basicprofile-info">
                 <Row className="order-bottom add-custom justify-content-center">
-                    <a
+                  <a
                         className="btn lightbox-231763449585064"
                         style={{
                             fontSize: '14px',
@@ -130,6 +131,7 @@ const BankDeclarationForm = () => {
                     >
                         Bank Reference Letter
                     </a>
+                   
                 </Row></div>
         </div>
     );
