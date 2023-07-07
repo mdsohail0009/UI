@@ -45,7 +45,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         } 
         else if (cryptValue > maxPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " +  `${maxPurchase===250000?"250,000":maxPurchase}`  +" "+ coin + ". " + "Please contact support for higher amounts."
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " +  `${maxPurchase===350000?"350,000":maxPurchase}`  +" "+ coin + ". " + "Please contact support for higher amounts."
         }
        
     }

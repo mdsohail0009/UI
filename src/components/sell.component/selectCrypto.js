@@ -103,7 +103,7 @@ class SelectSellCrypto extends Component {
         else if (parseFloat(this.state.CryptoAmnt) > this.props.sellData.coinDetailData.sellMaxValue) {
             let sellMaxValue=this.props.sellData.coinDetailData.sellMaxValue;
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') +  `${sellMaxValue===250000?"250,000":sellMaxValue}`+" "+coin +". Please contact support for higher amounts." })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') +  `${sellMaxValue===350000?"350,000":sellMaxValue}`+" "+coin +". Please contact support for higher amounts." })
             return;
         }
         else {
