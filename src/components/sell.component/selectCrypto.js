@@ -13,6 +13,7 @@ import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import { setWallet } from '../../reducers/buyReducer';
+import {numberWithCommas} from '../../utils/service';
 
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
@@ -103,7 +104,7 @@ class SelectSellCrypto extends Component {
         else if (parseFloat(this.state.CryptoAmnt) > this.props.sellData.coinDetailData.sellMaxValue) {
             let sellMaxValue=this.props.sellData.coinDetailData.sellMaxValue;
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') +  `${sellMaxValue===250000?"250,000":sellMaxValue}`+" "+coin +". Please contact support for higher amounts." })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') +  `${numberWithCommas(sellMaxValue)}`+" "+coin +". Please contact support for higher amounts." })
             return;
         }
         else {

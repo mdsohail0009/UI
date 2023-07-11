@@ -1,5 +1,6 @@
 import { fetchCurrencyConvertionValue } from "./api"
 import apicalls from "../../api/apiCalls";
+import {numberWithCommas} from '../../utils/service';
 
 export const convertCurrency = async ({ from, to, value, isCrypto, screenName }) => {
     const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,  screenName });
@@ -45,7 +46,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         } 
         else if (cryptValue > maxPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " +  `${maxPurchase===250000?"250,000":maxPurchase}`  +" "+ coin + ". " + "Please contact support for higher amounts."
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " +  `${numberWithCommas(maxPurchase)}`  +" "+ coin + ". " + "Please contact support for higher amounts."
         }
        
     }
