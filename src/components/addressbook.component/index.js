@@ -66,7 +66,7 @@ class AddressBook extends Component {
 		this.props.dispatch(setSelectedFeatureMenu(getFeatureId("/addressBook"), this.props.userConfig.id));
 	}
 	componentDidMount() {
-		this.setState({...this.state,cryptoFiat:true})
+		this.setState({...this.state,cryptoFiat:false})
 		this.props.dispatch(getScreenName({getScreen:null}))
 		this.permissionsInterval = setInterval(this.loadPermissions, 200);
 		if (process.env.REACT_APP_ISTR=="true") {
