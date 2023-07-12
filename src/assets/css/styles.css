@@ -885,6 +885,7 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .c-notallowed{cursor:not-allowed !important;}
 .cust-sumsub-font{width: 400px;}
 .sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 800px;height:350px;margin: 80px auto;border-radius: 14px;}
+.sumSub-confirm.cust-cord{background: var(--gridborder);}
 .sumSub-error{color: var(--black); padding: 50px 40px 16px;height:225px;margin: 50px 0 100px 0;border-radius: 14px;}
 .sumSub-review{font-size: 16px;font-weight: 700;line-height: 1.29;}
 .sumsub-mb{margin-bottom: 16px;}
@@ -1121,3 +1122,4 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .phone-flex{ display: flex;
     justify-content: space-between;
     align-items: center;}
+    .docfilecrypto{background-color:var(--coinviewradio) !important;border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 6px 4px 0;flex: 1 0 240px;}

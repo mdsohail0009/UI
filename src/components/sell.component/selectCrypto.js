@@ -13,6 +13,7 @@ import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import { setWallet } from '../../reducers/buyReducer';
+import {numberWithCommas} from '../../utils/service';
 
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
@@ -71,14 +72,7 @@ class SelectSellCrypto extends Component {
     previewSellData() {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
-        const maxUSDT = 100000;
-        const purchaseCurrencyMaxAmt = {
-            GBP: this.state.USDAmnt * gbpInUsd,
-            EUR: this.state.USDAmnt * eurInUsd,
-            USD: this.state.USDAmnt
-        }
-        const maxAmtMesage = "$100,000";
+        let { sellMinValue,coin } = this.props.sellData.coinDetailData;
         if ((this.state.CryptoAmnt === "")) {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('enter_amount')
@@ -104,12 +98,13 @@ class SelectSellCrypto extends Component {
             return;
         } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue + " " + coin  })
             return;
         }
-        else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
+        else if (parseFloat(this.state.CryptoAmnt) > this.props.sellData.coinDetailData.sellMaxValue) {
+            let sellMaxValue=this.props.sellData.coinDetailData.sellMaxValue;
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') +  `${numberWithCommas(sellMaxValue)}`+" "+coin +". Please contact support for higher amounts." })
             return;
         }
         else {
@@ -183,7 +178,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, isShowCoinsData: true })
     }
     render() {
-        const { Text, Paragraph } = Typography;
+        const { Paragraph } = Typography;
         const { coinDetailData } = this.props.sellData;
         return (
             <>
