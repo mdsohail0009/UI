@@ -169,9 +169,10 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
         "Amount":FixedAmountVal.toFixed(2),
         "MemberWalletId": props.walletCode?.walletId,
         "WalletCode": props.walletCode?.walletCode,
-        "Documents":state.documents
-
+        "Documents":state.documents,
+        "CreatedBy":props.userProfile?.userName,
     }
+    obj.info=JSON.stringify(props?.trackAuditLogData);
     setState({ ...state, newtransferLoader: true, errorMessage: null });
     const res = await internalCustomerTransfer(obj);
     if (res.ok) {
