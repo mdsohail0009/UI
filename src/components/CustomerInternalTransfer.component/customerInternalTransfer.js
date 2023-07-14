@@ -169,7 +169,7 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
         "Amount":FixedAmountVal.toFixed(2),
         "MemberWalletId": props.walletCode?.walletId,
         "WalletCode": props.walletCode?.walletCode,
-        "Documents":state.documents,
+        "docRepositories":state.documents,
         "CreatedBy":props.userProfile?.userName,
     }
     obj.info=JSON.stringify(props?.trackAuditLogData);
@@ -180,6 +180,8 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
 
     } else {
         setState({ ...state, newtransferLoader: false, errorMessage: apicalls.isErrorDispaly(res) })
+        useDivRef?.current?.scrollIntoView(0,0);
+        return;
     }
 
 

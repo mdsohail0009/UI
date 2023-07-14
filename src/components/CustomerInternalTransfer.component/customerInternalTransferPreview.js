@@ -12,7 +12,7 @@ import { getFeaturePermissionsByKeyName } from "../shared/permissions/permission
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-import {saveWithdraw} from '../personalInternalTransfer.component/api'
+import {internalCustomerTransferSave} from './api'
 import DelcarationForm from './successPage';
 const { Text } = Typography; 
 class CustomerTransferSummary extends Component {
@@ -101,14 +101,15 @@ saveWithdrawdata = async () => {
     }
     if (this.state.reviewDetails) {
         let obj = Object.assign({}, this.state.reviewDetails);
-        obj["accountNumber"] = obj.accountNumber ? apicalls.encryptValue(obj.accountNumber, this.props.userProfile?.sk) : null;
-        obj["bankName"] = obj.bankName ? apicalls.encryptValue(obj.bankName, this.props.userProfile?.sk) : null;
-        obj["bankAddress"] = obj.bankAddress ? apicalls.encryptValue(obj.bankAddress, this.props.userProfile?.sk) : null;
-        obj["beneficiaryAccountName"] = obj.beneficiaryAccountName ? apicalls.encryptValue(obj.beneficiaryAccountName, this.props.userProfile?.sk) : null;
-        obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
-        obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
-        obj["originalAmount"] = obj.requestedAmount ? obj.requestedAmount : 0;
-      const saveRes = await saveWithdraw(obj)
+        obj["MemberWalletId"] = this.props.walletCode?.walletId;
+        obj["walletCode"] = this.props.walletCode?.walletCode;
+        obj["totalValue"] =this.props.reviewDetails?.totalAmount;
+        obj["requestedAmount"] =this.props.reviewDetails?.requestedAmount;
+        obj["docRepositories"]=this.props.reviewDetails.docRepositories;
+        obj["info"]=JSON.stringify(this.props?.trackAuditLogData);
+        obj["CreatedBy"]=this.props.userProfile?.userName;    
+
+      const saveRes = await internalCustomerTransferSave(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
        
@@ -186,8 +187,7 @@ saveWithdrawdata = async () => {
                                     <div className="summary-liststyle">How much you will receive</div>
                     <div className="summarybal">
                     <NumberFormat
-                                            value={`${
-                                                (this.state.reviewDetails?.totalAmount - this.state.reviewDetails?.fee)}`}
+                                            value={`${this.state.reviewDetails?.requestedAmount}`}
                                             thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.props.walletCode?.walletCode}`}</div>
                   </div>
                 
@@ -201,7 +201,7 @@ saveWithdrawdata = async () => {
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal amount</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${this.state.reviewDetails?.fee}`}
+                                        value={`${this.state.reviewDetails?.withdrawalAmount}`}
                                         thousandSeparator={true} displayType={"text"} /> {`${this.props.walletCode?.walletCode}`}</div>
                   </div>
                 

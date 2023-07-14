@@ -7,5 +7,7 @@ const getCustomerDeail = ( reference) => {
 const internalCustomerTransfer = ( obj) => {
     return apiClient.post(ApiControllers.withdraw +`InternalCustomerTransfer/Confirm`,obj);
 }
-
-export { getCustomerDeail,internalCustomerTransfer };
+const internalCustomerTransferSave = ( obj) => {
+    return apiClient.post(ApiControllers.withdraw +`InternalCustomerTransfer`,obj);
+}
+export { getCustomerDeail,internalCustomerTransfer,internalCustomerTransferSave };

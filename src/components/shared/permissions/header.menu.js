@@ -48,7 +48,6 @@ import { clearPermissions, fetchFeatures, getScreenName, setSelectedFeatureMenu 
 import { readNotification as readNotifications } from "../../../notifications/api";
 import apicalls from "../../../api/apiCalls";
 import { setNotificationCount } from "../../../reducers/dashboardReducer";
-import { userManager } from "../../../authentication";
 import { setCurrentAction } from "../../../reducers/actionsReducer";
 import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
@@ -56,7 +55,7 @@ import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
 import { useAuth0 } from "@auth0/auth0-react";
 import { userLogout } from "../../../reducers/authReducer";
-import CustomerInternalTransfer from "../../CustomerInternalTransfer.component/index";
+import CustomerInternalTransafer from "../../CustomerInternalTransfer.component/index";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -722,7 +721,7 @@ class HeaderPermissionMenu extends Component {
                 onClose={() => this.closeDrawer("send")}
             />
             {console.log(this.state.drawerMenu?.internalCustomerTransfer)}
-           {this.state.drawerMenu?.internalCustomerTransfer && <CustomerInternalTransfer/>}
+           {this.state.drawerMenu?.internalCustomerTransfer && <CustomerInternalTransafer/>}
             <Drawer
                 title={[
                     <div className="side-drawer-header">
