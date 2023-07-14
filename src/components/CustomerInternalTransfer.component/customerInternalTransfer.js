@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import { Input, Row, Col, Form, Button, Typography, Alert } from 'antd';
+import React, {useEffect, useState } from "react";
+import { Input, Row, Col, Form, Button, Typography, Alert,Spin } from 'antd';
 import apicalls from "../../api/apiCalls";
 
 import NumberFormat from "react-number-format";
-import { validateAmount } from "../personalInternalTransfer.component/api";
-import {getCustomerDeails} from './api';
+import {getCustomerDeail,internalCustomerTransfer} from './api';
 import Loader from "../../Shared/loader";
 import Translate from "react-translate-component";
 import { getVerificationFields } from "../onthego.transfer/verification.component/api"
@@ -14,24 +13,23 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-// import CustomerTransferSummary from "./customerInternalTransferPreview";
+import AddressDocumnet from '../addressbook.component/document.upload';
+import CustomerTransferSummary from "./customerInternalTransferPreview";
 
 const { Text,Paragraph } = Typography; 
-class CustomerTransfer extends Component {
-  enteramtForm = React.createRef();
- useDivRef = React.createRef(null);
-  state = {
-    step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
+const CustomerTransfer =(props)=> {
+const  enteramtForm = React.useRef();
+const useDivRef = React.useRef(null);
+ const [state,setState ]= useState({
+    step: props.selectedCurrency ? "enteramount" : "selectcurrency",
     filterObj: [],
-    selectedCurrency: this.props.selectedCurrency,
+    selectedCurrency: props.selectedCurrency,
         isNewTransfer: false,
         amount: "",
     onTheGoObj: { amount: '', description: '' },
     reviewDetails: {},
-    payees: [],
-    payeesLoading: true,
     errorMessage: null,
-    codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null }, isBtnLoading: false, reviewDetailsLoading: false,
+    isBtnLoading: false, reviewDetailsLoading: false,
     isVerificationEnable: true,
     isVarificationLoader: true,
     fiatWallets: [],
@@ -46,27 +44,28 @@ class CustomerTransfer extends Component {
     customerIdErrorMessage:null,
     isShowValid:false,
     ibanLoading:false,
-    isValidateLoading:false
-  }
-  componentDidMount() {
-    console.log(this.props.walletCode);
-    this.verificationCheck()
-    getFeaturePermissionsByKeyName(`send_fiat`);
-    this.permissionsInterval = setInterval(this.loadPermissions, 200);
-  }
-  loadPermissions = () => {
-    if (this.props.withdrawCryptoPermissions) {
-      clearInterval(this.permissionsInterval);
-      let _permissions = {};
-      for (let action of this.props.withdrawCryptoPermissions?.actions) {
-        _permissions[action.permissionName] = action.values;
-      }
-      this.setState({ ...this.state, permissions: _permissions });
-    }
-  }
+    isValidateLoading:false,
+    documents:null,
+    newtransferLoader:false
+  })
+  useEffect(()=>{
+    verificationCheck()
+    // getFeaturePermissionsByKeyName(`send_fiat`);
+    // permissionsInterval = setInterval(loadPermissions, 200);
+  },[])
+//   const loadPermissions = () => {
+//     if (props.withdrawCryptoPermissions) {
+//       clearInterval(permissionsInterval);
+//       let _permissions = {};
+//       for (let action of props.withdrawCryptoPermissions?.actions) {
+//         _permissions[action.permissionName] = action.values;
+//       }
+//       setState({ ...state, permissions: _permissions });
+//     }
+//   }
 
-  verificationCheck = async () => {
-    this.setState({ ...this.state, isVarificationLoader: true })
+ const verificationCheck = async () => {
+    setState({ ...state, isVarificationLoader: true })
     const verfResponse = await getVerificationFields();
     let minVerifications = 0;
     if (verfResponse.ok) {
@@ -76,174 +75,130 @@ class CustomerTransfer extends Component {
         }
       }
       if (minVerifications >= 1) {
-        this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
+        setState({ ...state, isVarificationLoader: false, isVerificationEnable: true })
             } else {
-                this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
+                setState({ ...state, isVarificationLoader: false, isVerificationEnable: false })
       }
     } else {
-        this.setState({ ...this.state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
+        setState({ ...state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
     }
   }
-  chnageStep = (step, values) => {
-    this.setState({ ...this.state, step, onTheGoObj: values });
-    if (step === 'newtransfer') {
-      this.props.dispatch(hideSendCrypto(false));
-        this.setState({ ...this.state, step, isNewTransfer: true, onTheGoObj: values });
-    }
-}
-amountnext = (values) => {
-    let _amt = values.amount;
-    _amt = _amt.replace(/,/g, "");
-    if (_amt > 0) {
-        this.setState({ ...this.state, amount: _amt }, () => this.validateAmt(_amt, "newtransfer", values, "newtransferLoader",))
-    } else {
-        if (!_amt) {
-            this.setState({ ...this.state, errorMessage: '' });
-        } else {
-            this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero' });
-        }
-    }
-}
- getCustomerDeails = async (e,isValid) => {
-this.setState({...this.state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:null,isShowValid:false})
+
+ const getCustomerDeails = async (e,isValid) => {
+setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:null,isShowValid:false,errorMessage:null})
     if(e?.length>=10&&isValid){
-        this.setState({...this.state,validIban:true})
-        isValid ? this.setState({...this.state,ibanLoading:true}) : this.setState({...this.state,ibanLoading:false});
-        const response = await getCustomerDeails(e);
+        setState({...state,validIban:true})
+        isValid ? setState({...state,ibanLoading:true}) : setState({...state,ibanLoading:false});
+        const response = await getCustomerDeail(e);
         if (response.ok) {
-            if(isValid&&response.data && (response.data?.routingNumber || response.data?.bankName)){
-                this.setState({...this.state,customerDetails:response.data,isShowCustomerDetails:true,validIban:true,isValidateLoading:false})
+            if(isValid&&response.data &&response.data?.fullName){
+                setState({...state,customerDetails:response.data,isShowCustomerDetails:true,validIban:true,isValidateLoading:false})
             }else{
-                this.setState({...this.state,validIban:false,ibanLoading:false,isValidateLoading:false})
-                if (this.state.customerDetails) {
-                    this.setState({...this.state,customerDetails:{},isShowCustomerDetails:false,customerIdErrorMessage:"No bank details are available for this IBAN number",ibanLoading:false})
-                    this.useDivRef.current.scrollIntoView(0,0);
+                setState({...state,validIban:false,ibanLoading:false,isValidateLoading:false})
+                if (state.customerDetails) {
+                    setState({...state,customerDetails:{},isShowCustomerDetails:false,customerIdErrorMessage:"No bank details are available for this IBAN number",ibanLoading:false})
+                    useDivRef?.current?.scrollIntoView(0,0);
                     return;
                 }
             }
         }else{
-            this.setState({...this.state,customerDetails:{},validIban:false,customerIdErrorMessage:apicalls.isErrorDispaly(response),ibanLoading:false,isValidateLoading:false})
+            setState({...state,customerDetails:{},validIban:false,errorMessage:apicalls.isErrorDispaly(response),ibanLoading:false,isValidateLoading:false})
         }
     }
     if(e?.length>=10&&!isValid) {
-        this.setState({...this.state,customerIdErrorMessage:false,isValidateLoading:false});
+        setState({...state,customerIdErrorMessage:false,isValidateLoading:false});
     } 
 }
-onCustomerValidate = (e) => {
-    debugger
-    this.setState({...this.state,isShowCustomerDetails:false,validIban:true,isValidateLoading:true});
-    if (e?.length >= 10) {
-        if (e &&!/^[A-Za-z0-9]+$/.test(e)) {
-            this.setState({...this.state,customerDetails:{},isShowCustomerDetails:false,isShowValid:true})
-            this.enteramtForm.current?.validateFields(["customerId"], this.validateCustomerId)
+ const onCustomerValidate = () => {
+    let customerId = enteramtForm.current.getFieldsValue().customerId;
+    setState({...state,isShowCustomerDetails:false,validIban:true,isValidateLoading:true});
+    if (customerId?.length >= 10) {
+        if (customerId &&!/^[A-Za-z0-9]+$/.test(customerId)) {
+            setState({...state,customerDetails:{},isShowCustomerDetails:false,isShowValid:true})
+            enteramtForm.current?.validateFields(["customerId"], validateCustomerId)
         }
         else {
-            this.setState({...this.state,isShowValid:false})
-            this.getCustomerDeails(e, "true");
+            setState({...state,isShowValid:false})
+            getCustomerDeails(customerId, "true");
         }
     }
     else {
-        this.setState({...this.state,customerDetails:{},isShowCustomerDetails:false,validIban:false,isShowValid:true})
-        this.enteramtForm?.current.validateFields(["customerId"], this.validateCustomerId)
+        setState({...state,customerDetails:{},isShowCustomerDetails:false,validIban:false,isShowValid:true})
+        enteramtForm?.current.validateFields(["customerId"], validateCustomerId)
     }
 }
 
- validateCustomerId = (_, value) => {
-    this.setState({...this.state,isValidateLoading:false})
-    if ((!value&&this.state.isShowValid)||!value) {
-        this.setState({...this.state,isShowCustomerDetails:false})
+ const validateCustomerId = (_, value) => {
+    setState({...state,isValidateLoading:false})
+    if ((!value&&state.isShowValid)||!value) {
+        setState({...state,isShowCustomerDetails:false})
         return Promise.reject(apicalls.convertLocalLang("is_required"));
-    } else if ((!this.state.validIban&&this.state.isShowValid) || value?.length < 10) {
-        this.setState({...this.state,customerDetails:{},isShowCustomerDetails:false})
-        return Promise.reject("Please enter correct Customer ID to proceed");
+    } else if ((!state.validIban&&state.isShowValid) || value?.length < 10) {
+        setState({...state,customerDetails:{},isShowCustomerDetails:false})
+        return Promise.reject("Please enter valid Customer ID");
     } else if (
-        (value && this.state.isShowValid)&&
+        (value && state.isShowValid)&&
         !/^[A-Za-z0-9]+$/.test(value)
     ) {
-        this.setState({...this.state,customerDetails:{},isShowCustomerDetails:false})
+        setState({...state,customerDetails:{},isShowCustomerDetails:false})
         return Promise.reject(
-            "Please enter correct Customer ID to proceed"
+            "Please enter valid Customer ID"
         );
     }
     else {
         return Promise.resolve();
     }
 };
-  validateAmt = async (amt, step, values, loader) => {
-    
-    const {isShowCustomerDetails}=this.state;
-    if (Object.hasOwn(values, 'customerId')) {
-        if ((!isShowCustomerDetails || Object.keys(isShowCustomerDetails).length === 0)) {
-            this.setState({ ...this.state, [loader]: false, errorMessage: "Please click validate button before saving" });
-            this.useDivRef?.current?.scrollIntoView(0,0);
+ const amountnext = async (values) => {
+    const {customerDetails}=state;
+    if(values.amount==="0" || values.amount==='0'){
+        setState({ ...state, newtransferLoader: false, errorMessage: "Amount must be greater than zero." });
+        useDivRef?.current?.scrollIntoView(0,0);
+        return;
+    }
+   else if (Object.hasOwn(values, 'customerId')) {
+        if ((!customerDetails || Object.keys(customerDetails).length === 0)) {
+            setState({ ...state, newtransferLoader: false, errorMessage: "Please click the validate button to retrieve customer details." });
+            useDivRef?.current?.scrollIntoView(0,0);
             return;
         }
-    } 
-    let FixedAmountVal=parseFloat(amt?.replace(/,/g, ''));
-    this.setState({ ...this.state, [loader]: true, errorMessage: null });
-    const res = await validateAmount(FixedAmountVal.toFixed(2),this.props.walletCode?.walletCode);
+    }
+    let FixedAmountVal=parseFloat(values.amount?.replace(/,/g, ''));
+    let obj={
+        "ReceiverCustomerId": state.customerDetails.receiversCustomerId,
+        "Amount":FixedAmountVal.toFixed(2),
+        "MemberWalletId": props.walletCode?.walletId,
+        "WalletCode": props.walletCode?.walletCode,
+        "Documents":state.documents
+
+    }
+    setState({ ...state, newtransferLoader: true, errorMessage: null });
+    const res = await internalCustomerTransfer(obj);
     if (res.ok) {
-        this.setState({ ...this.state, [loader]: false, errorMessage: null,isPersonalSummary:true,isPersonal:false,reviewDetails:res.data }, () => this.chnageStep(step, values,));
+        setState({ ...state, newtransferLoader: false, errorMessage: null,isPersonalSummary:true,isPersonal:false,reviewDetails:res.data })
 
     } else {
-        this.setState({ ...this.state, [loader]: false, errorMessage: apicalls.isErrorDispaly(res) })
+        setState({ ...state, newtransferLoader: false, errorMessage: apicalls.isErrorDispaly(res) })
     }
 
+
   }
-   goBack = async () => {
-    this.setState({ ...this.state, isPersonalSummary: false,isPersonal:true,isVarificationLoader:false});
+  const goBack = async () => {
+    setState({ ...state, isPersonalSummary: false,isPersonal:true,isVarificationLoader:false});
 }
 
-  keyDownHandler = (e) => {
+ const keyDownHandler = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      this.goToAddressBook()
-    }
-  }
-  goToAddressBook = () => {
-    let _amt = this.enteramtForm.current.getFieldsValue().amount
-    _amt = _amt.replace(/,/g, '')
-    if (_amt > 0) {
-      this.setState(
-        {
-          ...this.state,
-          isNewTransfer: false,
-          amount: _amt,
-          onTheGoObj: this.enteramtForm.current.getFieldsValue(),
-        },
-        () => {
-          this.enteramtForm.current
-            .validateFields()
-            .then(() =>
-              this.validateAmt(
-                _amt,
-                'addressselection',
-                this.enteramtForm.current.getFieldsValue(),
-                'addressLoader',
-              ),
-            )
-        },
-      )
-    } else {
-      if (!_amt) {
-        this.enteramtForm.current.validateFields()
-      } else {
-        this.setState({
-          ...this.state,
-          errorMessage: 'Amount must be greater than zero',
-        })
-      }
     }
   }
 
 
-  render() {
-    const {  isVarificationLoader, isVerificationEnable,isPersonalSummary ,isPersonal,reviewDetails,enterCustomerId,useDivRef} = this.state;
+
     return <React.Fragment>
-{isPersonal && <>
-
-          {isVarificationLoader && <Loader />}
-          {!isVarificationLoader && (<>
+{state.isPersonal && <>
+          {state.isVarificationLoader && <Loader />}
+          {!state.isVarificationLoader && (<>
              <div className="text-center sell-title-styels">
              <Translate
                         content={"tab_InternalCustomerTransfer"}
@@ -251,35 +206,35 @@ onCustomerValidate = (e) => {
                             className="drawer-maintitle"
                         />
                         </div>
-                        <Row gutter={[16, 16]}>
+                       {state.isVerificationEnable&& <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <div className="summarybal total-amount">
-                      {this.props.walletCode.walletCode} {" "}
+                      {props.walletCode.walletCode} {" "}
                         <NumberFormat
                           decimalScale={2}
                           placeholder={"Enter Amount"}
                           thousandSeparator={true} displayType={"text"}
                           disabled
-                          value={this.props.walletCode.amount}
+                          value={props.walletCode.amount}
                         />
                       </div>
                     </Col>
-                    </Row>      
+                    </Row>      }
             <Form
               autoComplete="off"
               initialValues={{ amount: "",enterCustomerId:null }}
-              ref={this.enteramtForm}
-              onFinish={this.amountnext}
+              ref={enteramtForm}
+              onFinish={amountnext}
               scrollToFirstError
             >
                 <div ref={useDivRef}></div>
-              {!isVerificationEnable && (
+              {!state.isVerificationEnable && (
                   <Alert 
                   message="Verification alert !"
                   description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
-                      this.props.history.push("/userprofile/2");
-                      if (this.props?.onClosePopup) {
-                          this.props?.onClosePopup();
+                      props.history.push("/userprofile/2");
+                      if (props?.onClosePopup) {
+                          props?.onClosePopup();
                       }
                   }}>security section</Link></Text>}
                   type="warning"
@@ -287,8 +242,8 @@ onCustomerValidate = (e) => {
                   closable={false}
               />
               )}
-              {this.state.errorMessage && <Alert type="error" description={this.state.errorMessage} showIcon />}
-              {isVerificationEnable && (
+              {state.errorMessage && <Alert type="error" description={state.errorMessage} showIcon />}
+              {state.isVerificationEnable && (
                 <>
                   <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -322,9 +277,9 @@ onCustomerValidate = (e) => {
                           displayType="input"
                           allowNegative={false}
                           thousandSeparator={","}
-                          onKeyDown={this.keyDownHandler}
+                          onKeyDown={keyDownHandler}
                           onValueChange={() => {
-                            this.setState({ ...this.state, amount: this.enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
+                            setState({ ...state, amount: enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
                         }}
                         />
 
@@ -337,12 +292,12 @@ onCustomerValidate = (e) => {
                 required
                 rules={[
                     {
-                        validator: this.validateCustomerId,
+                        validator: validateCustomerId,
                       },
                 ]}
                 label='Customer ID'
                 onChange={(e) => {
-                    this.getCustomerDeails(e.target.value)
+                    getCustomerDeails(e.target.value)
                 }}
             >
                 <Input
@@ -351,14 +306,56 @@ onCustomerValidate = (e) => {
                     maxLength={10}
                     addonAfter={ <Button className={``}
                     type="primary"
-                        loading={this.state.isValidateLoading}
-                        onClick={() => this.onCustomerValidate(enterCustomerId)}
+                        loading={state.isValidateLoading}
+                        onClick={() => onCustomerValidate()}
                          >
                         <Translate content="validate" />
                     </Button>     }
                     />                      
             </Form.Item>
-            </Col>     
+            </Col> 
+                                <div className="box basic-info alert-info-custom mt-16 kpi-List" style={{width:'100%'}}>
+                                    <Spin spinning={state.ibanLoading}>
+                                        {state.validIban && state.isShowCustomerDetails &&
+                                            <><Row>
+                                                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                                                    <div className="kpi-divstyle">
+                                                        <label className="kpi-label">
+                                                            Personal/Business Name
+                                                        </label>
+                                                        <div class><Text className="kpi-val">{(state.customerDetails?.fullName !== '' && state.customerDetails?.fullName !== null) ? state.customerDetails?.fullName : '-'}</Text></div>
+                                                    </div>
+                                                </Col>
+                                                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                                                    <div className="kpi-divstyle">
+                                                        <label className="kpi-label ">Email Address</label>
+                                                        <div class><Text className="kpi-val">{(state.customerDetails?.email !== '' && state.customerDetails?.email !== null) ? state.customerDetails?.email : '-'}</Text></div>
+                                                    </div>
+                                                </Col>
+                                                <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                                                    <div className="kpi-divstyle">
+                                                        <label className="kpi-label ">Phone Number</label>
+                                                        <div class><Text className="kpi-val">{(state.customerDetails?.phoneNumber !== '' && state.customerDetails?.phoneNumber !== null) ? state.customerDetails?.phoneNumber : '-'}</Text></div>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                            </>}
+                                            {(!state.validIban || !state.isShowCustomerDetails) &&    
+                                           <div>
+                                            <span className="info-details">No customer details available</span>
+                                           </div>
+                                      }
+                                    </Spin>
+                                </div>
+                                {state.validIban && state.isShowCustomerDetails && <Col>
+                                    <React.Fragment>
+                                        <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
+                                        <AddressDocumnet
+                                            documents={state?.documents} editDocument={false}
+                                            onDocumentsChange={(docs) => {
+                                                setState({ ...state, documents: docs })
+                                            }} refreshData={"customer"} type={"reasonPayee"} />
+                                    </React.Fragment></Col>}
                   </Row>
                   <Row gutter={[16, 4]} className="send-drawerbtn" >
                   <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mobile-viewbtns mobile-btn-pd">
@@ -367,7 +364,7 @@ onCustomerValidate = (e) => {
                       htmlType="submit"
                       size="large"
                       className="pop-btn"
-                      loading={this.state.newtransferLoader}
+                      loading={state.newtransferLoader}
                     >
                        Transfer
                     </Button>
@@ -380,9 +377,9 @@ onCustomerValidate = (e) => {
             </>
           )}
         </>}
-        {/* {isPersonalSummary && <CustomerTransferSummary back={this.goBack} walletCode={this.props?.walletCode} reviewDetails={reviewDetails} onClose={this.props?.onClose}/>} */}
+        {state.isPersonalSummary && <CustomerTransferSummary back={goBack} walletCode={props?.walletCode} reviewDetails={state.reviewDetails} onClose={props?.onClose}/>}
 </React.Fragment>
-  }
+  
 }
 const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
   return {

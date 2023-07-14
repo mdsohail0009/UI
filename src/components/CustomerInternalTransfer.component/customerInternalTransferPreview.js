@@ -12,7 +12,7 @@ import { getFeaturePermissionsByKeyName } from "../shared/permissions/permission
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {setClearAmount} from '../../reducers/sendreceiveReducer'
 import { setStep } from '../../reducers/buysellReducer';
-import {saveWithdraw} from './api'
+import {saveWithdraw} from '../personalInternalTransfer.component/api'
 import DelcarationForm from './successPage';
 const { Text } = Typography; 
 class CustomerTransferSummary extends Component {
@@ -25,7 +25,6 @@ class CustomerTransferSummary extends Component {
     onTheGoObj: { amount: '', description: '' },
     reviewDetails: this.props?.reviewDetails,
     errorMessage: null,
-    codeDetails: { abaRoutingCode: "", swiftRouteBICNumber: "", reasionOfTransfer: "", documents: null },
     verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
     isShowGreyButton: false,
     permissions: {},
@@ -187,22 +186,23 @@ saveWithdrawdata = async () => {
                                     <div className="summary-liststyle">How much you will receive</div>
                     <div className="summarybal">
                     <NumberFormat
-                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                                            value={`${
+                                                (this.state.reviewDetails?.totalAmount - this.state.reviewDetails?.fee)}`}
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.props.walletCode?.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Total fees</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.comission)}`}
-                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                                        value={`${this.state.reviewDetails?.fee}`}
+                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.props.walletCode?.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal amount</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.requestedAmount)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                                        value={`${this.state.reviewDetails?.fee}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.props.walletCode?.walletCode}`}</div>
                   </div>
                 
 
@@ -213,40 +213,23 @@ saveWithdrawdata = async () => {
                   </div>
                   <div className="cust-summary-new kpi-List sendfiat-summarystyle">
                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Whitelist Name </div>
-                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.favouriteName}</Text></div>
+                                    <div className="kpi-label"> Personal/Business Name </div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.fullName}</Text></div>
                   </div>
                
-                {this.state.reviewDetails?.name &&
+                {this.state.reviewDetails?.email &&
                                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Beneficiary Name</div>
-                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.name}</Text></div>
+                                    <div className="kpi-label">Email Address</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.email}</Text></div>
                                 </div>
                            }
-                {this.state.reviewDetails?.firstName && 
+                {this.state.reviewDetails?.phoneNumber && 
                                 <div className="kpi-divstyle" >
-                                    <div className="kpi-label">First Name</div>
-                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.firstName}</Text></div>
+                                    <div className="kpi-label">Phone Number</div>
+                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.phoneNumber}</Text></div>
                                 </div>
                           }
-                {this.state.reviewDetails?.lastName && 
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Last Name</div>
-                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.lastName}</Text></div>
-                                </div>
-                           }
-                 {this.state.reviewDetails?.iban &&
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">IBAN </div>
-                                    <div> <Text className="kpi-val">{this.state.reviewDetails?.iban}</Text></div>
-                                </div>
-                           }
-               {this.state.reviewDetails?.customerRemarks &&
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Reason For Transfer </div>
-                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.customerRemarks || "-"}</Text></div>
-                                </div>
-                          }
+                          
 
 {this.state.reviewDetails?.abaRoutingCode &&
                                 <div className="kpi-divstyle" >
@@ -254,30 +237,7 @@ saveWithdrawdata = async () => {
                                     <div> <Text className="kpi-val">{this.state.reviewDetails?.abaRoutingCode || "-"}</Text></div>
                                 </div>
     }
-                {this.state.reviewDetails?.swiftRouteBICNumber &&
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">SWIFT / BIC Code</div>
-                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.swiftRouteBICNumber || "-"}</Text></div>
-                                </div>
-                            }
-                {this.state.reviewDetails?.accountNumber &&
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Account Number </div>
-                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.accountNumber || "-"}</Text></div>
-                                </div>
-                           }
-                           {this.state.reviewDetails?.ukShortCode &&
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Uk Sort Code  </div>
-                                    <div>  <Text className="kpi-val">{this.state.reviewDetails?.ukShortCode || "-"}</Text></div>
-                                </div>
-                           }
-                {this.state.reviewDetails?.bankName &&
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">Bank Name </div>
-                                    <div>  <Text className="kpi-val">{this.state?.reviewDetails?.bankName || "-"}</Text></div>
-                                </div>
-                            }
+
                             </div>
              
                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} verificationsData={(data)=>this.verificationsData(data)}/>

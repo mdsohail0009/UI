@@ -56,6 +56,7 @@ import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
 import { useAuth0 } from "@auth0/auth0-react";
 import { userLogout } from "../../../reducers/authReducer";
+import CustomerInternalTransfer from "../../CustomerInternalTransfer.component/index";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -170,7 +171,8 @@ class HeaderPermissionMenu extends Component {
             receive_crypto: false,
             sendFiatTab: false,
             theamFalge: 'darkTheam',
-            tabColour: false
+            tabColour: false,
+            internalCustomerTransfer:false,
 
         },
         previousDrawerKey: ""
@@ -206,6 +208,7 @@ class HeaderPermissionMenu extends Component {
     }
 
     navigate = (menuKey, menuItem) => {
+        debugger
         if (menuItem.path === "/modal") {
             switch (menuKey) {
                 case "trade_buy":
@@ -262,9 +265,9 @@ class HeaderPermissionMenu extends Component {
                     window.open(process.env.REACT_APP_BANK_UI_URL + 'dashboard/receive', '_self')
                     break;
                     case "Internal_Customer_Transfer":
-                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_crypto: true, sendCryptoTab: false, sendFiatTab: false } });
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, internalCustomerTransfer: true, sendCryptoTab: false, sendFiatTab: false, } });
                         this.props.dispatch(setWithdrawfiat(""));
-                        this.props.dispatch(byFiatSetStep("step1"));
+                        // this.props.dispatch(byFiatSetStep("step1"));
                         this.props.dispatch(setWithdrawfiatenaable(false));
                         this.props.dispatch(setSendCrypto(false));
                         break;
@@ -718,7 +721,8 @@ class HeaderPermissionMenu extends Component {
                 isShowSendFiat={this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
-           
+            {console.log(this.state.drawerMenu?.internalCustomerTransfer)}
+           {this.state.drawerMenu?.internalCustomerTransfer && <CustomerInternalTransfer/>}
             <Drawer
                 title={[
                     <div className="side-drawer-header">
