@@ -261,6 +261,13 @@ class HeaderPermissionMenu extends Component {
                 case "personal_bank_account":
                     window.open(process.env.REACT_APP_BANK_UI_URL + 'dashboard/receive', '_self')
                     break;
+                    case "Internal_Customer_Transfer":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, receive_crypto: true, sendCryptoTab: false, sendFiatTab: false } });
+                        this.props.dispatch(setWithdrawfiat(""));
+                        this.props.dispatch(byFiatSetStep("step1"));
+                        this.props.dispatch(setWithdrawfiatenaable(false));
+                        this.props.dispatch(setSendCrypto(false));
+                        break;
                 default:
                     break;
             }

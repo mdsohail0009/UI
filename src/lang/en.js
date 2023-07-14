@@ -686,5 +686,7 @@ export default {
 	personal_iban_transafer:"Personal IBAN Transfer",
 	fiat_transfer_success:"Back to Transfer",
 	suissebase_credit:"SuisseBase Credits",
-	suissebasecredits:"SuisseBase Credits Available"
+	suissebasecredits:"SuisseBase Credits Available",
+	tab_InternalCustomerTransfer:"Internal Customer Transfer"
+	
 };
