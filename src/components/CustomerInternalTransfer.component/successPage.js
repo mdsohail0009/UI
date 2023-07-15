@@ -20,7 +20,7 @@ class DelcarationForm extends Component {
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext cust-heightmbl">Your transaction has been processed successfully</Title>
        
-       <Translate content="fiat_transfer_success" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.props?.back() }}  />
+       <Translate content="customer_transfer_success" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.props?.back() }}  />
    </div>
    </div>
             </>

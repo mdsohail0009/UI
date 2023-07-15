@@ -27,7 +27,7 @@ const CustomerInternalTransafer = (props) => {
                 className="side-drawer custom-fait-sidedrawer"
                 destroyOnClose={true}
             >
-              <CustomerTransfer walletCode={props.walletCode} onClose={props?.onClose}/>
+              <CustomerTransfer walletCode={props.walletCode} onClose={props?.onClose} isWallet={props?.isWallet}/>
             </Drawer>
         );
 

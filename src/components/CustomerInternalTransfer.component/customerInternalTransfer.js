@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from "react";
-import { Input, Row, Col, Form, Button, Typography, Alert,Spin } from 'antd';
+import { Input, Row, Col, Form, Button, Typography, Alert,Spin,Image,List,Empty } from 'antd';
 import apicalls from "../../api/apiCalls";
-
+import Search from "antd/lib/input/Search";
 import NumberFormat from "react-number-format";
 import {getCustomerDeail,internalCustomerTransfer} from './api';
 import Loader from "../../Shared/loader";
@@ -11,28 +11,25 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
-import {hideSendCrypto,setClearAmount} from '../../reducers/sendreceiveReducer'
-import { setStep } from '../../reducers/buysellReducer';
+import { getAccountWallet} from "../../api/apiServer";
 import AddressDocumnet from '../addressbook.component/document.upload';
 import CustomerTransferSummary from "./customerInternalTransferPreview";
+import {setSelectedWallet,setSummaryDetails} from '../../reducers/internalCustomerTransfer';
 
 const { Text,Paragraph } = Typography; 
 const CustomerTransfer =(props)=> {
+  let permissionsInterval;
 const  enteramtForm = React.useRef();
 const useDivRef = React.useRef(null);
  const [state,setState ]= useState({
-    step: props.selectedCurrency ? "enteramount" : "selectcurrency",
+    step: props?.isWallet ? "selectcurrency":"enteramount" ,
     filterObj: [],
-    selectedCurrency: props.selectedCurrency,
-        isNewTransfer: false,
-        amount: "",
-    onTheGoObj: { amount: '', description: '' },
-    reviewDetails: {},
     errorMessage: null,
-    isBtnLoading: false, reviewDetailsLoading: false,
+     reviewDetailsLoading: false,
     isVerificationEnable: true,
     isVarificationLoader: true,
     fiatWallets: [],
+    filtercoinsList:[],
     isShowGreyButton: false,
     permissions: {},
     isPersonalSummary:false,
@@ -46,25 +43,70 @@ const useDivRef = React.useRef(null);
     ibanLoading:false,
     isValidateLoading:false,
     documents:null,
-    newtransferLoader:false
+    newtransferLoader:false,
+    searchFiatVal: "",
+    selectedCurrency:{},
+
   })
   useEffect(()=>{
-    verificationCheck()
-    // getFeaturePermissionsByKeyName(`send_fiat`);
-    // permissionsInterval = setInterval(loadPermissions, 200);
-  },[])
-//   const loadPermissions = () => {
-//     if (props.withdrawCryptoPermissions) {
-//       clearInterval(permissionsInterval);
-//       let _permissions = {};
-//       for (let action of props.withdrawCryptoPermissions?.actions) {
-//         _permissions[action.permissionName] = action.values;
-//       }
-//       setState({ ...state, permissions: _permissions });
-//     }
-//   }
+    if(props?.isWallet){
+      getAccountWallets();
+    }else{
+      props.dispatch(setSelectedWallet(props?.walletCode));
+      verificationCheck(null);
+    }
 
- const verificationCheck = async () => {
+    getFeaturePermissionsByKeyName(`send_fiat`);
+    permissionsInterval = setInterval(loadPermissions, 200);
+  },[])
+  const loadPermissions = () => {
+    if (props.withdrawCryptoPermissions) {
+      clearInterval(permissionsInterval);
+      let _permissions = {};
+      for (let action of props.withdrawCryptoPermissions?.actions) {
+        _permissions[action.permissionName] = action.values;
+      }
+      setState({ ...state, permissions: _permissions });
+    }
+  }
+const getAccountWallets=async()=>{
+  setState({ ...state,fiatWalletsLoading:true });
+  let walletObj=await getAccountWallet()
+  if(walletObj.ok){
+    setState({ ...state, fiatWallets: walletObj.data,filtercoinsList: walletObj.data,fiatWalletsLoading:false });
+  }
+  else{
+       setState({ ...state,fiatWalletsLoading:false,   errorMessage: apicalls.isErrorDispaly(walletObj) });
+  
+  }
+}
+const handleFiatSearch = ({ target: { value: val } }) => {
+  if (val) {
+      const fiatWallets = state.filtercoinsList?.filter(item => item.currencyCode.toLowerCase().includes(val.toLowerCase()));
+      setState({ ...state, fiatWallets, searchFiatVal: val });
+  }
+  else
+      setState({ ...state, fiatWallets: state.filtercoinsList, searchFiatVal: val });
+}
+const selectsCurrency=(item)=>{
+  setState({ ...state,errorMessage:null, })
+    if (item.avilable) {
+      verificationCheck(item);
+     props.dispatch(setSelectedWallet(item));
+    }
+    else {
+      setState({...state,errorMessage:"Insufficient balance"})
+    }
+  
+}
+const changeSteps = (step,values) => {
+  if (step === 'enteramount') {
+      setState({ ...state, step,isVarificationLoader:false,fiatWalletsLoading:false,selectedCurrency:values,isVerificationEnable:false  });
+  }else{
+    setState({ ...state, step,isVarificationLoader:false,fiatWalletsLoading:false ,isPersonalSummary:true,isVerificationEnable:false  });
+  }
+}
+ const verificationCheck = async (values) => {
     setState({ ...state, isVarificationLoader: true })
     const verfResponse = await getVerificationFields();
     let minVerifications = 0;
@@ -75,9 +117,15 @@ const useDivRef = React.useRef(null);
         }
       }
       if (minVerifications >= 1) {
-        setState({ ...state, isVarificationLoader: false, isVerificationEnable: true })
+        setState({ ...state, isVarificationLoader: false, isVerificationEnable: true})
+        if(props?.isWallet){
+          changeSteps('enteramount',values);
+        }
             } else {
                 setState({ ...state, isVarificationLoader: false, isVerificationEnable: false })
+                if(props?.isWallet){
+                  changeSteps('enteramount',values);
+                }
       }
     } else {
         setState({ ...state, isVarificationLoader: false, errorMessage: apicalls.isErrorDispaly(verfResponse) })
@@ -92,7 +140,7 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
         const response = await getCustomerDeail(e);
         if (response.ok) {
             if(isValid&&response.data &&response.data?.fullName){
-                setState({...state,customerDetails:response.data,isShowCustomerDetails:true,validIban:true,isValidateLoading:false})
+                setState({...state,customerDetails:response.data,isShowCustomerDetails:true,validIban:true,isValidateLoading:false,ibanLoading:false})
             }else{
                 setState({...state,validIban:false,ibanLoading:false,isValidateLoading:false})
                 if (state.customerDetails) {
@@ -167,8 +215,8 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
     let obj={
         "ReceiverCustomerId": state.customerDetails.receiversCustomerId,
         "Amount":FixedAmountVal.toFixed(2),
-        "MemberWalletId": props.walletCode?.walletId,
-        "WalletCode": props.walletCode?.walletCode,
+        "MemberWalletId":props?.isWallet?state?.selectedCurrency.id: props.walletCode?.walletId ,
+        "WalletCode":props?.isWallet?state?.selectedCurrency?.currencyCode: props.walletCode?.walletCode,
         "docRepositories":state.documents,
         "CreatedBy":props.userProfile?.userName,
     }
@@ -176,7 +224,9 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
     setState({ ...state, newtransferLoader: true, errorMessage: null });
     const res = await internalCustomerTransfer(obj);
     if (res.ok) {
-        setState({ ...state, newtransferLoader: false, errorMessage: null,isPersonalSummary:true,isPersonal:false,reviewDetails:res.data })
+        setState({ ...state, newtransferLoader: false, errorMessage: null,isPersonalSummary:true,isPersonal:false })
+        changeSteps('customerySummary',res.data);
+        props.dispatch(setSummaryDetails(res.data));
 
     } else {
         setState({ ...state, newtransferLoader: false, errorMessage: apicalls.isErrorDispaly(res) })
@@ -188,6 +238,14 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
   }
   const goBack = async () => {
     setState({ ...state, isPersonalSummary: false,isPersonal:true,isVarificationLoader:false});
+    props.dispatch(setSelectedWallet(null));
+    if (props?.isWallet) {
+      changeSteps('selectcurrency', null);
+        getAccountWallets();
+    }else{
+      changeSteps('enteramount',null);
+    }
+
 }
 
  const keyDownHandler = (e) => {
@@ -197,9 +255,58 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
   }
 
 
+ const renderStep = () => {
+    const steps = {
+      selectcurrency: (
+        <React.Fragment>
+          {state.fiatWalletsLoading && <Loader />}
+          {state.errorMessage && <Alert type="error" description={state.errorMessage} showIcon />}
+          {!state.fiatWalletsLoading  && (
+            <div>
+              <div className="text-center sell-title-styels">
+             <Translate
+                        content={"tab_InternalCustomerTransfer"}
+                            component={Paragraph}
+                            className="drawer-maintitle"
+                        />
+                        </div>
+              <div className="mt-8">
+              <div
+                 className='label-style'>Send from your SuisseBase FIAT Wallet</div>
+              </div>
+              <Search placeholder="Search Currency" value={state.searchFiatVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={handleFiatSearch} size="middle" bordered={false} className="cust-search" />
+              <List
+                itemLayout="horizontal"
+                dataSource={state.fiatWallets}
+                className="crypto-list auto-scroll wallet-list"
+                loading={state.fiatWalletsLoading}
+                locale={{
+                    emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+                        <Translate content="No_data" />
+                    } />
+                }}
+                renderItem={item => (
 
-    return <React.Fragment>
-{state.isPersonal && <>
+                    <List.Item className="drawer-list-fiat sendfiat-coins" onClick={() => selectsCurrency(item)}>
+                    <Link>
+                      <List.Item.Meta className='drawer-coin'
+                        avatar={<Image preview={false} src={item.imagePath} />}
+
+                        title={<div className="wallet-title">{item.currencyCode}</div>}
+                      />
+                       <><div className="text-right coin-typo">
+                         <NumberFormat value={item.avilable} className="drawer-list-font" displayType={'text'} thousandSeparator={true} prefix={item.currencyCode == 'USD' && '$' || item.currencyCode=='EUR' && '€'|| item.currencyCode =='GBP' && '£' || item.currencyCode=='CHF' && '₣' || item.currencyCode=='SGD' && 'S$'} renderText={(value, props) => <div {...props} >{value}</div>} />
+                    </div></>
+                    </Link>
+                  </List.Item>
+                )}
+              />
+            </div>
+          )}
+        </React.Fragment>
+      ),
+      enteramount: (
+        <>
           {state.isVarificationLoader && <Loader />}
           {!state.isVarificationLoader && (<>
              <div className="text-center sell-title-styels">
@@ -212,13 +319,13 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                        {state.isVerificationEnable&& <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <div className="summarybal total-amount">
-                      {props.walletCode.walletCode} {" "}
+                      {props.walletCode.walletCode ||state?.selectedCurrency.currencyCode} {" "}
                         <NumberFormat
                           decimalScale={2}
                           placeholder={"Enter Amount"}
                           thousandSeparator={true} displayType={"text"}
                           disabled
-                          value={props.walletCode.amount}
+                          value={props.walletCode.amount ||state?.selectedCurrency.avilable}
                         />
                       </div>
                     </Col>
@@ -236,8 +343,8 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                   message="Verification alert !"
                   description={<Text>Without verifications you can't send. Please select send verifications from <Link onClick={() => {
                       props.history.push("/userprofile/2");
-                      if (props?.onClosePopup) {
-                          props?.onClosePopup();
+                      if (props?.onClose) {
+                          props?.onClose();
                       }
                   }}>security section</Link></Text>}
                   type="warning"
@@ -379,9 +486,19 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
             </Form>
             </>
           )}
-        </>}
-        {state.isPersonalSummary && <CustomerTransferSummary back={goBack} walletCode={props?.walletCode} reviewDetails={state.reviewDetails} onClose={props?.onClose}/>}
+        </>
+      ),
+      customerySummary:(<>
+        {state.isPersonalSummary && <CustomerTransferSummary back={goBack} onClose={props?.onClose}/>}
+        </>
+      )
+  }
+  return steps[state.step];
+}
+return <React.Fragment>
+{renderStep()}
 </React.Fragment>
+
   
 }
 const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
@@ -395,14 +512,6 @@ const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
 };
 const connectDispatchToProps = (dispatch) => {
   return {
-  
-      changeStep: (stepcode) => {
-          dispatch(setStep(stepcode))
-      },
-      amountReset: () => {
-          dispatch(setClearAmount())
-      },
-
     dispatch
   }
 }

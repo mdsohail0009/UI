@@ -10,20 +10,13 @@ import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
-import {setClearAmount} from '../../reducers/sendreceiveReducer'
-import { setStep } from '../../reducers/buysellReducer';
 import {internalCustomerTransferSave} from './api'
 import DelcarationForm from './successPage';
 const { Text } = Typography; 
 class CustomerTransferSummary extends Component {
   reviewScrool = React.createRef();
   state = {
-    step: this.props.selectedCurrency ? "enteramount" : "selectcurrency",
-    filterObj: [],
-    selectedCurrency: this.props.selectedCurrency,
-        amount: "",
-    onTheGoObj: { amount: '', description: '' },
-    reviewDetails: this.props?.reviewDetails,
+    reviewDetails: this.props?.summaryDetails,
     errorMessage: null,
     verifyData: null, isBtnLoading: false, reviewDetailsLoading: false,
     isShowGreyButton: false,
@@ -33,10 +26,6 @@ class CustomerTransferSummary extends Component {
   componentDidMount() {
     getFeaturePermissionsByKeyName(`send_fiat`);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
-    if (!this.props.walletCode) {
-      this.fetchMemberWallet();
-    }
-   
   }
 
 
@@ -53,6 +42,7 @@ class CustomerTransferSummary extends Component {
 
 
 saveWithdrawdata = async () => {
+  const {summaryDetails}=this.props;
     this.setState({ ...this.state, isBtnLoading: true ,errorMessage:null})
     if (this.state.verifyData?.verifyData) {
         if (this.state.verifyData.verifyData.isPhoneVerified) {
@@ -99,20 +89,19 @@ saveWithdrawdata = async () => {
             return
         }
     }
-    if (this.state.reviewDetails) {
-        let obj = Object.assign({}, this.state.reviewDetails);
-        obj["MemberWalletId"] = this.props.walletCode?.walletId;
-        obj["walletCode"] = this.props.walletCode?.walletCode;
-        obj["totalValue"] =this.props.reviewDetails?.totalAmount;
-        obj["requestedAmount"] =this.props.reviewDetails?.requestedAmount;
-        obj["docRepositories"]=this.props.reviewDetails.docRepositories;
+    if (summaryDetails) {
+        let obj = Object.assign({}, summaryDetails);
+        obj["MemberWalletId"] = this.props.selectedWallet?.walletId ||this.props.selectedWallet?.id;
+        obj["walletCode"] = this.props.selectedWallet?.walletCode||this.props.selectedWallet.currencyCode;
+        obj["totalValue"] =summaryDetails?.totalAmount;
+        obj["requestedAmount"] =summaryDetails?.requestedAmount;
+        obj["docRepositories"]=summaryDetails?.docRepositories;
         obj["info"]=JSON.stringify(this.props?.trackAuditLogData);
         obj["CreatedBy"]=this.props.userProfile?.userName;    
 
       const saveRes = await internalCustomerTransferSave(obj)
       if (saveRes.ok) {
         this.props.dispatch(setSendFiatHead(true));
-       
         this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
         this.props.dispatch(fetchMarketCoinData(true))
         this.setState({ ...this.state, isBtnLoading: false,errorMessage:null ,isSuccess:true})
@@ -160,11 +149,9 @@ saveWithdrawdata = async () => {
         verificationsData:data });
     }
   }
-
-
-
   render() {
     const {isShowGreyButton,isSuccess} =this.state;
+    const {summaryDetails,selectedWallet}=this.props;
     return <React.Fragment>
   { !isSuccess && <React.Fragment>
           <div ref={this.reviewScrool}></div>
@@ -187,22 +174,22 @@ saveWithdrawdata = async () => {
                                     <div className="summary-liststyle">How much you will receive</div>
                     <div className="summarybal">
                     <NumberFormat
-                                            value={`${this.state.reviewDetails?.requestedAmount}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.props.walletCode?.walletCode}`}</div>
+                                            value={`${summaryDetails?.requestedAmount}`}
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet.currencyCode ||selectedWallet.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Total fees</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${this.state.reviewDetails?.fee}`}
-                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.props.walletCode?.walletCode}`}</div>
+                                        value={`${summaryDetails?.fee}`}
+                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet.currencyCode||selectedWallet.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal amount</div>
                                     <div className="summarybal"><NumberFormat
-                                        value={`${this.state.reviewDetails?.withdrawalAmount}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.props.walletCode?.walletCode}`}</div>
+                                        value={`${summaryDetails?.withdrawalAmount}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${selectedWallet.currencyCode||selectedWallet.walletCode}`}</div>
                   </div>
                 
 
@@ -214,31 +201,22 @@ saveWithdrawdata = async () => {
                   <div className="cust-summary-new kpi-List sendfiat-summarystyle">
                 <div className="kpi-divstyle" >
                                     <div className="kpi-label"> Personal/Business Name </div>
-                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.fullName}</Text></div>
+                                   <div> <Text className="kpi-val">{summaryDetails?.fullName}</Text></div>
                   </div>
                
-                {this.state.reviewDetails?.email &&
+                {summaryDetails?.email &&
                                 <div className="kpi-divstyle" >
                                     <div className="kpi-label">Email Address</div>
-                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.email}</Text></div>
+                                   <div> <Text className="kpi-val">{summaryDetails?.email}</Text></div>
                                 </div>
                            }
-                {this.state.reviewDetails?.phoneNumber && 
+                {summaryDetails?.phoneNumber && 
                                 <div className="kpi-divstyle" >
                                     <div className="kpi-label">Phone Number</div>
-                                   <div> <Text className="kpi-val">{this.state.reviewDetails?.phoneNumber}</Text></div>
+                                   <div> <Text className="kpi-val">{summaryDetails?.phoneNumber}</Text></div>
                                 </div>
                           }
-                          
-
-{this.state.reviewDetails?.abaRoutingCode &&
-                                <div className="kpi-divstyle" >
-                                    <div className="kpi-label">ABA Routing code</div>
-                                    <div> <Text className="kpi-val">{this.state.reviewDetails?.abaRoutingCode || "-"}</Text></div>
-                                </div>
-    }
-
-                            </div>
+                         </div>
              
                 <Verifications onchangeData={(obj) => this.changesVerification(obj)} onReviewDetailsLoading={(val) => this.onReviewDetailsLoading(val)} verificationsData={(data)=>this.verificationsData(data)}/>
                 
@@ -267,25 +245,19 @@ saveWithdrawdata = async () => {
 </React.Fragment>
   }
 }
-const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
+const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc,internalCustomerTransfer }) => {
   return {
     sendReceive,
     userProfile: userConfig?.userProfileInfo,
     trackAuditLogData: userConfig?.trackAuditLogData,
     withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
-    oidc: oidc?.user?.profile
+    oidc: oidc?.user?.profile,
+    selectedWallet:internalCustomerTransfer.selectedWallet,
+    summaryDetails:internalCustomerTransfer.summaryDetails,
   };
 };
 const connectDispatchToProps = (dispatch) => {
   return {
-  
-      changeStep: (stepcode) => {
-          dispatch(setStep(stepcode))
-      },
-      amountReset: () => {
-          dispatch(setClearAmount())
-      },
-
     dispatch
   }
 }

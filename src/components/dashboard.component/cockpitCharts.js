@@ -277,7 +277,7 @@ const CockpitCharts=(props)=> {
                 {process.env.REACT_APP_PERSONAL_IBAN==="personal" &&state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={state.personalTransafershowDrawer}  walletCode={state.selctedVal} onClose={() => {
                         closeDrawer();
                     }}/>}
-                     {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" &&state.customerTransafershowDrawer && <CustomerInternalTransafer showDrawer={state.customerTransafershowDrawer}  walletCode={state.selctedVal} onClose={() => {
+                     {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" &&state.customerTransafershowDrawer && <CustomerInternalTransafer showDrawer={state.customerTransafershowDrawer} isWallet={false}  walletCode={state.selctedVal} onClose={() => {
                         closeDrawer();
                     }}/>}
                 <Drawer

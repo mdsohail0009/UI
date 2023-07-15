@@ -21,6 +21,7 @@ import TransforReducer from '../reducers/tranfor.Reducer';
 import featuresReducer from '../reducers/feturesReducer';
 import currentActionReducer from '../reducers/actionsReducer';
 import serviceWorkerReducer from '../reducers/serviceWorker';
+import internalCustomerTransfer from '../reducers/internalCustomerTransfer';
 
 const persistConfig = {
     key: "root",
@@ -45,7 +46,8 @@ const rootReducer = combineReducers({
     TransforStore: TransforReducer,
     menuItems:featuresReducer,
     currentAction:currentActionReducer,
-    serviceWReducer:serviceWorkerReducer
+    serviceWReducer:serviceWorkerReducer,
+    internalCustomerTransfer:internalCustomerTransfer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

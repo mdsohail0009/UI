@@ -207,7 +207,7 @@ class Wallets extends Component {
                 {process.env.REACT_APP_PERSONAL_IBAN==="personal" && this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
                         this.closeDrawer();
                     }}/>}
-                     {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" && this.state.customerTransafershowDrawer && <CustomerInternalTransafer showDrawer={this.state.customerTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
+                     {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" && this.state.customerTransafershowDrawer && <CustomerInternalTransafer showDrawer={this.state.customerTransafershowDrawer} isWallet={false} walletCode={this.state.selctedVal} onClose={() => {
                         this.closeDrawer();
                     }}/>}
                 <Drawer
