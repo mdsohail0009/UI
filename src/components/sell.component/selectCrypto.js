@@ -226,7 +226,9 @@ class SelectSellCrypto extends Component {
                             <Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
                             
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" /><div className="sell-btn-style">
-                                    <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
+                                    <SuisseBtn autoDisable={true} 
+                                    disabled={this.state.isConvertionLoading}
+                                    title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
                                 </div></div>}
                         </Card>
 
