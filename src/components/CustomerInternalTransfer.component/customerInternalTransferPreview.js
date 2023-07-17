@@ -175,21 +175,21 @@ saveWithdrawdata = async () => {
                     <div className="summarybal">
                     <NumberFormat
                                             value={`${summaryDetails?.requestedAmount}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet.currencyCode ||selectedWallet.walletCode}`}</div>
+                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet?.currencyCode ||selectedWallet?.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Total fees</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${summaryDetails?.fee}`}
-                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet.currencyCode||selectedWallet.walletCode}`}</div>
+                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet?.currencyCode||selectedWallet?.walletCode}`}</div>
                   </div>
                 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Withdrawal amount</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${summaryDetails?.withdrawalAmount}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${selectedWallet.currencyCode||selectedWallet.walletCode}`}</div>
+                                        thousandSeparator={true} displayType={"text"} /> {`${selectedWallet?.currencyCode||selectedWallet?.walletCode}`}</div>
                   </div>
                 
 

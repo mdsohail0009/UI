@@ -32,7 +32,6 @@ const useDivRef = React.useRef(null);
     isShowGreyButton: false,
     permissions: {},
     isPersonalSummary:false,
-    isPersonal:true,
     customerDetails:{},
     enterCustomerId:null,
     isShowCustomerDetails:false,
@@ -104,7 +103,11 @@ const changeSteps = (step,values,flag) => {
   if (step === 'enteramount') {
       setState({ ...state, step,isVarificationLoader:false,selectedCurrency:values,isVerificationEnable:flag?true:false  });
       setFiatWalletsLoading(false);
-  }else{
+  }else if (step === 'selectcurrency'){
+    setState({ ...state, step,isVarificationLoader:false,selectedCurrency:values,isPersonalSummary:false,isVerificationEnable:flag?true:false  });
+    setFiatWalletsLoading(false);
+  }
+  else {
     setState({ ...state, step,isVarificationLoader:false,isPersonalSummary:true,isVerificationEnable:false  });
     setFiatWalletsLoading(false);
   }
@@ -227,7 +230,7 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
     setState({ ...state, newtransferLoader: true, errorMessage: null });
     const res = await internalCustomerTransfer(obj);
     if (res.ok) {
-        setState({ ...state, newtransferLoader: false, errorMessage: null,isPersonalSummary:true,isPersonal:false })
+        setState({ ...state, newtransferLoader: false, errorMessage: null,isPersonalSummary:true})
         changeSteps('customerySummary',res.data,false);
         props.dispatch(setSummaryDetails(res.data));
 
@@ -240,13 +243,13 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
 
   }
   const goBack = async () => {
-    setState({ ...state, isPersonalSummary: false,isPersonal:true,isVarificationLoader:false});
+    setState({ ...state,isVarificationLoader:false});
     props.dispatch(setSelectedWallet(null));
     if (props?.isWallet) {
-      changeSteps('selectcurrency', null,false);
+      changeSteps('selectcurrency', null,true);
         getAccountWallets();
     }else{
-      changeSteps('enteramount',null,false);
+      changeSteps('enteramount',null,true);
     }
 
 }
@@ -321,13 +324,13 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                        {state.isVerificationEnable&& !state.isVarificationLoader&& <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <div className="summarybal total-amount">
-                      {props.walletCode.walletCode ||state?.selectedCurrency.currencyCode} {" "}
+                      {props.walletCode?.walletCode ||state?.selectedCurrency?.currencyCode} {" "}
                         <NumberFormat
                           decimalScale={2}
                           placeholder={"Enter Amount"}
                           thousandSeparator={true} displayType={"text"}
                           disabled
-                          value={props.walletCode.amount ||state?.selectedCurrency.avilable}
+                          value={props.walletCode.amount ||state?.selectedCurrency?.avilable}
                         />
                       </div>
                     </Col>
@@ -496,6 +499,7 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
   return steps[state.step];
 }
 return <React.Fragment>
+  {console.log(state.step,"step")}
 {renderStep()}
 </React.Fragment>
 
