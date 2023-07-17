@@ -25,7 +25,6 @@ const useDivRef = React.useRef(null);
     step: props?.isWallet ? "selectcurrency":"enteramount" ,
     filterObj: [],
     errorMessage: null,
-     reviewDetailsLoading: false,
     isVerificationEnable: true,
     isVarificationLoader: true,
     fiatWallets: [],
@@ -46,8 +45,8 @@ const useDivRef = React.useRef(null);
     newtransferLoader:false,
     searchFiatVal: "",
     selectedCurrency:{},
-
   })
+  const [fiatWalletsLoading,setFiatWalletsLoading]=useState(false);
   useEffect(()=>{
     if(props?.isWallet){
       getAccountWallets();
@@ -70,13 +69,15 @@ const useDivRef = React.useRef(null);
     }
   }
 const getAccountWallets=async()=>{
-  setState({ ...state,fiatWalletsLoading:true });
-  let walletObj=await getAccountWallet()
+  setFiatWalletsLoading(true)
+  let walletObj=await getAccountWallet();
   if(walletObj.ok){
-    setState({ ...state, fiatWallets: walletObj.data,filtercoinsList: walletObj.data,fiatWalletsLoading:false });
+    setState({ ...state, fiatWallets:walletObj.data,filtercoinsList: walletObj.data,errorMessage:null});
+    setFiatWalletsLoading(false)
   }
   else{
-       setState({ ...state,fiatWalletsLoading:false,   errorMessage: apicalls.isErrorDispaly(walletObj) });
+       setState({ ...state,fiatWalletsLoading:false, fiatWallets:[],  errorMessage: apicalls.isErrorDispaly(walletObj) });
+       setFiatWalletsLoading(false)
   
   }
 }
@@ -99,11 +100,13 @@ const selectsCurrency=(item)=>{
     }
   
 }
-const changeSteps = (step,values) => {
+const changeSteps = (step,values,flag) => {
   if (step === 'enteramount') {
-      setState({ ...state, step,isVarificationLoader:false,fiatWalletsLoading:false,selectedCurrency:values,isVerificationEnable:false  });
+      setState({ ...state, step,isVarificationLoader:false,selectedCurrency:values,isVerificationEnable:flag?true:false  });
+      setFiatWalletsLoading(false);
   }else{
-    setState({ ...state, step,isVarificationLoader:false,fiatWalletsLoading:false ,isPersonalSummary:true,isVerificationEnable:false  });
+    setState({ ...state, step,isVarificationLoader:false,isPersonalSummary:true,isVerificationEnable:false  });
+    setFiatWalletsLoading(false);
   }
 }
  const verificationCheck = async (values) => {
@@ -119,12 +122,12 @@ const changeSteps = (step,values) => {
       if (minVerifications >= 1) {
         setState({ ...state, isVarificationLoader: false, isVerificationEnable: true})
         if(props?.isWallet){
-          changeSteps('enteramount',values);
+          changeSteps('enteramount',values,true);
         }
             } else {
                 setState({ ...state, isVarificationLoader: false, isVerificationEnable: false })
                 if(props?.isWallet){
-                  changeSteps('enteramount',values);
+                  changeSteps('enteramount',values,false);
                 }
       }
     } else {
@@ -225,7 +228,7 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
     const res = await internalCustomerTransfer(obj);
     if (res.ok) {
         setState({ ...state, newtransferLoader: false, errorMessage: null,isPersonalSummary:true,isPersonal:false })
-        changeSteps('customerySummary',res.data);
+        changeSteps('customerySummary',res.data,false);
         props.dispatch(setSummaryDetails(res.data));
 
     } else {
@@ -240,10 +243,10 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
     setState({ ...state, isPersonalSummary: false,isPersonal:true,isVarificationLoader:false});
     props.dispatch(setSelectedWallet(null));
     if (props?.isWallet) {
-      changeSteps('selectcurrency', null);
+      changeSteps('selectcurrency', null,false);
         getAccountWallets();
     }else{
-      changeSteps('enteramount',null);
+      changeSteps('enteramount',null,false);
     }
 
 }
@@ -259,9 +262,6 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
     const steps = {
       selectcurrency: (
         <React.Fragment>
-          {state.fiatWalletsLoading && <Loader />}
-          {state.errorMessage && <Alert type="error" description={state.errorMessage} showIcon />}
-          {!state.fiatWalletsLoading  && (
             <div>
               <div className="text-center sell-title-styels">
              <Translate
@@ -270,16 +270,20 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                             className="drawer-maintitle"
                         />
                         </div>
+                        {fiatWalletsLoading &&state.fiatWallets?.length===0 && <Loader />}
+          {state.errorMessage && <Alert type="error" description={state.errorMessage} showIcon />}
+                        {!(fiatWalletsLoading&& state.fiatWallets?.length==0 )   && (<>
               <div className="mt-8">
               <div
                  className='label-style'>Send from your SuisseBase FIAT Wallet</div>
               </div>
+            
               <Search placeholder="Search Currency" value={state.searchFiatVal} prefix={<span className="icon lg search-angle drawer-search" />} onChange={handleFiatSearch} size="middle" bordered={false} className="cust-search" />
               <List
                 itemLayout="horizontal"
                 dataSource={state.fiatWallets}
                 className="crypto-list auto-scroll wallet-list"
-                loading={state.fiatWalletsLoading}
+                loading={fiatWalletsLoading}
                 locale={{
                     emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
                         <Translate content="No_data" />
@@ -300,15 +304,12 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                     </Link>
                   </List.Item>
                 )}
-              />
+              /></>)}
             </div>
-          )}
         </React.Fragment>
       ),
       enteramount: (
         <>
-          {state.isVarificationLoader && <Loader />}
-          {!state.isVarificationLoader && (<>
              <div className="text-center sell-title-styels">
              <Translate
                         content={"tab_InternalCustomerTransfer"}
@@ -316,7 +317,8 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                             className="drawer-maintitle"
                         />
                         </div>
-                       {state.isVerificationEnable&& <Row gutter={[16, 16]}>
+                        {state.isVarificationLoader && <Loader />}
+                       {state.isVerificationEnable&& !state.isVarificationLoader&& <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <div className="summarybal total-amount">
                       {props.walletCode.walletCode ||state?.selectedCurrency.currencyCode} {" "}
@@ -330,7 +332,7 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                       </div>
                     </Col>
                     </Row>      }
-            <Form
+          { !state.isVarificationLoader&& <Form
               autoComplete="off"
               initialValues={{ amount: "",enterCustomerId:null }}
               ref={enteramtForm}
@@ -483,10 +485,8 @@ setState({...state,enterCustomerId:e,customerDetails:{},customerIdErrorMessage:n
                   </Row>
                 </>
               )}
-            </Form>
+            </Form>}
             </>
-          )}
-        </>
       ),
       customerySummary:(<>
         {state.isPersonalSummary && <CustomerTransferSummary back={goBack} onClose={props?.onClose}/>}
