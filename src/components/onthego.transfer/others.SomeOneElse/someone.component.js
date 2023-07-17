@@ -143,7 +143,6 @@ const SomeoneComponent = (props) => {
             form.current.setFieldsValue({others:null})      
     }
     const handleTabChange=(activekey) => {
-        console.log(activekey)
         setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
         form.current.resetFields();setDocuments(null); setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
         form?.current?.setFieldsValue({others:null});

@@ -47,7 +47,6 @@ const useDivRef = React.useRef(null);
   const [step,setStep]=useState(props?.isWallet ? "selectcurrency":"enteramount")
   const [customerDetails,setCustomerDetails]=useState({});
   useEffect(()=>{
-    console.log(props?.isWallet,"props?.isWallet")
     if(props?.isWallet){
       getAccountWallets();
     }else{
