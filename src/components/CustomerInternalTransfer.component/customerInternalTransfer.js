@@ -449,19 +449,19 @@ setCustomerDetails({});
                                                         <label className="kpi-label">
                                                             Personal/Business Name
                                                         </label>
-                                                        <div class><Text className="kpi-val">{(customerDetails?.fullName !== '' && customerDetails?.fullName !== null) ? customerDetails?.fullName : '-'}</Text></div>
+                                                        <div class><Text className="kpi-val">{customerDetails?.fullName || '-'}</Text></div>
                                                     </div>
                                                 </Col>
                                                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                                                     <div className="kpi-divstyle">
                                                         <label className="kpi-label ">Email Address</label>
-                                                        <div class><Text className="kpi-val">{(customerDetails?.email !== '' &&customerDetails?.email !== null) ? customerDetails?.email : '-'}</Text></div>
+                                                        <div class><Text className="kpi-val">{customerDetails?.email || '-'}</Text></div>
                                                     </div>
                                                 </Col>
                                                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                                                     <div className="kpi-divstyle">
                                                         <label className="kpi-label ">Phone Number</label>
-                                                        <div class><Text className="kpi-val">{(customerDetails?.phoneNumber !== '' && customerDetails?.phoneNumber !== null) ? customerDetails?.phoneNumber : '-'}</Text></div>
+                                                        <div class><Text className="kpi-val">{customerDetails?.phoneNumber || '-'}</Text></div>
                                                     </div>
                                                 </Col>
                                             </Row>
