@@ -805,8 +805,8 @@ selectsCurrency=(item)=>{
                 className="addCryptoList paste-recept-style mobile-scroll"
               >
                 {pastPayees.length > 0 &&
-                  pastPayees?.map((item) => (
-                    <Row
+                  pastPayees?.map((item,index) => (
+                    <Row key={index}
                       className="fund-border"
                       onClick={()=>this.handleForm(item)}
                           >
