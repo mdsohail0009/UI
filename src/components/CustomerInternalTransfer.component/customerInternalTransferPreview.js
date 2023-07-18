@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { getFeaturePermissionsByKeyName } from "../shared/permissions/permissionService";
 import { setSendFiatHead } from "../../reducers/buyFiatReducer";
 import {internalCustomerTransferSave} from './api'
-import DelcarationForm from './successPage';
+import DelcarationForm from '../personalInternalTransfer.component/successPage';
 const { Text } = Typography; 
 class CustomerTransferSummary extends Component {
   reviewScrool = React.createRef();
@@ -25,6 +25,7 @@ class CustomerTransferSummary extends Component {
   }
   componentDidMount() {
     getFeaturePermissionsByKeyName(`send_fiat`);
+    this.reviewScrool.current.scrollIntoView(0,0);
     this.permissionsInterval = setInterval(this.loadPermissions, 200);
   }
 
@@ -51,7 +52,7 @@ saveWithdrawdata = async () => {
                     ...this.state,
                     errorMessage: "Please verify phone verification code"
                 });
-                this.reviewScrool.current.scrollIntoView();
+                this.reviewScrool.current.scrollIntoView(0,0);
                 return;
             }
         }
@@ -61,7 +62,7 @@ saveWithdrawdata = async () => {
                     ...this.state,
                     errorMessage: "Please verify  email verification code"
                 });
-                this.reviewScrool.current.scrollIntoView();
+                this.reviewScrool.current.scrollIntoView(0,0);
                 return;
             }
         }
@@ -71,7 +72,7 @@ saveWithdrawdata = async () => {
                     ...this.state,
                     errorMessage: "Please verify authenticator code"
                 });
-                this.reviewScrool.current.scrollIntoView();
+                this.reviewScrool.current.scrollIntoView(0,0);
                 return;
             }
         }
@@ -85,7 +86,7 @@ saveWithdrawdata = async () => {
                 errorMessage:
                     "Without Verifications you can't send. Please select send verifications from security section",
             });
-            this.reviewScrool.current.scrollIntoView();
+            this.reviewScrool.current.scrollIntoView(0,0);
             return
         }
     }
@@ -111,7 +112,7 @@ saveWithdrawdata = async () => {
           ...this.state,
           errorMessage: apicalls.isErrorDispaly(saveRes), isBtnLoading: false,isSuccess:false
         });
-        this.reviewScrool.current.scrollIntoView();
+        this.reviewScrool.current.scrollIntoView(0,0);
       }
     }
   }
@@ -241,7 +242,7 @@ saveWithdrawdata = async () => {
             </Form>
           </Spin>
         </React.Fragment>}
-   { isSuccess && <DelcarationForm back={this.props?.back}/>}
+   {isSuccess && <DelcarationForm back={this.props?.back}/>}
 </React.Fragment>
   }
 }

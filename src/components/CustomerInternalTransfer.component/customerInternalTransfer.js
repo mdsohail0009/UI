@@ -23,7 +23,6 @@ const  enteramtForm = React.useRef();
 const useDivRef = React.useRef(null);
  const [state,setState ]= useState({
     filterObj: [],
-    errorMessage: null,
     isVerificationEnable: true,
     isVarificationLoader: true,
     fiatWallets: [],
@@ -45,7 +44,8 @@ const useDivRef = React.useRef(null);
   const [fiatWalletsLoading,setFiatWalletsLoading]=useState(false);
   const [isPersonalSummary,setIsPersonalSummary]=useState(false);
   const [step,setStep]=useState(props?.isWallet ? "selectcurrency":"enteramount")
-  const [customerDetails,setCustomerDetails]=useState({});
+  const [customerDetails,setCustomerDetails]=useState(null);
+  const [errorMessage,setErrorMessage]=useState(null);
   useEffect(()=>{
     if(props?.isWallet){
       getAccountWallets();
@@ -71,12 +71,14 @@ const getAccountWallets=async()=>{
   setFiatWalletsLoading(true)
   let walletObj=await getAccountWallet();
   if(walletObj.ok){
-    setState({ ...state, fiatWallets:walletObj.data,filtercoinsList: walletObj.data,errorMessage:null});
-    setCustomerDetails({});
+    setState({ ...state, fiatWallets:walletObj.data,filtercoinsList: walletObj.data});
+    setErrorMessage(null)
+    setCustomerDetails(null);
     setFiatWalletsLoading(false)
   }
   else{
-       setState({ ...state,fiatWalletsLoading:false, fiatWallets:[],  errorMessage: apicalls.isErrorDispaly(walletObj) });
+       setState({ ...state,fiatWalletsLoading:false, fiatWallets:[]});
+       setErrorMessage(apicalls.isErrorDispaly(walletObj))
        setFiatWalletsLoading(false)
   
   }
@@ -90,17 +92,18 @@ const handleFiatSearch = ({ target: { value: val } }) => {
       setState({ ...state, fiatWallets: state.filtercoinsList, searchFiatVal: val });
 }
 const selectsCurrency=(item)=>{
-  setState({ ...state,errorMessage:null, })
     if (item.avilable) {
       verificationCheck(item);
      props.dispatch(setSelectedWallet(item));
     }
     else {
-      setState({...state,errorMessage:"Insufficient balance"})
+      setErrorMessage("Insufficient balance");
+      useDivRef?.current?.scrollIntoView(0,0);
     }
   
 }
 const changeSteps = (step,values,flag) => {
+  setErrorMessage(null);
   if (step === 'enteramount') {
     setStep(step);
       setState({ ...state,isVarificationLoader:false,selectedCurrency:values,isVerificationEnable:flag?true:false  });
@@ -120,6 +123,7 @@ const changeSteps = (step,values,flag) => {
 
 }
  const verificationCheck = async (values) => {
+  setErrorMessage(null);
     setState({ ...state, isVarificationLoader: true })
     const verfResponse = await getVerificationFields();
     let minVerifications = 0;
@@ -131,9 +135,7 @@ const changeSteps = (step,values,flag) => {
       }
       if (minVerifications >= 1) {
         setState({ ...state, isVarificationLoader: false, isVerificationEnable: true})
-        if(props?.isWallet){
           changeSteps('enteramount',values,true);
-        }
             } else {
                 setState({ ...state, isVarificationLoader: false, isVerificationEnable: false })
                 if(props?.isWallet){
@@ -145,55 +147,58 @@ const changeSteps = (step,values,flag) => {
     }
   }
 
- const getCustomerDeails = async (e,isValid) => {
-setState({...state,enterCustomerId:e,customerIdErrorMessage:null,isShowValid:false,errorMessage:null})
-setCustomerDetails({});
-    if(e?.length>=10&&isValid){
-        setState({...state,validIban:true})
-        isValid ? setState({...state,ibanLoading:true}) : setState({...state,ibanLoading:false});
-        const response = await getCustomerDeail(e);
-        if (response.ok) {
-            if(isValid&&response.data &&response.data?.fullName){
-                setState({...state,isShowCustomerDetails:true,validIban:true,isValidateLoading:false,ibanLoading:false})
-                setCustomerDetails(response.data);
-            }else{
-                setState({...state,validIban:false,ibanLoading:false,isValidateLoading:false})
-                if (customerDetails) {
-                    setState({...state,isShowCustomerDetails:false,customerIdErrorMessage:"No bank details are available for this IBAN number",ibanLoading:false})
-                    setCustomerDetails({});
-                    useDivRef?.current?.scrollIntoView(0,0);
-                    return;
-                }
-            }
-        }else{
-          setCustomerDetails({});
-            setState({...state,validIban:false,errorMessage:apicalls.isErrorDispaly(response),ibanLoading:false,isValidateLoading:false})
+  const getCustomerDeails = async (e, isValid) => {
+    setState({ ...state, enterCustomerId: e, customerIdErrorMessage: null, isShowValid: false, documents: null })
+    setErrorMessage(null);
+    setCustomerDetails(null);
+    if (e?.length >= 10 && isValid) {
+      setState({ ...state, validIban: true })
+      isValid ? setState({ ...state, ibanLoading: true }) : setState({ ...state, ibanLoading: false });
+      const response = await getCustomerDeail(e);
+      if (response.ok) {
+        if (isValid && response.data && response.data?.fullName) {
+          setState({ ...state, isShowCustomerDetails: true, validIban: true, isValidateLoading: false, ibanLoading: false })
+          setCustomerDetails(response.data);
+        } else {
+          setState({ ...state, validIban: false, ibanLoading: false, isValidateLoading: false })
+          if (customerDetails) {
+            setState({ ...state, isShowCustomerDetails: false, customerIdErrorMessage: "No bank details are available for this IBAN number", ibanLoading: false })
+            setCustomerDetails(null);
+            useDivRef?.current?.scrollIntoView(0, 0);
+            return;
+          }
         }
+      } else {
+        setCustomerDetails(null);
+        setState({ ...state, validIban: false, ibanLoading: false, isValidateLoading: false })
+        setErrorMessage(apicalls.isErrorDispaly(response));
+        useDivRef?.current?.scrollIntoView(0, 0);
+      }
     }
-    if(e?.length>=10&&!isValid) {
-        setState({...state,customerIdErrorMessage:false,isValidateLoading:false});
-    } 
-}
- const onCustomerValidate = () => {
+    if (e?.length >= 10 && !isValid) {
+      setState({ ...state, customerIdErrorMessage: false, isValidateLoading: false });
+    }
+  }
+  const onCustomerValidate = () => {
     let customerId = enteramtForm.current.getFieldsValue().customerId;
-    setState({...state,isShowCustomerDetails:false,validIban:true,isValidateLoading:true});
+    setState({ ...state, isShowCustomerDetails: false, validIban: true, isValidateLoading: true });
     if (customerId?.length >= 10) {
-        if (customerId &&!/^[A-Za-z0-9]+$/.test(customerId)) {
-          setCustomerDetails({});
-            setState({...state,isShowCustomerDetails:false,isShowValid:true})
-            enteramtForm.current?.validateFields(["customerId"], validateCustomerId)
-        }
-        else {
-            setState({...state,isShowValid:false})
-            getCustomerDeails(customerId, "true");
-        }
+      if (customerId && !/^[A-Za-z0-9]+$/.test(customerId)) {
+        setCustomerDetails(null);
+        setState({ ...state, isShowCustomerDetails: false, isShowValid: true })
+        enteramtForm.current?.validateFields(["customerId"], validateCustomerId)
+      }
+      else {
+        setState({ ...state, isShowValid: false })
+        getCustomerDeails(customerId, "true");
+      }
     }
     else {
-      setCustomerDetails({});
-        setState({...state,isShowCustomerDetails:false,validIban:false,isShowValid:true})
-        enteramtForm?.current.validateFields(["customerId"], validateCustomerId)
+      setCustomerDetails(null);
+      setState({ ...state, isShowCustomerDetails: false, validIban: false, isShowValid: true })
+      enteramtForm?.current.validateFields(["customerId"], validateCustomerId)
     }
-}
+  }
 
  const validateCustomerId = (_, value) => {
     setState({...state,isValidateLoading:false})
@@ -201,14 +206,14 @@ setCustomerDetails({});
         setState({...state,isShowCustomerDetails:false})
         return Promise.reject(apicalls.convertLocalLang("is_required"));
     } else if ((!state.validIban&&state.isShowValid) || value?.length < 10) {
-      setCustomerDetails({});
+      setCustomerDetails(null);
         setState({...state,isShowCustomerDetails:false})
         return Promise.reject("Please enter valid Customer ID");
     } else if (
         (value && state.isShowValid)&&
         !/^[A-Za-z0-9]+$/.test(value)
     ) {
-      setCustomerDetails({});
+      setCustomerDetails(null);
         setState({...state,isShowCustomerDetails:false})
         return Promise.reject(
             "Please enter valid Customer ID"
@@ -220,13 +225,16 @@ setCustomerDetails({});
 };
  const amountnext = async (values) => {
     if(values.amount==="0" || values.amount==='0'){
-        setState({ ...state, newtransferLoader: false, errorMessage: "Amount must be greater than zero." });
+        setState({ ...state, newtransferLoader: false
+         });
+         setErrorMessage( "Amount must be greater than zero.")
         useDivRef?.current?.scrollIntoView(0,0);
         return;
     }
    else if (Object.hasOwn(values, 'customerId')) {
         if ((!customerDetails || Object.keys(customerDetails).length === 0)) {
-            setState({ ...state, newtransferLoader: false, errorMessage: "Please click the validate button to retrieve customer details." });
+            setState({ ...state, newtransferLoader: false});
+            setErrorMessage("Please click the validate button to retrieve customer details.")
             useDivRef?.current?.scrollIntoView(0,0);
             return;
         }
@@ -241,15 +249,18 @@ setCustomerDetails({});
         "CreatedBy":props.userProfile?.userName,
     }
     obj.info=JSON.stringify(props?.trackAuditLogData);
-    setState({ ...state, newtransferLoader: true, errorMessage: null });
+    setState({ ...state, newtransferLoader: true});
+    setErrorMessage(null);
     const res = await internalCustomerTransfer(obj);
     if (res.ok) {
-        setState({ ...state, newtransferLoader: false, errorMessage: null})
+        setState({ ...state, newtransferLoader: false,})
+        setErrorMessage(null);
         setIsPersonalSummary(true);
         props.dispatch(setSummaryDetails(res.data));
 
     } else {
-        setState({ ...state, newtransferLoader: false, errorMessage: apicalls.isErrorDispaly(res) })
+        setState({ ...state, newtransferLoader: false})
+        setErrorMessage(apicalls.isErrorDispaly(res));
         useDivRef?.current?.scrollIntoView(0,0);
         return;
     }
@@ -257,8 +268,8 @@ setCustomerDetails({});
 
   }
   const goBack = async () => {
-    setState({ ...state,isVarificationLoader:false});
-    setCustomerDetails({});
+    setState({ ...state,isVarificationLoader:false,documents:null});
+    setCustomerDetails(null);
     props.dispatch(setSelectedWallet(null));
       changeSteps('selectcurrency', null,true);
         getAccountWallets();
@@ -275,6 +286,7 @@ setCustomerDetails({});
     const steps = {
       selectcurrency: (
         <React.Fragment>
+          <div ref={useDivRef}></div>
             <div>
               <div className="text-center sell-title-styels">
              <Translate
@@ -284,7 +296,7 @@ setCustomerDetails({});
                         />
                         </div>
                         {fiatWalletsLoading &&state.fiatWallets?.length===0 && <Loader />}
-          {state.errorMessage && <Alert type="error" description={state.errorMessage} showIcon />}
+          {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
                         {!(fiatWalletsLoading&& state.fiatWallets?.length==0 )   && (<>
               <div className="mt-8">
               <div
@@ -333,7 +345,7 @@ setCustomerDetails({});
                         {state.isVarificationLoader && <Loader />}
                        {state.isVerificationEnable&& !state.isVarificationLoader&& <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                      <div className="summarybal total-amount">
+                      <div className="summarybal total-amount mb-8">
                       {props.walletCode?.walletCode ||state?.selectedCurrency?.currencyCode} {" "}
                         <NumberFormat
                           decimalScale={2}
@@ -367,7 +379,7 @@ setCustomerDetails({});
                   closable={false}
               />
               )}
-              {state.errorMessage && <Alert type="error" description={state.errorMessage} showIcon />}
+              {errorMessage && <Alert type="error" description={errorMessage} showIcon />}
               {state.isVerificationEnable && (
                 <>
                   <Row gutter={[16, 16]}>
@@ -404,7 +416,8 @@ setCustomerDetails({});
                           thousandSeparator={","}
                           onKeyDown={keyDownHandler}
                           onValueChange={() => {
-                            setState({ ...state, amount: enteramtForm.current?.getFieldsValue().amount, errorMessage: '' })
+                            setState({ ...state, amount: enteramtForm.current?.getFieldsValue().amount})
+                            setErrorMessage(null);
                         }}
                         />
 
@@ -441,7 +454,7 @@ setCustomerDetails({});
             </Col> 
                                 <div className="box basic-info alert-info-custom mt-16 kpi-List" style={{width:'100%'}}>
                                     <Spin spinning={state.ibanLoading}>
-                                        {state.validIban && state.isShowCustomerDetails &&
+                                        {state.validIban && state.isShowCustomerDetails &&customerDetails!==null &&
                                             <><Row>
                                                 <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
                                                     <div className="kpi-divstyle">
@@ -465,14 +478,14 @@ setCustomerDetails({});
                                                 </Col>
                                             </Row>
                                             </>}
-                                            {(!state.validIban || !state.isShowCustomerDetails) &&    
+                                            {(!state.validIban || !state.isShowCustomerDetails ||customerDetails===null) &&    
                                            <div>
                                             <span className="info-details">No customer details available</span>
                                            </div>
                                       }
                                     </Spin>
                                 </div>
-                                {state.validIban && state.isShowCustomerDetails && <Col>
+                                {state.validIban && state.isShowCustomerDetails && customerDetails!==null && <Col>
                                     <React.Fragment>
                                         <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
                                         <AddressDocumnet
