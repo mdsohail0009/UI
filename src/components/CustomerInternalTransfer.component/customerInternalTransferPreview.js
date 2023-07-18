@@ -167,32 +167,29 @@ saveWithdrawdata = async () => {
                         {this.state.errorMessage && <Alert type="error" showIcon closable={false} description={this.state.errorMessage} />}
 
               
-                <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
-                                    <div className="adbook-head" >Transfer details</div>
-                  </div>
+            <div className="d-flex  justify-content" style={{ alignItems: 'baseline' }}>
+              <div className="adbook-head" >Transfer details</div>
+            </div>
                   <div className="cust-summary-new">
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">How much you will receive</div>
-                    <div className="summarybal">
-                    <NumberFormat
-                                            value={`${summaryDetails?.requestedAmount}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet?.currencyCode ||selectedWallet?.walletCode}`}</div>
-                  </div>
-                
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Total fees</div>
-                                    <div className="summarybal"><NumberFormat
-                                        value={`${summaryDetails?.fee}`}
-                                        thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet?.currencyCode||selectedWallet?.walletCode}`}</div>
-                  </div>
-                
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Withdrawal amount</div>
-                                    <div className="summarybal"><NumberFormat
-                                        value={`${summaryDetails?.withdrawalAmount}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${selectedWallet?.currencyCode||selectedWallet?.walletCode}`}</div>
-                  </div>
-                
+              <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                <div className="summary-liststyle">Withdrawal amount</div>
+                <div className="summarybal"><NumberFormat
+                  value={`${summaryDetails?.requestedAmount}`}
+                  thousandSeparator={true} displayType={"text"} /> {`${selectedWallet?.currencyCode || selectedWallet?.walletCode}`}</div>
+              </div>
+              <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                <div className="summary-liststyle">Effective Fees</div>
+                <div className="summarybal"><NumberFormat
+                  value={`${summaryDetails?.fee}`}
+                  thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet?.currencyCode || selectedWallet?.walletCode}`}</div>
+              </div>
+              <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                <div className="summary-liststyle">How Much Beneficiary Will Receive</div>
+                <div className="summarybal">
+                  <NumberFormat
+                    value={`${summaryDetails?.withdrawalAmount}`}
+                    thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${selectedWallet?.currencyCode || selectedWallet?.walletCode}`}</div>
+              </div>
 
                   </div>
                  
