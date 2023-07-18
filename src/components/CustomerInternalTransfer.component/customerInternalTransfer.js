@@ -243,8 +243,8 @@ const changeSteps = (step,values,flag) => {
     let obj={
         "ReceiverCustomerId": customerDetails.receiversCustomerId,
         "Amount":FixedAmountVal.toFixed(2),
-        "MemberWalletId":props?.isWallet?state?.selectedCurrency.id: props.walletCode?.walletId ,
-        "WalletCode":props?.isWallet?state?.selectedCurrency?.currencyCode: props.walletCode?.walletCode,
+        "MemberWalletId":state?.selectedCurrency?.id?state?.selectedCurrency.id: props.walletCode?.walletId ,
+        "WalletCode":!state?.selectedCurrency?.currencyCode ? props.walletCode?.walletCode : state?.selectedCurrency?.currencyCode,
         "docRepositories":state.documents,
         "CreatedBy":props.userProfile?.userName,
     }
@@ -346,13 +346,13 @@ const changeSteps = (step,values,flag) => {
                        {state.isVerificationEnable&& !state.isVarificationLoader&& <Row gutter={[16, 16]}>
                     <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                       <div className="summarybal total-amount mb-8">
-                      {props.walletCode?.walletCode ||state?.selectedCurrency?.currencyCode} {" "}
+                   {!state?.selectedCurrency?.currencyCode ? props.walletCode?.walletCode : state?.selectedCurrency?.currencyCode }{" "}
                         <NumberFormat
                           decimalScale={2}
                           placeholder={"Enter Amount"}
                           thousandSeparator={true} displayType={"text"}
                           disabled
-                          value={props.walletCode.amount ||state?.selectedCurrency?.avilable}
+                          value={!state?.selectedCurrency?.avilable?props.walletCode.amount:state?.selectedCurrency?.avilable}
                         />
                       </div>
                     </Col>
