@@ -130,10 +130,10 @@ const changeSteps = (step,values,flag) => {
     if (verfResponse.ok) {
       for (let verifMethod in verfResponse.data) {
         if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
-            minVerifications = minVerifications + 1;
+            minVerifications = minVerifications + Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS);
         }
       }
-      if (minVerifications >= 1) {
+      if (minVerifications >= Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS)) {
         setState({ ...state, isVarificationLoader: false, isVerificationEnable: true})
           changeSteps('enteramount',values,true);
             } else {
