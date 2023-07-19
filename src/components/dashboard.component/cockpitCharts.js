@@ -16,6 +16,7 @@ import MassPayment from '../buyfiat.component'
 import { buyFiatSteps as config } from '../buyfiat.component/config';
 import { getScreenName } from '../../reducers/feturesReducer';
 import PersonalInternalTransferComponent from '../personalInternalTransfer.component';
+import CustomerInternalTransafer from '../CustomerInternalTransfer.component/index';
 const { Title, Paragraph, Text } = Typography;
 
 const CockpitCharts=(props)=> {
@@ -38,7 +39,8 @@ const CockpitCharts=(props)=> {
         valNum: 1,
         showFuntransfer: false,
         errorMessage:null,
-        personalTransafershowDrawer:false
+        personalTransafershowDrawer:false,
+        customerTransafershowDrawer:false
     })
     useEffect(()=>{
         if(props.dashboard.wallets.data!==state.transactionData){
@@ -83,8 +85,11 @@ const CockpitCharts=(props)=> {
         }else if(e===4){
             props.dispatch(getScreenName({getScreen:"dashboard"}))
             setState({ ...setState, personalTransafershowDrawer: true, selctedVal: value.walletCode })
-          
-        }else {
+        }
+        else if(e===6){
+          props.dispatch(getScreenName({getScreen:"dashboard"}))
+          setState({ ...setState, customerTransafershowDrawer: true, selctedVal: value }) 
+      }else {
             props.dispatch(getScreenName({getScreen:"dashboard"}))
             props.history.push(`/internaltransfer`)
         }
@@ -96,7 +101,8 @@ const CockpitCharts=(props)=> {
             buyFiatDrawer: false,
             transactions: false,
             showFuntransfer:false,
-            personalTransafershowDrawer:false
+            personalTransafershowDrawer:false,
+            customerTransafershowDrawer:false
         })
     }
    const handleSearch = ({ currentTarget: { value } }) => {
@@ -127,6 +133,13 @@ const CockpitCharts=(props)=> {
                     <Translate content="personal_iban_transafer" />
                     </Link>
                 </li>}
+                {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" &&
+                <li onClick={() => showSendReceiveDrawer(6, item)}>
+                    <Link value={6} className="c-pointer">
+                    <Translate content="tab_InternalCustomerTransfer"/>
+                    </Link>
+                </li>
+                 } 
             </ul>
         </Menu>
     )
@@ -261,6 +274,9 @@ const CockpitCharts=(props)=> {
                     }}
                 />}
                 {process.env.REACT_APP_PERSONAL_IBAN==="personal" &&state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={state.personalTransafershowDrawer}  walletCode={state.selctedVal} onClose={() => {
+                        closeDrawer();
+                    }}/>}
+                     {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" &&state.customerTransafershowDrawer && <CustomerInternalTransafer showDrawer={state.customerTransafershowDrawer} isWallet={false}  walletCode={state.selctedVal} onClose={() => {
                         closeDrawer();
                     }}/>}
                 <Drawer
