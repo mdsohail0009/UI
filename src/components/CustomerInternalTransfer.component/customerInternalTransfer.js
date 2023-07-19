@@ -105,11 +105,15 @@ const selectsCurrency=(item)=>{
 const changeSteps = (step,values,flag) => {
   setErrorMessage(null);
   setStep(step);
-  if (step === 'enteramount'||step === 'selectcurrency') {
+  if (step === 'enteramount') {
       setState({ ...state,isVarificationLoader:false,selectedCurrency:values,isVerificationEnable:flag?true:false  });
       setFiatWalletsLoading(false);
       setIsPersonalSummary(false);
-  }else {
+  }else  if (step === 'selectcurrency') {
+    setState({ ...state,isVarificationLoader:false,selectedCurrency:values,isVerificationEnable:flag?true:false  });
+    setFiatWalletsLoading(false);
+    setIsPersonalSummary(false);
+}else {
     setState({ ...state,isVarificationLoader:false,isVerificationEnable:false  });
     setIsPersonalSummary(true);
     setFiatWalletsLoading(false);
@@ -195,19 +199,23 @@ const changeSteps = (step,values,flag) => {
   }
 
  const validateCustomerId = (_, value) => {
-  setCustomerDetails(null);
-  setState({...state,isShowCustomerDetails:false})
     setState({...state,isValidateLoading:false})
     if ((!value&&state.isShowValid)||!value) {
+        setState({...state,isShowCustomerDetails:false})
         return Promise.reject(apicalls.convertLocalLang("is_required"));
     } else if ((!state.validIban&&state.isShowValid) || value?.length < 10) {
+      setCustomerDetails(null);
+        setState({...state,isShowCustomerDetails:false})
         return Promise.reject("Please enter valid Customer ID");
     } else if (
         (value && state.isShowValid)&&
         !/^[A-Za-z0-9]+$/.test(value)
     ) {
-
-        return Promise.reject("Please enter valid Customer ID");
+      setCustomerDetails(null);
+        setState({...state,isShowCustomerDetails:false})
+        return Promise.reject(
+            "Please enter valid Customer ID"
+        );
     }
     else {
         return Promise.resolve();
