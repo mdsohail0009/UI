@@ -105,11 +105,15 @@ const selectsCurrency=(item)=>{
 const changeSteps = (step,values,flag) => {
   setErrorMessage(null);
   setStep(step);
-  if (step === 'enteramount'||step === 'selectcurrency') {
+  if (step === 'enteramount') {
       setState({ ...state,isVarificationLoader:false,selectedCurrency:values,isVerificationEnable:flag?true:false  });
       setFiatWalletsLoading(false);
       setIsPersonalSummary(false);
-  }else {
+  }else  if (step === 'selectcurrency') {
+    setState({ ...state,isVarificationLoader:false,selectedCurrency:values,isVerificationEnable:flag?true:false  });
+    setFiatWalletsLoading(false);
+    setIsPersonalSummary(false);
+}else {
     setState({ ...state,isVarificationLoader:false,isVerificationEnable:false  });
     setIsPersonalSummary(true);
     setFiatWalletsLoading(false);
