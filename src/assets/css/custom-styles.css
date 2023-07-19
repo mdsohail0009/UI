@@ -1300,6 +1300,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .video-block .text-white{text-align: center;}
 }
 @media (max-width: 767.98px){
+    .header-right ul:last-child li:last-child {line-height: 20px;}
     .newSpace{display: flex; padding-top: 14px;}
     .field-width{width:120px !important;}
     .new-custom-radiobtn.mb-24 label:first-child{margin-left:-3px; margin-right:10px;}
