@@ -157,12 +157,12 @@ const changeSteps = (step,values,flag) => {
       const response = await getCustomerDeail(e);
       if (response.ok) {
         if (isValid && response.data && response.data?.fullName) {
-          setState({ ...state, isShowCustomerDetails: true, validIban: true, isValidateLoading: false, ibanLoading: false })
+          setState({ ...state, isShowCustomerDetails: true, validIban: true, isValidateLoading: false, ibanLoading: false,documents: null })
           setCustomerDetails(response.data);
         } else {
           setState({ ...state, validIban: false, ibanLoading: false, isValidateLoading: false })
           if (customerDetails) {
-            setState({ ...state, isShowCustomerDetails: false, customerIdErrorMessage: "No bank details are available for this IBAN number", ibanLoading: false })
+            setState({ ...state, isShowCustomerDetails: false, customerIdErrorMessage: "No bank details are available for this IBAN number", ibanLoading: false,documents: null })
             setCustomerDetails(null);
             useDivRef?.current?.scrollIntoView(0, 0);
             return;
