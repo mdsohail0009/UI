@@ -21,11 +21,12 @@ import TransforReducer from '../reducers/tranfor.Reducer';
 import featuresReducer from '../reducers/feturesReducer';
 import currentActionReducer from '../reducers/actionsReducer';
 import serviceWorkerReducer from '../reducers/serviceWorker';
+import internalCustomerTransfer from '../reducers/internalCustomerTransfer';
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["oidc", "userConfig", "dashboard","menuItems","currentAction","permissions"]
+    whitelist: ["oidc", "dashboard","menuItems","currentAction","permissions"]
 }
 const rootReducer = combineReducers({
     oidc: authReducer,
@@ -45,7 +46,8 @@ const rootReducer = combineReducers({
     TransforStore: TransforReducer,
     menuItems:featuresReducer,
     currentAction:currentActionReducer,
-    serviceWReducer:serviceWorkerReducer
+    serviceWReducer:serviceWorkerReducer,
+    internalCustomerTransfer:internalCustomerTransfer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

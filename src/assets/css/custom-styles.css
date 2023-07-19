@@ -682,7 +682,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 /* success start */
 .cryptosummary-container{max-height: calc(100vh - 0px);}
 .success-title{font-weight: 800 !important;font-size: 26px !important;color: var(--white) !important;}
-.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice) !important;height: 330px;}
+.successsubtext{font-weight: 500;font-size: 16px;color: var(--coinPrice) !important;}
 .custom-declaraton{
     /* height: calc(100vh - 225px); */
     align-items: center;display: flex;justify-content: center;}
@@ -1072,7 +1072,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .agree-check input[type=checkbox]:checked+span{background-position:-153px -519px;}
     .agree-check input[type=checkbox]+span:hover{background-position: -190.5px -519px;}
     .text-style{margin-top: 16px !important;}
-    .successsubtext{height: 400px;}
+    /* .successsubtext{height: 400px;} */
     .round-pills .ant-radio-button-wrapper{line-height: 30px;}
     /* .select-currency{height: 400px;} */
     .val-updown{right: 20px;top:45px;}
@@ -1104,7 +1104,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position:-153px -513px;border-color: transparent !important;}
     .agree-check input[type=checkbox]+span:hover{background-position:-190.5px -513px;}
     .agree-check input[type=checkbox]:checked+span:hover{background-position:-153px -513px;}
-    .successsubtext{height: auto;}
+    /* .successsubtext{height: auto;} */
     .text-style{margin: 30px 0 !important;}
     /* .select-currency {height: 122px;} */
     /* .text-style{height: 140px;} */
@@ -1163,7 +1163,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .side-drawer .ant-drawer-body{padding: 0 30px 16px 30px;}
     .agree-check{height: 100px;}
     .travel-custcheck{height: auto;}
-    .successsubtext{height: calc(100vh - 592px);}
+    /* .successsubtext{height: calc(100vh - 592px);} */
     .custom-height {max-height: calc(100vh - 926px);}
     /* .select-currency {height: calc(100vh - 590px);} */
     .iban-list .ant-list-items{display: 238px;}
@@ -1197,6 +1197,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
     .video-block .text-white{text-align: center;}
 }
 @media (max-width: 767.98px){
+    .header-right ul:last-child li:last-child {line-height: 20px;}
     .video-tutorials{display: block;}
     .sumSub-confirm{width:auto;height: auto;}
     .cust-sumsub-font{width: auto;}
