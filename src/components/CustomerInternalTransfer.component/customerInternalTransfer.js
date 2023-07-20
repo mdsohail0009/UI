@@ -268,6 +268,7 @@ const changeSteps = (step,values,flag) => {
   const goBack = async () => {
     setState({ ...state,isVarificationLoader:false,documents:null});
     setCustomerDetails(null);
+    setIsPersonalSummary(false);
     props.dispatch(setSelectedWallet(null));
       changeSteps('selectcurrency', null,true);
         getAccountWallets();
