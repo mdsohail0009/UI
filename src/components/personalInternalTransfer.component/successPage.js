@@ -34,4 +34,4 @@ const connectStateToProps = ({ sendReceive, userConfig }) => {
         trackAuditLogData: userConfig.trackAuditLogData
     };
 };
-export default connect(connectStateToProps, null)(DelcarationForm);
+export default connect(connectStateToProps)(DelcarationForm);

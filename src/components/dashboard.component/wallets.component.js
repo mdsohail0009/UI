@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Typography, List, Button, Image, Dropdown, Space, Menu, Drawer } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
-import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
+import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
@@ -17,6 +17,7 @@ import Loader from "../../Shared/loader";
 import { buyFiatSteps as config } from '../buyfiat.component/config';
 import { getScreenName } from '../../reducers/feturesReducer';
 import PersonalInternalTransferComponent from '../personalInternalTransfer.component';
+import CustomerInternalTransafer from '../CustomerInternalTransfer.component/index';
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -29,7 +30,8 @@ class Wallets extends Component {
         transactions: false,
         selectedWallet: '',
         showFuntransfer: false,
-        personalTransafershowDrawer:false
+        personalTransafershowDrawer:false,
+        customerTransafershowDrawer:false,
     }
     cockpitCharts=()=>{
             this.props.history.push("/cockpitCharts");
@@ -89,6 +91,10 @@ class Wallets extends Component {
             this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.setState({ ...this.setState, personalTransafershowDrawer: true, selctedVal: value.walletCode })
           
+        } else if(e===6){
+            this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+            this.setState({ ...this.setState, customerTransafershowDrawer: true, selctedVal: value })
+          
         }else {
             this.props.dispatch(getScreenName({getScreen:"dashboard"}))
             this.props.history.push(`/internaltransfer`)
@@ -119,6 +125,13 @@ class Wallets extends Component {
                     
                     </Link>
                 </li>}
+                {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" &&
+                <li onClick={() => this.showSendReceiveDrawer(6, item)}>
+                    <Link value={6} className="c-pointer">
+                    <Translate content="tab_InternalCustomerTransfer"/>
+                    
+                    </Link>
+                </li>}
             </ul>
         </Menu>
     )
@@ -129,7 +142,8 @@ class Wallets extends Component {
             buyFiatDrawer: false,
             transactions: false,
             showFuntransfer:false,
-            personalTransafershowDrawer:false
+            personalTransafershowDrawer:false,
+            customerTransafershowDrawer:false
         })
     }
     render() {
@@ -191,6 +205,9 @@ class Wallets extends Component {
                     }}
                 />}
                 {process.env.REACT_APP_PERSONAL_IBAN==="personal" && this.state.personalTransafershowDrawer && <PersonalInternalTransferComponent showDrawer={this.state.personalTransafershowDrawer}  walletCode={this.state.selctedVal} onClose={() => {
+                        this.closeDrawer();
+                    }}/>}
+                     {process.env.REACT_APP_CUSTOMER_INTERNAL_TRANSFER==="customer" && this.state.customerTransafershowDrawer && <CustomerInternalTransafer showDrawer={this.state.customerTransafershowDrawer} isWallet={false} walletCode={this.state.selctedVal} onClose={() => {
                         this.closeDrawer();
                     }}/>}
                 <Drawer

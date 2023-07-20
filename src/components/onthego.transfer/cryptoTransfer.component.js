@@ -474,7 +474,7 @@ class OnthegoCryptoTransfer extends Component {
                                 <Tabs.TabPane tab="Past Recipients" content="withdrawFiat" key={2} className="" component={Radio}> 
                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList paste-recept-style mobile-scroll">
                 {(pastPayees.length > 0) && pastPayees?.map((item, idx) =>
-                     <Row className="fund-border c-pointer" onClick={async () => {
+                     <Row className="fund-border c-pointer" key={idx} onClick={async () => {
                         if (!["myself", "1stparty", "ownbusiness"].includes(item.addressType?.toLowerCase())) {
                             this.setState({ ...this.state, addressOptions: { ...this.state.addressOptions, addressType: item.addressType }, selectedPayee: item }, () => {this.handlePreview(item)})
                           } else {

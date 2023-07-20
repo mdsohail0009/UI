@@ -224,10 +224,10 @@ class OnthegoFundTransfer extends Component {
     if (verfResponse.ok) {
       for (let verifMethod in verfResponse.data) {
         if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
-            minVerifications = minVerifications + 1;
+            minVerifications = minVerifications + Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS);
         }
       }
-      if (minVerifications >= 1) {
+      if (minVerifications >= Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS)) {
         this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
         this.getWithdrawValidations();
             } else {
@@ -805,8 +805,8 @@ selectsCurrency=(item)=>{
                 className="addCryptoList paste-recept-style mobile-scroll"
               >
                 {pastPayees.length > 0 &&
-                  pastPayees?.map((item) => (
-                    <Row
+                  pastPayees?.map((item,index) => (
+                    <Row key={index}
                       className="fund-border"
                       onClick={()=>this.handleForm(item)}
                           >

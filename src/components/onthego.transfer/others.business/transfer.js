@@ -101,7 +101,7 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab === "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
-
+        _obj.payeeAccountModels[0].userCreated =  this.props.userConfig?.userName ;
         _obj.addressType = "otherbusiness";
         _obj.transferType = this.props.currency=='CHF'&&'chftransfer'||this.props.currency=='SGD'&&'SWIFT/BIC' ||selectedTab;
         _obj.amount = this.props.amount || 0;
