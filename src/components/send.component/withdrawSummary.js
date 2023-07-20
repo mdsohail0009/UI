@@ -215,7 +215,6 @@ class WithdrawSummary extends Component {
 			_obj["comission"] = response.data?.comission;
 			_obj.totalValue = response?.data?.amount;
 			_obj.memberWalletId = response?.data?.memberWalletId;
-			_obj.requestedAmount = response?.data?.requestedAmount;
 			this.props?.dispatch(setWithdrawcrypto(_obj));
 			this.setState({
 				...this.state,
