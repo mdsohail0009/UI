@@ -54,7 +54,7 @@ import { KEY_URL_MAP } from "./config";
 import { getFeaturePermissionsByKey } from "./permissionService";
 import { headerSubscriber } from "../../../utils/pubsub";
 import { checkCustomerState } from "../../../utils/service";
-
+import CustomerInternalTransafer from "../../CustomerInternalTransfer.component/index";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
@@ -83,11 +83,10 @@ class MobileHeaderMenu extends Component {
                 <><Translate
                     content={item.content}
                     component={Menu.Item}
-                    key={indx}
                     className="mr-16"
                 /><Menu>
                         <ul className="drpdwn-list">
-                            {item?.subMenu?.map((subItem) => <li
+                            {item?.subMenu?.map((subItem) => <li key={indx}
                                 className={getScreen?.getScreen === item.content ? "" : "custom-inactive"}
 
                                 onClick={() => {
@@ -142,7 +141,8 @@ class HeaderPermissionMenu extends Component {
             receive_crypto: false,
             sendFiatTab: false,
             theamFalge: 'darkTheam',
-            tabColour: false
+            tabColour: false,
+            Internal_Customer_Transfer:false,
 
         },
         previousDrawerKey: ""
@@ -233,6 +233,12 @@ class HeaderPermissionMenu extends Component {
                 case "personal_bank_account":
                     window.open(process.env.REACT_APP_BANK_UI_URL + 'dashboard/receive', '_self')
                     break;
+                    case "Internal_Customer_Transfer":
+                        this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, Internal_Customer_Transfer: true, sendCryptoTab: false, sendFiatTab: false, } });
+                        this.props.dispatch(setWithdrawfiat(""));
+                        this.props.dispatch(setWithdrawfiatenaable(false));
+                        this.props.dispatch(setSendCrypto(false));
+                        break;
                 default:
                     break;
             }
@@ -299,7 +305,7 @@ class HeaderPermissionMenu extends Component {
         });
         this.props.clearSwapfullData();
         if (key === "send") {
-            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false } }, callback);
+            this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, send_crypto: false, send_fiat: false, receive_fiat: false, receive_crypto: false,Internal_Customer_Transfer:false } }, callback);
         }
         else if (key === "trade") {
             this.setState({ ...this.state, drawerMenu: { ...this.state.drawerMenu, "trade_buy": false, "trade_sell": false } }, callback);
@@ -523,7 +529,6 @@ class HeaderPermissionMenu extends Component {
                         content="header_title"
                         onClick={this.props.routeToCockpit}
                         onMouseOver={() => { this.handleHover() }}
-                        // component={Text}
                         className={this.props.menuItems.getScreen?.getScreen == "dashboard" ? "" : "custom-inactive"}
                     />
                 </Menu.Item>
@@ -687,7 +692,9 @@ class HeaderPermissionMenu extends Component {
                 isShowSendFiat={this.state.drawerMenu.sendFiatTab}
                 onClose={() => this.closeDrawer("send")}
             />
-           
+           {this.state.drawerMenu?.Internal_Customer_Transfer && <CustomerInternalTransafer showDrawer={this.state.drawerMenu?.Internal_Customer_Transfer} isWallet={true} walletCode={"USD"} onClose={() => {
+                        this.closeDrawer("send");
+                    }}/>}
             <Drawer
                 title={[
                     <div className="side-drawer-header">
