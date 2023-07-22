@@ -199,19 +199,23 @@ const changeSteps = (step,values,flag) => {
   }
 
  const validateCustomerId = (_, value) => {
-  setCustomerDetails(null);
-  setState({...state,isShowCustomerDetails:false})
     setState({...state,isValidateLoading:false})
     if ((!value&&state.isShowValid)||!value) {
+        setState({...state,isShowCustomerDetails:false})
         return Promise.reject(apicalls.convertLocalLang("is_required"));
     } else if ((!state.validIban&&state.isShowValid) || value?.length < 10) {
+      setCustomerDetails(null);
+        setState({...state,isShowCustomerDetails:false})
         return Promise.reject("Please enter valid Customer ID");
     } else if (
         (value && state.isShowValid)&&
         !/^[A-Za-z0-9]+$/.test(value)
     ) {
-
-        return Promise.reject("Please enter valid Customer ID");
+      setCustomerDetails(null);
+        setState({...state,isShowCustomerDetails:false})
+        return Promise.reject(
+            "Please enter valid Customer ID"
+        );
     }
     else {
         return Promise.resolve();
@@ -264,7 +268,6 @@ const changeSteps = (step,values,flag) => {
   const goBack = async () => {
     setState({ ...state,isVarificationLoader:false,documents:null});
     setCustomerDetails(null);
-    setIsPersonalSummary(false);
     props.dispatch(setSelectedWallet(null));
       changeSteps('selectcurrency', null,true);
         getAccountWallets();
@@ -519,11 +522,13 @@ return <React.Fragment>
 
   
 }
-const connectStateToProps = ({userConfig, menuItems }) => {
+const connectStateToProps = ({ sendReceive, userConfig, menuItems, oidc }) => {
   return {
+    sendReceive,
     userProfile: userConfig?.userProfileInfo,
     trackAuditLogData: userConfig?.trackAuditLogData,
     withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
+    oidc: oidc?.user?.profile
   };
 };
 const connectDispatchToProps = (dispatch) => {

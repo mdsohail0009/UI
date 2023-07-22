@@ -1059,6 +1059,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .jt-title{background-color: rgb(191 17 49) !important;}
 .submit-button{background-color: #1890ff !important;}
 .justify-content-center{justify-content: center;}
+.summarybal.total-amount{padding: 12px;border-radius: 12px;font-weight: 600;font-size: 18px;text-align: center;}
 /*@media start*/
 @media (min-width: 768px){
     .sumSub-confirm{display: flex;justify-content: center;}
