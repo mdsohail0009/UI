@@ -183,29 +183,25 @@ saveWithdrawdata = async () => {
                                     <div className="adbook-head" >Transfer details</div>
                   </div>
                   <div className="cust-summary-new">
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">How much you will receive</div>
-                    <div className="summarybal">
-                    <NumberFormat
-                                            value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
-                                            thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
-                  </div>
-                
+                  <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                                    <div className="summary-liststyle">Withdrawal amount</div>
+                                    <div className="summarybal"><NumberFormat
+                                        value={`${(this.state.reviewDetails?.requestedAmount)}`}
+                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+                  </div> 
                 <div className="pay-list" style={{ alignItems: 'baseline' }}>
                                     <div className="summary-liststyle">Total fees</div>
                                     <div className="summarybal"><NumberFormat
                                         value={`${(this.state.reviewDetails?.comission)}`}
                                         thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
                   </div>
-                
-                <div className="pay-list" style={{ alignItems: 'baseline' }}>
-                                    <div className="summary-liststyle">Withdrawal amount</div>
-                                    <div className="summarybal"><NumberFormat
-                                        value={`${(this.state.reviewDetails?.requestedAmount)}`}
-                                        thousandSeparator={true} displayType={"text"} /> {`${this.state.reviewDetails?.walletCode}`}</div>
-                  </div>
-                
-
+              <div className="pay-list" style={{ alignItems: 'baseline' }}>
+                <div className="summary-liststyle">How much you will receive</div>
+                <div className="summarybal">
+                  <NumberFormat
+                    value={`${(this.state.reviewDetails?.requestedAmount - this.state.reviewDetails?.comission)}`}
+                    thousandSeparator={true} displayType={"text"} decimalScale={2} /> {`${this.state.reviewDetails?.walletCode}`}</div>
+              </div>
                   </div>
                  
                                 <div className="d-flex  justify-content">
