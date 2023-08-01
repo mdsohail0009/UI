@@ -80,6 +80,7 @@ const SomeoneComponent = (props) => {
         obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
         obj.payeeAccountModels[0].modifiedBy = edit ? props.userConfig?.userName : null;
         obj.createdBy = props.userConfig?.userName;
+        obj.payeeAccountModels[0].userCreated =  props.userConfig?.userName ;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
         obj['customerId'] = props.userProfile?.id;
         if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount ||0; }      
@@ -142,7 +143,6 @@ const SomeoneComponent = (props) => {
             form.current.setFieldsValue({others:null})      
     }
     const handleTabChange=(activekey) => {
-        console.log(activekey)
         setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
         form.current.resetFields();setDocuments(null); setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
         form?.current?.setFieldsValue({others:null});
