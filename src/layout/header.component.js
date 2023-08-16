@@ -15,7 +15,6 @@ import Translate from "react-translate-component";
 import en from "../lang/en";
 import ch from "../lang/ch";
 import my from "../lang/my";
-import { userManager } from "../authentication";
 import Changepassword from "../components/changepassword";
 import {
   updateCoinDetails,
@@ -26,9 +25,8 @@ import {
 import { connect, useDispatch } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
 import { setHeaderTab } from "../reducers/buysellReducer";
-import { getScreenName, clearPermissions } from "../reducers/feturesReducer";
+import { getScreenName } from "../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../notifications/api";
-import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
@@ -111,10 +109,6 @@ class Header extends Component {
     }
     window.open(url);
   };
-
-  // clearEvents() {
-  //   this.trackEvent();
-  // }
   readNotification() {
     readNotifications().then(() => {
       this.props.dispatch(setNotificationCount(0));
