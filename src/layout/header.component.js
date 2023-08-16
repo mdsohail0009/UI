@@ -15,7 +15,6 @@ import Translate from "react-translate-component";
 import en from "../lang/en";
 import ch from "../lang/ch";
 import my from "../lang/my";
-import { userManager } from "../authentication";
 import Changepassword from "../components/changepassword";
 import {
   updateCoinDetails,
@@ -23,12 +22,11 @@ import {
   updateSwapdata,
   clearSwapData,
 } from "../reducers/swapReducer";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
-import { setHeaderTab} from "../reducers/buysellReducer";
-import { getScreenName ,clearPermissions} from "../reducers/feturesReducer";
+import { setHeaderTab } from "../reducers/buysellReducer";
+import { getScreenName } from "../reducers/feturesReducer";
 import { readNotification as readNotifications } from "../notifications/api";
-import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import { getmemeberInfo } from "../reducers/configReduser";
 import HeaderPermissionMenu from '../components/shared/permissions/header.menu';
@@ -36,15 +34,41 @@ import { handleHeaderProfileMenuClick } from "../utils/pubsub";
 import Notifications from "../notifications";
 import { checkCustomerState } from "../utils/service";
 import TheamSwitch from "../components/shared/permissions/theamSwitch"
-
+import { clearUserInfo } from "../reducers/configReduser";
+import { useAuth0 } from "@auth0/auth0-react";
+import { userLogout } from "../reducers/authReducer";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
 const { Paragraph, Text } = Typography;
+
+const LogoutApp = () => {
+  const { logout } = useAuth0()
+  const dispatch = useDispatch()
+  const clearEvents = () => {
+    dispatch(clearUserInfo());
+    dispatch(userLogout());
+    window.$zoho?.salesiq?.chat.complete();
+    window.$zoho?.salesiq?.reset();
+    logout();
+  }
+  return (<li onClick={() => { clearEvents() }}>
+    <Link className="text-left">
+      <span>
+        <Translate
+          content="logout"
+          className="text-white"
+          component={Text}
+        />
+      </span>
+    </Link>
+  </li>)
+}
+
 class Header extends Component {
   componentDidMount() {
     counterpart.setLocale(
-      this.props.userConfig ? this.props.userConfig.language : "en"
+      this.props?.userConfig ? this.props?.userConfig?.language : "en"
     );
   }
   componentWillUnmount() {
@@ -68,8 +92,8 @@ class Header extends Component {
   }
   userProfile() {
     this.props.history.push("/userprofile");
-    if (this.props.oidc.user.profile?.sub) {
-      this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
+    if (this.props.oidc.user?.profile?.sub) {
+      this.props.getmemeberInfoa(this.props.oidc.user?.profile.sub);
     }
   }
   enableDisable2fa = (status) => {
@@ -85,41 +109,31 @@ class Header extends Component {
     }
     window.open(url);
   };
-  trackEvent() {
-    this.props.dispatch(clearPermissions());
-    window.$zoho?.salesiq?.chat.complete();
-    window.$zoho?.salesiq?.reset();
-    userManager.signoutRedirect();
-    apiCalls.trackEvent({
-      Type: "User",
-      Action: "User Logged out",
-      Username: null,
-      customerId: null,
-      Feature: "Logout",
-      Remarks: "User Logged out",
-      Duration: 1,
-      Url: window.location.href,
-      FullFeatureName: "Logout"
-    });
-  }
-  clearEvents() {
-    this.trackEvent();
-  }
+
+  // clearEvents() {
+  //   this.trackEvent();
+  // }
   readNotification() {
     readNotifications().then(() => {
       this.props.dispatch(setNotificationCount(0));
     });
   }
   routeToHome = () => {
-    this.props.dispatch(getScreenName({getScreen:"dashboard"}))
+    this.props.dispatch(getScreenName({ getScreen: "dashboard" }))
     this.routeToCockpit();
   };
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
-    if (!this.props.userConfig?.isKYC) {
-      this.props.history.push("/notkyc");
+    if (!this.props.userConfig?.isEmailVerified) { 
+      this.props.history.push("/emailVerification");
+    } else if (!this.props.userConfig?.isCustomerUpdated) {
+      this.props.history.push("/auth0");
     } else if (!checkCustomerState(this.props.userConfig)) {
       this.props.history.push("/sumsub");
+    }else if (!this.props.userConfig?.isPhoneNumberVerified) {
+      this.props.history.push("/phoneVerification");
+    } else if (!this.props.userConfig?.isKYC) {
+      this.props.history.push("/notkyc");
     } else {
       this.props.history.push("/cockpit");
     }
@@ -143,7 +157,7 @@ class Header extends Component {
         <div className="profile-dropdown">
 
           <Translate
-          content={`${this.props.userConfig?.isBusiness===true?"business_account":"manage_account"}`}
+            content={`${this.props.userConfig?.isBusiness === true ? "business_account" : "manage_account"}`}
             component={Button}
             size="medium"
             block
@@ -229,7 +243,7 @@ class Header extends Component {
               </Link>
             </li>
             <li
-             onClick={() => this.uploadDoc()}
+              onClick={() => this.uploadDoc()}
             >
               <Link>
                 <span className="text-left">
@@ -259,17 +273,7 @@ class Header extends Component {
               </Link>
 
             </li>
-            <li onClick={() => this.clearEvents()}>
-              <Link className="text-left">
-                <span>
-                  <Translate
-                    content="logout"
-                    className="text-white"
-                    component={Text}
-                  />
-                </span>
-              </Link>
-            </li>
+            <LogoutApp />
           </ul>
         </div>
       </Menu>
@@ -278,97 +282,97 @@ class Header extends Component {
       <>
         <Layout className="layout">
           <section className="haead-main">
-          <div className="tlv-header" id="area">
-            
-            <div className="login-user">
-              <ul className="header-logo pl-0">
-                <li className="visible-mobile p-relative" onClick={this.showToggle}>
-                  {this.state.collapsed ?
-                    <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
-                </li>
-                <li className="mobile-logo">
-                  {
-                    <img
-                      src={logoWhite}
-                      alt="logo"
-                      className="tlv-logo dark c-pointer p-relative ml-12"
-                      onClick={this.routeToHome}
-                    />
-                  }
-                  {
-                    <img
-                      src={logoColor}
-                      alt="logo"
-                      className="tlv-logo light c-pointer p-relative ml-12"
-                      onClick={this.routeToHome}
-                    />
-                  }
-                </li>
+            <div className="tlv-header" id="area">
 
-              </ul>
-              <Menu
-                theme="light"
-                mode="horizontal"
-                className="header-right mobile-header-right"
-              >
-                <Menu.Item
-                  key="6"
-                  className="notification-conunt mr-8"
-                  onClick={() => this.setState({ ...this.state, showNotificationsDrawer: true })}
+              <div className="login-user">
+                <ul className="header-logo pl-0">
+                  <li className="visible-mobile p-relative" onClick={this.showToggle}>
+                    {this.state.collapsed ?
+                      <span className="icon lg hamburg " /> : <span className="icon md close-white " />}
+                  </li>
+                  <li className="mobile-logo">
+                    {
+                      <img
+                        src={logoWhite}
+                        alt="logo"
+                        className="tlv-logo dark c-pointer p-relative ml-12"
+                        onClick={this.routeToHome}
+                      />
+                    }
+                    {
+                      <img
+                        src={logoColor}
+                        alt="logo"
+                        className="tlv-logo light c-pointer p-relative ml-12"
+                        onClick={this.routeToHome}
+                      />
+                    }
+                  </li>
+                </ul>
+                <Menu
+                  theme="light"
+                  mode="horizontal"
+                  className="header-right mobile-header-right"
                 >
-                  <span
-                    className="icon md bell ml-4 p-relative"
-                    onClick={() => this.readNotification()}
+                  <Menu.Item
+                    key="6"
+                    className="notification-conunt mr-8"
+                    onClick={() => this.setState({ ...this.state, showNotificationsDrawer: true })}
                   >
-                    {this.props.dashboard?.notificationCount != null &&
-                      this.props.dashboard?.notificationCount !== 0 && (
-                        <span>{this.props.dashboard?.notificationCount}</span>
-                      )}
-                  </span>
-                </Menu.Item>
-                <Menu.Item key="15">
-                   
-                   <TheamSwitch theamFlag={this.state.theamFalge} />
-
-               </Menu.Item>
-                <Dropdown
-                  trigger={["click"]}
-                  overlay={userProfileMenu}
-                  placement="topRight"
-                  arrow
-                  overlayClassName="secureDropdown"
-                  getPopupContainer={() => document.getElementById("area")}
-                >
-                  <Menu.Item key="7">
-                    {this.props.userConfig?.imageURL != null && (
-                      <img
-                        src={
-                          this.props.userConfig?.imageURL
-                            ? this.props.userConfig?.imageURL
-                            : DefaultUser
-                        }
-                        className="user-profile "
-                        alt={"image"}
-                      />
-                    )}
-                    {this.props.userConfig?.imageURL === null && (
-                      <img
-                        src={
-                          this.props.userConfig?.imageURL
-                            ? this.props.userConfig?.imageURL
-                            : DefaultUser
-                        }
-                        className="user-profile"
-                        alt={"image"}
-                      />
-                    )}
+                    <span
+                      className="icon md bell ml-4 p-relative"
+                      onClick={() => this.readNotification()}
+                    >
+                      {this.props.dashboard?.notificationCount != null &&
+                        this.props.dashboard?.notificationCount !== 0 && (
+                          <span>{this.props.dashboard?.notificationCount}</span>
+                        )}
+                    </span>
                   </Menu.Item>
-                </Dropdown>
-              </Menu>
-            </div>
-            <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} routeToCockpit={this.routeToCockpit} />
+                  <Menu.Item key="15">
 
-          </div>
+                    <TheamSwitch theamFlag={this.state.theamFalge} />
+
+                  </Menu.Item>
+                  <Dropdown
+                    trigger={["click"]}
+                    overlay={userProfileMenu}
+                    placement="topRight"
+                    arrow
+                    overlayClassName="secureDropdown"
+                    getPopupContainer={() => document.getElementById("area")}
+                  >
+                    <Menu.Item key="7">
+                      {this.props.userConfig?.imageURL != null && (
+                        <img
+                          src={
+                            this.props.userConfig?.imageURL
+                              ? this.props.userConfig?.imageURL
+                              : DefaultUser
+                          }
+                          className="user-profile "
+                          alt={"image"}
+                        />
+                      )}
+                      {this.props.userConfig?.imageURL === null && (
+                        <img
+                          src={
+                            this.props.userConfig?.imageURL
+                              ? this.props.userConfig?.imageURL
+                              : DefaultUser
+                          }
+                          className="user-profile"
+                          alt={"image"}
+                        />
+                      )}
+
+                    </Menu.Item>
+                  </Dropdown>
+                </Menu>
+              </div>
+              <HeaderPermissionMenu collapsed={this.state.collapsed} isShowSider={this.state.isShowSider} routeToCockpit={this.routeToCockpit} />
+
+            </div>
           </section>
         </Layout>
         <Drawer
