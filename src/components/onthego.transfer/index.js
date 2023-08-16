@@ -329,6 +329,7 @@ saveWithdrawdata = async () => {
         obj["beneficiaryAccountAddress"] = obj.beneficiaryAccountAddress ? apicalls.encryptValue(obj.beneficiaryAccountAddress, this.props.userProfile?.sk) : null;
         obj["routingNumber"] = obj.routingNumber ? apicalls.encryptValue(obj.routingNumber, this.props.userProfile?.sk) : null;
         obj["bankId"]=this.state.selectedbankobj[0].bankId;
+        obj["externalAccountName"]=this.state.selectedbankobj[0].bankName;
         obj["info"] = JSON.stringify(this.props?.trackAuditLogData);
         obj["isToggel"] = this.state?.isToggel;
         obj["originalAmount"]=this.state.reviewDetails.originalAmount;
