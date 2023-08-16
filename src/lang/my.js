@@ -318,7 +318,7 @@ export default {
 	terms: "Mga palatuntunan",
 	refund_cancellation:
 		"at ang patakaran sa pagbabalik, refund at pagkansela nito.",
-	purchase_min: "Kailangan mong bumili ng hindi bababa sa",
+	purchase_min: "You have entered an amount below the minimum purchase. The minimum value is",
 	purchase_max: "Maaari ka lamang bumili ng maximum na",
 	enter_wallet: "Mangyaring maglagay ng halagang bibilhin",
 	select_wallet: "Mangyaring pumili ng wallet upang magpatuloy",
@@ -399,7 +399,7 @@ export default {
 		"Ang inilagay na halaga ay dapat na mas mababa sa available na balanse",
 	amount_max:
 		"Ang inilagay na halaga ay dapat na mas mababa sa max na halaga ng withdraw ng",
-	amount_min: "Pakilagay ang min value ng",
+	amount_min: "You have entered an amount below the minimum withdrawal. The minimum value is",
 	tag: "Tag",
 	button: "Ibahagi",
 	select_address: "piliin ang tirahan",
@@ -474,7 +474,7 @@ export default {
 		"Ang inilagay na halaga ay dapat na mas mababa kaysa sa magagamit na halaga",
 	available_balance_less:
 		"Ang inilagay na halaga ay dapat na mas mababa sa balanse",
-	enter_minvalue: "Pakilagay ang min value ng",
+	enter_minvalue: "You entered an amount below the minimum sale. The minimum value is",
 	enter_coinvalue: "Mangyaring ipasok mula sa coin Value",
 	receive_coin: "Mangyaring piliin ang tumanggap ng barya upang ipagpalit",
 	insufficient_balance: "Hindi sapat na balanse",
@@ -641,5 +641,7 @@ export default {
 	Whitelisting_Status:"Whitelisting Status",
 	Reason_For_Rejection:"sebab penolakan",
 	personal_iban_transafer:"Transferencia personal de IBAN",
-	fiat_transfer_success:"Volver a Transfor"
+	fiat_transfer_success:"Volver a Transfer",
+	suissebase_credit:"SuisseBase Credits",
+	address_hint_text_2: "Make sure to choose the right cryptocurrency.",
 };

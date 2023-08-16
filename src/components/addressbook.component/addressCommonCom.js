@@ -139,7 +139,7 @@ const AddressCommonCom = (props) => {
     getCountry();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const getName = () => {
-    return props?.userConfig.isBusiness
+    return props?.userConfig?.isBusiness
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
@@ -215,7 +215,7 @@ const AddressCommonCom = (props) => {
     if (e.target.value === "1stparty") {
       form.setFieldsValue({
         addressType: "1stparty",
-        beneficiaryAccountName: props?.userConfig.isBusiness
+        beneficiaryAccountName: props?.userConfig?.isBusiness
           ? props?.userConfig.businessName
           : props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
         bankType: "bank",
@@ -277,7 +277,6 @@ const AddressCommonCom = (props) => {
   const handleCountry = (e) => {
     let code = e;
     form.setFieldsValue({ "state": null });
-    let states = country?.filter((item) => item.name?.toLowerCase() === code.toLowerCase());
   }
 
   const getCountry = async () => {
@@ -285,7 +284,6 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       setCountry(response.data);
       form.getFieldValue("country");
-      let states = response.data?.filter((item) => item.name.toLowerCase());
     }else{
       setErrorMsg(apicalls.isErrorDispaly(response))
     }
@@ -320,7 +318,7 @@ const AddressCommonCom = (props) => {
       remarks: null,
       addressState: null,
       inputScore: 0,
-      outputScore: 0,
+      outputScore: 0,                                     
       recordStatus: editBankDetsils === true ? (recrdStatus ? recrdStatus : "Modified") : "Added",
     }
     if (editBankDetsils === true) {
@@ -374,13 +372,12 @@ const AddressCommonCom = (props) => {
     const type = withdraeTab;
     values["customerId"] = props?.userConfig?.id;
     if (!selectParty) {
-      values["beneficiaryAccountName"] = props?.userConfig.isBusiness
+      values["beneficiaryAccountName"] = props?.userConfig?.isBusiness
         ? props?.userConfig.businessName
         : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
     }
     values["type"] = type;
     values["info"] = JSON.stringify(props?.trackAuditLogData);
-    let Id = "00000000-0000-0000-0000-000000000000";
    
     if (!values.isAgree) {
       setBtnDisabled(false);
@@ -394,7 +391,7 @@ const AddressCommonCom = (props) => {
       saveObj.payeeAccountModels = bankmodalData
       if (withdraeTab === "Crypto")
         saveObj.documents = cryptoAddress?.documents;
-        saveObj.TransferType=props?.cryptoTab === 1&&"Crypto"
+        saveObj.TransferType=props?.cryptoTab === 1&&"Crypto";
       let response = await saveAddressBook(saveObj);
       if (response.ok) {
         setBtnDisabled(false);
@@ -426,45 +423,6 @@ const AddressCommonCom = (props) => {
     }
   };
 
-  
-  
-
-  const getIbanData = async (Val) => {
-    bankDetailForm.setFieldsValue({
-      bankName: "",
-      bankAddress: "",
-      payeeAccountState: null,
-      payeeAccountCountry: null,
-      payeeAccountPostalCode: "",
-      swiftCode: "",
-    });
-
-
-    if (Val && Val.length > 14) {
-      let response = await apiCalls.getIBANData(Val);
-      if (response.ok) {
-        const oldVal = bankDetailForm.getFieldValue();
-        bankDetailForm.setFieldsValue({
-          swiftCode: response.data.routingNumber || oldVal.routingNumber,
-          bankName: response.data.bankName || oldVal.bankName,
-          bankAddress: response.data.bankAddress || oldVal.bankAddress,
-          payeeAccountPostalCode: response.data.zipCode || oldVal.zipCode,
-          payeeAccountState: response.data.state || oldVal.state,
-          payeeAccountCountry: response.data.country || oldVal.country,
-        });
-        handleCountryChange(response.data.country);
-      }
-      else{
-        setErrorMsg(apicalls.isErrorDispaly(response))
-
-      }
-    } else {
-      bankDetailForm.setFieldsValue({
-        country: ""
-      })
-    }
-  };
-
   const selectCoin = async () => {
     let response = await getCoinList("All");
     if (response.ok) {
@@ -490,7 +448,7 @@ const AddressCommonCom = (props) => {
     return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
       <Image  preview={false} src={success} className="confirm-icon" />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                <Text className="successsubtext">{`Declaration form has been sent to ${props.userConfig?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
     </div></div>
 

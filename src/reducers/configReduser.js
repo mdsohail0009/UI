@@ -34,7 +34,6 @@ const clearUserInfo = () => {
 }
 const getmemeberInfo = () => {
     return async (dispatch) => {
-        
         apiCalls.getMember().then((res) => {
             if (res.ok) {
                 dispatch(userInfo(res.data));
@@ -48,23 +47,33 @@ const getmemeberInfo = () => {
 
 const getIpRegisteryData = () => {
     return async (dispatch) => {
-        apiCalls.getIpRegistery().then((res) => {
+        await apiCalls.getIpRegistery().then((res) => {
+            var userAgent = window?.navigator?.userAgent;
+            var Browser = userAgent?.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[1];
+            var version = userAgent?.match(/(chrome|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[2];
+            var osRegex = /(Windows NT|Mac OS X|Linux|iPhone|iPad|iPod|Android)[^\s;)]*/i;
+            var osMatch = userAgent?.match(osRegex);    
+            var operatingSystem = osMatch ? osMatch[0] : "Unknown";
+            const start = userAgent.indexOf('(') + 1;
+            const end = userAgent.indexOf(')');
+            const deviceInfo = userAgent.substring(start, end);
+            const deviceName = deviceInfo.split(';')[0].trim();
             if (res.ok) {
                 let ipInfo = {
                     "Ip": res.data.ip,
                     "Location": {
-                        "countryName": res.data.location.country.name,
-                        "state": res.data.location.region.name.replace(/ā/g, 'a'),
-                        "city": res.data.location.city,
-                        "postal": res.data.location.postal,
-                        "latitude": res.data.location.latitude,
-                        "longitude": res.data.location.longitude
+                        "countryName": res.data?.country_name,
+                        "state": res.data.region_name,
+                        "city": res.data?.city,
+                        "postal": res.data?.zip,
+                        "latitude": res.data?.latitude,
+                        "longitude": res.data?.longitude
                     },
-                    "Browser": res.data.user_agent.name,
+                    "Browser": Browser,
                     "DeviceType": {
-                        "name": res.data.user_agent.device.name,
-                        "type": res.data.user_agent.os.type,
-                        "version": res.data.user_agent.os.name + ' ' + res.data.user_agent.os.version
+                        "name": deviceName,
+                        "type": res.data?.type,
+                        "version":operatingSystem + " " + version
                     }
                 }
                 dispatch(fetchtrackauditlogs(ipInfo));
@@ -72,7 +81,6 @@ const getIpRegisteryData = () => {
         });
     }
 }
-
 let initialState = {
     userProfileInfo: null,
     trackAuditLogData: {},

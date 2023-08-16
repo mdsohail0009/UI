@@ -9,7 +9,7 @@
 
 
 .ant-alert{border-radius: 10px;margin-bottom: 16px;}
-.ant-alert-message{font-size: 18px !important;font-weight: 700;color: var(--textDark) !important;line-height: normal;}
+.ant-alert-message{font-size: 18px !important;font-weight: 400;color: var(--textDark) !important;line-height: normal;}
 .ant-alert-description{font-size: 16px !important;color: var(--textSecondary) !important;}
 .grey-search.ant-input-search .ant-input-group input, .grey-search.ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--bgGrey) !important;}
 .ant-input-search .ant-input-group-addon .ant-btn{background-color: transparent; border: none; width: 42px;box-shadow: none;}
@@ -67,6 +67,8 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.xxxl{width: 70px; height: 70px;}
 .icon.xl.closewhite{background-position: -2px -243px;}
 .icon.md.close{background-position: -42px -70px;}
+.icon.lg.greencheck{background-position: -68px -65px; position: absolute;top: 37px;right: 19px;transform: scale(0.8);}
+.icon.lg.close{background-position: -262px -516px; position: absolute;top: 37px;right: 19px;transform: scale(0.8);}
 .icon.lg{width: 26px; height: 26px;}
 .icon.lg.drawer-close{background-position: -1px -112px;}
 .icon.lg.check-ylw{background-position: -36px -111px;}
@@ -201,7 +203,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .pop-btn,.confirm-btn{font-size: 14px;}
 .confirm-btn{height: 48px;}
 .confirm-btn, .confirm-btn:hover, .confirm-btn:focus, .confirm-btn:active {background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));  border-radius: 40px;text-transform: uppercase;font-weight: 700; transition: 0.5s ease; color: var(--textPureWhite) !important;border: 1px solid linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2)) !important;}
-.pop-btn.ant-btn[disabled]{background-color: #3653E4 !important; border-color: #3653E4 !important;color: #FFFFFF; cursor: not-allowed !important; }
+.pop-btn.ant-btn[disabled]{background-color: #3653E4 !important; border-color: #3653E4   !important;color: #FFFFFF; cursor: not-allowed !important; }
 .btn-dropdown .ant-btn:hover{background-color: var(--bgDarkYellow); color: #000;}
 .pop-cancel{background-color: transparent !important;color: var(--White) !important; border-color: transparent !important; border-radius: 40px;height: 57px;padding: 0;}
 .pop-cancel:hover span{color: var(--textYellow) !important;}
@@ -342,8 +344,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 #memberWalletId .ant-select-selector, #currency .ant-select-selector{border-radius: 25px !important;height: 49px !important;}
 #memberWalletId .ant-form-item-has-error,  #currency .ant-form-item-has-error{border: 1px solid var(--red) !important;}
 .custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
-.ant-form-item-has-error .cust-input{background-color: transparent !important;border-color: var(--red) !important}
-.ant-form-item-explain-error{text-align: left;}
+.ant-form-item-has-error .cust-input{background-color: var(--customBG) !important;border-color: var(--red) !important}
+.ant-form-item-explain-error, .ant-form-item-explain-validating{text-align: left;}
 .ant-input-suffix, .anticon-eye-invisible.ant-input-password-icon{color: var(--bgWhite);}
 .coin.XRP {background-position: -2px -60px;}
 .coin.USDT{background-position: -596px -1px;}
@@ -454,6 +456,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .backup-admb-0{margin-bottom: 0 !important;}
 .custom-label.audit-label{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;}
 .basicinfo.crypto-text-mb{margin-bottom: 16px !important;display: inline-block;}
+.border-bottom{border-bottom: 1px solid var(--borderGrey);}
 .addressbook_tabs .ant-tabs-nav{width:auto !important}
 .addressbook_tabs .ant-tabs-tab.ant-tabs-tab-active,.addressbook_tabs .ant-tabs-tab:hover {background: transparent !important;font-weight: 600;  padding: 12px 15px 12px 12px !important; color: var(--textDark);}
 .wdr-summary{display: flex; justify-content: space-around; align-items: center;}
@@ -569,6 +572,16 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .visible-flex{display: flex; justify-content: space-between;align-items: center;}
 .addressbook-grid .cust-list>div{position: unset !important;}
 .transaction-grid td .gridLink,.cases-grid-style td .gridLink,.address-clear td .gridLink{padding:5px 0 0 0 !important; line-height: normal;}
+.reffername{
+    text-align: right;    
+    width: 180px;
+    top: 0;
+    right: 17px;
+    position: absolute;
+    color: #ffffff99;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 8px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -666,6 +679,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .ant-tooltip.ant-tooltip-placement-top{visibility: hidden;}
     .btn-mobile button{padding: 0 30px;}
     .k-pager-wrap.k-pager{font-size: 10px;}
+    .sumSub-confirm{width:350px;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
@@ -800,6 +814,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     
 }
 @media (min-width: 1400px){
+    .register-blockwid{    
+        width: 900px !important;
+        margin: 0 auto !important;}
     .custom-font{font-size:30px !important;}
     .mega-menu{max-width: 1320px;}
     .side-drawer .side-drawer-header{padding: 15px 0px 15px 0px;}
@@ -885,6 +902,7 @@ input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-app
 .c-notallowed{cursor:not-allowed !important;}
 .cust-sumsub-font{width: 400px;}
 .sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 800px;height:350px;margin: 80px auto;border-radius: 14px;}
+.sumSub-confirm.cust-cord{background: var(--gridborder);}
 .sumSub-error{color: var(--black); padding: 50px 40px 16px;height:225px;margin: 50px 0 100px 0;border-radius: 14px;}
 .sumSub-review{font-size: 16px;font-weight: 700;line-height: 1.29;}
 .sumsub-mb{margin-bottom: 16px;}
@@ -1009,7 +1027,6 @@ td.ant-table-column-sort{background: transparent;}
  .trn-sumtext {width: 330px;word-wrap: break-word;}
  .send-crypto-sumry .ant-checkbox-wrapper.ant-custumcheck {position: relative;bottom: 10px !important;}
  .fiat-crypto-model .ant-moda{width: 520px;}
- .send-crypto-err .custom-forminput .ant-form-item-control .ant-form-item-explain-error{position:absolute; bottom: -24px !important;}
  .buy-usdt-btn .ant-btn .ant-btn-lg :focus{box-shadow : none !important;--antd-wave-shadow-color:none !important;}
  /* Standard */
  .k-grid-header .k-header > .k-link{font-size: 16px;font-weight: 500;}
@@ -1094,7 +1111,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .statement-header div{flex: 1;}
 .statement-header.logo-content{align-items: flex-end;}
 .transaction-pdf-template thead{vertical-align: top;text-align: left;}
-.transaction-pdf-template thead th:first-child,tbody tr td:first-child{padding-left: 10px; }
+.transaction-pdf-template thead th:first-child,tbody tr td:first-child,.fee-discount-table tr td:first-child{padding-left: 10px; }
 .transaction-pdf-template tbody tr td{padding-top:8px;padding-bottom:8px; }
 .transaction-pdf-template .pdt-data tr td{word-break: break-all;}
 .ant-dropdown-menu.history-excel{background-color: var(--profileMenu) !important; border-radius: 10px; min-width: 100px; max-width: 200px; padding: 24px 0;right: 25px;}
@@ -1121,3 +1138,12 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .phone-flex{ display: flex;
     justify-content: space-between;
     align-items: center;}
+.commision-fee-custtable .cust-tr-style > th{border-right: 1px solid var(--tableborder)}
+.commision-fee-custtable .cust-tr-style > th:last-child{border-right:0}
+.cust-send-amountfield.fund-transfer-input .tfunds-inputgroup .ant-select{width:auto;}
+.accordian .ant-collapse-extra span{display: inline-block; color: var(--textPureWhite);font-size: 12px;padding: 2px 8px; border-radius: 4px; font-weight: 500;}
+.reject-lbl{background-color: red !important;}
+.subm-lbl{background-color: blue !important;}
+.Requet-lbl{background-color: #c7c70d !important;}
+.send-crypto-input.crypto-blc-inpt{position: relative;}
+.cust-error-msg-align .ant-form-item-explain{position: absolute;top:90px;}

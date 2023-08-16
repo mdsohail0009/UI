@@ -20,7 +20,12 @@ class TransactionSlips extends Component {
       let response = await downloadTransaction(modalData?.id, modalData?.docType);
       if (response.ok) {
         this.setState({ ...this.state, downloadError: "", isLoading: false })
-        window.open(response.data, '_blank')
+        const pdfUrl = response.data;
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.target = '_self';
+        link.download = 'file.pdf';
+        link.click();
         message.success({ content: "Downloaded successfully", className: 'custom-msg', duration: 3 });
       } else {
         this.setState({ ...this.state, downloadError: apicalls.isErrorDispaly(response), isLoading: false })

@@ -48,13 +48,14 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       setBtnDisabled(true);
       passwordResponce(false, '', false);
       initialValues.info = JSON.stringify(trackAuditLogData)
+      
       let obj = Object.assign({}, initialValues);
       obj.ConfirmPassword = apiClient.encryptValue(obj.ConfirmPassword, userConfig.sk)
       obj.CurrentPassword = apiClient.encryptValue(obj.CurrentPassword, userConfig.sk)
       obj.Password = apiClient.encryptValue(obj.Password, userConfig.sk)
       obj.Email = apiClient.encryptValue(obj.Email, userConfig.sk)
       obj.info = apiClient.encryptValue(obj.info, userConfig.sk)
-      const result = await changePassword(obj);
+      const result = await changePassword({password:obj.Password,info:obj.info});
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       if (result.ok) {
         setBtnDisabled(false);
@@ -73,17 +74,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       }
     }
   }
-  const isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (objValue.originalError &&typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
-
+ 
   const passwordResponce = (isError, msg, isloading) => {
     setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
     useDivRef.current?.scrollIntoView(0,0)

@@ -66,14 +66,14 @@ class CryptoWithDrawWallet extends Component {
         if (verfResponse.ok) {
             for (let verifMethod in verfResponse.data) {
                 if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
-                    minVerifications = minVerifications + 1;
+                    minVerifications = minVerifications + Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS);
                 }
             }
         }else{
             this.setState({...this.state,error:apiCalls.isErrorDispaly(verfResponse)})
         }
         this.setState({ ...this.state, isVerificationLoading: false });
-        return minVerifications >= 1;
+        return minVerifications >= Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS);
     }
     async componentDidMount() {
         const isVerified = await this.checkVerification();
@@ -82,8 +82,7 @@ class CryptoWithDrawWallet extends Component {
             if (this.props.sendReceive.withdrawCryptoObj) {
                 this.enteramtForm.current?.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
                 this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
-            } else {
-            }
+            } 
             this.enteramtForm?.current?.setFieldsValue({amount:this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue});
             this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
             this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));

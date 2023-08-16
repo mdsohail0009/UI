@@ -616,7 +616,7 @@ class PaymentsView extends Component {
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "IDENTITYPROOF") }}
-                                                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                                                headers={{Authorization : `Bearer ${this.props.user.deviceToken}`}}
                                             >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
@@ -652,7 +652,7 @@ class PaymentsView extends Component {
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "ADDRESSPROOF") }}
-                                                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                                                headers={{Authorization : `Bearer ${this.props.user.deviceToken}`}}
                                             >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
@@ -686,7 +686,7 @@ class PaymentsView extends Component {
                                                 showUploadList={false}
                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                 onChange={(props) => { this.handleUpload(props, "BANKPROOF") }}
-                                                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                                                headers={{Authorization : `Bearer ${this.props.user.deviceToken}`}}
                                             >
                                                 <p className="ant-upload-drag-icon">
                                                     <span className="icon xxxl doc-upload" />
@@ -758,6 +758,6 @@ class PaymentsView extends Component {
 }
 
 const connectStateToProps = ({ userConfig, oidc }) => {
-    return { userConfig: userConfig.userProfileInfo, user: oidc.user };
+    return { userConfig: userConfig.userProfileInfo, user: oidc };
 };
 export default connect(connectStateToProps, null)(PaymentsView);

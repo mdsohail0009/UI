@@ -27,7 +27,7 @@ class SuccessMsg extends Component {
                 <div className="success-pop text-center sell-success">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="success-title" />
-                    <Paragraph className="successsubtext cust-heightmbl"><Translate content="sucessText1" component={Text} className="successsubtext" /> {cd.totalValue} {cd.walletCode} <Translate content="sucessText3" component={Text} className="successsubtext" /></Paragraph>
+                    <Paragraph className="successsubtext cust-heightmbl"><Translate content="sucessText1" component={Text} className="successsubtext" />{" "} {cd?.requestedAmount}{" "} {cd.walletCode} <Translate content="sucessText3" component={Text} className="successsubtext" /></Paragraph>
                   <Translate content="crypto_with_draw_success" className=" cust-cancel-btn crypto-btn-mobile" component={Button} size="large" onClick={() => { this.onBackSend() }} />
                 </div>
             </>

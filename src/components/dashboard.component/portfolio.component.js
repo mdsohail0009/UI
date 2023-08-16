@@ -18,7 +18,6 @@ class Portfolio extends Component {
         this.state = {
             transactions: false,
             alert: false,
-            errorMessage: "",
             allDocs: false,
             selection: [],
             portfolioData: null,
@@ -63,8 +62,8 @@ class Portfolio extends Component {
         })
     }
     getNumberVal(item){
-        if (item.value.indexOf("/") > -1) {
-          let list = item.value.split("/");
+        if (item?.value?.indexOf("/") > -1) {
+          let list = item?.value?.split("/");
           return (
             <>
               <NumberFormat
@@ -209,7 +208,7 @@ class Portfolio extends Component {
                                         {loading && <tr>
                                             <td colSpan='5' className='text-center p-16'><Spin size='default' /></td></tr>}
                                     </tbody>}
-                                    {!(this.state.transactionData.length > 0) &&
+                                    {this.state.transactionData.length <= 0 &&
                                     <tbody>
                           <tr>
                             <td

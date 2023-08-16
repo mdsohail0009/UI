@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Input, Row, Col, Form, Button, Typography, Tabs, Image, Alert,Select } from 'antd';
-import { createPayee, payeeAccountObj, savePayee, confirmTransaction,getRelationDetails,getReasonforTransferDetails } from "../api";
+import { createPayee, payeeAccountObj, savePayee,getRelationDetails } from "../api";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import PayeeBankDetails from "./bankdetails.component";
 import { validateContentRule } from "../../../utils/custom.validator";
 import Translate from "react-translate-component";
 import apiCalls from "../../../api/apiCalls";
-import ConnectStateProps from "../../../utils/state.connect";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
+import { connect } from "react-redux";
 const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
 const SomeoneComponent = (props) => {
-    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType: 'domestic' });
+    const [addressOptions, setAddressOptions] = useState({ addressType: "individuals", transferType: (props.currency === "EUR") ? "sepa" : props.currency === "CHF"?'chftransfer':"swift", domesticType:props.currency=="SGD" && "SWIFT/BIC" || (props.currency=="EUR"&&'sepa')||'domestic' });
     const [bankdetails, setBankdetails] = useState(null);
     const [createPayeeObj, setCreatePayeeObj] = useState(null);
     const [documents, setDocuments] = useState(null);
@@ -41,15 +41,15 @@ const SomeoneComponent = (props) => {
         const createPayeeData = await createPayee(props.selectedAddress?.id || "", addressOptions.addressType);
         if (createPayeeData.ok) {
             setErrorMessage(null)
-            let edit = false;
+            let edit2 = false;
             setCreatePayeeObj(createPayeeData.data);
             setSelectedRelation(createPayeeData.data.relation)
             if (props.selectedAddress?.id) {
                 setIntialObj({ ...createPayeeData.data, payeeAccountModels: createPayeeData?.data?.payeeAccountModels[0] })
                 setDocuments(createPayeeData?.data?.payeeAccountModels[0]?.docrepoitory)
                 setAddressOptions({ ...addressOptions, domesticType: createPayeeData.data.transferType });
-                edit = true;
-                props?.onEdit(edit);
+                edit2 = true;
+                props?.onEdit(edit2);
                 setEdit(true);
                 setIsSelectedId(createPayeeData?.data?.id);
             }
@@ -71,18 +71,22 @@ const SomeoneComponent = (props) => {
         }
         let obj = { ...createPayeeObj, ...values };
         obj.payeeAccountModels = [payeeAccountObj()];
+        obj.others =values?.relation==="Others"? values?.others:null;
         obj.payeeAccountModels[0] = { ...obj.payeeAccountModels[0], ...bankdetails, ...values.payeeAccountModels };
         obj.payeeAccountModels[0].currencyType = "Fiat";
         obj.payeeAccountModels[0].docrepoitory = documents?.payee || documents?.transfer || documents;
         obj.payeeAccountModels[0].walletCode = props.currency;
         obj.payeeAccountModels[0].ukSortCode = values?.payeeAccountModels?.ukSortCode;
         obj.payeeAccountModels[0].accountNumber = values?.payeeAccountModels?.accountNumber;
-        obj.createdBy = props.userProfile?.userName;
+        obj.payeeAccountModels[0].modifiedBy = edit ? props.userConfig?.userName : null;
+        obj.createdBy = props.userConfig?.userName;
+        obj.payeeAccountModels[0].userCreated =  props.userConfig?.userName ;
         if (props.selectedAddress?.id) { obj.payeeAccountModels[0].id = createPayeeObj.payeeAccountModels[0].id; }
-        obj['customerId'] = props.userProfile.id;
-        if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount; }
-        obj['transferType'] = props.currency == "USD" || props.currency == "GBP"  ? addressOptions.domesticType : props.currency == "CHF"?'chftransfer':'sepa';
+        obj['customerId'] = props.userProfile?.id;
+        if (props.type !== "manual") { obj['amount'] = props.onTheGoObj?.amount ||0; }      
+        obj['transferType'] = (props.currency == "USD" || props.currency == "GBP") && addressOptions.domesticType || props.currency == "CHF" && 'chftransfer' || props.currency =='SGD' && 'SWIFT/BIC' ||(props.currency==='EUR'&&addressOptions.tabType!=="swifttransfer") &&'sepa'||(props.currency==='EUR'&&addressOptions.tabType==="swifttransfer" &&"swifttransfer");
         obj['addressType'] = addressOptions.addressType;
+        obj['info'] =JSON.stringify(props?.trackAuditLogData);
         if (edit) {
             obj.id = isSelectedId ? isSelectedId : createPayeeObj.payeeAccountModels[0]?.payeeId;
         }
@@ -92,16 +96,9 @@ const SomeoneComponent = (props) => {
         if (payeesave.ok) {
             setErrorMessage(null)
             if (props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: payeesave.data.id, amount: props.onTheGoObj.amount, reasonOfTransfer: obj.reasonOfTransfer, docRepositories: documents?.payee || documents?.transfer || rasonDocuments,transferOthers:obj.transferOthers, })
-                if (confirmRes.ok) {
                     setBtnLoading(false);
-                    props.onContinue(confirmRes.data);
-                    setErrorMessage(null)
-                } else {
-                    setBtnLoading(false);
-                    setErrorMessage(apiCalls.isErrorDispaly(confirmRes));
-                    useDivRef.current.scrollIntoView();
-                }
+                    props.onContinue(payeesave.data);
+                    props.reasonAddress(rasonDocuments);
             } else {
                 props.headingUpdate(true);
                 setShowDeclartion(true);
@@ -121,7 +118,6 @@ const SomeoneComponent = (props) => {
         if (data && !data?.bankName) {
             useDivRef.current.scrollIntoView()
             setErrorMessage("No bank details are available for this IBAN number");
-            return;
         }
         else if(data) {
             setIsTabChange(false);
@@ -144,9 +140,12 @@ const SomeoneComponent = (props) => {
     }
     const handleRelation=(e)=>{
         setSelectedRelation(e)
-        if(!edit){
-            form.current.setFieldsValue({others:null})
-        }        
+            form.current.setFieldsValue({others:null})      
+    }
+    const handleTabChange=(activekey) => {
+        setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+        form.current.resetFields();setDocuments(null); setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+        form?.current?.setFieldsValue({others:null});
     }
     return (<React.Fragment>
         {mainLoader && <Loader />}
@@ -155,7 +154,7 @@ const SomeoneComponent = (props) => {
             {showDeclartion && <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
                 <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${props.userProfile?.email}. 
+                <Text className="successsubtext">{`Declaration form has been sent to ${props.userConfig?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
             </div></div>}
 
@@ -163,10 +162,8 @@ const SomeoneComponent = (props) => {
                 {props.currency === "USD" && <>
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
-                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
-                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
-                            }}>
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={handleTabChange}
+                            >
                                 <Tabs.TabPane tab="Domestic USD Transfer" className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD Swift" className="text-white text-captz" key={"international"} disabled={edit} ></Tabs.TabPane>
                                 <Tabs.TabPane tab="International USD IBAN" className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
@@ -180,7 +177,9 @@ const SomeoneComponent = (props) => {
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
                             <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
                                 setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
-                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null)
+                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+                                form?.current?.setFieldsValue({others:null});
+                                
                             }}>
                                 <Tabs.TabPane tab={ props.currency === "GBP" ? `Local ${props.currency} Transfer` : `Swift ${props.currency} Transfer`} className="text-white text-captz" key={"domestic"} disabled={edit}></Tabs.TabPane>
                                 <Tabs.TabPane tab={ props.currency === "GBP" ? `International ${props.currency} Transfer` : `IBAN ${props.currency} Transfer`} className="text-white text-captz" key={"internationalIBAN"} disabled={edit}></Tabs.TabPane>
@@ -188,8 +187,36 @@ const SomeoneComponent = (props) => {
                         </Col>
                     </Row>
                 </>}
-              
-                {props.currency == 'EUR' && <h2 className="adbook-head">SEPA Transfer</h2>}
+                {!showDeclartion && <>
+                {props.currency === "SGD" && <>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);
+                                setReasonDocuments(null); setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+                                form?.current?.setFieldsValue({others:null});
+                            }}>
+                                <Tabs.TabPane tab="SGD SWIFT/BIC" className="text-white text-captz" key={"SWIFT/BIC"} disabled={edit}></Tabs.TabPane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </>}
+                {!showDeclartion && <>
+                {props.currency === "EUR" && <>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="">
+                            <Tabs activeKey={addressOptions.domesticType} style={{ color: '#fff' }} className="cust-tabs-fait" onChange={(activekey) => {
+                                setAddressOptions({ ...addressOptions, domesticType: activekey, tabType: activekey });
+                                form.current.resetFields();setDocuments(null);setReasonDocuments(null);setErrorMessage(null);edit ? setIsTabChange(false) : setIsTabChange(true);setSelectedRelation(null);
+                                form?.current?.setFieldsValue({others:null});
+                            }}>
+                                <Tabs.TabPane tab="SEPA Transfer" className="text-white text-captz" key={"sepa"} disabled={edit}></Tabs.TabPane>
+                                <Tabs.TabPane tab="SWIFT Transfer" className="text-white text-captz" key={"swifttransfer"} disabled={edit}></Tabs.TabPane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </>}
                 {props.currency == 'CHF' && <h2 className="adbook-head">CHF Transfer</h2>}
                 {errorMessage && <Alert type="error" showIcon closable={false} description={errorMessage} />}
             <Form
@@ -444,8 +471,11 @@ const SomeoneComponent = (props) => {
                 </>
                 <Paragraph className="adbook-head" >Bank Details</Paragraph>
                     {((props.selectedAddress?.id && createPayeeObj) || !props.selectedAddress?.id) &&
-                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} createPayeeObj={createPayeeObj} form={form} domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType} transferType={addressOptions?.transferType} getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
-
+                        <PayeeBankDetails GoType={props.ontheGoType} selectedAddress={props.selectedAddress} 
+                        createPayeeObj={createPayeeObj} form={form} 
+                        domesticType={props.currency=='CHF'?'internationalIBAN':addressOptions?.domesticType}
+                         transferType={(props.currency === "EUR" && addressOptions?.domesticType!=="swifttransfer") ? "sepa":(props.currency === "EUR" && addressOptions?.domesticType==="swifttransfer")?"swift": addressOptions?.transferType}
+                          getIbandata={(data) => getIbandata(data)} isAddTabCange={isTabChange} currency={props.currency} editDocument={edit}/>}
                     {props.type !== "manual" &&
                         (<React.Fragment>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload supporting documents to justify your transfer request. E.g. Invoice, Agreements</Paragraph>
@@ -472,6 +502,16 @@ const SomeoneComponent = (props) => {
         </>}
         </>}
         </>}
+        </>}
+        </>}
     </React.Fragment>)
 }
-export default ConnectStateProps(SomeoneComponent);
+
+const connectStateToProps = ({userConfig,
+}) => {
+  return {
+    userConfig: userConfig.userProfileInfo,
+    trackAuditLogData: userConfig.trackAuditLogData,
+  };
+};
+export default connect(connectStateToProps)(SomeoneComponent);

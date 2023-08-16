@@ -72,10 +72,10 @@ class AddBatchPayment extends Component {
         if (verfResponse.ok) {
           for (let verifMethod in verfResponse.data) {
           if (["isEmailVerification", "isPhoneVerified", "twoFactorEnabled", "isLiveVerification"].includes(verifMethod) && verfResponse.data[verifMethod] === true) {
-            minVerifications = minVerifications + 1;
+            minVerifications = minVerifications + Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS);
           }
           }
-          if (minVerifications >= 1) {
+          if (minVerifications >= Number(process.env.REACT_APP_SUISSEBASE_MIN_VERIFICATIONS)) {
           this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: false })
             } else {
               this.setState({ ...this.state, isVarificationLoader: false, isVerificationEnable: true })
@@ -335,7 +335,7 @@ downLoadPreview=()=>{
                                               showUploadList={false}
                                               beforeUpload={(props) => this.beforeUpload(props)}
                                               onChange={(props) => this.handleUpload(props)}
-                                              headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                                              headers={{Authorization : `Bearer ${this.props.user.deviceToken}`}}
                                          
                                               >
                                               <Button className='pop-btn mt-24'>Upload Excel</Button>
@@ -463,7 +463,7 @@ downLoadPreview=()=>{
     }
 }
 const connectStateToProps = ({ sendReceive, userConfig,oidc }) => {
-    return {sendReceive, userProfile: userConfig.userProfileInfo ,user: oidc.user}
+    return {sendReceive, userProfile: userConfig.userProfileInfo ,user: oidc}
 }
 const connectDispatchToProps = dispatch => {
     return {
