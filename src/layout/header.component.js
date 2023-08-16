@@ -109,10 +109,6 @@ class Header extends Component {
     }
     window.open(url);
   };
-
-  // clearEvents() {
-  //   this.trackEvent();
-  // }
   readNotification() {
     readNotifications().then(() => {
       this.props.dispatch(setNotificationCount(0));
