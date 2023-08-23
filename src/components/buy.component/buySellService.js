@@ -18,7 +18,7 @@ export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto,  scr
         return 0;
     }
 }
-export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase,coin }) => {
+export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase, eurInUsd, gbpInUsd,coin }) => {
     const validate = {
         message: null,
         valid: true
@@ -42,8 +42,12 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
     else {
         if (cryptValue < minPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + " " + coin
+            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + "   " + coin
         } 
+        else if (parseFloat(localValue) > maxPurchaseAmt || cryptValue > maxPurchaseAmt) {
+            validate.valid = false;
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for higher amounts."
+        }
         else if (cryptValue > maxPurchase) {
             validate.valid = false;
             validate.message = apicalls.convertLocalLang('purchase_max') + " " +  `${numberWithCommas(maxPurchase)}`  +" "+ coin + ". " + "Please contact support for higher amounts."

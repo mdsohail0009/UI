@@ -269,6 +269,18 @@ class Header extends Component {
               </Link>
 
             </li>
+            <li
+              onClick={() => this.handleVideoClick()}
+            >
+              <Link className="text-left">
+                <span>
+                  Video Tutorials
+                </span>
+                <span className="icon md rarrow-white" />
+
+              </Link>
+
+            </li>
             <LogoutApp />
           </ul>
         </div>

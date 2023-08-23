@@ -60,7 +60,7 @@ export default {
 	address_hint_text: "Be sure to select the right cryptocurrency.",
 	address_hint_text_1:
 		"If you send crypto to the wrong address (eg, Bitcoin to a Bitcoin Cash address), your crypto will be lost.",
-	address_hint_text_2: "Be sure to select the right cryptocurrency.",
+	address_hint_text_2: "Deposit below the minimum will not be credited.",
 	copy: "Copy",
 	share: "Share",
 	from_crypto: "From Crypto",

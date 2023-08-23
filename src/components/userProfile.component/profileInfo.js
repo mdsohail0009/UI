@@ -132,7 +132,7 @@ class ProfileInfo extends Component {
     const { Title, Text } = Typography;
     return (
       <>
-      <div className="">
+      <div className="main-container ">
         {this.state.errorMessage !== null && (
           <Alert
             className="mb-12  profile-alert-style"
@@ -324,7 +324,7 @@ class ProfileInfo extends Component {
                 </label>
                 <div style={{ flexGrow: 12 }}>
                   <p className="profile-value">
-                    {this.props.userConfig.phoneNumber || "--"}
+                    {this.props.userConfig.phoneNo || "--"}
                   </p>
                 </div>
               </div>

@@ -474,6 +474,34 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
             </Col>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address <span className="cust-start-style">*</span>
+								className="custom-forminput mb-36 agree send-crypto-sumry"
+								name="isDocumentUpload"
+								valuePropName="checked"
+								required
+							>				
+								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
+						<label>
+							<input
+								type="checkbox"
+								id="agree-check1"
+								checked={this.state.isDocCheck}
+                onClick={(e)=>this.handleDocCheck(e)}
+							/>
+							<span for="agree-check"  className="c-pointer"
+              />
+						</label>
+						<div
+							className="cust-agreecheck d-flex align-center travel-custcheck"
+							>
+               I may perform transactions greater than 1,000 CHF with this address
+						</div>
+					</div>
+								
+							</Form.Item>
+            </Col>
+            {isDocCheck===true && 
+            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
                             
                                             <Tooltip title="MP4, MOV, WMV, AVI files size maximum allow  25MB">
                                           <span

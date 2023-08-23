@@ -613,6 +613,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto-percent .percent{font-size: 20px;margin-left: 6px;}
 }
 @media (max-width: 767px){
+    .approve-email,.sumsub-mb{margin-top: 12px}
     .box.mb-flex{display: flex !important;}
     .mb-togglespace .ant-collapse-item.ant-collapse-item-active .downangle, .mb-togglespace .ant-collapse-header .icon.downangle{width: 32px !important;}
     .mb-togglespace .ant-collapse-header{display: flex !important;}

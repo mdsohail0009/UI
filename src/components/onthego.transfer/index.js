@@ -176,6 +176,8 @@ class OnthegoFundTransfer extends Component {
           bankId:this.state.selectedbankobj[0]?.bankId, 
           isToggle:this.state.isToggel,
           showAmount:!this.state.isToggel && this.enteramtForm?.current?.getFieldsValue()?.amount || this.state.showAmount,
+          withdrawalAmount:!this.state.isToggel && this.enteramtForm?.current?.getFieldsValue()?.amount || this.state.withdrawalAmount,
+          showAmount:!this.state.isToggel && this.enteramtForm?.current?.getFieldsValue()?.amount || this.state.showAmount,
           withdrawalAmount: this.enteramtForm?.current?.getFieldsValue()?.amount ,
           payeeId:this.state.selectedPayee.id
         }

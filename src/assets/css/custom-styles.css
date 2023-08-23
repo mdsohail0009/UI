@@ -462,7 +462,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .card-text-style{text-align: right;padding: 10px 16px 0;}
 .card-text-style span, .card-bottom-style span{color: var(--textWhite) !important;font-weight: 700;font-size: 16px;}
 .card-bottom-style{padding: 0px 16px 16px;align-items: flex-end;}
-.card-bottom-style img{width: 80px;}
+.card-bottom-style img{width:80px;}
 .master-text{margin-bottom: 0 ;}
 .cust-card-btn{margin-top: 52px;}
 /* Dashboard end */
@@ -571,6 +571,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .sub-abovesearch{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;text-transform: capitalize;}
+.code-lbl.text-upper-remove{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;}
 .uplaod-inner{color: var(--white) !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--white) !important;font-size: 16px;}
 .imprt-bg{
@@ -1098,7 +1099,7 @@ td .gridLink{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;paddin
 .kpi-val.adview-name{width: 230px;}
 .input-disabled-style .ant-select-selection-item{color: var(--textSecondary);}
 .travel-success{margin-top: 65px;}
-.dashbord-space .notices-content{margin-bottom: 36px;}.db-transactions thead,.fee-discount-table thead,.table-border thead{ background-color: var(--grid) !important;}.db-transactions{padding-top: 0;margin-top: 14px;height: 505px;}.db-transactions thead tr:first-child{border-bottom: none !important;}
+.dashbord-space .notices-content{margin-bottom: 36px;}.db-transactions thead,.fee-discount-table thead,.table-border thead{ background-color: var(--grid) !important;}.db-transactions{padding-top: 0;margin-top: 14px;min-height: 505px;}.db-transactions thead tr:first-child{border-bottom: none !important;}
 .download-btn{background-color: #3653E4; border-color: #3653E4;border-radius: 5px;font-weight: 600;transition: 0.3s ease; font-size: 16px; color: #FFFFFF;    padding: 10px 28px;   display: inline-block;    margin-left: 16px;}
 .validateiban-content:hover .ant-form-item-has-error .cust-input{border-color: var(--red) !important;}
 .crypto-list.auto-scroll.wallet-list .drawer-list-fiat .ant-image{vertical-align: middle;}
@@ -1301,6 +1302,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 }
 @media (max-width: 767.98px){
     .header-right ul:last-child li:last-child {line-height: 20px;}
+    .video-tutorials{display: block;}
     .newSpace{display: flex; padding-top: 14px;}
     .field-width{width:120px !important;}
     .new-custom-radiobtn.mb-24 label:first-child{margin-left:-3px; margin-right:10px;}
@@ -1400,6 +1402,8 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .transaction-panel, .crypto-style{margin-top: 30px;}
     .table-border td { min-width: 150px;    }
     .inputfont-style{font-size: 26px !important;}
+    .sumSub-confirm{width:auto;height: auto;}
+    .cust-sumsub-font{width: auto;}
 }
 @media (min-width: 375px){
     .flex-1 .ant-form-item-label > label::after{right: 78px !important;}
@@ -1413,6 +1417,8 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 
 @media (min-width: 768.1px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
+    .sumSub-confirm{display: flex;justify-content: center;}
+   
 }
 .mb-8{margin-bottom: 8px !important;}
 .mt-0{margin-top: 0 !important;}

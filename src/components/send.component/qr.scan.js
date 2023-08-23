@@ -108,7 +108,6 @@ class QRScan extends Component {
                 <Alert
                   type="error"
                   description={this.state.error}
-                  //onClose={() => seterrorMsg(null)}
                   showIcon
                 />
               )}
@@ -126,7 +125,6 @@ class QRScan extends Component {
                                 </Link>}
                                 {netWorkData.length === 1 &&  `${this.networkTypeNames(network.code)}`}
                             </div>
-                           
                         </>
                     })}
                 </div>
@@ -160,10 +158,11 @@ class QRScan extends Component {
                 </Paragraph>
                 <div className='recive-share'>Share</div>
                 <div>
-                <WhatsappShareButton te url={process.env.REACT_APP_WEB_URL} title={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`} >
+                <WhatsappShareButton  url={`${process.env.REACT_APP_WEB_URL} \nThank you.`} 
+                title={ `Hello, I would like to share my ` + `${this.walletCode} ` + `address for receiving: `+`\n${this.walletAddress}`+`\nPlease make sure you are using the correct protocol otherwise you are risking losing the funds.\nI am using SuisseBase:`} >
                 <span className='icon lg whats-app c-pointer'/>
                 </WhatsappShareButton>
-                <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving  ${this.walletAddress}. Note: Please make sure you are using the correct protocol otherwise you are risking losing the funds. I am using Suissebase. Thank you.`}  >
+                <EmailShareButton url={`${process.env.REACT_APP_WEB_URL} \nThank you.`} subject={"Wallet Address"} body={`Hello, I would like to share my ${this.walletCode} address for receiving: `+`  \n${this.walletAddress} \nPlease make sure you are using the correct protocol otherwise you are risking losing the funds. \nI am using SuisseBase:`}  >
                 <span className='icon lg mail-app c-pointer' />
                 </EmailShareButton>
                 </div>
