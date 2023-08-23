@@ -47,7 +47,7 @@ class AccountStatus extends Component {
             <p className="approve-email">
               Contact our Customer success at <a href={`mailto: ${process.env.REACT_APP_ONBOARDING}`}>{process.env.REACT_APP_ONBOARDING}</a> for more information.</p></>}</span></div>
           {this.props.customerState?.customerState === "Under Review" && <p className='approve-email' style={{ wordBreak: 'break-all' }}> Please contact administrator</p>}
-        </div>
+        </div>)}
     </>
   }
 }

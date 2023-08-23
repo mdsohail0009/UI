@@ -262,7 +262,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
   };
 
   render() {
-    const { isLoading, errorMessage, showDeclartion, cryptoData,showDeclartionApproved ,approvedAddress} = this.state;
+    const { isLoading, errorMessage, showDeclartion, cryptoData,showDeclartionApproved ,approvedAddress,isDocCheck} = this.state;
     if (isLoading) {
       return <Loader />
     }
@@ -478,7 +478,8 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
 								name="isDocumentUpload"
 								valuePropName="checked"
 								required
-							>				
+							</Paragraph>				
+              <Form.Item>
 								<div className={`d-flex  agree-check checkbox-mobile align-center`}>
 						<label>
 							<input
@@ -499,7 +500,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
 								
 							</Form.Item>
             </Col>
-            {isDocCheck===true && 
+            {isDocCheck===true && <>
             <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                             <Paragraph className="sub-abovesearch code-lbl upload-btn-mt">Please upload a screenshot or video to prove you are the owner of the address{isDocCheck===true&&<span className="cust-start-style">*</span>}  
                             
@@ -519,7 +520,7 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
                             />
                         </ Col>
                         
-                        </>}
+                        </>} </>}
           
             </Row>
             <Form.Item className="">

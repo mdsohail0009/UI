@@ -18,7 +18,7 @@ export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto,  scr
         return 0;
     }
 }
-export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase, eurInUsd, gbpInUsd,coin }) => {
+export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase, eurInUsd, gbpInUsd,coin,maxPurchaseAmt,maxAmtMessage }) => {
     const validate = {
         message: null,
         valid: true
