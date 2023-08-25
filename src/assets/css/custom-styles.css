@@ -1161,6 +1161,20 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .jt-title{background-color: rgb(191 17 49) !important;}
 .submit-button{background-color: #1890ff !important;}
 .justify-content-center{justify-content: center;}
+.approve-inprogress{margin: 16px 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    font-family: inherit;
+    text-shadow: none;
+    user-select: none;
+    transition: all,.1s,ease-in;
+    background-color: #FFA500;
+    border: 1px solid #FFA500;
+    color: #FFFFFF;}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
