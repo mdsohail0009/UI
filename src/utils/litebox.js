@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Row } from 'antd';
 import {isMobile } from 'react-device-detect';
-const InitialForm = () => {
+const Litebox = () => {
  
     useEffect(() => {
         const JFL_231443151170443 = new window.JotformFeedback({
@@ -112,7 +112,7 @@ const InitialForm = () => {
       <div>
             <div className="">
                 <Row className="order-bottom add-custom justify-content-center">
-                <a className="btn lightbox-231443151170443 approve-inprogress"             
+                <a className="btn lightbox-231443151170443 pop-btn approve-inprogress"             
      >        Lets get know each other (Initial Form)
 </a>
                  
@@ -121,4 +121,4 @@ const InitialForm = () => {
      
     </>)
 }
-export default InitialForm;
+export default Litebox;

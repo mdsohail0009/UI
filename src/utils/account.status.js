@@ -1,6 +1,6 @@
 import { Component } from "react";
 import pending from '../assets/images/pending1.png';
-import InitialForm from "./initialForm";
+import Litebox from "./litebox";
 import { BrowserView, MobileView} from 'react-device-detect';
 class AccountStatus extends Component {
   render() {
@@ -9,8 +9,8 @@ class AccountStatus extends Component {
           <div className="text-center">
           <img src={pending} className="confirm-icon" alt={"success"} /><br />
           <span className='sumSub-review '>{this.props.customerState?.customerState === "Under Review" ? "Your account is under review state" :<> <p className="sumsub-mb">Please Complete the final verification step by clicking on the link below
-          <BrowserView> {<InitialForm />}</BrowserView>
-          <MobileView>{<InitialForm />}</MobileView>
+          <BrowserView> {<Litebox />}</BrowserView>
+          <MobileView>{<Litebox />}</MobileView>
           </p>
             <p className="approve-email ">
               Contact our Customer success at <a href={`mailto: ${process.env.REACT_APP_ONBOARDING}`}>{process.env.REACT_APP_ONBOARDING}</a> for more information.</p></>}</span></div>
