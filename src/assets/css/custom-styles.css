@@ -1161,6 +1161,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .jt-title{background-color: rgb(191 17 49) !important;}
 .submit-button{background-color: #1890ff !important;}
 .justify-content-center{justify-content: center;}
+.approve-inprogress{padding: 13px;}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
