@@ -505,18 +505,7 @@ class HeaderPermissionMenu extends Component {
                                 <span className="icon md rarrow-white" />
                             </Link>
                         </li>
-                        <li
-                            onClick={() => this.props.history.push("/videoTutorials")}
-                        >
-                            <Link className="text-left">
-                                <span>
-                                    Video Tutorials
-                                </span>
-                                <span className="icon md rarrow-white" />
 
-                            </Link>
-
-                        </li>
                         <li
                          onClick={() => this.props.history.push("/fees")}
                         >

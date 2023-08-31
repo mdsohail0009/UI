@@ -1425,3 +1425,4 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 
 /*@media end*/
 .Effective-Fees-fs .ant-form-item-label>label{color: var(--termsText);}
+.approve-inprogress{padding: 13px;}

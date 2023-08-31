@@ -902,7 +902,7 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-appearance: none;appearance: none;margin: 0;}
 .c-notallowed{cursor:not-allowed !important;}
 .cust-sumsub-font{width: 400px;}
-.sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 800px;height:350px;margin: 80px auto;border-radius: 14px;}
+.sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px;width: 800px;margin: 80px auto;border-radius: 14px;}
 .sumSub-confirm.cust-cord{background: var(--gridborder);}
 .sumSub-error{color: var(--black); padding: 50px 40px 16px;height:225px;margin: 50px 0 100px 0;border-radius: 14px;}
 .sumSub-review{font-size: 16px;font-weight: 700;line-height: 1.29;}
