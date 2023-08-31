@@ -543,7 +543,7 @@ export default {
 	received: "Received",
 	comssion: "Commission",
 	WithdrawalFee: "Send Fee",
-	thousandKText: "The maximum amount is $350,000",
+	thousandKText: "The maximum amount is $550,000",
 	sucessText1: "Your order has been placed successfully,",
 	sucessText2: "has been added into your wallet.",
 	sucessText3: "amount has been debited from your wallet.",
