@@ -74,39 +74,39 @@ class MegaMenu extends Component {
         })
     }
     showBuyDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 buyDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isBusiness?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props?.userConfig?.isBusiness?'KYB.':'KYC.') });
         }
     }
     showSendDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 sendDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isBusiness?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props?.userConfig?.isBusiness?'KYB.':'KYC.') });
         }
     }
     showSwapDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 swapDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isBusiness?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props?.userConfig?.isBusiness?'KYB.':'KYC.') });
         }
     }
     showBuyFiatDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig?.isKYC) {
             this.setState({
                 buyFiatDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isBusiness?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props?.userConfig?.isBusiness?'KYB.':'KYC.') });
         }
     }
     render() {

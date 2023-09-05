@@ -3,7 +3,7 @@ import { ApiControllers } from './config'
 
 export const changePassword = (obj) => {
 
-    return apiClient.put(ApiControllers.customers + "ChangePassword", obj);
+    return apiClient.put(ApiControllers.customers + "ChangePWD", obj);
 }
 export const withdrawRecepientNamecheck = (customerId, name) => {
 
@@ -42,4 +42,9 @@ export const getAccountWallet=()=>{
 export const getAccountBankDetails=(payeeId,currency)=>{
     return apiClient.get(ApiControllers.addressbook + `PayeeLableLu/${payeeId}/${currency}`);
 }
-
+export const getSuissebaseCredit = (customerId) => {
+    return apiClient.get(ApiControllers.customers + `Customer/Credit/${customerId}`);
+  };
+  export const saveSuissebaseCrediate = (obj) => {
+    return apiClient.put(ApiControllers.customers + `SaveCredits`,obj);
+  };

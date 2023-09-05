@@ -42,9 +42,13 @@ export function getDocObj(customerId, path, docName, size, id, detailId) {
 }
 
 export function checkCustomerState(config) {
-    const hasProp = config.hasOwnProperty("customerState");
-    if ((hasProp && config.customerState === "Approved") || !hasProp) {
-        return true;
+    if (config) {
+        const hasProp = config.hasOwnProperty("customerState");
+        if ((hasProp && config.customerState === "Approved") || !hasProp) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
         return false;
     }

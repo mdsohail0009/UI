@@ -1,5 +1,6 @@
 import { fetchCurrencyConvertionValue } from "./api"
 import apicalls from "../../api/apiCalls";
+import {numberWithCommas} from '../../utils/service';
 
 export const convertCurrency = async ({ from, to, value, isCrypto, screenName }) => {
     const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,  screenName });
@@ -17,13 +18,11 @@ export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto,  scr
         return 0;
     }
 }
-export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase, eurInUsd, gbpInUsd }) => {
+export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase,coin }) => {
     const validate = {
         message: null,
         valid: true
     };
-    const maxPurchaseAmt = 100000;
-    const maxAmtMessage = "$100k"
     if (localValue === ""|| cryptValue === "") {
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
@@ -43,15 +42,11 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
     else {
         if (cryptValue < minPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + ". " + "Please contact support for more details."
+            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + " " + coin
         } 
-        else if (parseFloat(localValue) > maxPurchaseAmt || cryptValue > maxPurchaseAmt) {
-            validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for higher amounts."
-        }
         else if (cryptValue > maxPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxPurchase + ". " + "Please contact support for higher amounts."
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " +  `${numberWithCommas(maxPurchase)}`  +" "+ coin + ". " + "Please contact support for higher amounts."
         }
        
     }

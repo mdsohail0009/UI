@@ -3,15 +3,15 @@ import React, { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
 import { validateContentRule } from "../../../utils/custom.validator";
-import ConnectStateProps from "../../../utils/state.connect";
 import AddressDocumnet from "../../addressbook.component/document.upload";
 import { RecipientAddress } from "../../addressbook.v2/recipient.details";
-import { confirmTransaction, payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
+import {payeeAccountObj, savePayee, fetchIBANDetails,getRelationDetails,getReasonforTransferDetails } from "../api";
 import DomesticTransfer from "./domestic.transfer";
 import InternationalTransfer from "./international.transfer";
 import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
+import { connect } from "react-redux";
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
@@ -23,7 +23,7 @@ class BusinessTransfer extends Component {
         errorMessage: null,
         isLoading: true,
         details: {},
-        selectedTab: this.props.transferData?.transferType || "domestic", 
+        selectedTab: this.props.transferData?.transferType ||(this.props.currency=='SGD' && "SWIFT/BIC")|| (this.props.currency=='EUR' && "sepa") || "domestic", 
         isBtnLoading: false,
         showDeclaration: false,isEdit:false,
         isSelectedId: null,
@@ -64,9 +64,11 @@ class BusinessTransfer extends Component {
             if(data.transferType=== "international"){
                 this.setState({ ...this.state, selectedTab:data.transferType })
             }
-            else if(data.transferType=== "internationalIBAN"){
+            else if(data.transferType=== "internationalIBAN"||data.transferType==='sepa'){
                 this.setState({ ...this.state, selectedTab:data.transferType })
                  this.handleIbanChange({ target: { value: data?.iban, isNext: true } });
+            }else if(data.transferType=== "SWIFT/BIC"||this.props.currency=="SGD"){
+                this.setState({ ...this.state, selectedTab:"SWIFT/BIC" })
             }
             else{
                 this.setState({ ...this.state, selectedTab:"domestic" })  
@@ -90,18 +92,19 @@ class BusinessTransfer extends Component {
         }
         }
         let _obj = { ...details, ...values };
+        _obj.others =values?.relation==="Others"? values?.others:null;
         _obj.payeeAccountModels[0].currencyType = "Fiat";
         _obj.payeeAccountModels[0].walletCode = this.props.currency;
         _obj.payeeAccountModels[0].accountNumber = values?.accountNumber;
-        _obj.payeeAccountModels[0].bankName = selectedTab === "internationalIBAN" ? ibanDetails?.bankName :  values?.bankName;
+        _obj.payeeAccountModels[0].bankName = (selectedTab === "internationalIBAN" ||selectedTab === "sepa" )? ibanDetails?.bankName :  values?.bankName;
         _obj.payeeAccountModels[0].abaRoutingCode = values?.abaRoutingCode;
         _obj.payeeAccountModels[0].swiftRouteBICNumber = values?.swiftRouteBICNumber;
         _obj.payeeAccountModels[0].line1 = selectedTab === "internationalIBAN" ? ibanDetails?.bankAddress : values.bankAddress1;
         _obj.payeeAccountModels[0].line2 = values.bankAddress2;
-
+        _obj.payeeAccountModels[0].userCreated =  this.props.userConfig?.userName ;
         _obj.addressType = "otherbusiness";
-        _obj.transferType = this.props.currency=='CHF'?'chftransfer':selectedTab;
-        _obj.amount = this.props.amount;
+        _obj.transferType = this.props.currency=='CHF'&&'chftransfer'||this.props.currency=='SGD'&&'SWIFT/BIC' ||selectedTab;
+        _obj.amount = this.props.amount || 0;
         _obj.payeeAccountModels[0].ukSortCode = values?.ukSortCode;
         _obj.payeeAccountModels[0].city = ibanDetails?.city;
         _obj.payeeAccountModels[0].state = ibanDetails?.state;
@@ -111,7 +114,9 @@ class BusinessTransfer extends Component {
         _obj.payeeAccountModels[0].bic=ibanDetails?.routingNumber;
         _obj.payeeAccountModels[0].iban = values?.iban ? values?.iban : this.form2.current?.getFieldValue('iban');
         _obj.payeeAccountModels[0].docrepoitory =  this.state?.documents;
-        _obj.createdBy = this.props.userProfile?.userName;
+        _obj.payeeAccountModels[0].modifiedBy = isEdit ? this.props.userConfig?.userName : null;
+        _obj.createdBy = this.props.userConfig?.userName;
+        _obj.info =JSON.stringify(this.props?.trackAuditLogData);
         if(isEdit){
             _obj.id = isSelectedId? isSelectedId:details?.payeeId;
         }
@@ -125,13 +130,9 @@ class BusinessTransfer extends Component {
         
         if (response.ok) {
             if (this.props.type !== "manual") {
-                const confirmRes = await confirmTransaction({ payeeId: response.data.id, amount: this.props.amount, reasonOfTransfer: _obj.reasonOfTransfer, docRepositories: this.state?.reasonDocuments,transferOthers:_obj.transferOthers, })
-                if (confirmRes.ok) {this.useDivRef.current.scrollIntoView()
-                    this.props.onContinue(confirmRes.data);
-                    this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false,documents:null });
-                } else {
-                    this.setState({ ...this.state, errorMessage: apiCalls.isErrorDispaly(confirmRes), isLoading: false, isBtnLoading: false });
-                }
+                    this.useDivRef.current.scrollIntoView()
+                    this.props.onContinue(response.data);
+                    this.props.reasonAddress(this.state?.reasonDocuments);
             } else {
                 this.setState({ ...this.state, isLoading: false, errorMessage: null, isBtnLoading: false, showDeclaration: true });
                 this.props?.updatedHeading(true)
@@ -141,15 +142,15 @@ class BusinessTransfer extends Component {
         }
     }
     handleTabChange = (key) => {
-        if(key=='domestic'){
+        if(key=='domestic'||key=='sepa'){
             this.form.current?.resetFields();
-       }else if(key=='international'){
+       }else if(key=='international'||key=='swifttransfer'){
            this.form1.current?.resetFields();
        }else {
            this.form2.current?.resetFields();
        }
         let _obj = { ...this.state.details}
-        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null,selectedReasonforTransfer:null});this.form.current.resetFields();
+        this.setState({ ...this.state, selectedTab: key,errorMessage:null, ibanDetails: {}, iBanValid: false, enteredIbanData: null,documents:null,reasonDocuments:null ,selectedRelation:null,selectedReasonforTransfer:null});this.form?.current?.resetFields();
     }
    
     handleIbanChange = async ({ target: { value,isNext } }) => {
@@ -224,20 +225,21 @@ class BusinessTransfer extends Component {
     handleRelation=(e)=>{
         this.setState({...this.state,selectedRelation:e})
         if(!this.state.isEdit){
-            if(this.state.selectedTab=='domestic'){
-                this.form.current.setFieldsValue({others:null})
-           }else if(this.state.selectedTab=='international'){
-            this.form1.current.setFieldsValue({others:null})
+            if(this.state.selectedTab=='domestic' || this.props.currency=="SGD"
+            ||this.state.selectedTab=='sepa'){
+                this.form.current?.setFieldsValue({others:null})
+           }else if(this.state.selectedTab=='international'||this.state.selectedTab=='swifttransfer'){
+            this.form1.current?.setFieldsValue({others:null})
            }else {
-            this.form2.current.setFieldsValue({others:null})
+            this.form2.current?.setFieldsValue({others:null})
            }
-        }else if(this.state.isEdit && this.state.details.relation !='Others') {
-            if(this.state.selectedTab=='domestic'){
-                this.form.current.setFieldsValue({others:null})
-           }else if(this.state.selectedTab=='international'){
-            this.form1.current.setFieldsValue({others:null})
+        }else if(this.state.isEdit && this.state.details.relation ==='Others') {
+            if(this.state.selectedTab=='domestic'||this.state.selectedTab=='sepa'){
+                this.form.current?.setFieldsValue({others:null})
+           }else if(this.state.selectedTab=='international'||this.state.selectedTab=='swifttransfer'){
+            this.form1.current?.setFieldsValue({others:null})
            }else {
-            this.form2.current.setFieldsValue({others:null})
+            this.form2.current?.setFieldsValue({others:null})
            }
         }     
     }
@@ -253,9 +255,9 @@ class BusinessTransfer extends Component {
 
     handleReasonTrnsfer=(e)=>{
         this.setState({...this.state,selectedReasonforTransfer:e})
-        if(this.state.selectedTab=='domestic'){
+        if(this.state.selectedTab=='domestic'||this.state.selectedTab=='sepa'){
             this.form.current.setFieldsValue({transferOthers:null})
-       }else if(this.state.selectedTab=='international'){
+       }else if(this.state.selectedTab=='international'||this.state.selectedTab=='swifttransfer'){
         this.form1.current.setFieldsValue({transferOthers:null})
        }else {
         this.form2.current.setFieldsValue({transferOthers:null})
@@ -270,14 +272,14 @@ class BusinessTransfer extends Component {
             return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
                 <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
-                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
+                <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userConfig?.email}. 
                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
             </div>
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>
 
-            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`} className="text-white" key={"domestic"} disabled={this.state.isEdit}>
+            <Tabs.TabPane tab={this.props.currency=="USD" && `Domestic ${this.props.currency} transfer`|| this.props.currency=="EUR" && `SEPA Transfer` || this.props.currency=="GBP" && `Local  ${this.props.currency} Transfer` ||  this.props.currency=="CHF" && `Swift  ${this.props.currency} Transfer`  || this.props.currency =='SGD' && `${this.props.currency} SWIFT/BIC`} className="text-white" key={(this.props.currency=="SGD" && "SWIFT/BIC")||(this.props.currency==="EUR" && 'sepa') ||"domestic"} disabled={this.state.isEdit}>
                 <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
               
                 <Form initialValues={details}
@@ -420,7 +422,170 @@ class BusinessTransfer extends Component {
                     </Row>
 
                     <Paragraph className="adbook-head" >Bank Details</Paragraph>
-                    <DomesticTransfer type={this.props.type} currency={this.props.currency} form={this.form}  refreshData ={selectedTab}/>
+                    {this.props.currency =="EUR" && <> <Row className="validateiban-content">
+                   <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                       <div className=" custom-btn-error">
+                            <Form.Item
+                                className="custom-forminput custom-label"
+                                name="iban"
+                                label={"IBAN"}
+                                required
+                                rules={[
+                                    {
+                                        validator: this.validateIbanType,
+                                      },
+                                ]}
+                            >
+                                <Input
+                                    className="cust-input ibanborder-field"
+                                    placeholder={"IBAN"}
+                                    onChange={this.handleIbanChange}
+                                    maxLength={50}
+                                    addonAfter={ <Button className={``}
+                                    type="primary"
+                                       loading={this.state.isValidateLoading}
+                                       onClick={() => this.onIbanValidate(this.state?.enteredIbanData)} >
+                                   <Translate content="validate" />
+                           </Button>  }
+                                    />
+
+                            </Form.Item>
+                            </div>
+                       </Col>                     
+                    </Row>
+                      <div className="box basic-info alert-info-custom mt-16 kpi-List">
+                      <Spin spinning={this.state.ibanDetailsLoading}>
+                      {this.state.iBanValid && <Row>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label">
+                                  Bank Name
+                              </label>
+                              <div className=""><Text className="kpi-val">{this.state.ibanDetails?.bankName || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                              BIC
+                              </label>
+                              <div className=""><Text className="kpi-val">{this.state.ibanDetails?.routingNumber || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  Branch
+                              </label>
+                              <div className=""><Text className="kpi-val">{this.state?.ibanDetails?.branch || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  Country
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.country || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  State
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.state || "-"}</Text></div>
+                              </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                          <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  City
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.city || "-"}</Text></div>
+                          </div>
+                          </Col>
+                          <Col xs={24} md={24} lg={24} xl={24} xxl={24} className="mb-16">
+                              <div className="kpi-divstyle">
+                              <label className="kpi-label ">
+                                  Zip
+                              </label>
+                              <div><Text className="kpi-val">{this.state?.ibanDetails?.zipCode || "-"}</Text></div>
+                          </div>
+                          </Col>
+                      </Row>}
+                      {!this.state.iBanValid && !this.state.ibanDetailsLoading &&
+                              <div><Text className="info-details">No bank details available</Text></div>
+
+                         }
+                      </Spin>
+                     
+                  </div>
+                  {this.props?.type !== "manual" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-forminput custom-label"
+                                name="reasonOfTransfer"
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang("is_required"),
+                                    },
+                                    {
+                                        validator: validateContentRule,
+                                    },
+                                ]}
+                                label={
+                                    "Reason For Transfer"
+                                }
+                            >
+                                 <Select
+                                    className="cust-input"
+                                    maxLength={100}
+                                    placeholder={apicalls.convertLocalLang(
+                                        "reasiontotransfor"
+                                    )}
+                                    optionFilterProp="children"
+                                    onChange={(e)=>this.handleReasonTrnsfer(e)}
+                                >
+                                    {this.state.reasonForTransferDataa?.map((item, idx) => (
+                                    <Option key={idx} value={item.name}>
+                                        {item.name}
+                                    </Option>
+                                    ))}
+                                </Select> 
+                            </Form.Item>
+                        </Col>}
+                        {this.state.selectedReasonforTransfer=="Others" && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                            className=" mb-8 px-4 text-white-50 custom-forminput custom-label pt-8 sc-error"
+                            name="transferOthers"
+                            required
+                            rules={[
+                                {whitespace: true,
+                                message: "Is required",
+                                },
+                                {
+                                required: true,
+                                message: "Is required",
+                                },
+                                {
+                                validator: validateContentRule,
+                            },
+                            ]}
+                            >
+                            <Input
+                                className="cust-input"
+                                maxLength={100}
+                                placeholder="Please specify:"
+                            />
+                            </Form.Item>
+                      </Col>}
+                  </>}
+                    {this.props?.currency !="EUR" && <DomesticTransfer type={this.props?.type} currency={this.props?.currency} form={this.form}  refreshData ={selectedTab}/>}
                 
                         {this.props.type !== "manual" && 
                         (<React.Fragment>
@@ -447,7 +612,7 @@ class BusinessTransfer extends Component {
                     </div>
                 </Form></div>
             </Tabs.TabPane>
-            { (this.props.currency !="GBP" && this.props.currency !="CHF")&&   <Tabs.TabPane tab="International USD Swift" key={"international"} disabled={this.state.isEdit}>
+            { (this.props.currency !="GBP" && this.props.currency !="CHF" && this.props.currency !="SGD")&&   <Tabs.TabPane tab={`${this.props.currency=="EUR" ? "SWIFT Transfer" : "International USD Swift"}`} key={ (this.props.currency=="EUR"&&'swifttransfer')||"international"} disabled={this.state.isEdit}>
             <div>{errorMessage && <Alert type="error" description={errorMessage} showIcon />}
            
                 <Form initialValues={details}
@@ -944,5 +1109,11 @@ class BusinessTransfer extends Component {
         </Tabs></div>
     }
 }
-
-export default ConnectStateProps(BusinessTransfer);
+const connectStateToProps = ({userConfig,
+}) => {
+  return {
+    userConfig: userConfig.userProfileInfo,
+    trackAuditLogData: userConfig.trackAuditLogData,
+  };
+};
+export default connect(connectStateToProps)(BusinessTransfer);

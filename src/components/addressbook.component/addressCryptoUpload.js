@@ -14,7 +14,7 @@ import Loader from "../../Shared/loader";
 import { document } from "../onthego.transfer/api";
 import apiCalls from "../../api/apiCalls";
 import { bytesToSize } from "../../utils/service";
-import ConnectStateProps from "../../utils/state.connect";
+import { connect } from "react-redux";
 import { getFileURL } from "./api";
 import { ApiControllers } from "../../api/config";
 import DocumentPreview from '../../Shared/docPreview'
@@ -81,7 +81,7 @@ class AddressCryptoDocument extends Component {
   };
   deleteDoc=()=>{
     let { documents: docs } = this.state;
-    let files = this.state.filesList || docs.details || docs;;
+    let files = this.state.filesList || docs.details || docs;
     for(var k in files){
         if(files[k].id===this.state.selectedObj?.id){
             files[k].state='Deleted';
@@ -205,7 +205,7 @@ class AddressCryptoDocument extends Component {
                 }
                 showUploadList={false}
                 beforeUpload={(props) => {}}
-                headers={{Authorization : `Bearer ${this.props.user.access_token}`}}
+                headers={{Authorization : `Bearer ${this.props.oidc.deviceToken}`}}
                             onChange={({ file }) => {
                                 this.setState({ ...this.state, isDocLoading: true });
                                 if (file.status === "done") {
@@ -385,4 +385,10 @@ class AddressCryptoDocument extends Component {
     );
   }
 }
-export default ConnectStateProps(AddressCryptoDocument);
+const connectStateToProps = ({oidc
+}) => {
+  return {
+    oidc:oidc,
+  };
+};
+export default connect(connectStateToProps)(AddressCryptoDocument);

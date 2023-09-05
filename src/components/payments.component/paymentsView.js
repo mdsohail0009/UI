@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData,getFileURL } from './api';
-import { Typography, Button, Spin,message,Popover,Tooltip,Modal } from 'antd';
+import { Typography, Button, Spin,message,Popover,Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";

@@ -15,12 +15,11 @@ const Verifications = (props) => {
     const [emailSeconds, setEmailSeconds] = useState(120);
     const [errorMsg, setMsg] = useState(false);
     const [phbtnColor,setPhBtnColor]=useState(false)
-    const [emailbtnColor,setEmailBtnColor]=useState(false)
     const [authbtnColor,setAuthBtnColor]=useState(false)
     const [form] = Form.useForm();
     const useOtpRef = React.useRef(null);
     const { Text} = Typography;
-    const fullNumber = props.auth.phone_number;
+    const fullNumber = props.userConfig.phoneNo;
     let last4Digits;
     if (fullNumber) {
         last4Digits = fullNumber.slice(-4);
@@ -139,7 +138,6 @@ const goToSecurity=()=>{
         setEmail({ ...email, errorMsg: '', showRuleMsg: '',btnLoader:true })
         let response = await verifyEmailCode(email.code);
         if (response.ok) {
-            setEmailBtnColor(true)
         setEmail({ ...email, errorMsg: '', verified: true, btnName: 'verified', btnLoader:false });
         updateverifyObj(true, 'isEmailVerification')
         } else if (response.data == null) {
@@ -554,8 +552,8 @@ const goToSecurity=()=>{
 
 const connectStateToProps = ({ userConfig, oidc, menuItems }) => {
     return {
-        userConfig: userConfig.userProfileInfo,
-        auth: oidc.user.profile,
+        userConfig: userConfig?.userProfileInfo,
+        auth: oidc?.user?.profile,
         withdrawCryptoPermissions: menuItems?.featurePermissions?.send_fiat,
 
     };

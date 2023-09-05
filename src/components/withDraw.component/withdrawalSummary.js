@@ -254,7 +254,7 @@ const WithdrawalFiatSummary = ({
 			Obj.beneficiaryAccountName,
 			userConfig?.sk
 		);
-		Obj.createdby=userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
+		Obj.createdBy=userConfig?.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig?.lastName
 		Obj.info = JSON.stringify(trackAuditLogData);
 		let withdrawal = await withdrawSave(Obj);
 		setIsLoading(false);
@@ -272,7 +272,7 @@ const WithdrawalFiatSummary = ({
 		}
 	};
 
-	const fullNumber = oidc.phone_number;
+	const fullNumber = userConfig.phoneNo;
 	const last4Digits = fullNumber?.slice(-4);
 	const maskedNumber = last4Digits?.padStart(fullNumber.length, "*");
 

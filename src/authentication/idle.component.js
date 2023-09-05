@@ -5,7 +5,8 @@ import { userManager } from './index';
 import IdleTimer from 'react-idle-timer';
 import { updateAccessdenied } from '../reducers/feturesReducer';
 import { connect } from 'react-redux';
-import swwicon from '../assets/images/oops.png'
+import swwicon from '../assets/images/oops.png';
+import Wraplogout from '../authentication/logout-component'
 
 class IdleCmp extends Component {
     _count = 15;
@@ -14,15 +15,17 @@ class IdleCmp extends Component {
         counter: 15,
         showIdleModal: false,
         showRefreshPage: false,
+        logoutuser:false
     }
     handleOnIdle = () => {
-        this.setState({ ...this.state, showIdleModal: true });
-        this.timeInterval = setInterval(() => {
-            if (this._count === 0) { clearInterval(this.timeInterval); userManager.signoutRedirect(); } else {
-                this._count = this._count - 1;
-                this.setState({ ...this.state, counter: this._count });
-            }
-        }, 1000);
+        this.setState({...this.state,logoutuser:true})
+        // this.setState({ ...this.state, showIdleModal: true });
+        // this.timeInterval = setInterval(() => {
+        //     if (this._count === 0) { clearInterval(this.timeInterval); userManager.signoutRedirect(); } else {
+        //         this._count = this._count - 1;
+        //         this.setState({ ...this.state, counter: this._count });
+        //     }
+        // }, 1000);
     }
 
 
@@ -45,6 +48,7 @@ class IdleCmp extends Component {
                     onIdle={this.handleOnIdle}
                     debounce={250}
                 />
+                <Wraplogout isLogout={this.state.logoutuser} />
                 <App updateAvailable={this.props.updateAvailable} />
                 <Modal
                     title="Session timedout alert" visible={showIdleModal}

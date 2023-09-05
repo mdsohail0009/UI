@@ -36,12 +36,12 @@ const TheamSwitch = ({customer,getmemeberInfoa}) => {
         
       <div className="custom-theme-btn">
          {screenTheme != 'lightMode' && 
-                    <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() =>  themeSwitch() }>
+                    <div className="theme-switch newSpace theme-active mobile-mb-16 c-pointer" onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center " >
                             <p className="theme-txt"><span className="icon md theme-icon" /><span className='theme-text'>Light Mode</span></p></div>
                     </div>}
          {screenTheme != 'darkMode' &&            
-                    <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() =>  themeSwitch() }>
+                    <div className={"theme-switch c-pointer newSpace" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() =>  themeSwitch() }>
                         <div className="d-flex align-center c-pointer" >
                             <p className="theme-txt"><span className="icon md theme-icon" /><span className='theme-text'>Dark Mode</span></p>
                             </div>

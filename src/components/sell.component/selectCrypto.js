@@ -13,6 +13,7 @@ import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
 import { getFeaturePermissionsByKeyName } from '../shared/permissions/permissionService'
 import { setWallet } from '../../reducers/buyReducer';
+import {numberWithCommas} from '../../utils/service';
 
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
@@ -71,14 +72,7 @@ class SelectSellCrypto extends Component {
     previewSellData() {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
-        const maxUSDT = 100000;
-        const purchaseCurrencyMaxAmt = {
-            GBP: this.state.USDAmnt * gbpInUsd,
-            EUR: this.state.USDAmnt * eurInUsd,
-            USD: this.state.USDAmnt
-        }
-        const maxAmtMesage = "$100,000";
+        let { sellMinValue,coin } = this.props.sellData.coinDetailData;
         if ((this.state.CryptoAmnt === "")) {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('enter_amount')
@@ -104,12 +98,13 @@ class SelectSellCrypto extends Component {
             return;
         } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue + " " + coin  })
             return;
         }
-        else if (purchaseCurrencyMaxAmt[obj.toWalletCode] > maxUSDT) {
+        else if (parseFloat(this.state.CryptoAmnt) > this.props.sellData.coinDetailData.sellMaxValue) {
+            let sellMaxValue=this.props.sellData.coinDetailData.sellMaxValue;
             this.myRef.current.scrollIntoView(0,0);
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') +  `${numberWithCommas(sellMaxValue)}`+" "+coin +". Please contact support for higher amounts." })
             return;
         }
         else {
@@ -183,7 +178,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, isShowCoinsData: true })
     }
     render() {
-        const { Text, Paragraph } = Typography;
+        const { Paragraph } = Typography;
         const { coinDetailData } = this.props.sellData;
         return (
             <>
@@ -205,14 +200,15 @@ class SelectSellCrypto extends Component {
                                 isSwaped={this.state.isSwap}
                             />
                                 <div className='display-items moblie-order buy-sell-mobile' >
+                                    <div className='radio-grp'>
                                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills sell-radiobtn-style text-left" onChange={({ target: { value } }) => {
                                         this.clickMinamnt(value)
                                     }}>
                                         <Translate value="min" content="min" component={Radio.Button} />
 
                                         <Translate value="all" content="all" component={Radio.Button} />
-                                    </Radio.Group>
-                                    {<div className='crypto-details'><div className='sellcrypto-style'>Balance:
+                                    </Radio.Group></div>
+                                    {<div className='crypto-details crypto-bal'><div className='sellcrypto-style'>Balance:
                                     </div> <Currency 
                                     defaultValue={`${this.props.sellData.coinDetailData.coinBalance}`} 
                                     prefix={""} 
@@ -226,10 +222,13 @@ class SelectSellCrypto extends Component {
 
                                 <WalletList placeholder="Select Currency" onWalletSelect={(e) => this.handleWalletSelection(e)} defaultCurrency="USD"/>
                             </div>
-
-                            {<div><Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                            {<div className='buy-paragraph buy-para-wd'>
+                            <Translate content="thousandKText" component={Paragraph} className="buy-paragraph" />
+                            
                                 <Translate content="contact_amount_text" component={Paragraph} className="buy-paragraph" /><div className="sell-btn-style">
-                                    <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
+                                    <SuisseBtn autoDisable={true} 
+                                    disabled={this.state.isConvertionLoading}
+                                    title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
                                 </div></div>}
                         </Card>
 

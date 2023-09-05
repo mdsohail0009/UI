@@ -36,7 +36,7 @@ class FaitdepositSummary extends Component {
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={'success'} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className=""><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {fd.Amount}{fd.currencyCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
+                    <Paragraph className=""><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" />{" "} {fd.Amount}{" "}{fd.currencyCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
                     <Space direction="vertical" size="large">
                         <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.returnToFiatDep()} />
                     </Space>

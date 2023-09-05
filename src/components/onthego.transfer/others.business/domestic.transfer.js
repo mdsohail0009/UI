@@ -2,7 +2,6 @@ import { Component } from "react";
 import apiCalls from "../../../api/apiCalls";
 import { Form, Row, Col, Input,Select,Alert } from "antd";
 import { validateContentRule } from "../../../utils/custom.validator";
-import NumberFormat from "react-number-format";
 import { getReasonforTransferDetails } from "../api";
 const { TextArea } = Input;
 const {Option}=Select;
@@ -83,7 +82,7 @@ class DomesticTransfer extends Component {
 
                 </Form.Item>
             </Col>
-           {this.props.currency != 'GBP' &&this.props.currency != 'CHF' && <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+           {this.props.currency != 'GBP' &&this.props.currency != 'CHF' && this.props.currency != 'SGD'&&  <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                     className="fw-300 mb-4 text-white-50 py-4 custom-forminput custom-label"
                     name="abaRoutingCode"
@@ -133,17 +132,17 @@ class DomesticTransfer extends Component {
                         validator: this.validateNumber
                     }
                 ]}>
-                <NumberFormat
+                <Input
+                    type="text"
                     className="cust-input value-field cust-addon mt-0"
-                    customInput={Input}
                     prefix={""}
                     placeholder="Uk Sort Code"
                     allowNegative={false}
-                    maxlength={6}
+                    maxLength={6}
                 />
             </Form.Item>
         </Col>}
-        {this.props.currency == 'CHF'&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+        {(this.props.currency == 'CHF'|| this.props.currency == 'SGD')&&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
                         className="custom-forminput custom-label"
                         name="swiftRouteBICNumber"
