@@ -571,6 +571,7 @@ h1.heading{font-size: 24px;font-weight: 600;color:var(--textWhite);margin-bottom
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .sub-abovesearch{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;text-transform: capitalize;}
+.code-lbl.text-upper-remove{color: var(--subText) !important;font-weight: 400 !important;font-size: 14px !important;margin-bottom: 6px !important;}
 .uplaod-inner{color: var(--white) !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--white) !important;font-size: 16px;}
 .imprt-bg{
@@ -1161,7 +1162,11 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .jt-title{background-color: rgb(191 17 49) !important;}
 .submit-button{background-color: #1890ff !important;}
 .justify-content-center{justify-content: center;}
-.approve-inprogress{padding: 13px;}
+.inactive-badge{display: inline-block;margin-left: 10px;}
+.cust-badge-style .file-label.add-lbl{width: auto;}
+.cust-badge-style .file-labels{margin-left: 8px;font-size: 12px;}
+.cust-badge-style{align-items: center;}
+.fee-personal-badge .file-label.add-lbl{display: inline;margin-left: 8px}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
@@ -1302,6 +1307,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 }
 @media (max-width: 767.98px){
     .header-right ul:last-child li:last-child {line-height: 20px;}
+    .video-tutorials{display: block;}
     .newSpace{display: flex; padding-top: 14px;}
     .field-width{width:120px !important;}
     .new-custom-radiobtn.mb-24 label:first-child{margin-left:-3px; margin-right:10px;}
@@ -1401,6 +1407,8 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
     .transaction-panel, .crypto-style{margin-top: 30px;}
     .table-border td { min-width: 150px;    }
     .inputfont-style{font-size: 26px !important;}
+    .sumSub-confirm{width:auto;height: auto;}
+    .cust-sumsub-font{width: auto;}
 }
 @media (min-width: 375px){
     .flex-1 .ant-form-item-label > label::after{right: 78px !important;}
@@ -1414,9 +1422,12 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 
 @media (min-width: 768.1px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
+    .sumSub-confirm{display: flex;justify-content: center;}
+   
 }
 .mb-8{margin-bottom: 8px !important;}
 .mt-0{margin-top: 0 !important;}
 
 /*@media end*/
 .Effective-Fees-fs .ant-form-item-label>label{color: var(--termsText);}
+.approve-inprogress{padding: 13px;}
