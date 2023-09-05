@@ -135,8 +135,8 @@ const Fees = (props) => {
                           <table className="row-border inside-table"width="100%" >
                             <tr>
                               <td style={{ width: "150px" }}>{item.currencyType} <br/>{item.currency}</td>
-                              <td style={{ width: "150px" }} >{item.bankName}
-                              {" "} {item.status==="Inactive"? <span className="file-labels ml-8 fs-12 address-label address-label-width">Inactive</span>:" "}
+                              <td style={{ width: "150px" }} ><div className='fee-personal-badge'><span>{item.bankName }</span>{" "} {item.isPersonalBank && <span className="file-label add-lbl">Personal</span>}</div>
+
                               </td>
                               <td style={{ width: "150px" }}>
                                 <Form.Item className="customised-input">
