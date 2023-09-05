@@ -1162,6 +1162,11 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .jt-title{background-color: rgb(191 17 49) !important;}
 .submit-button{background-color: #1890ff !important;}
 .justify-content-center{justify-content: center;}
+.inactive-badge{display: inline-block;margin-left: 10px;}
+.cust-badge-style .file-label.add-lbl{width: auto;}
+.cust-badge-style .file-labels{margin-left: 8px;font-size: 12px;}
+.cust-badge-style{align-items: center;}
+.fee-personal-badge .file-label.add-lbl{display: inline;margin-left: 8px}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
