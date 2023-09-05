@@ -1167,6 +1167,7 @@ table tr:last-child td:last-child{border-bottom-right-radius: 20px;}
 .cust-badge-style .file-labels{margin-left: 8px;font-size: 12px;}
 .cust-badge-style{align-items: center;}
 .fee-personal-badge .file-label.add-lbl{display: inline;margin-left: 8px}
+.maxbuy-amount .ant-typography.buy-paragraph{display: inline-block; margin: 0; width: fit-content;}
 /*@media start*/
 @media (min-width: 768px){
     .flex-1 .ant-form-item-label > label::after{right: 0 !important;}
