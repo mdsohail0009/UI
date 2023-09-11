@@ -138,7 +138,7 @@ class BusinessTransfer extends Component {
                 this.props?.updatedHeading(true)
             }
         } else {this.useDivRef.current.scrollIntoView()
-            this.setState({ ...this.state, details: { ...details, ...values }, errorMessage: apiCalls.isErrorDispaly(response), isLoading: false, isBtnLoading: false });
+            this.setState({ ...this.state,  errorMessage: apiCalls.isErrorDispaly(response), isLoading: false, isBtnLoading: false });
         }
     }
     handleTabChange = (key) => {

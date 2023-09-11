@@ -9,7 +9,7 @@ class AccountStatus extends Component {
         <div className='sumSub-confirm cust-cord text-white text-center'>
           <div className="text-center">
           {this.props.customerState?.customerState === "Under Review" && <img src={spinner} className="confirm-icon" alt={"success"} />}
-          {this.props.customerState?.customerState !== "Under Review" && <img src={pending} className="confirm-icon" alt={"success"} />}
+          {this.props.customerState?.customerState !== "Under Review" && <img src={spinner} className="confirm-icon" alt={"success"} />}
           <br />
           <span className='sumSub-review '>{this.props.customerState?.customerState === "Under Review" ? "Your account is under review state" :<> <p className="sumsub-mb">Please Complete the final verification step by clicking on the link below
           <BrowserView> {<Litebox />}</BrowserView>
