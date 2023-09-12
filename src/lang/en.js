@@ -581,6 +581,7 @@ export default {
 	email_invalid_code: "Invalid email verification code",
 	sendTo: "Send",
 	account_address: "Beneficiary Address",
+	receiving_option:"Receiving Option",
 	account_name: "Beneficiary Name",
 	delete: "Delete",
 	personal_account: 'Personal Account',
