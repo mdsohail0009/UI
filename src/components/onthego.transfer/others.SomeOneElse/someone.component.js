@@ -9,6 +9,7 @@ import apiCalls from "../../../api/apiCalls";
 import Loader from "../../../Shared/loader";
 import alertIcon from '../../../assets/images/pending.png';
 import { connect } from "react-redux";
+import success from '../../../assets/images/success.svg';
 const { Paragraph, Text, Title } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
@@ -151,12 +152,18 @@ const SomeoneComponent = (props) => {
         {mainLoader && <Loader />}
         {!mainLoader && <>
             <div ref={useDivRef}></div>
-            {showDeclartion && <div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
+            {showDeclartion && <div className="custom-declaraton align-declaration">
+                 {process.env.REACT_APP_ISDOCUSIGN == "false" && <div className="success-pop text-center declaration-content">
                 <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userConfig?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
-            </div></div>}
+                 </div> || <div className="success-pop text-center declaration-content">
+             <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
+             <Title level={2} className="success-title">Address saved successfully</Title>
+             <p className="text-white">Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p>
+             </div>}
+             </div>}
 
             {!showDeclartion && <>
                 {props.currency === "USD" && <>

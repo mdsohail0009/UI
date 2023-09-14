@@ -72,6 +72,41 @@ class AddressBook extends Component {
 		if (process.env.REACT_APP_ISTR=="true") {
 			const obj=[{field: "walletSource", title: "Wallet Source", width: 180, filter:true}]
 			this.columnsCrypto.splice(4,0,...obj)     
+		 }else if(process.env.REACT_APP_ISDOCUSIGN == "true"){
+			const fiatobj=[{
+				field: "digitallySigned",
+				customCell: (props) => (
+					<td>
+						{props.dataItem?.digitallySigned==="Signed"  && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
+							if (!this.state.isDownloading)
+								this.downloadDeclarationForm(props?.dataItem);
+						}} >{props?.dataItem?.bankAccountType!=="Personal" && <DownloadOutlined />}</Link>{props.dataItem?.digitallySigned}</>}
+						{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
+						{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
+					</td>
+				),
+				title: apiCalls.convertLocalLang("whitelist"),
+				filter: true,
+				width: 200,
+			},]
+			this.columnsFiat.splice(6,0,...fiatobj)    
+			const cryptoobj=[ {
+				field: "digitallySigned",
+				customCell: (props) => (
+					<td>
+						{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
+							if (!this.state.isDownloading)
+								this.downloadDeclarationForm(props?.dataItem);
+						}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
+						{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
+						{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
+					</td>
+				),
+				title: apiCalls.convertLocalLang("whitelist"),
+				filter: true,
+				width: 200,
+			},]
+			this.columnsCrypto.splice(6,0,...cryptoobj)    
 		 }
 		if(!this.state.cryptoFiat){
 			this.props.changeStep("step1");
@@ -191,22 +226,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 200,
 		},
-		{
-			field: "digitallySigned",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.digitallySigned==="Signed"  && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <> <Link onClick={() => {
-						if (!this.state.isDownloading)
-							this.downloadDeclarationForm(props?.dataItem);
-					}} >{props?.dataItem?.bankAccountType!=="Personal" && <DownloadOutlined />}</Link>{props.dataItem?.digitallySigned}</>}
-					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
-					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: true,
-			width: 200,
-		},
+		
 		{
 			field: "status",
 			title: apiCalls.convertLocalLang("Status"),
@@ -275,22 +295,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 200,
 		},
-		{
-			field: "digitallySigned",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.digitallySigned==="Signed" && (this.state.selectedDeclaration !== props?.dataItem.payeeAccountId) && <><Link onClick={() => {
-						if (!this.state.isDownloading)
-							this.downloadDeclarationForm(props?.dataItem);
-					}} ><DownloadOutlined /></Link> {props.dataItem?.digitallySigned}</>}
-					{props.dataItem?.digitallySigned!=="Signed" && props.dataItem?.digitallySigned}
-					{this.state.isDownloading && this.state.selectedDeclaration === props?.dataItem.payeeAccountId && <Spin size="small" />}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: true,
-			width: 200,
-		},
+		
 		{
 			field: "status",
 			title: apiCalls.convertLocalLang("Status"),

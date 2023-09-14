@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Modal,Tooltip,Spin,Alert } from 'antd';
+import { Drawer, Typography, Button, Modal,Tooltip,Spin,Alert ,Image} from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import pending from '../../assets/images/pending.png';
@@ -7,7 +7,8 @@ import NumberFormat from "react-number-format";
 import Verifications from "../onthego.transfer/verification.component/verifications"
 import {proceedTransaction} from './api'
 import apicalls from '../../api/apiCalls';
-const { Title, Paragraph, Text } = Typography
+import success from '../../assets/images/success.svg';
+const { Title, Paragraph, Text } = Typography;
 
 class PaymentSummary extends Component {
 	myRef = React.createRef();
@@ -225,14 +226,19 @@ class PaymentSummary extends Component {
 						</>}
 						{this.state.showDeclaration && <>
 					
-							<div className="custom-declaraton align-declaration"> <div className="text-center mt-36 declaration-content">
+							<div className="custom-declaraton align-declaration">
+								{process.env.REACT_APP_ISDOCUSIGN == "false" && <div className="text-center mt-36 declaration-content">
 							<img src={pending} alt={`Processed`} className="confirm-icon"/>
 							<Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.customer?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
 
-      </div>
-      </div>
+                               </div> || <div className="success-pop text-center declaration-content">
+								<Image src={success} className="confirm-icon" alt={"success"} preview={false} />
+							<Title level={2} className="success-title">Address saved successfully</Title>
+							<p className="text-white">Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p>
+						</div>}
+                       </div>
 						</>}
 					</div>
 					</Spin>

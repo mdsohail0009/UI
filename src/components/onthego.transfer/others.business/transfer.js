@@ -12,6 +12,7 @@ import Translate from "react-translate-component";
 import alertIcon from '../../../assets/images/pending.png';
 import apicalls from "../../../api/apiCalls";
 import { connect } from "react-redux";
+import success from '../../../assets/images/success.svg';
 const { Paragraph, Title, Text } = Typography;
 const { TextArea } = Input;
 const {Option}=Select;
@@ -269,12 +270,17 @@ class BusinessTransfer extends Component {
             return <Loader />
         }
         if (this.state.showDeclaration) {
-            return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+            return <div className="custom-declaraton"> 
+            {process.env.REACT_APP_ISDOCUSIGN == "false" && <div className="success-pop text-center declaration-content">
                 <Image  preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userConfig?.email}. 
                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved. `}</Text>
-            </div>
+            </div> || <div className="success-pop text-center declaration-content">
+            <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
+          <Title level={2} className="success-title">Address saved successfully</Title>
+		  <p className="text-white">Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p>
+      </div>}
             </div>
         }
         return <div ref={this.useDivRef}><Tabs className="cust-tabs-fait" onChange={this.handleTabChange} activeKey={selectedTab}>

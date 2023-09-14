@@ -445,13 +445,18 @@ const AddressCommonCom = (props) => {
     />
   );
   if (isSignRequested) {
-    return <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+    return <div className="custom-declaraton"> 
+   {process.env.REACT_APP_ISDOCUSIGN =="false" && <div className="success-pop text-center declaration-content">
       <Image  preview={false} src={success} className="confirm-icon" />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${props.userConfig?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
-    </div></div>
-
+    </div> || <div className="success-pop text-center declaration-content">
+       <Image  preview={false} src={success}  className="confirm-icon" />
+       <Title level={2} className="successsubtext cust-heightmbl">Address saved successfully</Title>
+       <p className="text-white">Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p>
+   </div>}
+    </div>
   }
   return (
     <div>
