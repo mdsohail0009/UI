@@ -294,6 +294,12 @@ class FaitDeposit extends Component {
                     <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fait-subtext" >{BankInfo.accountNumber}</Text>
                      </CopyToClipboard>
                      </div>
+                   {BankInfo.receivingOptions &&  <Translate
+                      className="fait-title"
+                      content="receiving_option"
+                      component={Text}                     
+                    />}
+                   {BankInfo?.receivingOptions &&<p>{BankInfo?.receivingOptions === "Others" ? `${BankInfo?.receivingOptions } (${BankInfo?.receivingComment})` :BankInfo?.receivingOptions}</p>}
                      </div>
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="fait-maintext"
