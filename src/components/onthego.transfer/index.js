@@ -1305,13 +1305,19 @@ Effective-Fees"  onClick={()=>this.feeChange()}><span>Effective Fees</span><span
                     onAddressOptionsChange={(value) => this.setState({ ...this.state, addressOptions: value })} onTheGoObj={this.state.onTheGoObj} selectedbankobj={this.state.selectedbankobj} 
                     reasonAddress={this.addressDoc}/>
             </>,
-      declaration: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
+      declaration: <div className="custom-declaraton send-success"> 
+      {process.env.REACT_APP_ISDOCUSIGN == "false" && <div className="success-pop text-center declaration-content">
       <Image preview={false} src={alertIcon} className="confirm-icon"  />
       <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
            
-           <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn send-crypto-btn" component={Button} size="large" onClick={() => { this.goBack() }} /> </div></div>,
+    <Translate content="Back_to_Withdrawfiat" className=" cust-cancel-btn send-crypto-btn" component={Button} size="large" onClick={() => { this.goBack() }} /> </div> 
+    || <div className="success-pop text-center declaration-content">
+    <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
+  <Title level={2} className="success-title">Address saved successfully</Title>
+  <p>Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p></div>}
+    </div>,
        successpage: <div className="custom-declaraton send-success"> <div className="success-pop text-center declaration-content">
        <Image  preview={false} src={success}  className="confirm-icon" />
        <Title level={2} className="successsubtext cust-heightmbl">Your transaction has been processed successfully</Title>

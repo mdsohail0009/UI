@@ -5,6 +5,7 @@ import alertIcon from '../../assets/images/pending.png';
 import Translate from 'react-translate-component';
 import { handleSendFetch,hideSendCrypto,setSendCrypto} from '../../reducers/sendreceiveReducer';
 import apiCalls from '../../api/apiCalls';
+import success from '../../assets/images/success.svg'
 class DelcarationForm extends Component {
     componentDidMount() {
         this.successTrack();
@@ -23,7 +24,8 @@ class DelcarationForm extends Component {
 
         return (
             <>
-                 <div className="custom-declaraton"> <div className="success-pop text-center declaration-content">
+                 <div className="custom-declaraton"> 
+                {process.env.REACT_APP_ISDOCUSIGN == "false" &&<div className="success-pop text-center declaration-content">
                 <Image preview={false} src={alertIcon} className="confirm-icon" />
                 <Title level={2} className="success-title">Declaration form sent successfully</Title>
                 <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
@@ -33,7 +35,13 @@ class DelcarationForm extends Component {
                     
                 <Translate content="crypto_with_draw_success" className=" cust-cancel-btn" component={Button} size="large" onClick={() => { this.onBackSend() }} />
                     </div>
-            </div></div>
+                 </div> || <div className="success-pop text-center declaration-content">
+            <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
+            <Title level={2} className="success-title">Address saved successfully</Title>
+            <p className="text-white">Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p>
+		    <div className="send-cypto-summary"> <Translate content="crypto_with_draw_success" className="cust-cancel-btn send-crypto-btn" component={Button} onClick={this.onBackSend} /></div>
+            </div>}
+            </div>
             </>
         );
     }

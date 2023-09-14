@@ -267,12 +267,17 @@ this.setState({...this.state,isDocCheck:e.target.checked,details:{}})
       return <Loader />
     }
     if (showDeclartion) {
-      return<div className="custom-declaraton align-declaration"> <div className="success-pop text-center declaration-content">
+      return<div className="custom-declaraton align-declaration">
+        {process.env.REACT_APP_ISDOCUSIGN == "false" && <div className="success-pop text-center declaration-content">
           <Image  preview={false} src={alertIcon} className="confirm-icon"/>
           <Title level={2} className="success-title">Declaration form sent successfully</Title>
         <Text className="successsubtext">{`Declaration form has been sent to ${this.props.userProfile?.email}. 
                 Please sign using link received in email to whitelist your address. Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved.`}</Text>
-      </div>
+        </div> || <div className="success-pop text-center declaration-content">
+								<Image src={success} className="confirm-icon" alt={"success"} preview={false} />
+							<Title level={2} className="success-title">Address saved successfully</Title>
+              <p className="text-white">Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p>
+						</div>}
       </div>
     }else if(showDeclartionApproved){
       return<div className="custom-declaraton travel-success"> <div className="success-pop text-center declaration-content">
