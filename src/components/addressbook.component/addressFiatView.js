@@ -239,7 +239,7 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.city}
 													</div>
 												</div>
-											</Col>} */}
+											</Col>}
 											{fiatAddress?.postalCode && <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
 													<label className="kpi-label">Postal Code</label>
@@ -250,7 +250,7 @@ const AddressFiatView = (props) => {
 															: fiatAddress?.postalCode}
 													</div>
 												</div>
-											</Col>}											
+											</Col>}											 */}
 											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div className="kpi-divstyle ad-rec-detyails">
