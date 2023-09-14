@@ -23,8 +23,6 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         message: null,
         valid: true
     };
-    const maxPurchaseAmt = 100000;
-    const maxAmtMessage = "$100k"
     if (localValue === ""|| cryptValue === "") {
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
@@ -44,11 +42,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
     else {
         if (cryptValue < minPurchase) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + "   " + coin
-        } 
-        else if (parseFloat(localValue) > maxPurchaseAmt || cryptValue > maxPurchaseAmt) {
-            validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage + ". " + "Please contact support for higher amounts."
+            validate.message = apicalls.convertLocalLang('purchase_min') + " " + minPurchase + " " + coin
         }
         else if (cryptValue > maxPurchase) {
             validate.valid = false;
