@@ -39,7 +39,7 @@ class DelcarationForm extends Component {
             <Image src={success} className="confirm-icon" alt={"success"} preview={false} />
             <Title level={2} className="success-title">Address saved successfully</Title>
             <p className="text-white">Please note that any transactions regarding this whitelist will only be processed once your whitelisted address has been approved</p>
-		    <div className="send-cypto-summary"> <Translate content="crypto_with_draw_success" className="cust-cancel-btn send-crypto-btn" component={Button} onClick={this.onBackSend} /></div>
+		  
             </div>}
             </div>
             </>
